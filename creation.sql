@@ -156,3 +156,8 @@ CREATE TABLE ORDERPRODUCT(
     FOREIGN KEY (orderNumber) REFERENCES ORDERS(idOrder),
     FOREIGN KEY (product) REFERENCES PRODUCTS(idProduct)
 );
+
+USE pa2a2drivncook;
+INSERT INTO SITEROLE(roleName) VALUES ('Client');
+INSERT INTO SITEROLE(roleName) VALUES ('Franchisé');
+INSERT INTO SITEROLE(roleName) VALUES ('Administrateur');
