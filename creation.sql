@@ -17,6 +17,7 @@ CREATE TABLE USER(
     firstname VARCHAR(100),
     emailAddress VARCHAR(200),
     phoneNumber CHAR(10),
+    pwd CHAR(60),
     token CHAR(60),
     createDate TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     userRole INTEGER,
