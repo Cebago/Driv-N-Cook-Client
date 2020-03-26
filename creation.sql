@@ -20,6 +20,7 @@ CREATE TABLE USER(
     pwd CHAR(60),
     token CHAR(60),
     createDate TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    isActivated TINYINT(1) DEFAULT 0,
     userRole INTEGER,
     FOREIGN KEY (userRole) REFERENCES SITEROLE(idRole),
     fidelityCard INTEGER,
