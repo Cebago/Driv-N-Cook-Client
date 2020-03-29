@@ -21,6 +21,9 @@ CREATE TABLE USER(
     token CHAR(60),
     createDate TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     isActivated TINYINT(1) DEFAULT 0,
+    address VARCHAR(150),
+    postalCode VARCHAR(6),
+    licenseNumber VARCHAR(15),
     userRole INTEGER,
     FOREIGN KEY (userRole) REFERENCES SITEROLE(idRole),
     fidelityCard INTEGER,
@@ -46,32 +49,53 @@ CREATE TABLE EVENTS(
     eventStartHour TIME,
     eventEndHour TIME
 );
+CREATE TABLE EVENTSTATUS(
+    event INTEGER,
+    status INTEGER,
+    PRIMARY KEY(event, status),
+    updateDate TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (event) REFERENCES EVENTS(idEvent),
+    FOREIGN KEY (status) REFERENCES STATUS(idStatus)
+);
 CREATE TABLE WAREHOUSES(
     idWarehouse INTEGER PRIMARY KEY AUTO_INCREMENT,
     warehouseName VARCHAR(60),
     warehouseCity VARCHAR(60),
     warehouseAddress VARCHAR(100),
-    warehousePostalCode VARCHAR(6)
-);
-CREATE TABLE OPENDAYS(
-    idOpen INTEGER PRIMARY KEY AUTO_INCREMENT,
-    openDays VARCHAR(60),
-    startHour TIME,
-    endHour TIME
+    warehousePostalCode VARCHAR(6),
+    warehouseType VARCHAR(100)
 );
 CREATE TABLE TRUCK(
     idTruck INTEGER PRIMARY KEY AUTO_INCREMENT,
     truckManufacturers VARCHAR(100),
     truckModel VARCHAR(100),
-    licensePlate VARCHAR(8),
-    warehouse INTEGER NOT NULL,
-    FOREIGN KEY (warehouse) REFERENCES WAREHOUSES(idWarehouse),
+    licensePlate VARCHAR(10),
+    km INTEGER,
     user INTEGER,
-    FOREIGN KEY (user) REFERENCES USER(idUser),
-    status INTEGER NOT NULL,
-    FOREIGN KEY (status) REFERENCES STATUS(idStatus),
-    planning INTEGER NOT NULL,
-    FOREIGN KEY (planning) REFERENCES OPENDAYS(idOpen)
+    FOREIGN KEY (user) REFERENCES USER(idUser)
+);
+CREATE TABLE OPENDAYS(
+    idOpen INTEGER PRIMARY KEY AUTO_INCREMENT,
+    openDay VARCHAR(60),
+    startHour TIME,
+    endHour TIME,
+    truck INTEGER,
+    FOREIGN KEY (truck) REFERENCES TRUCK(idTruck)
+);
+CREATE TABLE TRUCKSTATUS(
+    truck INTEGER,
+    status INTEGER,
+    PRIMARY KEY(truck, status),
+    updateDate TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (truck) REFERENCES TRUCK(idTruck),
+    FOREIGN KEY (status) REFERENCES STATUS(idStatus)
+);
+CREATE TABLE TRUCKWAREHOUSE(
+    truck INTEGER,
+    warehouse INTEGER,
+    PRIMARY KEY (truck, warehouse),
+    FOREIGN KEY (truck) REFERENCES TRUCK(idTruck),
+    FOREIGN KEY (warehouse) REFERENCES WAREHOUSES(idWarehouse)
 );
 CREATE TABLE HOST(
     event INTEGER NOT NULL,
@@ -83,86 +107,145 @@ CREATE TABLE HOST(
 CREATE TABLE MAINTENANCE(
     idMaintenance INTEGER PRIMARY KEY AUTO_INCREMENT,
     maintenanceName VARCHAR(60),
-    maintenancePrice INTEGER,
+    maintenancePrice DOUBLE,
     maintenanceDate DATE,
+    km INTEGER,
     truck INTEGER NOT NULL,
     FOREIGN KEY (truck) REFERENCES TRUCK(idTruck)
 );
 CREATE TABLE ORDERS(
     idOrder INTEGER PRIMARY KEY AUTO_INCREMENT,
-    orderPrice INTEGER,
+    orderPrice DOUBLE,
     orderDate TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    orderInvoice VARCHAR(150),
+    orderType VARCHAR(100),
     truck INTEGER NOT NULL,
     FOREIGN KEY (truck) REFERENCES TRUCK(idTruck),
     user INTEGER NOT NULL,
-    FOREIGN KEY (user) REFERENCES USER(idUser),
-    status INTEGER NOT NULL,
-    FOREIGN KEY (status) REFERENCES STATUS(idStatus)
+    FOREIGN KEY (user) REFERENCES USER(idUser)
+);
+CREATE TABLE ORDERSTATUS(
+    orders INTEGER,
+    status INTEGER,
+    PRIMARY KEY(orders, status),
+    updateDate TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (orders) REFERENCES ORDERS(idOrder),
+    FOREIGN KEY (status) REFERENCES STATUS(idStatus)    
 );
 CREATE TABLE MENUS(
     idMenu INTEGER PRIMARY KEY AUTO_INCREMENT,
     menuName VARCHAR(60),
-    menuPrice INTEGER,
-    menuQuantity INTEGER,
+    menuPrice DOUBLE,
     truck INTEGER,
     FOREIGN KEY (truck) REFERENCES TRUCK(idTruck)
+);
+CREATE TABLE MENUSSTATUS(
+    menus INTEGER,
+    status INTEGER,
+    PRIMARY KEY(menus, status),
+    updateDate TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (menus) REFERENCES MENUS(idMenu),
+    FOREIGN KEY (status) REFERENCES STATUS(idStatus)    
 );
 CREATE TABLE INGREDIENTS(
     idIngredient INTEGER PRIMARY KEY AUTO_INCREMENT,
     ingredientName VARCHAR(60),
-    ingredientQuatity INTEGER,
-    ingredientPrice INTEGER
+    ingredientCategory VARCHAR(60),
+    ingredientImage VARCHAR(100)
+);
+CREATE TABLE CONTACT(
+    idContact INTEGER PRIMARY KEY AUTO_INCREMENT,
+    contactSubject VARCHAR(60),
+    contactDescription TEXT,
+    createDate TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    user INTEGER,
+    FOREIGN KEY (user) REFERENCES USER(idUser)
 );
 CREATE TABLE STORE(
-    warehouse INTEGER NOT NULL,
-    ingredient INTEGER NOT NULL,
-    PRIMARY KEY(warehouse, ingredient),
+    warehouse INTEGER,
+    ingredient INTEGER,
+    PRIMARY KEY (warehouse, ingredient),
+    quantity INTEGER,
+    price DOUBLE,
     FOREIGN KEY (warehouse) REFERENCES WAREHOUSES(idWarehouse),
     FOREIGN KEY (ingredient) REFERENCES INGREDIENTS(idIngredient)
+);
+CREATE TABLE CART(
+    idCart INTEGER PRIMARY KEY AUTO_INCREMENT,
+    cartPrice DOUBLE,
+    updateDate TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    cartType VARCHAR(60)
 );
 CREATE TABLE PRODUCTS(
     idProduct INTEGER PRIMARY KEY AUTO_INCREMENT,
     productName VARCHAR(60),
-    productPrice INTEGER,
-    productQuantity INTEGER,
-    productOrigin VARCHAR(60),
-    truck INTEGER NOT NULL,
+    productPrice DOUBLE,
+    truck INTEGER,
     FOREIGN KEY (truck) REFERENCES TRUCK(idTruck)
 );
-CREATE TABLE REQUIRED(
-    menu INTEGER NOT NULL,
-    product INTEGER NOT NULL,
-    PRIMARY KEY(menu, product),
+CREATE TABLE PRODUCTSTATUS(
+    product INTEGER,
+    status INTEGER,
+    PRIMARY KEY(product, status),
+    updateDate TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (product) REFERENCES PRODUCTS(idProduct),
+    FOREIGN KEY (status) REFERENCES STATUS(idStatus)
+);
+CREATE TABLE CARTPRODUCT(
+    cart INTEGER,
+    product INTEGER,
+    PRIMARY KEY(cart, product),
+    quantity INTEGER,
+    FOREIGN KEY (cart) REFERENCES CART(idCart),
+    FOREIGN KEY (product) REFERENCES PRODUCTS(idProduct)
+);
+CREATE TABLE CARTINGREDIENT(
+    cart INTEGER,
+    ingredient INTEGER,
+    PRIMARY KEY (cart, ingredient),
+    quantity INTEGER,
+    FOREIGN KEY (cart) REFERENCES CART(idCart),
+    FOREIGN KEY (ingredient) REFERENCES INGREDIENTS(idIngredient)
+);
+CREATE TABLE CARTSTATUS(
+    cart INTEGER,
+    status INTEGER,
+    PRIMARY KEY(cart, status),
+    updateDate TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (cart) REFERENCES CART(idCart),
+    FOREIGN KEY (status) REFERENCES STATUS(idStatus)
+);
+CREATE TABLE CARTMENU(
+    cart INTEGER,
+    menu INTEGER,
+    PRIMARY KEY (cart, menu),
+    quantity INTEGER,
+    FOREIGN KEY (cart) REFERENCES CART(idCart),
+    FOREIGN KEY (menu) REFERENCES MENUS(idMenu)
+);
+CREATE TABLE TRANSACTION(
+    idTransaction INTEGER PRIMARY KEY AUTO_INCREMENT,
+    transactionDate TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    price DOUBLE,
+    user INTEGER,
+    FOREIGN KEY (user) REFERENCES USER(idUser),
+    orders INTEGER,
+    FOREIGN KEY (orders) REFERENCES ORDERS(idOrder)
+);
+CREATE TABLE SOLDIN(
+    menu INTEGER,
+    product INTEGER,
+    PRIMARY KEY (menu, product),
     FOREIGN KEY (menu) REFERENCES MENUS(idMenu),
     FOREIGN KEY (product) REFERENCES PRODUCTS(idProduct)
 );
-CREATE TABLE USED(
-    ingredient INTEGER NOT NULL,
-    product INTEGER NOT NULL,
-    PRIMARY KEY(ingredient, product),
+CREATE TABLE COMPOSE(
+    ingredient INTEGER,
+    product INTEGER,
+    PRIMARY KEY (ingredient, product),
+    quantity INTEGER,
     FOREIGN KEY (ingredient) REFERENCES INGREDIENTS(idIngredient),
     FOREIGN KEY (product) REFERENCES PRODUCTS(idProduct)
-);
-CREATE TABLE ORDERMENU(
-    orderNumber INTEGER NOT NULL,
-    menu INTEGER NOT NULL,
-    PRIMARY KEY(orderNumber, menu),
-    FOREIGN KEY (orderNumber) REFERENCES ORDERS(idOrder),
-    FOREIGN KEY (menu) REFERENCES MENUS(idMenu)
-);
-CREATE TABLE ORDERPRODUCT(
-    orderNumber INTEGER NOT NULL,
-    product INTEGER NOT NULL,
-    PRIMARY KEY(orderNumber, product),
-    FOREIGN KEY (orderNumber) REFERENCES ORDERS(idOrder),
-    FOREIGN KEY (product) REFERENCES PRODUCTS(idProduct)
-);
-CREATE TABLE FAVORITES(
-	user INTEGER NOT NULL,
-    truck INTEGER NOT NULL,
-    PRIMARY KEY(user, truck),
-    FOREIGN KEY (user) REFERENCES USER(idUser),
-    FOREIGN KEY (truck) REFERENCES TRUCK(idTruck)
 );
 
 USE pa2a2drivncook;
