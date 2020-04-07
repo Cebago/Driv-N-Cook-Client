@@ -71,6 +71,7 @@ CREATE TABLE TRUCK(
     truckModel VARCHAR(100),
     licensePlate VARCHAR(10),
     km INTEGER,
+    createDate TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     user INTEGER,
     FOREIGN KEY (user) REFERENCES USER(idUser)
 );
