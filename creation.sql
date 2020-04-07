@@ -247,6 +247,13 @@ CREATE TABLE COMPOSE(
     FOREIGN KEY (ingredient) REFERENCES INGREDIENTS(idIngredient),
     FOREIGN KEY (product) REFERENCES PRODUCTS(idProduct)
 );
+CREATE TABLE LOCATION(
+	idLocation INTEGER PRIMARY KEY AUTO_INCREMENT,
+    lat FLOAT,
+    lng FLOAT,
+    truck INTEGER,
+    FOREIGN KEY (truck) REFERENCES TRUCK(idTruck)
+);
 
 USE pa2a2drivncook;
 INSERT INTO SITEROLE(roleName) VALUES ('Client');
