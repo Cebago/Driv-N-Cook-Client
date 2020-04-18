@@ -75,7 +75,7 @@ INSERT INTO CARTPRODUCT(cart, product, quantity) VALUES (3, 1, 2);
 INSERT INTO CARTPRODUCT(cart, product, quantity) VALUES (3, 2, 5);
 INSERT INTO CARTPRODUCT(cart, product, quantity) VALUES (4, 2, 14);
 
-INSERT INTO ORDERS(orderPrice, orderInvoice, orderType, truck, user) VALUES (7.00, '/var/www/html/invoices/1.pdf', 'Commande client', 1, 1);
+INSERT INTO ORDERS(orderPrice, orderInvoice, orderType, truck, user) VALUES (7.00, '/var/www/html/invoices/1.pdf', 'Commande Fracnhisé', 1, 1);
 INSERT INTO ORDERS(orderPrice, orderInvoice, orderType, truck, user) VALUES (27.50, '/var/www/html/invoices/2.pdf', 'Commande client', 2, 1);
 INSERT INTO ORDERS(orderPrice, orderInvoice, orderType, truck, user) VALUES (30.50, '/var/www/html/invoices/3.pdf', 'Commande client', 3, 1);
 INSERT INTO ORDERS(orderPrice, orderInvoice, orderType, truck, user) VALUES (77.00, '/var/www/html/invoices/4.pdf', 'Commande client', 4, 1);
@@ -84,3 +84,8 @@ INSERT INTO TRANSACTION(price, user, orders) VALUES (7.00, 1, 1);
 INSERT INTO TRANSACTION(price, user, orders) VALUES (27.50, 1, 2);
 INSERT INTO TRANSACTION(price, user, orders) VALUES (30.50, 1, 2);
 INSERT INTO TRANSACTION(price, user, orders) VALUES (77.00, 1, 4);
+
+INSERT INTO CARTINGREDIENT(cart, ingredient, quantity) VALUES (1, 1, 7);
+INSERT INTO CARTINGREDIENT(cart, ingredient, quantity) VALUES (1, 2, 8);
+INSERT INTO CARTINGREDIENT(cart, ingredient, quantity) VALUES (1, 3), 9;
+INSERT INTO CARTINGREDIENT(cart, ingredient, quantity) VALUES (1, 4, 10);
