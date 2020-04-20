@@ -10,23 +10,26 @@ INSERT INTO OPENDAYS(openDay, startHour, endHour, truck) VALUES ('Mercredi', '08
 INSERT INTO OPENDAYS(openDay, startHour, endHour, truck) VALUES ('Jeudi', '08:00', '17:00', 1);
 INSERT INTO OPENDAYS(openDay, startHour, endHour, truck) VALUES ('Vendredi', '08:00', '17:00', 1);
 
-INSERT INTO OPENDAYS(openDay, startHour, endHour, truck) VALUES ('Samedi', '08:00', '17:00', 2);
+
 INSERT INTO OPENDAYS(openDay, startHour, endHour, truck) VALUES ('Mardi', '08:00', '17:00', 2);
 INSERT INTO OPENDAYS(openDay, startHour, endHour, truck) VALUES ('Mercredi', '08:00', '17:00', 2);
 INSERT INTO OPENDAYS(openDay, startHour, endHour, truck) VALUES ('Jeudi', '08:00', '17:00', 2);
 INSERT INTO OPENDAYS(openDay, startHour, endHour, truck) VALUES ('Vendredi', '08:00', '17:00', 2);
+INSERT INTO OPENDAYS(openDay, startHour, endHour, truck) VALUES ('Samedi', '08:00', '17:00', 2);
 
-INSERT INTO OPENDAYS(openDay, startHour, endHour, truck) VALUES ('Samedi', '08:00', '17:00', 3);
-INSERT INTO OPENDAYS(openDay, startHour, endHour, truck) VALUES ('Dimanche', '08:00', '17:00', 3);
+
 INSERT INTO OPENDAYS(openDay, startHour, endHour, truck) VALUES ('Mercredi', '08:00', '17:00', 3);
 INSERT INTO OPENDAYS(openDay, startHour, endHour, truck) VALUES ('Jeudi', '08:00', '17:00', 3);
 INSERT INTO OPENDAYS(openDay, startHour, endHour, truck) VALUES ('Vendredi', '08:00', '17:00', 3);
+INSERT INTO OPENDAYS(openDay, startHour, endHour, truck) VALUES ('Samedi', '08:00', '17:00', 3);
+INSERT INTO OPENDAYS(openDay, startHour, endHour, truck) VALUES ('Dimanche', '08:00', '17:00', 3);
 
 INSERT INTO OPENDAYS(openDay, startHour, endHour, truck) VALUES ('Lundi', '08:00', '17:00', 4);
-INSERT INTO OPENDAYS(openDay, startHour, endHour, truck) VALUES ('Dimanche', '08:00', '17:00', 4);
 INSERT INTO OPENDAYS(openDay, startHour, endHour, truck) VALUES ('Mercredi', '08:00', '17:00', 4);
-INSERT INTO OPENDAYS(openDay, startHour, endHour, truck) VALUES ('Samedi', '08:00', '17:00', 4);
 INSERT INTO OPENDAYS(openDay, startHour, endHour, truck) VALUES ('Vendredi', '08:00', '17:00', 4);
+INSERT INTO OPENDAYS(openDay, startHour, endHour, truck) VALUES ('Samedi', '08:00', '17:00', 4);
+INSERT INTO OPENDAYS(openDay, startHour, endHour, truck) VALUES ('Dimanche', '08:00', '17:00', 4);
+
 
 INSERT INTO INGREDIENTS(ingredientName, ingredientCategory) VALUES ('Tomate', 'Fruit');
 INSERT INTO INGREDIENTS(ingredientName, ingredientCategory) VALUES ('Pomme de terre', 'Féculent');
@@ -87,5 +90,5 @@ INSERT INTO TRANSACTION(price, user, orders) VALUES (77.00, 1, 4);
 
 INSERT INTO CARTINGREDIENT(cart, ingredient, quantity) VALUES (1, 1, 7);
 INSERT INTO CARTINGREDIENT(cart, ingredient, quantity) VALUES (1, 2, 8);
-INSERT INTO CARTINGREDIENT(cart, ingredient, quantity) VALUES (1, 3), 9;
+INSERT INTO CARTINGREDIENT(cart, ingredient, quantity) VALUES (1, 3, 9);
 INSERT INTO CARTINGREDIENT(cart, ingredient, quantity) VALUES (1, 4, 10);
