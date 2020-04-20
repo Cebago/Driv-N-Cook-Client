@@ -34,8 +34,7 @@ CREATE TABLE STATUS(
     idStatus INTEGER PRIMARY KEY AUTO_INCREMENT,
     statusName VARCHAR(60),
     statusDescription VARCHAR(60),
-    statusType VARCHAR(60),
-    updateDate TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+    statusType VARCHAR(60)
 );
 CREATE TABLE EVENTS(
     idEvent INTEGER PRIMARY KEY AUTO_INCREMENT,
@@ -63,6 +62,8 @@ CREATE TABLE WAREHOUSES(
     warehouseCity VARCHAR(60),
     warehouseAddress VARCHAR(100),
     warehousePostalCode VARCHAR(6),
+    lat FLOAT,
+    lng FLOAT,
     warehouseType VARCHAR(100)
 );
 CREATE TABLE TRUCK(
@@ -166,7 +167,7 @@ CREATE TABLE STORE(
     warehouse INTEGER,
     ingredient INTEGER,
     PRIMARY KEY (warehouse, ingredient),
-    quantity INTEGER,
+    available TINYINT(1),
     price DOUBLE,
     FOREIGN KEY (warehouse) REFERENCES WAREHOUSES(idWarehouse),
     FOREIGN KEY (ingredient) REFERENCES INGREDIENTS(idIngredient)
@@ -246,7 +247,6 @@ CREATE TABLE COMPOSE(
     ingredient INTEGER,
     product INTEGER,
     PRIMARY KEY (ingredient, product),
-    quantity INTEGER,
     FOREIGN KEY (ingredient) REFERENCES INGREDIENTS(idIngredient),
     FOREIGN KEY (product) REFERENCES PRODUCTS(idProduct)
 );
@@ -262,3 +262,29 @@ USE pa2a2drivncook;
 INSERT INTO SITEROLE(roleName) VALUES ('Client');
 INSERT INTO SITEROLE(roleName) VALUES ('Franchisé');
 INSERT INTO SITEROLE(roleName) VALUES ('Administrateur');
+
+INSERT INTO STATUS (statusName, statusDescription, statusType) VALUES ("Payée","La commande a été payée","Commande");
+INSERT INTO STATUS (statusName, statusDescription, statusType) VALUES ("En cours","La commande est en cours","Commande");
+INSERT INTO STATUS (statusName, statusDescription, statusType) VALUES ("En attente de paiement","La commande est en attente de paiement","Commande");
+INSERT INTO STATUS (statusName, statusDescription, statusType) VALUES ("Récupérée","La commande a été récupérée","Commande");
+INSERT INTO STATUS (statusName, statusDescription, statusType) VALUES ("Refusée","Le paiement de la commande a été refusé","Commande");
+INSERT INTO STATUS (statusName, statusDescription, statusType) VALUES ("Validé","Le paiement de la commande a été validé","Paiement");
+INSERT INTO STATUS (statusName, statusDescription, statusType) VALUES ("Refusé","Le paiement de la commande a été refusé","Paiement");
+INSERT INTO STATUS (statusName, statusDescription, statusType) VALUES ("Finalisé","Le panier est validé","Panier");
+INSERT INTO STATUS (statusName, statusDescription, statusType) VALUES ("En cours","Le panier est en cours d'édition","Panier");
+INSERT INTO STATUS (statusName, statusDescription, statusType) VALUES ("En maintenance","Le camion est en maintenance","Camion");
+INSERT INTO STATUS (statusName, statusDescription, statusType) VALUES ("A l'entrepôt","Le camion n'est assigné à personne","Camion");
+INSERT INTO STATUS (statusName, statusDescription, statusType) VALUES ("Fermé","Le camion n'est pas disponible","Camion");
+INSERT INTO STATUS (statusName, statusDescription, statusType) VALUES ("Vendu","Le camion ne fait plus partie des effectifs","Camion");
+INSERT INTO STATUS (statusName, statusDescription, statusType) VALUES ("Ouvert","Le camion est disponible","Camion");
+INSERT INTO STATUS (statusName, statusDescription, statusType) VALUES ("Programmé","L'évènement est programmé","Evènements");
+INSERT INTO STATUS (statusName, statusDescription, statusType) VALUES ("Passé","L'évènement est passé","Evènements");
+INSERT INTO STATUS (statusName, statusDescription, statusType) VALUES ("Annulé","L'évènement est annulé","Evènements");
+INSERT INTO STATUS (statusName, statusDescription, statusType) VALUES ("En cours","L'évènement est en cours","Evènements");
+INSERT INTO STATUS (statusName, statusDescription, statusType) VALUES ("Disponible","Le produit est disponible","Produit");
+INSERT INTO STATUS (statusName, statusDescription, statusType) VALUES ("Indisponible","Le produit est indisponible","Produit");
+INSERT INTO STATUS (statusName, statusDescription, statusType) VALUES ("En cours d'édition","Le produit est en cours d'édition","Produit");
+INSERT INTO STATUS (statusName, statusDescription, statusType) VALUES ("Disponible","Le menu est disponible","Menu");
+INSERT INTO STATUS (statusName, statusDescription, statusType) VALUES ("Indisponible","Le menu est indisponible","Menu");
+INSERT INTO STATUS (statusName, statusDescription, statusType) VALUES ("En cours d'édition","Le menu est en cours d'édition","Menu");
+
