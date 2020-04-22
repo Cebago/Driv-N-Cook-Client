@@ -167,7 +167,7 @@ CREATE TABLE STORE(
     warehouse INTEGER,
     ingredient INTEGER,
     PRIMARY KEY (warehouse, ingredient),
-    available TINYINT(1),
+    available TINYINT(1) DEFAULT 0,
     price DOUBLE,
     FOREIGN KEY (warehouse) REFERENCES WAREHOUSES(idWarehouse),
     FOREIGN KEY (ingredient) REFERENCES INGREDIENTS(idIngredient)
