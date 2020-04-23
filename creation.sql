@@ -23,6 +23,7 @@ CREATE TABLE USER(
     isActivated TINYINT(1) DEFAULT 0,
     address VARCHAR(150),
     postalCode VARCHAR(6),
+    city VARCHAR(100),
     licenseNumber VARCHAR(15),
     userRole INTEGER,
     FOREIGN KEY (userRole) REFERENCES SITEROLE(idRole),
