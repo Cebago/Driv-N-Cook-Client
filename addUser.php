@@ -130,7 +130,7 @@ if( count($_POST) == 6
 		$link = "https://drivncook.fr/isActivated?cle=".urlencode($cle);
 		$message = '
 		Bonjour ' . $lastName . ' ' . $firstName . '
-		Bienvenue sur Driv'n Cook,
+		Bienvenue sur Driv\'n Cook,
  
 		Pour activer votre compte, veuillez cliquer sur le lien ci-dessous ou le copier/coller dans votre navigateur internet.
  		'.$link.'
