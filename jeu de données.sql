@@ -43,7 +43,7 @@ VALUES ('Créteil', 'Créteil', '2 rue Maréchal', 94000, 'Entrepôt');
 INSERT INTO WAREHOUSES(warehouseName, warehouseType)
 VALUES ('Stock du camion', 'Camion');
 INSERT INTO WAREHOUSES(warehouseName, warehouseCity, warehouseAddress, warehousePostalCode, warehouseType)
-VALUES ('Créteil', 'Créteil', '2 rue Maréchal', 94000, 'Entrepôt');
+VALUES ('Livry', 'Livry', '2 rue ESGI', 93500, 'Entrepôt');
 INSERT INTO WAREHOUSES(warehouseName, warehouseType)
 VALUES ('Stock du camion', 'Camion');
 
@@ -60,6 +60,19 @@ INSERT INTO STORE(warehouse, ingredient, available, price) VALUES (2, 3, 1, 0.26
 INSERT INTO STORE(warehouse, ingredient, available, price) VALUES (2, 4, 1, 0.35);
 INSERT INTO STORE(warehouse, ingredient, available, price) VALUES (2, 5, 1, 0.95);
 INSERT INTO STORE(warehouse, ingredient, available, price) VALUES (2, 6, 1, 1.30);
+
+INSERT INTO STORE(warehouse, ingredient, available, price) VALUES (3, 1, 1, 0.20);
+INSERT INTO STORE(warehouse, ingredient, available, price) VALUES (3, 2, 1, 0.35);
+INSERT INTO STORE(warehouse, ingredient, available, price) VALUES (3, 3, 1, 0.80);
+INSERT INTO STORE(warehouse, ingredient, available, price) VALUES (3, 4, 1, 0.26);
+INSERT INTO STORE(warehouse, ingredient, available, price) VALUES (3, 5, 1, 0.75);
+INSERT INTO STORE(warehouse, ingredient, available, price) VALUES (3, 6, 1, 1.20);
+INSERT INTO STORE(warehouse, ingredient, available, price) VALUES (4, 1, 1, 0.35);
+INSERT INTO STORE(warehouse, ingredient, available, price) VALUES (4, 2, 1, 0.40);
+INSERT INTO STORE(warehouse, ingredient, available, price) VALUES (4, 3, 1, 0.26);
+INSERT INTO STORE(warehouse, ingredient, available, price) VALUES (4, 4, 1, 0.35);
+INSERT INTO STORE(warehouse, ingredient, available, price) VALUES (4, 5, 1, 0.95);
+INSERT INTO STORE(warehouse, ingredient, available, price) VALUES (4, 6, 1, 1.30);
 
 INSERT INTO TRUCKWAREHOUSE (truck, warehouse) VALUES (1, 2);
 
