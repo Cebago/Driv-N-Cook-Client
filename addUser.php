@@ -127,7 +127,7 @@ if( count($_POST) == 6
 		$destination = $email;
 		$subject = "Activation de votre compte Drincook";
 		$header = "FROM: client@drivncook.fr";
-		$link = "https://drivncook.fr/isActivated?cle=".urlencode($cle);
+		$link = "https://drivncook.fr/isActivated?cle=" . urlencode($cle) . "&id=" . urlencode($idUser) ;
 		$message = '
 		Bonjour ' . $lastName . ' ' . $firstName . '
 		Bienvenue sur Driv\'n Cook,
