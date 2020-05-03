@@ -124,23 +124,21 @@ if( count($_POST) == 6
 			":token"=>$cle,
 			":email"=>$email
 		]);
-		$destination = $email;
-		$subject = "Activation de votre compte Drincook";
-		$header = "FROM: client@drivncook.fr";
-		$link = "https://drivncook.fr/isActivated?cle=" . urlencode($cle) . "&id=" . urlencode($idUser) ;
-		$message = '
-		Bonjour ' . $lastName . ' ' . $firstName . '
-		Bienvenue sur Driv\'n Cook,
- 
-		Pour activer votre compte, veuillez cliquer sur le lien ci-dessous ou le copier/coller dans votre navigateur internet.
- 		'.$link.'
- 		---------------
- 		
- 		Ceci est un mail automatique,
- 		Merci de ne pas y répondre.';
+        $destination = $email;
+        $admin = ($_SERVER["SERVER_ADMIN"]);
+        $domaineAddresse  = substr($admin, strpos($admin,'@')+1, strlen($admin));
+        $subject = "Activation de votre compte Driv'N Cook";
+        $header = "From: no-reply@".$domaineAddresse."\n";
+        $header .= "X-Sender: <no-reply@".$domaineAddresse."\n";
+        $header .= "X-Mailer: PHP\n";
+        $header .= "Return-Path: <no-reply@".$domaineAddresse."\n";
+        $header .= "Content-Type: text/html; charset=iso-8859-1\n";
+        $link = "https://".$domaineAddresse."/isActivated?cle=" . urlencode($cle) . "&id=" . urlencode($idUser) ;
 
-		$message = wordwrap($message, 70, "\r\n");
-		mail($destination, $subject, $message, $header);
+        $html = file_get_contents('mail.html');
+        $html =  str_replace("{{firstname}}",$firstName." !" ,$html);
+        $html =  str_replace("{{link}}",$link,$html);
+        mail($destination, $subject, $html, $header);
 		header("Location: login.php");
 	}
 } else {
