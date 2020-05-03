@@ -47,6 +47,11 @@ VALUES ('Livry', 'Livry', '2 rue ESGI', 93500, 'Entrepôt');
 INSERT INTO WAREHOUSES(warehouseName, warehouseType)
 VALUES ('Stock du camion', 'Camion');
 
+INSERT INTO TRUCKWAREHOUSE(warehouse, truck) VALUES (1, 1);
+INSERT INTO TRUCKWAREHOUSE(warehouse, truck) VALUES (1, 2);
+INSERT INTO TRUCKWAREHOUSE(warehouse, truck) VALUES (3, 3);
+INSERT INTO TRUCKWAREHOUSE(warehouse, truck) VALUES (3, 4);
+
 
 INSERT INTO STORE(warehouse, ingredient, available, price) VALUES (1, 1, 1, 0.20);
 INSERT INTO STORE(warehouse, ingredient, available, price) VALUES (1, 2, 1, 0.35);
