@@ -1,3 +1,10 @@
+<?php
+require 'header.php';
 
-<div class="bfh-selectbox bfh-languages" data-language="en_US" data-available="en_US,fr_CA,es_MX" data-flags="true">
-</div>
+$jsonFile = file_get_contents('assets/traduction.json');
+
+$tabLang =  json_decode($jsonFile, true);
+$headerTabLang =a; 
+echo $tabLang["header"]["fr_FR"]['name'];
+
+?>

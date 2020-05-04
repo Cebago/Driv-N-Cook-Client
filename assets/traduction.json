@@ -1,0 +1,23 @@
+{
+  "header": {
+    "fr_FR": {
+      "name": "Français",
+      "icon": "flag-icon-fr"
+    },
+    "es_ES": {
+      "name": "Espagnol",
+      "icon": "flag-icon-es"
+    },
+    "en_EN": {
+      "name": "English",
+      "icon": "flag-icon-gb"
+    }
+  },
+  "values": {
+    "home" : {
+      "fr_FR" : "Accueil",
+      "es_ES" : "Bienvenida",
+      "en_EN" : "Home"
+    }
+  }
+}

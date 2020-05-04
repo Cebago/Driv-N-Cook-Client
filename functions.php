@@ -11,3 +11,8 @@ function connectDB(){
     }
     return $pdo;
 }
+
+function getTranslate(){
+
+}
+

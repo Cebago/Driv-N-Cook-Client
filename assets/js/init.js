@@ -391,3 +391,5 @@ $(window).on("backstretch.after", function (e, instance, index) {
     })
     BackgroundCheck.refresh();
 });
+
+
