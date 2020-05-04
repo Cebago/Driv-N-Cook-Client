@@ -26,6 +26,7 @@ CREATE TABLE USER(
     city VARCHAR(100),
     licenseNumber VARCHAR(15),
     lang VARCHAR(5) DEFAULT "fr_FR",
+    acceptEmails TINYINT(1) DEFAULT 0,
     userRole INTEGER,
     FOREIGN KEY (userRole) REFERENCES SITEROLE(idRole),
     fidelityCard INTEGER,
