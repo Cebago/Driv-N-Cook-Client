@@ -17,6 +17,28 @@
     "accueil" : {
       "es_ES" : "Bienvenida",
       "en_EN" : "Home"
+    },
+    "nos camions" : {
+      "es_ES" : "nuestros camiones",
+      "en_EN" : "our trucks"
+    },
+    "evenements" : {
+      "es_ES" : "eventos",
+      "en_EN" : "events"
+    },
+    "rejoignez-nous" : {
+      "es_ES" : "únete a nosotros",
+      "en_EN" : "join us"
+    },
+    "titre1" : {
+      "es_ES" : "comida <b>realmente</b> local",
+      "en_EN" : "<b>truly</b> local cuisine",
+      "fr_FR" : "la cuisine <b>vraiment</b> locale"
+    },
+    "titre2" : {
+      "es_ES" : "Descubre los <span class=\"prime-color\">sabores</span><br><span class=\"style-change\">de <span class=\"prime-color\">Driv'n</span>Cook</span>",
+      "en_EN" : "Discover the <span class=\"prime-color\">flavors</span><br><span class=\"style-change\">of <span class=\"prime-color\">Driv'n</span>Cook</span>",
+      "fr_FR" : "Découvrez les <span class=\"prime-color\">saveurs</span><br><span class=\"style-change\">de <span class=\"prime-color\">Driv'n</span>Cook</span>"
     }
   }
 }

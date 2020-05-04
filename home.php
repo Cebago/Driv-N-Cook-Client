@@ -28,7 +28,7 @@ $setLanguage = $_COOKIE['Lang'];
             <div class="row">
                 <div class="col-lg-2">
                     <div class="logo-area">
-                        <a href="index.html"><img src="assets/images/logo/logo.png" alt="logo"></a>
+                        <a href="index.html"><img src="/img/logo.png" alt="logo"></a>
                     </div>
                 </div>
                 <div class="col-lg-10">
@@ -39,17 +39,10 @@ $setLanguage = $_COOKIE['Lang'];
                     </div>
                     <div class="main-menu">
                         <ul>
-                            <li class="active"><a href="index.html"><?php getTranslate("accueil", $tabLang, $setLanguage);?>  </a></li>
-                            <li><a href="about.html">about</a></li>
-                            <li><a href="menu.html">menu</a></li>
-                            <li><a href="#">blog</a>
-                                <ul class="sub-menu">
-                                    <li><a href="blog-home.html">Blog Home</a></li>
-                                    <li><a href="blog-details.html">Blog Details</a></li>
-                                </ul>
-                            </li>
-                            <li><a href="contact-us.html">contact</a></li>
-                            <li><a href="elements.html">Elements</a></li>
+                            <li class="active"><a href="index.html"><?php getTranslate("accueil", $tabLang, $setLanguage);?></a></li>
+                            <li><a href="about.html"><?php getTranslate("nos camions", $tabLang, $setLanguage);?></a></li>
+                            <li><a href="menu.html"><?php getTranslate("evenements ", $tabLang, $setLanguage);?></a></li>
+                            <li><a href="http://franchises.drivncook.fr"><?php getTranslate("rejoignez-nous", $tabLang, $setLanguage);?></a></li>
                             <li class="nav-item dropdown">
                                 <a class="nav-link dropdown-toggle" id="dropdown09" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span class="flag-icon <?php echo $headerTabLang[$setLanguage]["icon"] ?>"> </span> <?php echo $headerTabLang[$_COOKIE['Lang']]["name"] ?></a>
                                 <div class="dropdown-menu bg-info border-light" aria-labelledby="dropdown09">
@@ -76,9 +69,8 @@ $setLanguage = $_COOKIE['Lang'];
     <div class="container">
         <div class="row">
             <div class="col-lg-12">
-                <h6>the most interesting food in the world</h6>
-                <h1>Discover the <span class="prime-color">flavors</span><br>
-                    <span class="style-change">of <span class="prime-color">food</span>fun</span></h1>
+                <h6><?php getTranslate("titre1", $tabLang, $setLanguage);?></h6>
+                <h1><?php getTranslate("titre2", $tabLang, $setLanguage);?></h1>
             </div>
         </div>
     </div>
