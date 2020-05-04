@@ -14,8 +14,7 @@
     }
   },
   "values": {
-    "home" : {
-      "fr_FR" : "Accueil",
+    "accueil" : {
       "es_ES" : "Bienvenida",
       "en_EN" : "Home"
     }

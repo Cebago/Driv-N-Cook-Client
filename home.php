@@ -9,6 +9,7 @@ $headerTabLang = $jsonFile['header'];
 $tabLang = $jsonFile['values'];
 $setLanguage = $_COOKIE['Lang'];
 
+
 ?>
 
 </head>
@@ -38,7 +39,7 @@ $setLanguage = $_COOKIE['Lang'];
                     </div>
                     <div class="main-menu">
                         <ul>
-                            <li class="active"><a href="index.html"><?php getTranslate("Home");?>  </a></li>
+                            <li class="active"><a href="index.html"><?php getTranslate("accueil", $tabLang, $setLanguage);?>  </a></li>
                             <li><a href="about.html">about</a></li>
                             <li><a href="menu.html">menu</a></li>
                             <li><a href="#">blog</a>
