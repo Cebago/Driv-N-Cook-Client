@@ -25,6 +25,7 @@ CREATE TABLE USER(
     postalCode VARCHAR(6),
     city VARCHAR(100),
     licenseNumber VARCHAR(15),
+    lang VARCHAR(5) DEFAULT "fr_FR",
     userRole INTEGER,
     FOREIGN KEY (userRole) REFERENCES SITEROLE(idRole),
     fidelityCard INTEGER,
