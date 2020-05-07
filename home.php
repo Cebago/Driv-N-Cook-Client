@@ -42,7 +42,7 @@ $setLanguage = $_COOKIE['Lang'];
                             <li class="active"><a href="index.html"><?php getTranslate("accueil", $tabLang, $setLanguage);?></a></li>
                             <li><a href="about.html"><?php getTranslate("nos camions", $tabLang, $setLanguage);?></a></li>
                             <li><a href="menu.html"><?php getTranslate("evenements ", $tabLang, $setLanguage);?></a></li>
-                            <li><a href="http://franchises.drivncook.fr"><?php getTranslate("rejoignez-nous", $tabLang, $setLanguage);?></a></li>
+                            <li><a href="animateTruck.html"><?php getTranslate("rejoignez-nous", $tabLang, $setLanguage);?></a></li>
                             <li class="nav-item dropdown">
                                 <a class="nav-link dropdown-toggle" id="dropdown09" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span class="flag-icon <?php echo $headerTabLang[$setLanguage]["icon"] ?>"> </span> <?php echo $headerTabLang[$_COOKIE['Lang']]["name"] ?></a>
                                 <div class="dropdown-menu bg-info border-light" aria-labelledby="dropdown09">
