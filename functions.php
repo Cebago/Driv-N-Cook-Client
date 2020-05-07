@@ -11,3 +11,13 @@ function connectDB(){
     }
     return $pdo;
 }
+
+function getTranslate($text, $tabLang, $setLanguage){
+    //si la value existe on traduit, sinon on laisse le texte pas défault
+    if(array_key_exists($text,$tabLang) && array_key_exists( $setLanguage, $tabLang[$text]))
+        echo $tabLang[$text][$setLanguage];
+    else
+        echo $text;
+
+}
+
