@@ -1,8 +1,8 @@
 
-INSERT INTO TRUCK (truckManufacturers, truckModel, licensePlate, km) VALUES ('Mercedes', 'New Actros','AA-777-AA', 12);
-INSERT INTO TRUCK (truckManufacturers, truckModel, licensePlate, km) VALUES ('Renault', 'Proof','BB-888-BB', 500);
-INSERT INTO TRUCK (truckManufacturers, truckModel, licensePlate, km) VALUES ('Ford', 'Mustang','CC-111-CC', 12);
-INSERT INTO TRUCK (truckManufacturers, truckModel, licensePlate, km) VALUES ('Volvo', 'Bullet','775 EBJ 75', 12);
+INSERT INTO TRUCK (truckManufacturers, truckModel, truckName, licensePlate, km) VALUES ('Mercedes', 'New Actros', 'Chez Toni','AA-777-AA', 12);
+INSERT INTO TRUCK (truckManufacturers, truckModel, truckName, licensePlate, km) VALUES ('Renault', 'Proof', 'Au paradis du fromage', 'BB-888-BB', 500);
+INSERT INTO TRUCK (truckManufacturers, truckModel, truckName, licensePlate, km) VALUES ('Ford', 'Mustang', 'Vegan d\'un jour', 'CC-111-CC', 12);
+INSERT INTO TRUCK (truckManufacturers, truckModel, truckName, licensePlate, km) VALUES ('Volvo', 'Bullet', 'Le patron', '775 EBJ 75', 12);
 
 INSERT INTO OPENDAYS(openDay, startHour, endHour, truck) VALUES ('Lundi', '08:00', '17:00', 1);
 INSERT INTO OPENDAYS(openDay, startHour, endHour, truck) VALUES ('Mardi', '08:00', '17:00', 1);
