@@ -73,6 +73,7 @@ CREATE TABLE TRUCK(
     idTruck INTEGER PRIMARY KEY AUTO_INCREMENT,
     truckManufacturers VARCHAR(100),
     truckModel VARCHAR(100),
+    truckName VARCHAR(50),
     licensePlate VARCHAR(10),
     km INTEGER,
     createDate TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
