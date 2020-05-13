@@ -24,19 +24,19 @@
 
 			import Stats from './jsm/libs/stats.module.js';
 			import { GUI } from './jsm/libs/dat.gui.module.js';
-			import { GLTFLoader } from './jsm/loaders/GLTFLoader.js';
 			import { FBXLoader } from './jsm/loaders/FBXLoader.js';
+			import { GLTFLoader } from './jsm/loaders/GLTFLoader.js';
 			import { OrbitControls } from './jsm/controls/OrbitControls.js';
 
 
 			var container, stats;
-			var camera, scene, renderer;
-
+			var camera, scene, renderer, mixer;
+			var clock = new THREE.Clock();
 			var clothGeometry;
 			var sphere;
-			var object;
-
+			var object = [];
 			init();
+			initWoman();
 			animate();
 
 			function init() {
@@ -53,7 +53,7 @@
 				// camera
 
 				camera = new THREE.PerspectiveCamera( 30, window.innerWidth / window.innerHeight, 1, 10000 );
-				camera.position.set( 1000, 250, 1500 );
+				camera.position.set( 1000, 250, 1600 );
 
 				// lights
 
@@ -92,6 +92,7 @@
 
 									child.castShadow = true;
 									child.receiveShadow = true;
+									child.rotation.z = 85;
 								}
 
 							} );
@@ -119,27 +120,28 @@
 							scene.add( gltf.scene );
 						});
 
+				//pizza
 
-				//woman
-		
-				var loader = new FBXLoader();
-		        loader.load( 'models/fbx/Sitting.fbx', function ( object ) {
-		          mixer = new THREE.AnimationMixer( object );
-		          var action = mixer.clipAction( object.animations[ 0 ] );
-		          action.play();
-		          // fonction traverse permettant d'appliquer des proprietes sur tout l'objet
-		          object.traverse( function ( child ) {
-		            if ( child.isMesh ) {
-		              child.castShadow = true;
-		              child.receiveShadow = true;
-		            }
-		          });
-		          //object.position.y = 4;
-		          // fonction scale permettant de modifier la taille de l'objet dans son ensmeble
-		          //object.scale.set( 0.03, 0.03, 0.03 );
-		          scene.add( object );
-		        });
-		  
+					/*var loader = new GLTFLoader().setPath( 'models/gltf/pizza_2/' );
+					loader.load( 'scene.gltf', function ( gltf ) {
+
+						gltf.scene.traverse( function ( child ) {
+
+							if ( child.isMesh ) {
+
+								//child.position.x = 750;
+								child.castShadow = true;
+								child.receiveShadow = true;
+								child.width = 500;
+								child.height = 500;
+								//child.scale.set(1000,1000,1000);
+								
+							}
+
+						} );
+						scene.add( gltf.scene );
+					});*/
+
 
 
 	
@@ -192,6 +194,51 @@
 
 			//
 
+			function initWoman(){
+				 var loader = new FBXLoader();
+		        loader.load( 'models/fbx/Sitting.fbx', function ( object ) {
+		          mixer = new THREE.AnimationMixer( object );
+		          var action = mixer.clipAction( object.animations[ 0 ] );
+		          action.play();
+		          // fonction traverse permettant d'appliquer des proprietes sur tout l'objet
+		          object.traverse( function ( child ) {
+		            if ( child.isMesh ) {
+		              child.castShadow = true;
+		              child.receiveShadow = true;
+		              }
+		              object.position.x = 750;
+		              object.position.y = 15;
+		              object.position.z = -70;
+		          });
+
+		         
+		          // fonction scale permettant de modifier la taille de l'objet dans son ensmeble
+		          
+		          scene.add( object );
+		        });
+		      }
+				  
+			
+
+			//
+	      function animate() {
+	        requestAnimationFrame( animate );
+	        var delta = clock.getDelta();
+	        if ( mixer ){
+	          mixer.update( delta );
+	        }
+	        render();
+	        renderer.render( scene, camera );
+	      }
+
+			function render() {
+ 				renderer.render( scene, camera );
+				
+			}
+
+			
+
+
 			function onWindowResize() {
 
 				camera.aspect = window.innerWidth / window.innerHeight;
@@ -201,21 +248,7 @@
 
 			}
 
-			//
 
-			function animate() {
-
-				requestAnimationFrame( animate );
-				renderer.render( scene, camera );
-
-
-				
-			}
-
-			function render() {
-
-				
-			}
 
 		</script>
 	</body>
