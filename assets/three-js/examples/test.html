@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<title>driv'n'cook</title>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+		<link type="text/css" rel="stylesheet" href="main.css">
+		<style>
+			body {
+				background-color: #cce0ff;
+				color: #000;
+			}
+			a {
+				color: #080;
+			}
+		</style>
+	</head>
+
+	<body>
+
+		<script type="module">
+
+			import * as THREE from '../build/three.module.js';
+
+			import Stats from './jsm/libs/stats.module.js';
+			import { GUI } from './jsm/libs/dat.gui.module.js';
+			import { GLTFLoader } from './jsm/loaders/GLTFLoader.js';
+			import { FBXLoader } from './jsm/loaders/FBXLoader.js';
+			import { OrbitControls } from './jsm/controls/OrbitControls.js';
+
+
+			var container, stats;
+			var camera, scene, renderer;
+
+			var clothGeometry;
+			var sphere;
+			var object;
+
+			init();
+			animate();
+
+			function init() {
+
+				container = document.createElement( 'div' );
+				document.body.appendChild( container );
+
+				// scene
+
+				scene = new THREE.Scene();
+				scene.background = new THREE.Color( 0xcce0ff );
+				scene.fog = new THREE.Fog( 0xcce0ff, 500, 10000 );
+
+				// camera
+
+				camera = new THREE.PerspectiveCamera( 30, window.innerWidth / window.innerHeight, 1, 10000 );
+				camera.position.set( 1000, 250, 1500 );
+
+				// lights
+
+				scene.add( new THREE.AmbientLight( 0x666666 ) );
+
+				var light = new THREE.DirectionalLight( 0xdfebff, 1 );
+				light.position.set( 50, 200, 100 );
+				light.position.multiplyScalar( 1.3 );
+
+				light.castShadow = true;
+
+				light.shadow.mapSize.width = 1024;
+				light.shadow.mapSize.height = 1024;
+
+				var d = 300;
+
+				light.shadow.camera.left = - d;
+				light.shadow.camera.right = d;
+				light.shadow.camera.top = d;
+				light.shadow.camera.bottom = - d;
+
+				light.shadow.camera.far = 1000;
+
+				scene.add( light );
+
+
+				//truck
+
+
+				var loader = new GLTFLoader().setPath( 'models/gltf/foodtruck/' );
+						loader.load( 'scene.gltf', function ( gltf ) {
+
+							gltf.scene.traverse( function ( child ) {
+
+								if ( child.isMesh ) {
+
+									child.castShadow = true;
+									child.receiveShadow = true;
+								}
+
+							} );
+							scene.add( gltf.scene );
+						});
+
+				//bench
+
+
+				var loader = new GLTFLoader().setPath( 'models/gltf/picnic/' );
+						loader.load( 'scene.gltf', function ( gltf ) {
+
+							gltf.scene.traverse( function ( child ) {
+
+								if ( child.isMesh ) {
+
+									child.position.x = 750;
+									child.castShadow = true;
+									child.receiveShadow = true;
+									child.scale.set(75,75,75);
+									
+								}
+
+							} );
+							scene.add( gltf.scene );
+						});
+
+
+				//woman
+		
+				var loader = new FBXLoader();
+		        loader.load( 'models/fbx/Sitting.fbx', function ( object ) {
+		          mixer = new THREE.AnimationMixer( object );
+		          var action = mixer.clipAction( object.animations[ 0 ] );
+		          action.play();
+		          // fonction traverse permettant d'appliquer des proprietes sur tout l'objet
+		          object.traverse( function ( child ) {
+		            if ( child.isMesh ) {
+		              child.castShadow = true;
+		              child.receiveShadow = true;
+		            }
+		          });
+		          //object.position.y = 4;
+		          // fonction scale permettant de modifier la taille de l'objet dans son ensmeble
+		          //object.scale.set( 0.03, 0.03, 0.03 );
+		          scene.add( object );
+		        });
+		  
+
+
+	
+				// floor
+				var loader = new THREE.TextureLoader();
+				var groundTexture = loader.load( './textures/terrain/grasslight-big.jpg' );
+				groundTexture.wrapS = groundTexture.wrapT = THREE.RepeatWrapping;
+				groundTexture.repeat.set( 25, 25 );
+				groundTexture.anisotropy = 16;
+				groundTexture.encoding = THREE.sRGBEncoding;
+
+
+				var groundMaterial = new THREE.MeshLambertMaterial( { map: groundTexture } );
+
+				var mesh = new THREE.Mesh( new THREE.PlaneBufferGeometry( 20000, 20000 ), groundMaterial );
+				mesh.position.y = 0;
+				mesh.rotation.x = - Math.PI / 2;
+				mesh.receiveShadow = true;
+				scene.add( mesh );
+
+
+				// renderer
+
+				renderer = new THREE.WebGLRenderer( { antialias: true } );
+				renderer.setPixelRatio( window.devicePixelRatio );
+				renderer.setSize( window.innerWidth, window.innerHeight );
+
+				container.appendChild( renderer.domElement );
+
+				renderer.outputEncoding = THREE.sRGBEncoding;
+
+				renderer.shadowMap.enabled = true;
+
+				// controls
+				var controls = new OrbitControls( camera, renderer.domElement );
+				controls.maxPolarAngle = Math.PI * 0.5;
+				controls.minDistance = 1000;
+				controls.maxDistance = 5000;
+
+				// performance monitor
+
+				stats = new Stats();
+				container.appendChild( stats.dom );
+
+				//
+
+				window.addEventListener( 'resize', onWindowResize, false );
+
+			}
+
+			//
+
+			function onWindowResize() {
+
+				camera.aspect = window.innerWidth / window.innerHeight;
+				camera.updateProjectionMatrix();
+
+				renderer.setSize( window.innerWidth, window.innerHeight );
+
+			}
+
+			//
+
+			function animate() {
+
+				requestAnimationFrame( animate );
+				renderer.render( scene, camera );
+
+
+				
+			}
+
+			function render() {
+
+				
+			}
+
+		</script>
+	</body>
+</html>
+
+   
