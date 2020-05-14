@@ -8,7 +8,9 @@ $jsonFile =  json_decode($jsonFile, true);
 $headerTabLang = $jsonFile['header'];
 $tabLang = $jsonFile['values'];
 $setLanguage = $_COOKIE['Lang'];
-
+if(!isset($_GET['Lang'])) {
+    setcookie("Lang", "fr_FR", time() + 86400, '/');
+}
 
 ?>
 
