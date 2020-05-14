@@ -30,13 +30,14 @@
 
 
 			var container, stats;
-			var camera, scene, renderer, mixer;
+			var camera, scene, renderer, mixer, mixer2;
 			var clock = new THREE.Clock();
 			var clothGeometry;
 			var sphere;
 			var object = [];
 			init();
 			initWoman();
+			initCooker();
 			animate();
 
 			function init() {
@@ -53,7 +54,7 @@
 				// camera
 
 				camera = new THREE.PerspectiveCamera( 30, window.innerWidth / window.innerHeight, 1, 10000 );
-				camera.position.set( 1000, 250, 1600 );
+				camera.position.set( 1000, 250, 2000 );
 
 				// lights
 
@@ -120,28 +121,106 @@
 							scene.add( gltf.scene );
 						});
 
-				//pizza
+				//three
 
-					/*var loader = new GLTFLoader().setPath( 'models/gltf/pizza_2/' );
+					var loader = new GLTFLoader().setPath( 'models/gltf/three/' );
 					loader.load( 'scene.gltf', function ( gltf ) {
 
 						gltf.scene.traverse( function ( child ) {
 
 							if ( child.isMesh ) {
 
-								//child.position.x = 750;
+								child.position.x = 1100;
 								child.castShadow = true;
 								child.receiveShadow = true;
-								child.width = 500;
-								child.height = 500;
-								//child.scale.set(1000,1000,1000);
+								child.scale.set(15,15,15);
 								
 							}
 
 						} );
 						scene.add( gltf.scene );
-					});*/
+					});
 
+					//city right
+
+					var loader = new GLTFLoader().setPath( 'models/gltf/city/' );
+					loader.load( 'scene.gltf', function ( gltf ) {
+
+						gltf.scene.traverse( function ( child ) {
+
+							if ( child.isMesh ) {
+
+								child.position.x = -5000;
+								//schild.rotation.z = 95;
+								child.castShadow = true;
+								child.receiveShadow = true;
+								child.scale.set(15,15,15);
+								
+							}
+
+						} );
+						scene.add( gltf.scene );
+					});
+
+					//city left
+					var loader = new GLTFLoader().setPath( 'models/gltf/city/' );
+					loader.load( 'scene.gltf', function ( gltf ) {
+
+						gltf.scene.traverse( function ( child ) {
+
+							if ( child.isMesh ) {
+
+								child.position.x = 5000;
+								//schild.rotation.z = 95;
+								child.castShadow = true;
+								child.receiveShadow = true;
+								child.scale.set(15,15,15);
+								
+							}
+
+						} );
+						scene.add( gltf.scene );
+					});
+
+					//city up
+					var loader = new GLTFLoader().setPath( 'models/gltf/city/' );
+					loader.load( 'scene.gltf', function ( gltf ) {
+
+						gltf.scene.traverse( function ( child ) {
+
+							if ( child.isMesh ) {
+
+								child.position.x = 500;
+								child.position.y = 5000;
+								//schild.rotation.z = 95;
+								child.castShadow = true;
+								child.receiveShadow = true;
+								child.scale.set(15,15,15);
+								
+							}
+
+						} );
+						scene.add( gltf.scene );
+					});
+
+					//three
+
+					var loader = new GLTFLoader().setPath( 'models/gltf/three/' );
+						loader.load( 'scene.gltf', function ( gltf ) {
+
+							gltf.scene.traverse( function ( child ) {
+
+								if ( child.isMesh ) {
+
+									child.castShadow = true;
+									child.receiveShadow = true;
+									child.position.x = -550;
+									child.scale.set(15,15,15);
+								}
+
+							} );
+							scene.add( gltf.scene );
+						});
 
 
 	
@@ -217,25 +296,52 @@
 		          scene.add( object );
 		        });
 		      }
+
+		      function initCooker(){
+				 var loader = new FBXLoader();
+		        loader.load( 'models/fbx/Watering.fbx', function ( object ) {
+		          mixer2 = new THREE.AnimationMixer( object );
+		          var action = mixer2.clipAction( object.animations[ 0 ] );
+		          action.play();
+		          // fonction traverse permettant d'appliquer des proprietes sur tout l'objet
+		          object.traverse( function ( child ) {
+		            if ( child.isMesh ) {
+		              child.castShadow = true;
+		              child.receiveShadow = true;
+		              }
+		              object.position.x = -120;
+		              object.position.y = 60;
+		              object.position.z = 300;
+		              object.rotation.y = 30;
+		          });
+
+		         
+		          // fonction scale permettant de modifier la taille de l'objet dans son ensmeble
+		          
+		          scene.add( object );
+		        });
+		      }
 				  
 			
 
 			//
-	      function animate() {
+	    function animate() {
 	        requestAnimationFrame( animate );
 	        var delta = clock.getDelta();
 	        if ( mixer ){
 	          mixer.update( delta );
 	        }
+	        if ( mixer2 ){
+	          mixer2.update( delta );
+	        }
 	        render();
 	        renderer.render( scene, camera );
 	      }
 
-			function render() {
- 				renderer.render( scene, camera );
+		function render() {
+ 			renderer.render( scene, camera );
 				
-			}
-
+		}
 			
 
 
