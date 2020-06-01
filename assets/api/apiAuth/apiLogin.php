@@ -25,5 +25,5 @@ if (isset($json['email'])
     }
     echo json_encode(['token' => $token,]);
 } else {
-    http_response_code(400);
+    http_response_code(412);
 }
