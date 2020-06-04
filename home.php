@@ -8,7 +8,7 @@ $jsonFile =  json_decode($jsonFile, true);
 $headerTabLang = $jsonFile['header'];
 $tabLang = $jsonFile['values'];
 $setLanguage = $_COOKIE['Lang'];
-if(!isset($_GET['Lang'])) {
+if($setLanguage){
     setcookie("Lang", "fr_FR", time() + 86400, '/');
 }
 
@@ -43,7 +43,7 @@ if(!isset($_GET['Lang'])) {
                         <ul>
                             <li class="active"><a href="index.html"><?php getTranslate("accueil", $tabLang, $setLanguage);?></a></li>
                             <li><a href="about.html"><?php getTranslate("nos camions", $tabLang, $setLanguage);?></a></li>
-                            <li><a href="menu.html"><?php getTranslate("evenements ", $tabLang, $setLanguage);?></a></li>
+                            <li><a href="menu.html"><?php getTranslate("evenements", $tabLang, $setLanguage);?></a></li>
                             <li><a href="http://franchises.drivncook.fr"><?php getTranslate("rejoignez-nous", $tabLang, $setLanguage);?></a></li>
                             <li class="nav-item dropdown">
                                 <a class="nav-link dropdown-toggle" id="dropdown09" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span class="flag-icon <?php echo $headerTabLang[$setLanguage]["icon"] ?>"> </span> <?php echo $headerTabLang[$_COOKIE['Lang']]["name"] ?></a>
