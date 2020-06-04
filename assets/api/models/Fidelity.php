@@ -1,7 +1,7 @@
 <?php
 
 
-class Fidelity {
+class Fidelity implements  JsonSerializable{
     private int $idFidelity;
     private int $points;
 
@@ -49,5 +49,11 @@ class Fidelity {
         $this->points = $points;
     }
 
-
+    /**
+     * @return mixed|void
+     */
+    public function jsonSerialize()
+    {
+        return get_object_vars($this);
+    }
 }
