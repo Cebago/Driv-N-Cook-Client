@@ -1,6 +1,7 @@
 <?php
 require_once __DIR__ . "/../../utils/databases/DatabaseManager.php";
 require_once __DIR__ . "/../../models/User.php";
+require_once __DIR__ . "/../../models/Fidelity.php";
 
 class AuthService {
     private DatabaseManager $manager;
@@ -36,16 +37,9 @@ class AuthService {
     }
 
     /**
-     * @param string $email
-     * @return bool
+     * @param string $token
+     * @return User|null
      */
-    public function emailExists(string $email): bool {
-        $res = $this->manager->findOne('SELECT emailAddress FROM USER WHERE emailAddress = ?', [
-            $email
-        ]);
-        return $res !== null;
-    }
-
     public function userFromToken(string $token): ?User {
         $res = $this->manager->findOne('SELECT idUser, firstname, lastname, emailAddress, pwd FROM USER WHERE token = ?', [
             $token
@@ -54,5 +48,25 @@ class AuthService {
             return null;
         }
         return new User($res['idUser'], $res['firstname'], $res['lastname'], $res['emailAddress'], $res['pwd']);
+    }
+
+    /**
+     * @param string $token
+     * @return User|null
+     */
+    public function fidelityFromToken(string $token): ?User {
+        $user = $this->userFromToken($token);
+        if ($user === null) {
+            return null;
+        }
+        $res = $this->manager->findOne("SELECT idFidelity, points FROM FIDELITY, USER WHERE token = ? AND idFidelity = fidelityCard", [
+            $token
+        ]);
+        if ($res === null) {
+            return null;
+        }
+        $fidelity = new Fidelity($res["idFidelity"], $res["points"]);
+        $user->setFidelity($fidelity);
+        return $user;
     }
 }

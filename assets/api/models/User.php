@@ -9,7 +9,7 @@ class User implements JsonSerializable {
     private string $email;
     private string $password;
     private ?string $token;
-    private ?Fidelity $fidelity;
+    private ?Fidelity $card;
 
     /**
      * User constructor.
@@ -134,7 +134,7 @@ class User implements JsonSerializable {
      */
     public function getFidelity(): ?Fidelity
     {
-        return $this->fidelity;
+        return $this->card;
     }
 
     /**
@@ -142,7 +142,7 @@ class User implements JsonSerializable {
      */
     public function setFidelity(?Fidelity $fidelity): void
     {
-        $this->fidelity = $fidelity;
+        $this->card = $fidelity;
     }
 
 }
