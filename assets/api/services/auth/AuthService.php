@@ -63,7 +63,7 @@ class AuthService {
             $token
         ]);
         if ($res === null) {
-            return null;
+            return $user;
         }
         $fidelity = new Fidelity($res["idFidelity"], $res["points"]);
         $user->setFidelity($fidelity);
