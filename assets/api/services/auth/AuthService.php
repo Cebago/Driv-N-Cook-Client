@@ -69,4 +69,24 @@ class AuthService {
         $user->setFidelity($fidelity);
         return $user;
     }
+
+    public function subscribeFidelity(string $token) {
+        $user = $this->userFromToken($token);
+        if ($user === null) {
+            return null;
+        }
+        $fidelity = $this->fidelityFromToken($token);
+        if ($fidelity->getFidelity() !== null) {
+            return $fidelity;
+        }
+        $res = $this->manager->exec("INSERT INTO FIDELITY (points) VALUE (0)", []);
+        $last = $this->manager->getLastInsertId();
+        $res = $this->manager->exec("UPDATE USER SET fidelityCard = ? WHERE token = ?", [
+            $last,
+            $token
+        ]);
+        $fidelity = new Fidelity($last, 0);
+        $user->setFidelity($fidelity);
+        return $user;
+    }
 }
