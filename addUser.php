@@ -119,7 +119,18 @@ if( count($_POST) == 6
 		$result = $queryPrepared->fetch();
 		$idUser = $result["idUser"];
 
-		$queryPrepared = $pdo->prepare("UPDATE USER SET token = :token WHERE emailAddress = :email");
+		$queryPrepared = $pdo->prepare("INSERT INTO USERTOKEN (tokenType, user) VALUE ('Site', :user)");
+		$queryPrepared->execute([
+		    ":user" => $idUser
+        ]);
+		$queryPrepared = $pdo->prepare("INSERT INTO USERTOKEN (tokenType, user) VALUE ('Appli', :user)");
+        $queryPrepared->execute([
+            ":user" => $idUser
+        ]);
+
+		$queryPrepared = $pdo->prepare("UPDATE USERTOKEN, USER SET token = :token WHERE emailAddress = :email 
+                                            AND idUser = user
+                                            AND tokenType = 'Site' ");
 		$queryPrepared->execute([
 			":token"=>$cle,
 			":email"=>$email
