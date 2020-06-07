@@ -18,7 +18,6 @@ CREATE TABLE USER(
     emailAddress VARCHAR(200),
     phoneNumber CHAR(10),
     pwd CHAR(60),
-    token CHAR(60),
     createDate TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     isActivated TINYINT(1) DEFAULT 0,
     address VARCHAR(150),
@@ -261,6 +260,13 @@ CREATE TABLE LOCATION(
     lng FLOAT,
     truck INTEGER,
     FOREIGN KEY (truck) REFERENCES TRUCK(idTruck)
+);
+CREATE TABLE USERTOKEN(
+    idToken INTEGER PRIMARY KEY AUTO_INCREMENT,
+    token VARCHAR(60),
+    tokenType VARCHAR(10),
+    user INTEGER,
+    FOREIGN KEY (user) REFERENCES USER(idUser)
 );
 
 USE pa2a2drivncook;
