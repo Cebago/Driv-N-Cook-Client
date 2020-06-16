@@ -23,6 +23,9 @@ if (isset($_GET, $_GET['id'], $_GET['cle']) && count($_GET) == 2) {
             ":user" => $user['idUser']
         ]);
         header("Location: login.php");
+    } else {
+        header("Location: register.php");
     }
+} else {
+    header("Location: register.php");
 }
-header("Location: register.php");
