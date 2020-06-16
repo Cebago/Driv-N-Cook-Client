@@ -107,7 +107,7 @@ class AuthService {
      */
     public function fidelityFromPoints(int $getPoints) {
         $fidelity = $this->manager->getAll("SELECT idAdvantage, advantageName, advantagePoints, categoryName FROM ADVANTAGE, PRODUCTCATEGORY 
-WHERE advantagePoints <= ? AND idCategory = category", [
+WHERE advantagePoints <= ? AND idCategory = category ORDER BY advantagePoints ASC", [
             $getPoints
             ]);
         return $fidelity;
