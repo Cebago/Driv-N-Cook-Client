@@ -2,6 +2,7 @@
 require_once __DIR__ . "/../../utils/databases/DatabaseManager.php";
 require_once __DIR__ . "/../../models/User.php";
 require_once __DIR__ . "/../../models/Fidelity.php";
+require_once __DIR__ . "/../../models/Advantage.php";
 
 class AuthService {
     private DatabaseManager $manager;
@@ -106,10 +107,15 @@ class AuthService {
      * @return array
      */
     public function fidelityFromPoints(int $getPoints) {
-        $fidelity = $this->manager->getAll("SELECT idAdvantage, advantageName, advantagePoints, categoryName FROM ADVANTAGE, PRODUCTCATEGORY 
+        $fidelity = [];
+        $advantages = $this->manager->getAll("SELECT idAdvantage, advantageName, advantagePoints, categoryName FROM ADVANTAGE, PRODUCTCATEGORY 
 WHERE advantagePoints <= ? AND idCategory = category ORDER BY advantagePoints ASC", [
             $getPoints
             ]);
+        foreach ($advantages as $advantage) {
+            $tmp = new Advantage($advantage["idAdvantage"], $advantage["advantagePoints"], $advantage["advantageName"], $advantage["categoryName"]);
+            $fidelity[] = $tmp;
+        }
         return $fidelity;
     }
 }
