@@ -109,12 +109,12 @@ class AuthService {
     public function fidelityFromPoints(int $getPoints) {
         $fidelity = [];
         $advantages = $this->manager->getAll("SELECT idAdvantage, advantageName, advantagePoints, categoryName FROM ADVANTAGE, PRODUCTCATEGORY 
-WHERE advantagePoints <= ? AND idCategory = category ORDER BY advantagePoints ASC", [
+                                                    WHERE advantagePoints <= ? AND idCategory = category ORDER BY advantagePoints ASC", [
             $getPoints
             ]);
-        foreach ($advantages as $advantage) {
-            $tmp = new Advantage($advantage["idAdvantage"], $advantage["advantagePoints"], $advantage["advantageName"], $advantage["categoryName"]);
-            $fidelity[] = $tmp;
+        for ($i = 0; $i < count($advantages); $i++) {
+            $tmp = new Advantage($advantages[$i]["idAdvantage"], $advantages[$i]["advantagePoints"], $advantages[$i]["advantageName"], $advantages[$i]["categoryName"]);
+            $fidelity["Advantage" . $i] = $tmp;
         }
         return $fidelity;
     }
