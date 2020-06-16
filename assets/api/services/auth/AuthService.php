@@ -100,4 +100,16 @@ class AuthService {
         $user->setFidelity($fidelity);
         return $user;
     }
+
+    /**
+     * @param int $getPoints
+     * @return array
+     */
+    public function fidelityFromPoints(int $getPoints) {
+        $fidelity = $this->manager->getAll("SELECT idAdvantage, advantageName, advantagePoints, categoryName FROM ADVANTAGE, PRODUCTCATEGORY 
+WHERE advantagePoints <= ? AND idCategory = category", [
+            $getPoints
+            ]);
+        return $fidelity;
+    }
 }
