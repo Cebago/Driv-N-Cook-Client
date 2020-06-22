@@ -7,12 +7,15 @@ $jsonFile = file_get_contents('assets/traduction.json');
 $jsonFile =  json_decode($jsonFile, true);
 $headerTabLang = $jsonFile['header'];
 $tabLang = $jsonFile['values'];
-$setLanguage = $_COOKIE['Lang'];
-if($setLanguage){
+if(isset($_COOKIE['Lang'])){
+    $setLanguage = $_COOKIE['Lang'];
+}else{
     setcookie("Lang", "fr_FR", time() + 86400, '/');
+    $setLanguage = "fr_FR";
 }
 
 ?>
+
 
 </head>
 <body>
@@ -30,7 +33,7 @@ if($setLanguage){
             <div class="row">
                 <div class="col-lg-2">
                     <div class="logo-area">
-                        <a href="index.html"><img src="/img/logo.png" alt="logo"></a>
+                        <a href="index.html"><img src="./img/logo.png" alt="logo"></a>
                     </div>
                 </div>
                 <div class="col-lg-10">
@@ -46,7 +49,7 @@ if($setLanguage){
                             <li><a href="menu.html"><?php getTranslate("evenements", $tabLang, $setLanguage);?></a></li>
                             <li><a href="http://franchises.drivncook.fr"><?php getTranslate("rejoignez-nous", $tabLang, $setLanguage);?></a></li>
                             <li class="nav-item dropdown">
-                                <a class="nav-link dropdown-toggle" id="dropdown09" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span class="flag-icon <?php echo $headerTabLang[$setLanguage]["icon"] ?>"> </span> <?php echo $headerTabLang[$_COOKIE['Lang']]["name"] ?></a>
+                                <a class="nav-link dropdown-toggle" id="dropdown09" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span class="flag-icon <?php echo $headerTabLang[$setLanguage]["icon"] ?>"> </span> <?php echo $headerTabLang[$setLanguage]["name"] ?></a>
                                 <div class="dropdown-menu bg-info border-light" aria-labelledby="dropdown09">
                                     <?php
                                         foreach($headerTabLang as $key => $value){
