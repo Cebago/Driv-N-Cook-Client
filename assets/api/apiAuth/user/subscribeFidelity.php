@@ -14,13 +14,13 @@ if (isset($json['token'])) {
 
     $dbManager = new DatabaseManager();
     $authService = new AuthService($dbManager);
-    $user = $authService->fidelityFromToken($token);
+    $user = $authService->subscribeFidelity($token);
 
     if ($user === null) {
         http_response_code(401);
-        die();
     }
-    echo json_encode($user);
+    
+
 } else {
     http_response_code(400);
 }

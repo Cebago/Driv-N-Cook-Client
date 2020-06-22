@@ -2,6 +2,7 @@
 require_once __DIR__ . "/../../utils/databases/DatabaseManager.php";
 require_once __DIR__ . "/../../models/User.php";
 require_once __DIR__ . "/../../models/Fidelity.php";
+require_once __DIR__ . "/../../models/Advantage.php";
 
 class AuthService {
     private DatabaseManager $manager;
@@ -29,8 +30,11 @@ class AuthService {
             return null;
         }
         $token = bin2hex(random_bytes(32));
-        $this->manager->exec('UPDATE USER SET token = ? WHERE idUser = ?', [
+        $this->manager->exec('UPDATE USERTOKEN, USER SET USERTOKEN.token = ? WHERE user = idUser 
+                                                 AND tokenType = ? 
+                                                 AND idUser = ? ', [
            $token,
+           "Appli",
            $result['idUser']
         ]);
         return $token;
@@ -41,8 +45,11 @@ class AuthService {
      * @return User|null
      */
     public function userFromToken(string $token): ?User {
-        $res = $this->manager->findOne('SELECT idUser, firstname, lastname, emailAddress, pwd FROM USER WHERE token = ?', [
-            $token
+        $res = $this->manager->findOne('SELECT idUser, firstname, lastname, emailAddress, pwd FROM USER, USERTOKEN WHERE USERTOKEN.token = ? 
+                                                                             AND user = idUser 
+                                                                             AND tokenType = ?', [
+            $token,
+            "Appli"
         ]);
         if ($res === null) {
             return null;
@@ -59,14 +66,56 @@ class AuthService {
         if ($user === null) {
             return null;
         }
-        $res = $this->manager->findOne("SELECT idFidelity, points FROM FIDELITY, USER WHERE token = ? AND idFidelity = fidelityCard", [
-            $token
+        $res = $this->manager->findOne("SELECT idFidelity, points FROM FIDELITY, USER, USERTOKEN WHERE USERTOKEN.token = ? 
+                                                           AND idFidelity = fidelityCard 
+                                                           AND tokenType = ? 
+                                                           AND user = idUser", [
+            $token,
+            'Appli'
         ]);
         if ($res === null) {
-            return null;
+            return $user;
         }
         $fidelity = new Fidelity($res["idFidelity"], $res["points"]);
         $user->setFidelity($fidelity);
         return $user;
+    }
+
+    public function subscribeFidelity(string $token) {
+        $user = $this->userFromToken($token);
+        if ($user === null) {
+            return null;
+        }
+        $fidelity = $this->fidelityFromToken($token);
+        if ($fidelity->getFidelity() !== null) {
+            return $fidelity;
+        }
+        $res = $this->manager->exec("INSERT INTO FIDELITY (points) VALUE (0)", []);
+        $last = $this->manager->getLastInsertId();
+        $res = $this->manager->exec("UPDATE USER, USERTOKEN SET fidelityCard = ? WHERE USERTOKEN.token = ? AND tokenType = ? AND user = idUser", [
+            $last,
+            $token,
+            "Appli"
+        ]);
+        $fidelity = new Fidelity($last, 0);
+        $user->setFidelity($fidelity);
+        return $user;
+    }
+
+    /**
+     * @param int $getPoints
+     * @return array
+     */
+    public function fidelityFromPoints(int $getPoints) {
+        $fidelity = [];
+        $advantages = $this->manager->getAll("SELECT idAdvantage, advantageName, advantagePoints, categoryName FROM ADVANTAGE, PRODUCTCATEGORY 
+                                                    WHERE advantagePoints <= ? AND idCategory = category ORDER BY advantagePoints ASC", [
+            $getPoints
+            ]);
+        for ($i = 0; $i < count($advantages); $i++) {
+            $tmp = new Advantage($advantages[$i]["idAdvantage"], $advantages[$i]["advantagePoints"], $advantages[$i]["advantageName"], $advantages[$i]["categoryName"]);
+            $fidelity["Advantage" . $i] = $tmp;
+        }
+        return $fidelity;
     }
 }
