@@ -5,9 +5,9 @@ require 'functions.php';
 include 'header.php';
 
 $pdo = connectDB();
-$queryPrepared = $pdo->prepare("SELECT ingredientName, ingredientImage, ingredientCategory, quantity, idIngredient
-FROM INGREDIENTS, CARTINGREDIENT, CART, USER 
-WHERE CARTINGREDIENT.ingredient = idIngredient AND CARTINGREDIENT.cart = idCart AND CART.user = idUser AND  user = 1");
+$queryPrepared = $pdo->prepare("SELECT menuName, menuImage, menuPrice, quantity, cart
+FROM MENUS, CARTMENU, USER, CART 
+WHERE CARTMENU.menu = idMenu AND CARTMENU.cart = idCart AND CART.user = idUser AND  user = 1");
 $queryPrepared->execute();
 $result = $queryPrepared->fetchAll(PDO::FETCH_ASSOC);
 
@@ -85,6 +85,7 @@ $idCart = $idCart["idCart"];
                 </div>
             </div>
             <div class="row">
+                <?php foreach ($key as $value) { ?>
                 <div class="col-md-4 col-sm-6">
                     <div class="single-food">
                         <div class="food-img">
@@ -99,6 +100,7 @@ $idCart = $idCart["idCart"];
                         </div>
                     </div>
                 </div>
+                <?php } ?>
                 <div class="col-md-4 col-sm-6">
                     <div class="single-food mt-5 mt-sm-0">
                         <div class="food-img">
