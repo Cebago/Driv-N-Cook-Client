@@ -26,6 +26,8 @@ class User implements JsonSerializable {
         $this->lastname = $lastname;
         $this->email = $email;
         $this->password = $password;
+        $this->card = null;
+        $this->token = null;
     }
 
     public function jsonSerialize()
