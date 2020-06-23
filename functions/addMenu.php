@@ -9,7 +9,7 @@ if (isset($_GET["idMenu"])) {
     $idMenu = $_GET["idMenu"];
 
     $pdo = connectDB();
-    $queryPrepared = $pdo->prepare("UPDATE CARTMENU SET quantity = quantity+1 WHERE idMenu = :idMenu");
+    $queryPrepared = $pdo->prepare("UPDATE CARTMENU SET quantity = quantity+1 WHERE menu = :idMenu");
     $queryPrepared->execute([
         ":idMenu" => $idMenu
     ]);
