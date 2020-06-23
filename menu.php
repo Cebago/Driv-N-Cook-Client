@@ -25,6 +25,7 @@ $result = $queryPrepared->fetchAll(PDO::FETCH_ASSOC);
         };
         request.open('GET', 'functions/addMenu.php?idMenu=' + idMenu);
         request.send();
+    }
 
 </script>
 <body>
