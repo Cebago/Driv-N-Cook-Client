@@ -5,18 +5,28 @@ require 'functions.php';
 include 'header.php';
 
 $pdo = connectDB();
-$queryPrepared = $pdo->prepare("SELECT menuName, menuImage, menuPrice, quantity, cart
-FROM MENUS, CARTMENU, USER, CART 
-WHERE CARTMENU.menu = idMenu AND CARTMENU.cart = idCart AND CART.user = idUser AND  user = 1");
+$queryPrepared = $pdo->prepare("SELECT menuName, menuImage, menuPrice, idMenu FROM MENUS");
 $queryPrepared->execute();
 $result = $queryPrepared->fetchAll(PDO::FETCH_ASSOC);
 
-$queryPrepared = $pdo->prepare("SELECT idCart FROM CART WHERE user = 1 ORDER BY idCart DESC;");
-$queryPrepared->execute();
-$idCart = $queryPrepared->fetch(PDO::FETCH_ASSOC);
-$idCart = $idCart["idCart"];
-
 ?>
+<script>
+    function addQuantity(idMenu) {
+
+        const request = new XMLHttpRequest();
+        request.onreadystatechange = function () {
+            if (request.readyState === 4) {
+                if (request.status === 200) {
+                    if (request.responseText !== "") {
+                        alert(request.responseText);
+                    }
+                }
+            }
+        };
+        request.open('GET', 'functions/addMenu.php?idMenu=' + idMenu);
+        request.send();
+
+</script>
 <body>
     <!-- Preloader Starts -->
     <div class="preloader">
@@ -85,94 +95,27 @@ $idCart = $idCart["idCart"];
                 </div>
             </div>
             <div class="row">
-                <?php foreach ($key as $value) { ?>
-                <div class="col-md-4 col-sm-6">
+                <?php foreach ($result as $value) {
+                    ?>
+                <div class="col-md-6 col-sm-6">
                     <div class="single-food">
                         <div class="food-img">
-                            <img src="assets/images/food1.jpg" class="img-fluid" alt="">
+                            <img src="<?php echo $value["menuImage"]?>>" class="img-fluid" alt="">
                         </div>
                         <div class="food-content">
                             <div class="d-flex justify-content-between">
-                                <h5>Mexican Eggrolls</h5>
-                                <span class="style-change">$14.50</span>
+                                <h5><?php echo $value["menuName"]?></h5>
+                                <span class="style-change"><?php echo number_format($value["menuPrice"], 2) . "€" ?></span>
                             </div>
-                            <p class="pt-3">Face together given moveth divided form Of Seasons that fruitful.</p>
+                            <button type="button"
+                                    onclick="addQuantity(<?php echo $value["idMenu"];?>)"
+                                    class="btn btn-sm btn-success ml-1">Ajouter au panier</i></button>
                         </div>
                     </div>
                 </div>
                 <?php } ?>
-                <div class="col-md-4 col-sm-6">
-                    <div class="single-food mt-5 mt-sm-0">
-                        <div class="food-img">
-                            <img src="assets/images/food2.jpg" class="img-fluid" alt="">
-                        </div>
-                        <div class="food-content">
-                            <div class="d-flex justify-content-between">
-                                <h5>chicken burger</h5>
-                                <span class="style-change">$9.50</span>
-                            </div>
-                            <p class="pt-3">Face together given moveth divided form Of Seasons that fruitful.</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-4 col-sm-6">
-                    <div class="single-food mt-5 mt-md-0">
-                        <div class="food-img">
-                            <img src="assets/images/food3.jpg" class="img-fluid" alt="">
-                        </div>
-                        <div class="food-content">
-                            <div class="d-flex justify-content-between">
-                                <h5>topu lasange</h5>
-                                <span class="style-change">$12.50</span>
-                            </div>
-                            <p class="pt-3">Face together given moveth divided form Of Seasons that fruitful.</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-4 col-sm-6">
-                    <div class="single-food mt-5">
-                        <div class="food-img">
-                            <img src="assets/images/food4.jpg" class="img-fluid" alt="">
-                        </div>
-                        <div class="food-content">
-                            <div class="d-flex justify-content-between">
-                                <h5>pepper potatoas</h5>
-                                <span class="style-change">$14.50</span>
-                            </div>
-                            <p class="pt-3">Face together given moveth divided form Of Seasons that fruitful.</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-4 col-sm-6">
-                    <div class="single-food mt-5">
-                        <div class="food-img">
-                            <img src="assets/images/food5.jpg" class="img-fluid" alt="">
-                        </div>
-                        <div class="food-content">
-                            <div class="d-flex justify-content-between">
-                                <h5>bean salad</h5>
-                                <span class="style-change">$8.50</span>
-                            </div>
-                            <p class="pt-3">Face together given moveth divided form Of Seasons that fruitful.</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-4 col-sm-6">
-                    <div class="single-food mt-5">
-                        <div class="food-img">
-                            <img src="assets/images/food6.jpg" class="img-fluid" alt="">
-                        </div>
-                        <div class="food-content">
-                            <div class="d-flex justify-content-between">
-                                <h5>beatball hoagie</h5>
-                                <span class="style-change">$11.50</span>
-                            </div>
-                            <p class="pt-3">Face together given moveth divided form Of Seasons that fruitful.</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
+
+
     </section>
     <!-- Food Area End -->
 
@@ -294,16 +237,6 @@ Copyright &copy;<script>document.write(new Date().getFullYear());</script> All r
             </div>
         </div>
     </footer>
-    <!-- Footer Area End -->
+   <?php include "footer.php"?>
 
 
-    <!-- Javascript -->
-    <script src="assets/js/vendor/jquery-2.2.4.min.js"></script>
-	<script src="assets/js/vendor/bootstrap-4.1.3.min.js"></script>
-    <script src="assets/js/vendor/wow.min.js"></script>
-    <script src="assets/js/vendor/owl-carousel.min.js"></script>
-    <script src="assets/js/vendor/jquery.datetimepicker.full.min.js"></script>
-    <script src="assets/js/vendor/jquery.nice-select.min.js"></script>
-    <script src="assets/js/main.js"></script>
-</body>
-</html>
