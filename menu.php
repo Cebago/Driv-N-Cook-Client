@@ -101,7 +101,7 @@ $result = $queryPrepared->fetchAll(PDO::FETCH_ASSOC);
                 <div class="col-md-6 col-sm-6">
                     <div class="single-food">
                         <div class="food-img">
-                            <img src="<?php echo $value["menuImage"]?>>" class="img-fluid" alt="">
+                            <img src="<?php echo $value["menuImage"]?>" class="img-fluid" alt="">
                         </div>
                         <div class="food-content">
                             <div class="d-flex justify-content-between">
