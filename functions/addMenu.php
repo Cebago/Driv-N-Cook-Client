@@ -10,7 +10,7 @@ if (isset($_GET["idMenu"])) {
     $email = $_SESSION["email"];
 
     $pdo = connectDB();
-    $queryPrepared = $pdo->prepare("SELECT idCart, idUser FROM CART, USER WHERE USER.idUser = user AND emailAddress = :email ORDER BY idCart DESC");
+    $queryPrepared = $pdo->prepare("SELECT idCart, idUser FROM CART, USER WHERE USER.idUser = user AND emailAddress = :email ORDER BY idCart DESC;");
     $queryPrepared->execute([
         ":email" => $email
     ]);
@@ -20,7 +20,7 @@ if (isset($_GET["idMenu"])) {
 
 
     $pdo = connectDB();
-    $queryPrepared = $pdo->prepare("INSERT INTO CARTMENU (cart,menu,quantity) VALUES (:cart,:menu,1) ON DUPLICATE KEY UPDATE quantity = quantity + 1");
+    $queryPrepared = $pdo->prepare("INSERT INTO CARTMENU (cart,menu,quantity) VALUES (:cart,:menu,1) ON DUPLICATE KEY UPDATE quantity = quantity + 1;");
     $queryPrepared->execute([
         ":cart" => $idCart,
         ":menu" => $idMenu

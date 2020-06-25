@@ -11,6 +11,16 @@ $queryPrepared = $pdo->prepare("SELECT menuName, menuImage, menuPrice, idMenu FR
 $queryPrepared->execute();
 $result = $queryPrepared->fetchAll(PDO::FETCH_ASSOC);
 
+$email = $_SESSION["email"];
+$pdo = connectDB();
+$queryPrepared = $pdo->prepare("SELECT SUM(quantity) as quantity FROM CARTMENU, CART, MENUS, USER WHERE CARTMENU.cart = idCart AND MENUS.idMenu = CARTMENU.menu AND CART.user = idUser AND emailAddress = :email  GROUP BY idCart;");
+$queryPrepared->execute([
+        ":email"=>$email
+]);
+$quantity = $queryPrepared->fetch(PDO::FETCH_ASSOC);
+
+
+
 ?>
 <script>
     function addQuantity(idMenu) {
@@ -27,8 +37,12 @@ $result = $queryPrepared->fetchAll(PDO::FETCH_ASSOC);
         };
         request.open('GET', 'functions/addMenu.php?idMenu=' + idMenu);
         request.send();
+
+        const count = document.getElementById('count');
+        count.innerText = Number(count.innerText)+1;
     }
 </script>
+    <?php include "navbar.php"; ?>
 <body>
     <!-- Preloader Starts -->
     <div class="preloader">
@@ -64,7 +78,7 @@ $result = $queryPrepared->fetchAll(PDO::FETCH_ASSOC);
                             </li>
                             <li><a href="contact-us.html">contact</a></li>
                             <li><a href="elements.html">Elements</a></li>
-                            <li><a href="#"><button type="button" class="btn btn-light"><i class="fas fa-shopping-cart"></i>&nbsp<span class="badge badge-light" id="count">0</span></button></a></li>
+                            <li><a href="#"><button type="button" class="btn btn-light"><i class="fas fa-shopping-cart"></i>&nbsp<span class="badge badge-light" id="count"><?php echo $quantity["quantity"]; ?></span></button></a></li>
                         </ul>
                     </div>
                 </div>
