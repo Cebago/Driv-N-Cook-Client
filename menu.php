@@ -2,6 +2,8 @@
 session_start();
 require 'conf.inc.php';
 require 'functions.php';
+
+if (isActivated() && isConnected()) {
 include 'header.php';
 
 $pdo = connectDB();
@@ -13,6 +15,23 @@ $result = $queryPrepared->fetchAll(PDO::FETCH_ASSOC);
 <script>
     function addQuantity(idMenu) {
 
+        const request = new XMLHttpRequest();
+        request.onreadystatechange = function () {
+            if (request.readyState === 4) {
+                if (request.status === 200) {
+                    if (request.responseText !== "") {
+                        alert(request.responseText);
+                    }
+                }
+            }
+        };
+        request.open('GET', 'functions/addMenu.php?idMenu=' + idMenu);
+        request.send();
+
+        const count = document.getElementById("count");
+        count.innerText=Number(count.innerText)+1;
+    }
+    function cart(){
         const request = new XMLHttpRequest();
         request.onreadystatechange = function () {
             if (request.readyState === 4) {
@@ -63,6 +82,7 @@ $result = $queryPrepared->fetchAll(PDO::FETCH_ASSOC);
                             </li>
                             <li><a href="contact-us.html">contact</a></li>
                             <li><a href="elements.html">Elements</a></li>
+                            <li><a href="#"><button type="button" class="btn btn-light"><i class="fas fa-shopping-cart"></i>&nbsp<span class="badge badge-light" id="count">0</span></button></a></li>
                         </ul>
                     </div>
                 </div>
@@ -237,7 +257,10 @@ Copyright &copy;<script>document.write(new Date().getFullYear());</script> All r
                 </div>
             </div>
         </div>
+        <?php include "footer.php"; ?>
     </footer>
-   <?php include "footer.php"?>
+    <?php }else{
+    header("Location: login.php");
+}
 
 
