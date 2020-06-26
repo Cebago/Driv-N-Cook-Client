@@ -26,6 +26,20 @@ function login($email){
     $_SESSION["email"] = $email;
 }
 
+function getOpenTrucks(){
+    $pdo = connectDB();
+    $queryPrepared = $pdo->prepare("SELECT truckName, truckPicture FROM TRUCK;");
+    $queryPrepared->execute();
+    return $queryPrepared->fetchAll(PDO::FETCH_ASSOC);
+}
+
+function isOpen($idTruck){
+    $pdo = connectDB();
+    $queryPrepared = $pdo->prepare("SELECT * FROM OPENDAYS WHERE openDay = 'Lundi' AND startHour < current_time() AND endHour > current_time() AND truck = :idTruck1;");
+    $queryPrepared->execute([":idTruck"=>$idTruck]);
+}
+
+
 function isConnected(){
     if(!empty($_SESSION["email"])
         && !empty($_SESSION["token"]) ){

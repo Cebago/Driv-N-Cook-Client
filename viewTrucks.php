@@ -2,9 +2,7 @@
 
 require('navbar.php');
 
-if(!isset( $_GET['idTruck'])){
-    header("Location: 404.html");
-}
+$listTrucks = getOpenTrucks();
 ?>
 </head>
 <body>
