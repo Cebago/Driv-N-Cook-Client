@@ -11,15 +11,6 @@ $queryPrepared = $pdo->prepare("SELECT menuName, menuImage, menuPrice, idMenu FR
 $queryPrepared->execute();
 $result = $queryPrepared->fetchAll(PDO::FETCH_ASSOC);
 
-$email = $_SESSION["email"];
-$pdo = connectDB();
-$queryPrepared = $pdo->prepare("SELECT SUM(quantity) as quantity FROM CARTMENU, CART, MENUS, USER WHERE CARTMENU.cart = idCart AND MENUS.idMenu = CARTMENU.menu AND CART.user = idUser AND emailAddress = :email  GROUP BY idCart;");
-$queryPrepared->execute([
-        ":email"=>$email
-]);
-$quantity = $queryPrepared->fetch(PDO::FETCH_ASSOC);
-
-
 
 ?>
 <script>
@@ -50,42 +41,6 @@ $quantity = $queryPrepared->fetch(PDO::FETCH_ASSOC);
     </div>
     <!-- Preloader End -->
 
-    <!-- Header Area Starts -->
-	<header class="header-area header-area2">
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-2">
-                    <div class="logo-area">
-                        <a href="index.html"><img src="assets/images/logo/logo2.png" alt="logo"></a>
-                    </div>
-                </div>
-                <div class="col-lg-10">
-                    <div class="custom-navbar">
-                        <span></span>
-                        <span></span>
-                        <span></span>
-                    </div>  
-                    <div class="main-menu main-menu2">
-                        <ul>
-                            <li class="active"><a href="index.html">home</a></li>
-                            <li><a href="about.html">about</a></li>
-                            <li><a href="menu.html">menu</a></li>
-                            <li><a href="#">blog</a>
-                                <ul class="sub-menu">
-                                    <li><a href="blog-home.html">Blog Home</a></li>
-                                    <li><a href="blog-details.html">Blog Details</a></li>
-                                </ul>
-                            </li>
-                            <li><a href="contact-us.html">contact</a></li>
-                            <li><a href="elements.html">Elements</a></li>
-                            <li><a href="#"><button type="button" class="btn btn-light"><i class="fas fa-shopping-cart"></i>&nbsp<span class="badge badge-light" id="count"><?php echo $quantity["quantity"]; ?></span></button></a></li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </header>
-    <!-- Header Area End -->
 
     <!-- Banner Area Starts -->
     <section class="banner-area banner-area2 menu-bg text-center">

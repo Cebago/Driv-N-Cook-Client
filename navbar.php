@@ -14,6 +14,15 @@ if(isset($_COOKIE['Lang'])){
     $setLanguage = "fr_FR";
 }
 
+$email = $_SESSION["email"];
+$pdo = connectDB();
+$queryPrepared = $pdo->prepare("SELECT SUM(quantity) as quantity FROM CARTMENU, CART, MENUS, USER WHERE CARTMENU.cart = idCart AND MENUS.idMenu = CARTMENU.menu AND CART.user = idUser AND emailAddress = :email  GROUP BY idCart;");
+$queryPrepared->execute([
+    ":email"=>$email
+]);
+$quantity = $queryPrepared->fetch(PDO::FETCH_ASSOC);
+
+
 ?>
 
 
@@ -50,6 +59,7 @@ if(isset($_COOKIE['Lang'])){
                             <li><a href="about.html"><?php getTranslate("nos camions", $tabLang, $setLanguage);?></a></li>
                             <li><a href="menu.html"><?php getTranslate("evenements", $tabLang, $setLanguage);?></a></li>
                             <li><a href="http://franchises.drivncook.fr"><?php getTranslate("rejoignez-nous", $tabLang, $setLanguage);?></a></li>
+                            <li><a href="#"><button type="button" class="btn btn-alert"><i class="fas fa-shopping-cart"></i>&nbsp<span class="badge badge-alert" id="count"><?php echo $quantity["quantity"]; ?></span></button></a></li>
                             <li class="nav-item dropdown">
                                 <a class="nav-link dropdown-toggle" id="dropdown09" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span class="flag-icon <?php echo $headerTabLang[$setLanguage]["icon"] ?>"> </span> <?php echo $headerTabLang[$setLanguage]["name"] ?></a>
                                 <div class="dropdown-menu bg-info border-light" aria-labelledby="dropdown09">
