@@ -34,7 +34,6 @@ if(isset($_COOKIE['Lang'])){
                 <div class="col-lg-2">
                     <div class="logo-area">
                         <a href="index.html"><img src="./img/logo.png" alt="logo"></a>
-                        <span>Driv'n Cook</span>
                     </div>
 
                 </div>
@@ -47,7 +46,7 @@ if(isset($_COOKIE['Lang'])){
                     <div class="main-menu">
                         <ul>
                             <li class="active"><a href="index.html"><?php getTranslate("accueil", $tabLang, $setLanguage);?></a></li>
-                            <li><a href="about.html"><?php getTranslate("nos camions", $tabLang, $setLanguage);?></a></li>
+                            <li><a href="viewTrucks.php"><?php getTranslate("nos camions", $tabLang, $setLanguage);?></a></li>
                             <li><a href="menu.html"><?php getTranslate("evenements", $tabLang, $setLanguage);?></a></li>
                             <li><a href="http://franchises.drivncook.fr"><?php getTranslate("rejoignez-nous", $tabLang, $setLanguage);?></a></li>
                             <li class="nav-item dropdown">

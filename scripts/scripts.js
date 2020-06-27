@@ -76,28 +76,24 @@ function showMap() {
                 if (request.responseText !== "") {
                     let myJson = JSON.parse(request.responseText);
                     console.log(myJson);
-                    for (var i = 0; i < myJson.length; i++) {
-                        let marker = new google.maps.Marker({
-                            position: new google.maps.LatLng(myJson[i]["lat"], myJson[i]["lng"]),
-                            icon: '../assets/img/truck.png',
-                            map: map
-                        });
+                    for (let i = 0; i < myJson.length; i++) {
 
                         let geocoder = new google.maps.Geocoder; //affiche la localisation du camion
-                        let latlng = {lat: parseFloat(myJson[0]["lat"]), lng: parseFloat(myJson[0]["lng"])  };
+                        let latlng = {lat: parseFloat(myJson[i]["lat"]), lng: parseFloat(myJson[i]["lng"])  };
                         geocoder.geocode({'location': latlng}, function(results, status) {
                             if (status === 'OK') {
                                 if (results[0]) {
-
                                     var marker = new google.maps.Marker({
                                         position: latlng,
+                                        icon: 'img/truck.png',
                                         map: map
                                     });
                                     var smallInfoString = '<div id="content" class="dataInfos">' +
                                         '<div id="siteNotice">' +
                                         '</div>' +
-                                        '<h6>' + myJson[0]["truckName"] + '</h6>' +
-                                        '<div>'+results[0].formatted_address+'</div>'+
+                                        '<h5>'+myJson[i]["truckName"]+'</h5>' +
+                                        '<img src = "'+myJson[i]["truckPicture"]+'" style="width: 100px">'+
+                                        '<div>'+results[i].formatted_address+'</div>'+
                                         '<div id="bodyContent">' +
                                         '</div>';
                                     let smallInfo = new google.maps.InfoWindow({
@@ -108,12 +104,16 @@ function showMap() {
                                     marker.addListener('mouseover', function () {
                                         smallInfo.open(map, marker);
                                     });
+                                    marker.addListener('mouseout', function () {
+                                        smallInfo.close(map, marker);
+                                    });
                                     marker.addListener('click', function () {
                                         window.open(
-                                            'http://drivncook.fr/trucks?idTrucks='+myJson["idTruck"],
+                                            'http://127.0.0.1/Driv-N-Cook-Client/truck.php?idTruck='+myJson[i]["idTruck"],
                                             '_blank'
                                         );
                                     });
+
                                 } else {
                                     window.alert('No results found');
                                 }
@@ -129,4 +129,18 @@ function showMap() {
     };
     request.open('GET', 'functions/getTruck.php');
     request.send();
+}
+
+function filterTruck(){
+    let closed = document.getElementsByClassName("isClosed");
+    for(let i =0; i < closed.length; i++) {
+        closed[i].parentElement.parentElement.parentElement.parentElement.style.display = "none";
+    }
+}
+
+function removeFilterTruck() {
+    let closed = document.getElementsByClassName("isClosed");
+    for(let i =0; i < closed.length; i++) {
+        closed[i].parentElement.parentElement.parentElement.parentElement.style.display = "block";
+    }
 }

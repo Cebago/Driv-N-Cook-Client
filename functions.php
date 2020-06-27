@@ -137,6 +137,11 @@ function logout($email){
     $queryPrepared->execute([":email"=>$email]);
 }
 
+/**
+ * @param $text
+ * @param $tabLang
+ * @param $setLanguage
+ */
 function getTranslate($text, $tabLang, $setLanguage){
     //si la value existe on traduit, sinon on laisse le texte pas défault
     if(array_key_exists($text,$tabLang) && array_key_exists($setLanguage, $tabLang[$text]) )
