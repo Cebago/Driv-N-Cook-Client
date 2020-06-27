@@ -7,12 +7,19 @@ $jsonFile = file_get_contents('assets/traduction.json');
 $jsonFile =  json_decode($jsonFile, true);
 $headerTabLang = $jsonFile['header'];
 $tabLang = $jsonFile['values'];
-$setLanguage = $_COOKIE['Lang'];
-if($setLanguage){
+if(isset($_COOKIE['Lang'])){
+    $setLanguage = $_COOKIE['Lang'];
+}else{
     setcookie("Lang", "fr_FR", time() + 86400, '/');
+    $setLanguage = "fr_FR";
 }
 
 ?>
+
+
+</head>
+<body>
+
 <!-- Preloader Starts -->
 <div class="preloader">
     <div class="spinner"></div>
@@ -26,8 +33,10 @@ if($setLanguage){
             <div class="row">
                 <div class="col-lg-2">
                     <div class="logo-area">
-                        <a href="index.html"><img src="/img/logo.png" alt="logo"></a>
+                        <a href="index.html"><img src="./img/logo.png" alt="logo"></a>
+                        <span>Driv'n Cook</span>
                     </div>
+
                 </div>
                 <div class="col-lg-10">
                     <div class="custom-navbar">
@@ -42,7 +51,7 @@ if($setLanguage){
                             <li><a href="menu.html"><?php getTranslate("evenements", $tabLang, $setLanguage);?></a></li>
                             <li><a href="http://franchises.drivncook.fr"><?php getTranslate("rejoignez-nous", $tabLang, $setLanguage);?></a></li>
                             <li class="nav-item dropdown">
-                                <a class="nav-link dropdown-toggle" id="dropdown09" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span class="flag-icon <?php echo $headerTabLang[$setLanguage]["icon"] ?>"> </span> <?php echo $headerTabLang[$_COOKIE['Lang']]["name"] ?></a>
+                                <a class="nav-link dropdown-toggle" id="dropdown09" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span class="flag-icon <?php echo $headerTabLang[$setLanguage]["icon"] ?>"> </span> <?php echo $headerTabLang[$setLanguage]["name"] ?></a>
                                 <div class="dropdown-menu bg-info border-light" aria-labelledby="dropdown09">
                                     <?php
                                     foreach($headerTabLang as $key => $value){
@@ -61,16 +70,3 @@ if($setLanguage){
 </div>
 </body>
 <!-- Header Area End -->
-
-<!-- Banner Area Starts -->
-<section class="banner-area text-center">
-    <div class="container">
-        <div class="row">
-            <div class="col-lg-12">
-                <h6><?php getTranslate("titre1", $tabLang, $setLanguage);?></h6>
-                <h1><?php getTranslate("titre2", $tabLang, $setLanguage);?></h1>
-            </div>
-        </div>
-    </div>
-</section>
-<!-- Banner Area End -->

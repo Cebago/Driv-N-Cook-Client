@@ -26,6 +26,39 @@ function login($email){
     $_SESSION["email"] = $email;
 }
 
+/**
+ * @return array
+ */
+
+function getTrucks(){
+    $pdo = connectDB();
+    $queryPrepared = $pdo->prepare("SELECT idTruck, truckName, truckPicture, categorie FROM TRUCK;");
+    $queryPrepared->execute();
+    return $queryPrepared->fetchAll(PDO::FETCH_ASSOC);
+}
+
+/**
+ * @param $idTruck
+ * @return bool
+ */
+function isOpen($idTruck){
+    $translateDay = [
+        1 => "Lundi",
+        2 => "Mardi",
+        3 => "Mercredi",
+        4 => "Jeudi",
+        5 => "Vendredi",
+        6 => "Samedi",
+        7 => "Dimanche",
+    ];
+    $pdo = connectDB();
+    $queryPrepared = $pdo->prepare("SELECT * FROM OPENDAYS WHERE openDay = :currentDay AND startHour < current_time() AND endHour > current_time() AND truck = :idTruck;");
+    $queryPrepared->execute([":currentDay" => $translateDay[date("N")], ":idTruck" => $idTruck]);
+    return !empty($queryPrepared->fetch());
+
+}
+
+
 function isConnected(){
     if(!empty($_SESSION["email"])
         && !empty($_SESSION["token"]) ){
@@ -106,7 +139,7 @@ function logout($email){
 
 function getTranslate($text, $tabLang, $setLanguage){
     //si la value existe on traduit, sinon on laisse le texte pas défault
-    if(array_key_exists($text,$tabLang) && $setLanguage != "fr_FR")
+    if(array_key_exists($text,$tabLang) && array_key_exists($setLanguage, $tabLang[$text]) )
         echo $tabLang[$text][$setLanguage];
     else
         echo $text;
