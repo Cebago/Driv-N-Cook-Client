@@ -4,43 +4,37 @@ require 'conf.inc.php';
 require 'functions.php';
 
 if (isActivated() && isConnected()) {
-include 'header.php';
+    include 'header.php';
+    $printedMenus = 0;
+    $pdo = connectDB();
+    $queryPrepared = $pdo->prepare("SELECT menuName, menuImage, menuPrice, idMenu FROM MENUS, TRUCK WHERE MENUS.truck = 1 ");
+    $queryPrepared->execute();
+    $result = $queryPrepared->fetchAll(PDO::FETCH_ASSOC);
 
-$pdo = connectDB();
-$queryPrepared = $pdo->prepare("SELECT menuName, menuImage, menuPrice, idMenu FROM MENUS");
-$queryPrepared->execute();
-$result = $queryPrepared->fetchAll(PDO::FETCH_ASSOC);
 
+    ?>
+    <script>
+        function addQuantity(idMenu) {
 
-?>
-<script>
-    function addQuantity(idMenu) {
-
-        const request = new XMLHttpRequest();
-        request.onreadystatechange = function () {
-            if (request.readyState === 4) {
-                if (request.status === 200) {
-                    if (request.responseText !== "") {
-                        alert(request.responseText);
+            const request = new XMLHttpRequest();
+            request.onreadystatechange = function () {
+                if (request.readyState === 4) {
+                    if (request.status === 200) {
+                        if (request.responseText !== "") {
+                            alert(request.responseText);
+                        }
                     }
                 }
-            }
-        };
-        request.open('GET', 'functions/addMenu.php?idMenu=' + idMenu);
-        request.send();
+            };
+            request.open('GET', 'functions/addMenu.php?idMenu=' + idMenu);
+            request.send();
 
-        const count = document.getElementById('count');
-        count.innerText = Number(count.innerText)+1;
-    }
-</script>
+            const count = document.getElementById('count');
+            count.innerText = Number(count.innerText) + 1;
+        }
+    </script>
     <?php include "navbar.php"; ?>
-<body>
-    <!-- Preloader Starts -->
-    <div class="preloader">
-        <div class="spinner"></div>
-    </div>
-    <!-- Preloader End -->
-
+    <body>
 
     <!-- Banner Area Starts -->
     <section class="banner-area banner-area2 menu-bg text-center">
@@ -58,34 +52,47 @@ $result = $queryPrepared->fetchAll(PDO::FETCH_ASSOC);
     <!-- Food Area starts -->
     <section class="food-area section-padding">
         <div class="container">
-            <div class="row">
-                <div class="col-md-5">
-                    <div class="section-top">
-                        <h3><span class="style-change">we serve</span> <br>delicious food</h3>
-                        <p class="pt-3">They're fill divide i their yielding our after have him fish on there for greater man moveth, moved Won't together isn't for fly divide mids fish firmament on net.</p>
-                    </div>
-                </div>
-            </div>
+
             <div class="row">
                 <?php foreach ($result as $value) {
+                    $products = getMenus($value);
+                    if(empty($products))
+                        continue;
+                    $printedMenus++;
                     ?>
-                <div class="col-md-6 col-sm-6">
-                    <div class="single-food">
-                        <div class="food-img">
-                            <img src="<?php echo $value["menuImage"]?>" class="img-fluid" alt="">
-                        </div>
-                        <div class="food-content">
-                            <div class="d-flex justify-content-between">
-                                <h5><?php echo $value["menuName"]?></h5>
-                                <span class="style-change"><?php echo number_format($value["menuPrice"], 2) . "€" ?></span>
+                    <div class="col-md-6 col-sm-6">
+                        <div class="single-food">
+                            <div class="food-img">
+                                <img src="<?php echo $value["menuImage"] ?>" class="img-fluid" alt="">
                             </div>
-                            <button type="button"
-                                    onclick="addQuantity(<?php echo $value["idMenu"];?>)"
-                                    class="btn btn-sm btn-success ml-1">Ajouter au panier</i></button>
+                            <div class="food-content">
+                                <div class="d-flex justify-content-between">
+                                    <h5><?php echo $value["menuName"] ?></h5>
+                                    <ul>
+                                    <?php foreach ($products as $product) {
+                                        echo "<li>" . $product["productName"] . "</li>";
+                                    } ?>
+                                    </ul>
+                                    <span class="style-change"><?php echo number_format($value["menuPrice"], 2) . "€" ?></span>
+                                </div>
+                                <button type="button"
+                                        onclick="addQuantity(<?php echo $value["idMenu"]; ?>)"
+                                        class="btn btn-sm btn-success ml-1">Ajouter au panier</i></button>
+                            </div>
                         </div>
                     </div>
-                </div>
-                <?php } ?>
+                <?php }
+                    if(!$printedMenus){ ?>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="section-top">
+                                    <h3><span class="style-change"><?php getTranslate("Désolé", $tabLang, $setLanguage) ?></span></h3>
+                                    <p><?php getTranslate("TitreOutOfMenus", $tabLang, $setLanguage) ?></p>
+                                </div>
+                            </div>
+                        </div>
+                <?php }?>
+
 
 
     </section>
@@ -107,19 +114,19 @@ $result = $queryPrepared->fetchAll(PDO::FETCH_ASSOC);
                     <form action="#">
                         <div class="input-group mb-3">
                             <div class="input-group-prepend">
-                              <span class="input-group-text"><i class="fa fa-calendar"></i></span>
+                                <span class="input-group-text"><i class="fa fa-calendar"></i></span>
                             </div>
                             <input type="text" id="datepicker">
                         </div>
                         <div class="input-group mb-3">
                             <div class="input-group-prepend">
-                              <span class="input-group-text"><i class="fa fa-clock-o"></i></span>
+                                <span class="input-group-text"><i class="fa fa-clock-o"></i></span>
                             </div>
                             <input type="text" id="datepicker2">
                         </div>
                         <div class="input-group mb-3">
                             <div class="input-group-prepend">
-                              <span class="input-group-text"><i class="fa fa-user-o"></i></span>
+                                <span class="input-group-text"><i class="fa fa-user-o"></i></span>
                             </div>
                             <input type="text">
                         </div>
@@ -141,7 +148,9 @@ $result = $queryPrepared->fetchAll(PDO::FETCH_ASSOC);
                     <div class="col-md-4">
                         <div class="single-widget single-widget1">
                             <a href="index.html"><img src="assets/images/logo/logo2.png" alt=""></a>
-                            <p class="mt-3">Which morning fourth great won't is to fly bearing man. Called unto shall seed, deep, herb set seed land divide after over first creeping. First creature set upon stars deep male gathered said she'd an image spirit our</p>
+                            <p class="mt-3">Which morning fourth great won't is to fly bearing man. Called unto shall
+                                seed, deep, herb set seed land divide after over first creeping. First creature set upon
+                                stars deep male gathered said she'd an image spirit our</p>
                         </div>
                     </div>
                     <div class="col-md-4">
@@ -190,8 +199,10 @@ $result = $queryPrepared->fetchAll(PDO::FETCH_ASSOC);
                 <div class="row">
                     <div class="col-lg-7 col-md-6">
                         <span><!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
-Copyright &copy;<script>document.write(new Date().getFullYear());</script> All rights reserved | This template is made with <i class="fa fa-heart-o" aria-hidden="true"></i> by <a href="https://colorlib.com" target="_blank">Colorlib</a>
-<!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. --></span>
+Copyright &copy;<script>document.write(new Date().getFullYear());</script> All rights reserved | This template is made with <i
+                                    class="fa fa-heart-o" aria-hidden="true"></i> by <a href="https://colorlib.com"
+                                                                                        target="_blank">Colorlib</a>
+                            <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. --></span>
                     </div>
                     <div class="col-lg-5 col-md-6">
                         <div class="social-icons">
@@ -210,7 +221,7 @@ Copyright &copy;<script>document.write(new Date().getFullYear());</script> All r
         </div>
         <?php include "footer.php"; ?>
     </footer>
-    <?php }else{
+<?php } else {
     header("Location: login.php");
 }
 

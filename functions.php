@@ -106,6 +106,35 @@ function isActivated(){
     }
 }
 
+function getMenus($value){
+    $pdo = connectDB();
+    $queryPrepared = $pdo->prepare("SELECT productName, available FROM PRODUCTS, SOLDIN, MENUS, TRUCK, STORE, WAREHOUSES, COMPOSE, INGREDIENTS, TRUCKWAREHOUSE
+                                                            WHERE SOLDIN.product = idProduct 
+                                                            AND SOLDIN.menu = idMenu 
+                                                            AND MENUS.truck = idTruck 
+                                                            AND idMenu = :menu
+                                                            AND WAREHOUSES.idWarehouse = STORE.warehouse
+                                                            AND COMPOSE.ingredient = idIngredient
+                                                            AND COMPOSE.product = idProduct
+                                                            AND warehouseType = 'Camion'
+                                                            AND STORE.ingredient = idIngredient
+                                                            AND STORE.warehouse = idWarehouse
+                                                            AND TRUCKWAREHOUSE.truck = idTruck
+                                                            AND TRUCKWAREHOUSE.warehouse = idWarehouse;");
+    $queryPrepared->execute([
+        ":menu" => $value["idMenu"]
+    ]);
+    $menus = $queryPrepared->fetchAll(PDO::FETCH_ASSOC);
+   foreach ($menus as $menu){
+       if($menu["available"] == 0) {
+          return 0;
+       }
+    }
+   return $menus;
+
+}
+
+
 function isAdmin(){
     if(!empty($_SESSION["email"]) && !empty($_SESSION["token"]) ){
         $email = $_SESSION["email"];
