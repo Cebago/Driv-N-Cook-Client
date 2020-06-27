@@ -26,17 +26,36 @@ function login($email){
     $_SESSION["email"] = $email;
 }
 
-function getOpenTrucks(){
+/**
+ * @return array
+ */
+
+function getTrucks(){
     $pdo = connectDB();
-    $queryPrepared = $pdo->prepare("SELECT truckName, truckPicture FROM TRUCK;");
+    $queryPrepared = $pdo->prepare("SELECT idTruck, truckName, truckPicture, categorie FROM TRUCK;");
     $queryPrepared->execute();
     return $queryPrepared->fetchAll(PDO::FETCH_ASSOC);
 }
 
+/**
+ * @param $idTruck
+ * @return bool
+ */
 function isOpen($idTruck){
+    $translateDay = [
+        1 => "Lundi",
+        2 => "Mardi",
+        3 => "Mercredi",
+        4 => "Jeudi",
+        5 => "Vendredi",
+        6 => "Samedi",
+        7 => "Dimanche",
+    ];
     $pdo = connectDB();
-    $queryPrepared = $pdo->prepare("SELECT * FROM OPENDAYS WHERE openDay = 'Lundi' AND startHour < current_time() AND endHour > current_time() AND truck = :idTruck1;");
-    $queryPrepared->execute([":idTruck"=>$idTruck]);
+    $queryPrepared = $pdo->prepare("SELECT * FROM OPENDAYS WHERE openDay = :currentDay AND startHour < current_time() AND endHour > current_time() AND truck = :idTruck;");
+    $queryPrepared->execute([":currentDay" => $translateDay[date("N")], ":idTruck" => $idTruck]);
+    return !empty($queryPrepared->fetch());
+
 }
 
 

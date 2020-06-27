@@ -34,7 +34,9 @@ if(isset($_COOKIE['Lang'])){
                 <div class="col-lg-2">
                     <div class="logo-area">
                         <a href="index.html"><img src="./img/logo.png" alt="logo"></a>
+                        <span>Driv'n Cook</span>
                     </div>
+
                 </div>
                 <div class="col-lg-10">
                     <div class="custom-navbar">
