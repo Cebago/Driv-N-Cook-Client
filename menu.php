@@ -7,8 +7,8 @@ if (isActivated() && isConnected()) {
     include 'header.php';
     $printedMenus = 0;
     $pdo = connectDB();
-    $queryPrepared = $pdo->prepare("SELECT menuName, menuImage, menuPrice, idMenu FROM MENUS, TRUCK WHERE MENUS.truck = 1 ");
-    $queryPrepared->execute();
+    $queryPrepared = $pdo->prepare("SELECT menuName, menuImage, menuPrice, idMenu, truck FROM MENUS, TRUCK WHERE MENUS.truck = TRUCK.idTruck AND truck = :truck");
+    $queryPrepared->execute([":truck" => $_GET["truck"]]);
     $result = $queryPrepared->fetchAll(PDO::FETCH_ASSOC);
 
 
