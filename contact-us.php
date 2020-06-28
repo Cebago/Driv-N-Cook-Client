@@ -27,14 +27,37 @@ $trucks = getTrucks();
     <!-- Banner Area End -->
 
     <!-- Contact Form Starts -->
-
     <section class="contact-form section-padding3" style="margin-top: 30px;">
         <div class="container">
+            <?php
+            if (isset($_POST["sender"]) && isset($_POST["subject"]) && !empty($_POST["destinataire"]) && !empty($_POST["message"]) ) {
+                $pdo = connectDB();
+                $queryPrepared = $pdo->prepare("INSERT INTO CONTACT(user, contactSubject, receiver, contactDescription) values(:sender, :subject, :destinataire, :message);");
+                $queryPrepared->execute([":sender" => $_POST["sender"], ":subject" => $_POST["subject"],":destinataire" => $_POST["destinataire"],":message" => $_POST["message"],]);
+
+                unset($_POST["sender"]);
+                unset($_POST["subject"]);
+                unset($_POST["destinataire"]);
+                unset($_POST["message"]);
+
+                ?>
+                <div class="row" id="thanksMessage">
+                    <div class="col-md-5">
+                        <div class="section-top">
+                            <?php getTranslate("confirmContact", $tabLang, $setLanguage); ?>
+                        </div>
+                    </div>
+                </div>
+                <?php
+            }else{
+            ?>
             <div class="row">
                <div class="col-lg-12">
-                    <form action="#">
+                    <form method="POST" action="contact-us.php" id="formContact">
                         <div class="left">
                             <div class="form-row">
+                                <input type="text" name="sender" hidden value="<?php echo $user["idUser"]?>" required>
+
                                 <div class="col-md-6">
                                     <input type="text" disabled value="<?php echo $user["firstname"]?>" required>
                                 </div>
@@ -43,31 +66,32 @@ $trucks = getTrucks();
                                 </div>
                             </div>
                             <input type="email" disabled value="<?php echo $user["emailAddress"]?>" required>
-                            <input type="text" placeholder="<?php getTranslate("Sujet", $tabLang, $setLanguage);?> *" required>
+                            <input type="text" name="subject" placeholder="<?php getTranslate("Sujet", $tabLang, $setLanguage);?> *" required>
 
-                            <select class="custom-select">
+                            <select name="destinataire" class="custom-select">
                                 <option value="0"><?php getTranslate("Administration", $tabLang, $setLanguage);?></option>
                                 <?php
                                     foreach ($trucks as $truck){
                                         if($truck["idTruck"] == $_GET["idTruck"])
-                                            echo '<option selected value="'.$truck["truckName"].'">'.$truck["truckName"].'</option>';
+                                            echo '<option selected value="'.$truck["idTruck"].'">'.$truck["truckName"].'</option>';
                                         else
-                                            echo '<option value="'.$truck["truckName"].'">'.$truck["truckName"].'</option>';
+                                            echo '<option value="'.$truck["idTruck"].'">'.$truck["truckName"].'</option>';
                                     }
                                   ?>
-
                             </select>
                         </div>
                         <div class="right">
                             <textarea name="message" cols="20" rows="10" placeholder="<?php getTranslate("Message", $tabLang, $setLanguage);?>" required></textarea>
                         </div>
-                        <button type="submit" class="template-btn"><?php getTranslate("Envoyer", $tabLang, $setLanguage);?></button>
+                        <button type="submit" class="template-btn" ><?php getTranslate("Envoyer", $tabLang, $setLanguage);?></button>
                     </form>
                 </div>
             </div>
+            <?php } ?>
         </div>
     </section>
     <!-- Contact Form End -->
+
 
 <?php
 include "footer.php";

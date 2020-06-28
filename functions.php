@@ -148,12 +148,15 @@ function getTranslate($text, $tabLang, $setLanguage){
         echo $text;
 }
 
+/**
+ * @return bool|mixed
+ */
 function getUserInfos(){
     if(!empty($_SESSION["email"]) && !empty($_SESSION["token"]) ){
         $email = $_SESSION["email"];
         $token = $_SESSION["token"];
         $pdo = connectDB();
-        $queryPrepared = $pdo->prepare("SELECT firstname, lastname, emailAddress FROM USER, USERTOKEN WHERE emailAddress = :email 
+        $queryPrepared = $pdo->prepare("SELECT idUser, firstname, lastname, emailAddress FROM USER, USERTOKEN WHERE emailAddress = :email 
                                           AND USERTOKEN.token = :token 
                                           AND user = idUser 
                                           AND tokenType = 'Site'");
