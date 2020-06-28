@@ -1,6 +1,6 @@
 <?php
 require 'header.php';
-
+session_start();
 require_once 'functions.php';
 
 $jsonFile = file_get_contents('assets/traduction.json');

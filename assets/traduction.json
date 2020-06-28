@@ -60,6 +60,28 @@
     "Tous" : {
       "es_ES" : "Todos",
       "en_EN" : "All"
+    },
+    "Contactez-nous" : {
+      "es_ES" : "Contáctenos",
+      "en_EN" : "Contact-us"
+    },
+    "Sujet" : {
+      "es_ES" : "Tema",
+      "en_EN" : "Subject"
+    },
+    "Envoyer" : {
+      "es_ES" : "Envoyar",
+      "en_EN" : "Send"
+    },
+    "Choisir camion" : {
+      "es_ES" : "Elegir camión",
+      "en_EN" : "Choose Truck"
+    },
+    "Message" : {
+      "es_ES" : "Mensaje"
+    },
+    "Administration" : {
+      "es_ES" : "Administración"
     }
 
   }
