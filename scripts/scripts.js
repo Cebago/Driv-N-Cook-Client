@@ -144,3 +144,4 @@ function removeFilterTruck() {
         closed[i].parentElement.parentElement.parentElement.parentElement.style.display = "block";
     }
 }
+
