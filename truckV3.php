@@ -1,83 +1,61 @@
-<?php include "header.php" ?>
+<?php
+session_start();
+require 'conf.inc.php';
+require 'functions.php';
 
-<body>
-    <!-- Preloader Starts -->
-    <div class="preloader">
-        <div class="spinner"></div>
-    </div>
-    <!-- Preloader End -->
+if (isActivated() && isConnected()) {
+    include 'header.php';
+    $printedMenus = 0;
+    $pdo = connectDB();
+    $queryPrepared = $pdo->prepare("SELECT menuName, menuImage, menuPrice, idMenu, truck FROM MENUS, TRUCK WHERE MENUS.truck = TRUCK.idTruck AND truck = :truck");
+    $queryPrepared->execute([":truck" => $_GET["truck"]]);
+    $result = $queryPrepared->fetchAll(PDO::FETCH_ASSOC);
 
-    <!-- Header Area Starts -->
-	<header class="header-area header-area2">
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-2">
-                    <div class="logo-area">
-                        <a href="index.html"><img src="assets/images/logo/logo2.png" alt="logo"></a>
-                    </div>
-                </div>
-                <div class="col-lg-10">
-                    <div class="custom-navbar">
-                        <span></span>
-                        <span></span>
-                        <span></span>
-                    </div>
-                    <div class="main-menu main-menu2">
-                        <ul>
-                            <li class="active"><a href="index.html">home</a></li>
-                            <li><a href="truckV3.php">about</a></li>
-                            <li><a href="menu.html">menu</a></li>
-                            <li><a href="#">blog</a>
-                                <ul class="sub-menu">
-                                    <li><a href="blog-home.html">Blog Home</a></li>
-                                    <li><a href="blog-details.html">Blog Details</a></li>
-                                </ul>
-                            </li>
-                            <li><a href="contact-us.html">contact</a></li>
-                            <li><a href="elements.html">Elements</a></li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </header>
-    <!-- Header Area End -->
+    $queryPrepared = $pdo->prepare("SELECT truckName FROM TRUCK WHERE idTruck = :idTruck");
+    $queryPrepared->execute([":idTruck" => $_GET["truck"]]);
+    $truck = $queryPrepared->fetchAll(PDO::FETCH_ASSOC);
+
+
+
+    ?>
+<?php include "navbar.php"; ?>
+<body onload="getOpenDays('<?php echo $_GET["truck"]; ?>')">
+
 
     <!-- Banner Area Starts -->
-    <section class="banner-area banner-area2 text-center">
+    <section class="banner-area banner-area2 menu-bg text-center">
         <div class="container">
             <div class="row">
                 <div class="col-lg-12">
-                    <h1><i>About Us</i></h1>
+                    <h1><i><?php foreach ($truck as $key) { echo $key["truckName"]; } ?></i></h1>
                     <p class="pt-2"><i>Beast kind form divide night above let moveth bearing darkness.</i></p>
                 </div>
             </div>
         </div>
     </section>
-    <!-- Banner Area End -->
+    <!-- Food Area starts -->
+<section class="food-area section-padding3">
 
-    <!-- Welcome Area Starts -->
-    <section class="welcome-area section-padding2">
-        <div class="container-fluid">
-            <div class="row">
-                <div class="col-md-6 align-self-center">
-                    <div class="welcome-img">
-                        <img src="assets/images/welcome-bg.png" class="img-fluid" alt="">
-                    </div>
-                </div>
-                <div class="col-md-6 align-self-center">
-                    <div class="welcome-text mt-5 mt-md-0">
-                        <h3><span class="style-change">welcome</span> <br>to food fun</h3>
-                        <p class="pt-3">Created god gathered don't you yielding herb you had. And isn't, god was saw. Dominion. Great sixth for in unto was. Open can't tree am waters brought. Divide after there. Was.</p>
-                        <p>Created god gathered don't you yielding herb you had. And isn't, god was saw. Dominion. Great sixth for in unto was. Open can't tree waters brought. Divide after there. Was. Created god gathered don't you yielding herb you had. And isn't god.</p>
-                        <a href="#" class="template-btn mt-3">book a table</a>
-                    </div>
-                </div>
+    <!--    <div class="container">-->
+    <div class="row">
+    <div class="col-md-3 ml-5 mt-4">
+        <div class="tab-content card mt-1" id="myTabContent">
+            <div class="tab-pane fade show active" id="openDays" role="tabpanel" aria-labelledby="home-tab">
+                <table class="table" id="openTable">
+                    <thead class="thead-dark">
+                    <tr>
+                        <th scope="col">Jour de la semaine</th>
+                        <th scope="col">Ouverture</th>
+                        <th scope="col">Fermeture</th>
+                    </tr>
+                    </thead>
+                    <tbody id="tableBody">
+                    </tbody>
+                </table>
             </div>
         </div>
-    </section>
-    <!-- Welcome Area End -->
-
+    </div>
+    
     <!-- Deshes Area Starts -->
     <div class="deshes-area section-padding">
         <div class="container">
@@ -89,37 +67,55 @@
                     </div>
                 </div>
             </div>
-            <div class="row">
+    <?php foreach ($result as $value) {
+                    $products = getMenus($value);
+                    if (empty($products))
+                        continue;
+                    $printedMenus++;
+                    ?>
+            <div class="row mt-5">
                 <div class="col-lg-5 col-md-6 align-self-center">
                     <h1>01.</h1>
                     <div class="deshes-text">
-                        <h3><span>Garlic</span><br> green beans</h3>
-                        <p class="pt-3">Be. Seed saying our signs beginning face give spirit own beast darkness morning moveth green multiply she'd kind saying one shall, two which darkness have day image god their night. his subdue so you rule can.</p>
-                        <span class="style-change">$12.00</span>
+                        <h3><span><?php echo $value["menuName"] ?></span></h3>
+                        <ul>
+                            <?php foreach ($products as $product) {
+                                echo "<li>" . $product["productName"] . "</li>";
+                            } ?>
+                        </ul>
+                        <span class="style-change"><?php echo number_format($value["menuPrice"], 2) . "€" ?></span>
                         <a href="#" class="template-btn3 mt-3">book a table <span><i class="fa fa-long-arrow-right"></i></span></a>
                     </div>
                 </div>
                 <div class="col-lg-5 offset-lg-2 col-md-6 align-self-center mt-4 mt-md-0">
-                    <img src="assets/images/deshes1.png" alt="" class="img-fluid">
+                    <img src="<?php echo $value["menuImage"] ?>" class="img-fluid" alt="">
                 </div>
+                <button type="button"
+                        onclick="addQuantity(<?php echo $value["idMenu"]; ?>)"
+                        class="btn btn-sm btn-success ml-1">Ajouter au panier</i></button>
             </div>
-            <div class="row mt-5">
-                <div class="col-lg-5 col-md-6 align-self-center order-2 order-md-1 mt-4 mt-md-0">
-                    <img src="assets/images/deshes2.png" alt="" class="img-fluid">
-                </div>
-                <div class="col-lg-5 offset-lg-2 col-md-6 align-self-center order-1 order-md-2">
-                    <h1>02.</h1>
-                    <div class="deshes-text">
-                        <h3><span>Lemon</span><br> rosemary chicken</h3>
-                        <p class="pt-3">Be. Seed saying our signs beginning face give spirit own beast darkness morning moveth green multiply she'd kind saying one shall, two which darkness have day image god their night. his subdue so you rule can.</p>
-                        <span class="style-change">$12.00</span>
-                        <a href="#" class="template-btn3 mt-3">book a table <span><i class="fa fa-long-arrow-right"></i></span></a>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
+<!--            <div class="row mt-5">-->
+<!--                <div class="col-lg-5 col-md-6 align-self-center order-2 order-md-1 mt-4 mt-md-0">-->
+<!--                    <img src="assets/images/deshes2.png" alt="" class="img-fluid">-->
+<!--                </div>-->
+<!--                <div class="col-lg-5 offset-lg-2 col-md-6 align-self-center order-1 order-md-2">-->
+<!--                    <h1>02.</h1>-->
+<!--                    <div class="deshes-text">-->
+<!--                        <h3><span>Lemon</span><br> rosemary chicken</h3>-->
+<!--                        <p class="pt-3">Be. Seed saying our signs beginning face give spirit own beast darkness morning moveth green multiply she'd kind saying one shall, two which darkness have day image god their night. his subdue so you rule can.</p>-->
+<!--                        <span class="style-change">$12.00</span>-->
+<!--                        <a href="#" class="template-btn3 mt-3">book a table <span><i class="fa fa-long-arrow-right"></i></span></a>-->
+<!--                    </div>-->
+<!--                </div>-->
+<!--            </div>-->
+<!--        </div>-->
+<!--    </div>-->
     <!-- Deshes Area End -->
+    <?php } ?>
+    <button type="button"
+            onclick="addQuantity(<?php echo $value["idMenu"]; ?>)"
+            class="btn btn-sm btn-success ml-1">Ajouter au panier</i></button>
+
 
     <!-- Testimonial Area Starts -->
     <section class="testimonial-area section-padding4">
@@ -247,17 +243,11 @@ Copyright &copy;<script>document.write(new Date().getFullYear());</script> All r
                 </div>
             </div>
         </div>
+        <?php include "footer.php"; ?>
     </footer>
-    <!-- Footer Area End -->
+    <script src="scripts/scripts.js"></script>
+<?php } else {
+    header("Location: login.php");
+}
 
 
-    <!-- Javascript -->
-    <script src="assets/js/vendor/jquery-2.2.4.min.js"></script>
-	<script src="assets/js/vendor/bootstrap-4.1.3.min.js"></script>
-    <script src="assets/js/vendor/wow.min.js"></script>
-    <script src="assets/js/vendor/owl-carousel.min.js"></script>
-    <script src="assets/js/vendor/jquery.datetimepicker.full.min.js"></script>
-    <script src="assets/js/vendor/jquery.nice-select.min.js"></script>
-    <script src="assets/js/main.js"></script>
-</body>
-</html>

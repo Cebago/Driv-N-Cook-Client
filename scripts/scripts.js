@@ -130,3 +130,22 @@ function showMap() {
     request.open('GET', 'functions/getTruck.php');
     request.send();
 }
+
+function addQuantity(idMenu) {
+
+    const request = new XMLHttpRequest();
+    request.onreadystatechange = function () {
+        if (request.readyState === 4) {
+            if (request.status === 200) {
+                if (request.responseText !== "") {
+                    alert(request.responseText);
+                }
+            }
+        }
+    };
+    request.open('GET', 'functions/addMenu.php?idMenu=' + idMenu);
+    request.send();
+
+    const count = document.getElementById('count');
+    count.innerText = Number(count.innerText) + 1;
+}

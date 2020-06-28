@@ -27,6 +27,7 @@ $quantity = $queryPrepared->fetch(PDO::FETCH_ASSOC);
 
 
 </head>
+
 <body>
 
 <!-- Preloader Starts -->
@@ -56,11 +57,10 @@ $quantity = $queryPrepared->fetch(PDO::FETCH_ASSOC);
                     <div class="main-menu">
                         <ul>
                             <li class="active"><a href="index.html"><?php getTranslate("accueil", $tabLang, $setLanguage);?></a></li>
-                            <li><a href="about.html"><?php getTranslate("nos camions", $tabLang, $setLanguage);?></a></li>
+                            <li><a href="truckV3.php"><?php getTranslate("nos camions", $tabLang, $setLanguage);?></a></li>
                             <li><a href="menu.html"><?php getTranslate("evenements", $tabLang, $setLanguage);?></a></li>
                             <li><a href="http://franchises.drivncook.fr"><?php getTranslate("rejoignez-nous", $tabLang, $setLanguage);?></a></li>
-                            <li><a href="#"><button type="button" class="btn btn-alert" data-container="body" data-toggle="popover" data-placement="bottom" data-content="Vivamus sagittis lacus vel augue laoreet rutrum faucibus."><i class="fas fa-shopping-cart"></i>&nbsp<span class="badge badge-alert" id="count"><?php echo $quantity["quantity"]; ?></span></button></a></li>
-
+                            <li><a href="payment.php" class="btn btn-transparent btn-lg active" role="button" aria-pressed="true"><i class="fas fa-shopping-cart"></i>&nbsp<span class="badge badge-alert" id="count"><?php echo $quantity["quantity"]; ?></span></a></li>
                             <li class="nav-item dropdown">
                                 <a class="nav-link dropdown-toggle" id="dropdown09" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span class="flag-icon <?php echo $headerTabLang[$setLanguage]["icon"] ?>"> </span> <?php echo $headerTabLang[$setLanguage]["name"] ?></a>
                                 <div class="dropdown-menu bg-info border-light" aria-labelledby="dropdown09">
@@ -81,3 +81,4 @@ $quantity = $queryPrepared->fetch(PDO::FETCH_ASSOC);
 </div>
 </body>
 <!-- Header Area End -->
+
