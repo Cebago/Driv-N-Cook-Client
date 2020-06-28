@@ -13,28 +13,9 @@ if (isActivated() && isConnected()) {
 
 
     ?>
-    <script>
-        function addQuantity(idMenu) {
 
-            const request = new XMLHttpRequest();
-            request.onreadystatechange = function () {
-                if (request.readyState === 4) {
-                    if (request.status === 200) {
-                        if (request.responseText !== "") {
-                            alert(request.responseText);
-                        }
-                    }
-                }
-            };
-            request.open('GET', 'functions/addMenu.php?idMenu=' + idMenu);
-            request.send();
-
-            const count = document.getElementById('count');
-            count.innerText = Number(count.innerText) + 1;
-        }
-    </script>
-    <?php include "navbar.php"; ?>
-    <body>
+    <?php //include "navbar.php"; ?>
+    <body onload="getOpenDays('<?php echo $_GET['idTruck'];?>')">
 
     <!-- Banner Area Starts -->
     <section class="banner-area banner-area2 menu-bg text-center">
@@ -48,6 +29,25 @@ if (isActivated() && isConnected()) {
         </div>
     </section>
     <!-- Banner Area End -->
+
+    <div class="mt-1">
+        <div class="tab-content card mt-1" id="myTabContent">
+            <div class="tab-pane fade show active" id="openDays" role="tabpanel"  aria-labelledby="home-tab">
+                <table class="table" id="openTable">
+                    <thead class="thead-dark">
+                    <tr>
+                        <th scope="col">Jour de la semaine</th>
+                        <th scope="col">Ouverture</th>
+                        <th scope="col">Fermeture</th>
+                    </tr>
+                    </thead>
+                    <tbody id="tableBody">
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
 
     <!-- Food Area starts -->
     <section class="food-area section-padding">
@@ -221,6 +221,26 @@ Copyright &copy;<script>document.write(new Date().getFullYear());</script> All r
         </div>
         <?php include "footer.php"; ?>
     </footer>
+    <script>
+        function addQuantity(idMenu) {
+
+            const request = new XMLHttpRequest();
+            request.onreadystatechange = function () {
+                if (request.readyState === 4) {
+                    if (request.status === 200) {
+                        if (request.responseText !== "") {
+                            alert(request.responseText);
+                        }
+                    }
+                }
+            };
+            request.open('GET', 'functions/addMenu.php?idMenu=' + idMenu);
+            request.send();
+
+            const count = document.getElementById('count');
+            count.innerText = Number(count.innerText) + 1;
+        }
+    </script>
 <?php } else {
     header("Location: login.php");
 }
