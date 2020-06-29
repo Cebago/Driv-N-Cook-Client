@@ -4,18 +4,18 @@ require "../conf.inc.php";
 require "../functions.php";
 session_start();
 
-if (isset($_GET["idMenu"])) {
+if (isset($_GET["menu"])) {
 
-    $idMenu = $_GET["idMenu"];
+    $idMenu = $_GET["menu"];
     $email = $_SESSION["email"];
 
     $pdo = connectDB();
-    $queryPrepared = $pdo->prepare("SELECT idCart, idUser FROM CART, USER WHERE USER.idUser = user AND emailAddress = :email ORDER BY idCart DESC;");
+    $queryPrepared = $pdo->prepare("SELECT cart, idUser FROM CARTMENU, USER, CART WHERE CARTMENU.cart = CART.idCart AND CART.user = USER.idUser AND emailAddress = :email ORDER BY cart DESC;");
     $queryPrepared->execute([
         ":email" => $email
     ]);
     $result = $queryPrepared->fetchAll(PDO::FETCH_ASSOC);
-    $idCart = $result[0]["idCart"];
+    $idCart = $result[0]["cart"];
     $idUser = $result[0]["idUser"];
 
 

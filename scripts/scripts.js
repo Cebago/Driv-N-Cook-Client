@@ -131,7 +131,70 @@ function showMap() {
     request.send();
 }
 
-function addQuantity(idMenu) {
+// function addQuantity(idMenu) {
+//
+//     const request = new XMLHttpRequest();
+//     request.onreadystatechange = function () {
+//         if (request.readyState === 4) {
+//             if (request.status === 200) {
+//                 if (request.responseText !== "") {
+//                     alert(request.responseText);
+//                 }
+//             }
+//         }
+//     };
+//     request.open('GET', 'functions/addMenu.php?idMenu=' + idMenu);
+//     request.send();
+//
+//     const count = document.getElementById('count');
+//     count.innerText = Number(count.innerText) + 1;
+// }
+
+
+function deleteQuantity(cart,menu) {
+    let input = document.getElementById(menu);
+    // let inputPrice = document.getElementById('priceId'+ingredient);
+    // let inputPriceUnitary = document.getElementById('priceUnitary'+ingredient);
+    const count = document.getElementById('count');
+
+    if (Number(input.innerText) > 0){
+
+        count.innerText = Number(count.innerText) + 1;
+
+        // inputPrice.innerText = (parseFloat(inputPrice.innerText) - parseFloat(inputPriceUnitary.innerText)).toFixed(2)+'€';
+
+        document.getElementById(menu).removeAttribute("disabled");
+
+        const request = new XMLHttpRequest();
+        request.onreadystatechange = function() {
+            if(request.readyState === 4) {
+                if(request.status === 200) {
+                    if (request.responseText !== "") {
+                        alert(request.responseText);
+                    }
+                }
+            }
+        };
+        request.open('GET', 'functions/deleteIngredient.php?cart='+cart+'&menu='+menu);
+        request.send();
+    }else {
+        document.getElementById(menu).setAttribute("disabled","true");
+
+    }
+
+}
+
+function addQuantity(cart,menu) {
+
+    let input = document.getElementById(menu);
+    //let inputPrice = document.getElementById('priceId'+menu);
+    // let inputPriceUnitary = document.getElementById('priceUnitary'+menu);
+
+    const count = document.getElementById('count');
+    count.innerText = Number(count.innerText) + 1;
+
+
+    // inputPrice.innerText = (parseFloat(inputPrice.innerText) +  parseFloat(inputPriceUnitary.innerText)).toFixed(2) + '€';
 
     const request = new XMLHttpRequest();
     request.onreadystatechange = function () {
@@ -143,9 +206,9 @@ function addQuantity(idMenu) {
             }
         }
     };
-    request.open('GET', 'functions/addMenu.php?idMenu=' + idMenu);
+    request.open('GET', 'functions/addMenu.php?idMenu='+ menu);
     request.send();
 
-    const count = document.getElementById('count');
-    count.innerText = Number(count.innerText) + 1;
+
+
 }

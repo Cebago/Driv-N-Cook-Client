@@ -7,94 +7,101 @@ if (isActivated() && isConnected()) {
     include 'header.php';
     $printedMenus = 0;
     $pdo = connectDB();
-    $queryPrepared = $pdo->prepare("SELECT menuName, menuImage, menuPrice, idMenu, truck FROM MENUS, TRUCK WHERE MENUS.truck = TRUCK.idTruck AND truck = :truck");
-    $queryPrepared->execute([":truck" => $_GET["truck"]]);
+    $queryPrepared = $pdo->prepare("SELECT menuName, menuImage, menuPrice, idMenu, truck, quantity FROM MENUS, TRUCK, CARTMENU WHERE MENUS.truck = TRUCK.idTruck AND truck = :truck");
+    $queryPrepared->execute([":truck" => $_GET["idTruck"]]);
     $result = $queryPrepared->fetchAll(PDO::FETCH_ASSOC);
 
     $queryPrepared = $pdo->prepare("SELECT truckName FROM TRUCK WHERE idTruck = :idTruck");
-    $queryPrepared->execute([":idTruck" => $_GET["truck"]]);
+    $queryPrepared->execute([":idTruck" => $_GET["idTruck"]]);
     $truck = $queryPrepared->fetchAll(PDO::FETCH_ASSOC);
 
-
+    $queryPrepared = $pdo->prepare("SELECT idCart FROM CART, USER WHERE user = idUser AND emailAddress = :email ORDER BY idCart DESC LIMIT 1");
+    $queryPrepared->execute([":email"=>$_SESSION["email"]]);
+    $idCart = $queryPrepared->fetchAll(PDO::FETCH_ASSOC);
 
     ?>
 
     <?php include "navbar.php"; ?>
-<body onload="getOpenDays('<?php echo $_GET["truck"]; ?>')">
+    <body onload="getOpenDays('<?php echo $_GET["idTruck"]; ?>//')">
+    <body>
 
 <!-- Banner Area Starts -->
 <section class="banner-area banner-area2 menu-bg text-center">
     <div class="container">
         <div class="row">
             <div class="col-lg-12">
-                <h1><i><?php foreach ($truck as $key) { echo $key["truckName"]; } ?></i></h1>
+                <h1 class="style-change"><i><?php foreach ($truck as $key) {
+                            echo $key["truckName"];
+                        } ?></i></h1>
                 <p class="pt-2"><i>Beast kind form divide night above let moveth bearing darkness.</i></p>
             </div>
         </div>
     </div>
 </section>
-    <!-- Food Area starts -->
-    <section class="food-area section-padding3">
+<!-- Food Area starts -->
+<section class="food-area section-padding3">
 
-<!--    <div class="container">-->
-        <div class="row">
-            <div class="col-md-3 ml-5 mt-4">
-                <div class="tab-content card mt-1" id="myTabContent">
-                    <div class="tab-pane fade show active" id="openDays" role="tabpanel" aria-labelledby="home-tab">
-                        <table class="table" id="openTable">
-                            <thead class="thead-dark">
-                            <tr>
-                                <th scope="col">Jour de la semaine</th>
-                                <th scope="col">Ouverture</th>
-                                <th scope="col">Fermeture</th>
-                            </tr>
-                            </thead>
-                            <tbody id="tableBody">
-                            </tbody>
-                        </table>
+    <!--    <div class="container">-->
+    <!--        <div class="row">-->
+    <!--            <div class="col-md-3 ml-5 mt-4">-->
+    <!--                <div class="tab-content card mt-1" id="myTabContent">-->
+    <!--                    <div class="tab-pane fade show active" id="openDays" role="tabpanel" aria-labelledby="home-tab">-->
+    <!--                        <table class="table" id="openTable">-->
+    <!--                            <thead class="thead-dark">-->
+    <!--                            <tr>-->
+    <!--                                <th scope="col">Jour de la semaine</th>-->
+    <!--                                <th scope="col">Ouverture</th>-->
+    <!--                                <th scope="col">Fermeture</th>-->
+    <!--                            </tr>-->
+    <!--                            </thead>-->
+    <!--                            <tbody id="tableBody">-->
+    <!--                            </tbody>-->
+    <!--                        </table>-->
+    <!--                    </div>-->
+    <!--                </div>-->
+    <!--            </div>-->
+
+<!--    <div class="col-md-5 mt-4">-->
+        <h3>Nos menus</h3>
+        <?php foreach ($result as $value) {
+            $products = getMenus($value);
+        if (empty($products))
+            continue;
+        $printedMenus++;
+        ?>
+
+        <div class="col-md-4 col-sm-4">
+            <div class="single-food">
+                <div class="food-img">
+                    <img src="<?php echo $value["menuImage"] ?>" class="img-fluid" alt="">
+                </div>
+                <div class="food-content">
+                    <div class="d-flex justify-content-between">
+                        <h5><?php echo $value["menuName"] ?></h5>
+                        <ul>
+                            <?php foreach ($products as $product) {
+                                echo "<li>" . $product["productName"] . "</li>";
+                            } ?>
+                        </ul>
+                        <span class="style-change" id="<?php echo 'priceUnitary'.$value['idMenu']; ?>"><?php echo number_format($value["menuPrice"], 2) . "€" ?></span>
+                        <span class="style-change" id="<?php $value["idMenu"];?>"><?php echo $value["quantity"]; ?></span>
                     </div>
+                    <button type="button"
+                            onclick='addQuantity(<?php foreach ($idCart as $cartNb){ echo $cartNb["idCart"].", ".$value["idMenu"];?>)'
+                            class="btn btn-sm btn-success ml-1"><i class="fas fa-plus"></i></button>
+                    <button type="button"
+                            onclick='deleteQuantity(<?php echo $cartNb["idCart"].", ".$value["idMenu"]; } ?>)'
+                            class="btn btn-sm btn-danger ml-1"><i class="fas fa-minus"></i></button>
                 </div>
             </div>
-
-            <div class="col-md-5 mt-4">
-                <h3>Nos menus</h3>
-                <?php foreach ($result as $value) {
-                    $products = getMenus($value);
-                    if (empty($products))
-                        continue;
-                    $printedMenus++;
-                    ?>
-
-                    <div class="col-md-12 col-sm-12">
-                        <div class="single-food">
-                            <div class="food-img">
-                                <img src="<?php echo $value["menuImage"] ?>" class="img-fluid" alt="">
-                            </div>
-                            <div class="food-content">
-                                <div class="d-flex justify-content-between">
-                                    <h5><?php echo $value["menuName"] ?></h5>
-                                    <ul>
-                                        <?php foreach ($products as $product) {
-                                            echo "<li>" . $product["productName"] . "</li>";
-                                        } ?>
-                                    </ul>
-                                    <span class="style-change"><?php echo number_format($value["menuPrice"], 2) . "€" ?></span>
-                                </div>
-                                <button type="button"
-                                        onclick="addQuantity(<?php echo $value["idMenu"]; ?>)"
-                                        class="btn btn-sm btn-success ml-1">Ajouter au panier</i></button>
-                            </div>
-                        </div>
-                    </div>
-        <button type="button"
-                onclick="addQuantity(<?php echo $value["idMenu"]; ?>)"
-                class="btn btn-sm btn-success ml-1">Ajouter au panier</i></button>
-            </div>
         </div>
+
 <!--    </div>-->
-            <!-- Banner Area End -->
+    <!--        </div>-->
+    <!--    </div>-->
+    <!-- Banner Area End -->
 
-
+    <?php } ?>
 
 </section>
 <!-- Food Area End -->
@@ -140,6 +147,7 @@ if (isActivated() && isConnected()) {
     </div>
 </section>
 <!-- Table Area End -->
+
 
 <!-- Footer Area Starts -->
 <footer class="footer-area">
