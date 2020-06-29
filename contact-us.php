@@ -1,7 +1,5 @@
 <?php
-
-require('navbar.php');
-
+require ("navbar.php");
 
 
 if(!isConnected())
@@ -25,15 +23,19 @@ $trucks = getTrucks();
         </div>
     </section>
     <!-- Banner Area End -->
-
     <!-- Contact Form Starts -->
     <section class="contact-form section-padding3" style="margin-top: 30px;">
         <div class="container">
             <?php
-            if (isset($_POST["sender"]) && isset($_POST["subject"]) && !empty($_POST["destinataire"]) && !empty($_POST["message"]) ) {
+            if (isset($_POST["sender"]) && isset($_POST["subject"]) && !empty($_POST["destinataire"]) && isset($_POST["message"]) ) {
+
                 $pdo = connectDB();
                 $queryPrepared = $pdo->prepare("INSERT INTO CONTACT(user, contactSubject, receiver, contactDescription) values(:sender, :subject, :destinataire, :message);");
-                $queryPrepared->execute([":sender" => $_POST["sender"], ":subject" => $_POST["subject"],":destinataire" => $_POST["destinataire"],":message" => $_POST["message"],]);
+                $queryPrepared->execute([
+                    ":sender" => $_POST["sender"],
+                    ":subject" => $_POST["subject"],
+                    ":destinataire" => $_POST["destinataire"],
+                    ":message" => $_POST["message"]]);
 
                 unset($_POST["sender"]);
                 unset($_POST["subject"]);
@@ -44,7 +46,32 @@ $trucks = getTrucks();
                 <div class="row" id="thanksMessage">
                     <div class="col-md-5">
                         <div class="section-top">
-                            <?php getTranslate("confirmContact", $tabLang, $setLanguage); ?>
+                            <?php getTranslate("confirmContact1", $tabLang, $setLanguage); ?>
+                            <p> <?php getTranslate("confirmContact2", $tabLang, $setLanguage); ?></p>
+
+                        </div>
+                    </div>
+                </div>
+                <?php
+            }else if (isset($_POST["sender"]) && isset($_POST["subject"]) && isset($_POST["message"]) ) {
+
+                $pdo = connectDB();
+                $queryPrepared = $pdo->prepare("INSERT INTO CONTACT(user, contactSubject, contactDescription) values(:sender, :subject, :message);");
+                $queryPrepared->execute([
+                    ":sender" => $_POST["sender"],
+                    ":subject" => $_POST["subject"],
+                    ":message" => $_POST["message"]]);
+
+                unset($_POST["sender"]);
+                unset($_POST["subject"]);
+                unset($_POST["message"]);
+
+                ?>
+                <div class="row" id="thanksMessage">
+                    <div class="col-md-5">
+                        <div class="section-top">
+                            <?php getTranslate("confirmContact1 ", $tabLang, $setLanguage); ?>
+                            <p> <?php getTranslate("confirmContact2", $tabLang, $setLanguage); ?></p>
                         </div>
                     </div>
                 </div>
@@ -69,7 +96,7 @@ $trucks = getTrucks();
                             <input type="text" name="subject" placeholder="<?php getTranslate("Sujet", $tabLang, $setLanguage);?> *" required>
 
                             <select name="destinataire" class="custom-select">
-                                <option value="0"><?php getTranslate("Administration", $tabLang, $setLanguage);?></option>
+                                <option value=""><?php getTranslate("Administration", $tabLang, $setLanguage);?></option>
                                 <?php
                                     foreach ($trucks as $truck){
                                         if($truck["idTruck"] == $_GET["idTruck"])

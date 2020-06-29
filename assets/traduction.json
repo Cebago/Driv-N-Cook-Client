@@ -83,11 +83,15 @@
     "Administration" : {
       "es_ES" : "Administración"
     },
-    "confirmContact" : {
+    "confirmContact1" : {
       "fr_FR" : "<h3><span class=\"style-change\">Message envoyé</span> <br>Il roule au plus vite pour venir à nous</h3>",
       "es_ES" : "<h3><span class=\"style-change\">Mensaje enviado</span> <br>Él conduce más rápido para venir a nosotros\n\n</h3>,",
       "en_EN" : "<h3><span class=\"style-change\">Message sent</span> <br>He drives faster to come to us</h3>,"
-
+    },
+    "confirmContact2" : {
+      "fr_FR" : "Une réponse vous sera faite sur votre boite mail, surveillez là !",
+      "es_ES" : "Se le responderá a su buzón, ¡mírelo!",
+      "en_EN" : "An answer will be made to your mailbox, watch it!"
     }
 
   }
