@@ -35,96 +35,101 @@ if (isActivated() && isConnected()) {
     </div>
 </section>
 <!-- Food Area starts -->
-<section class="food-area section-padding3">
 
-<!--    <div class="container">-->
-<!--        <div class="row">-->
-<!--            <div class="col-md-3 ml-5 mt-4">-->
-<!--                <div class="tab-content card mt-1" id="myTabContent">-->
-<!--                    <div class="tab-pane fade show active" id="openDays" role="tabpanel" aria-labelledby="home-tab">-->
-<!--                        <table class="table" id="openTable">-->
-<!--                            <thead class="thead-dark">-->
-<!--                            <tr>-->
-<!--                                <th scope="col">Jour de la semaine</th>-->
-<!--                                <th scope="col">Ouverture</th>-->
-<!--                                <th scope="col">Fermeture</th>-->
-<!--                            </tr>-->
-<!--                            </thead>-->
-<!--                            <tbody id="tableBody">-->
-<!--                            </tbody>-->
-<!--                        </table>-->
-<!--                    </div>-->
-<!--                </div>-->
-<!--            </div>-->
+<section class="food-area section-padding2">
+    <div class="section-top2 text-center">
+        <h3><span><?php getTranslate("Horaire du camion", $tabLang, $setLanguage);?></span></h3>
+    </div>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-9 ml-5 mt-4">
+                <div class="tab-content card mt-1" id="myTabContent">
+                    <div class="tab-pane fade show active" id="openDays" role="tabpanel" aria-labelledby="home-tab">
+                        <table class="table" id="openTable">
+                            <thead class="table-warning">
+                            <tr>
+                                <th scope="col"><?php getTranslate("Jour de la semaine", $tabLang, $setLanguage);?></th>
+                                <th scope="col"><?php getTranslate("Ouverture", $tabLang, $setLanguage);?></th>
+                                <th scope="col"><?php getTranslate("Fermeture", $tabLang, $setLanguage);?></th>
+                            </tr>
+                            </thead>
+                            <tbody id="tableBody">
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+</section>
 
-            <!-- Deshes Area Starts -->
-            <div class="deshes-area section-padding">
-                <div class="container">
+<section class="food-area">
+    <!-- Deshes Area Starts -->
+    <div class="deshes-area section-padding">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="section-top2 text-center">
+                        <h3>Our <span>special</span> deshes</h3>
+                        <p><i>Beast kind form divide night above let moveth bearing darkness.</i></p>
+                    </div>
+                </div>
+            </div>
+            <?php foreach ($result as $value) {
+                $products = getMenus($value);
+                if (empty($products))
+                    continue;
+                $printedMenus++;
+                if ($count % 2 == 0) {
+                    ?>
                     <div class="row">
-                        <div class="col-lg-12">
-                            <div class="section-top2 text-center">
-                                <h3>Our <span>special</span> deshes</h3>
-                                <p><i>Beast kind form divide night above let moveth bearing darkness.</i></p>
+                        <div class="col-lg-5 col-md-6 align-self-center">
+                            <h1><?php echo $count; ?>.</h1>
+                            <div class="deshes-text">
+                                <h3><span><?php echo $value["menuName"] ?></span></h3>
+                                <ul>
+                                    <?php foreach ($products as $product) {
+                                        echo "<li>" . $product["productName"] . "</li>";
+                                    } ?>
+                                </ul>
+                                <span class="style-change"><?php echo number_format($value["menuPrice"], 2) . "€" ?></span>
+                                <a href="#" class="template-btn3 mt-3"
+                                   onclick='addQuantity(<?php echo $value["idMenu"]; ?>)'>Ajouter à mon panier
+                                    <span><i class="fa fa-long-arrow-right"></i></span></a>
+                            </div>
+                        </div>
+                        <div class="col-lg-5 offset-lg-2 col-md-6 align-self-center mt-4 mt-md-0">
+                            <img src="<?php echo $value["menuImage"] ?>" class="img-fluid" alt="">
+                        </div>
+                    </div>
+                    <?php $count++;
+                } else { ?>
+                    <!--            NEXT                    -->
+                    <div class="row mt-5">
+                        <div class="col-lg-5 col-md-6 align-self-center order-2 order-md-1 mt-4 mt-md-0">
+                            <img src="<?php echo $value["menuImage"] ?>" class="img-fluid" alt="">
+                        </div>
+                        <div class="col-lg-5 offset-lg-2 col-md-6 align-self-center order-1 order-md-2">
+                            <h1><?php echo $count; ?>.</h1>
+                            <div class="deshes-text">
+                                <h3><span><?php echo $value["menuName"] ?></span></h3>
+                                <ul>
+                                    <?php foreach ($products as $product) {
+                                        echo "<li>" . $product["productName"] . "</li>";
+                                    } ?>
+                                </ul>
+                                <span class="style-change"><?php echo number_format($value["menuPrice"], 2) . "€" ?></span>
+                                <a href="#" class="template-btn3 mt-3"
+                                   onclick='addQuantity(<?php echo $value["idMenu"]; ?>)'>Ajouter à mon panier
+                                    <span><i class="fa fa-long-arrow-right"></i></span></a>
                             </div>
                         </div>
                     </div>
-                    <?php foreach ($result as $value) {
-                        $products = getMenus($value);
-                        if (empty($products))
-                            continue;
-                        $printedMenus++;
-                        if ($count % 2 == 0) {
-                            ?>
-                            <div class="row">
-                                <div class="col-lg-5 col-md-6 align-self-center">
-                                    <h1><?php echo $count; ?>.</h1>
-                                    <div class="deshes-text">
-                                        <h3><span><?php echo $value["menuName"] ?></span></h3>
-                                        <ul>
-                                            <?php foreach ($products as $product) {
-                                                echo "<li>" . $product["productName"] . "</li>";
-                                            } ?>
-                                        </ul>
-                                        <span class="style-change"><?php echo number_format($value["menuPrice"], 2) . "€" ?></span>
-                                        <a href="#" class="template-btn3 mt-3"
-                                           onclick='addQuantity(<?php echo $value["idMenu"]; ?>)'>Ajouter à mon panier
-                                            <span><i class="fa fa-long-arrow-right"></i></span></a>
-                                    </div>
-                                </div>
-                                <div class="col-lg-5 offset-lg-2 col-md-6 align-self-center mt-4 mt-md-0">
-                                    <img src="<?php echo $value["menuImage"] ?>" class="img-fluid" alt="">
-                                </div>
-                            </div>
-                            <?php $count++;
-                        } else { ?>
-                            <!--            NEXT                    -->
-                            <div class="row mt-5">
-                                <div class="col-lg-5 col-md-6 align-self-center order-2 order-md-1 mt-4 mt-md-0">
-                                    <img src="<?php echo $value["menuImage"] ?>" class="img-fluid" alt="">
-                                </div>
-                                <div class="col-lg-5 offset-lg-2 col-md-6 align-self-center order-1 order-md-2">
-                                    <h1><?php echo $count; ?>.</h1>
-                                    <div class="deshes-text">
-                                        <h3><span><?php echo $value["menuName"] ?></span></h3>
-                                        <ul>
-                                            <?php foreach ($products as $product) {
-                                                echo "<li>" . $product["productName"] . "</li>";
-                                            } ?>
-                                        </ul>
-                                        <span class="style-change"><?php echo number_format($value["menuPrice"], 2) . "€" ?></span>
-                                        <a href="#" class="template-btn3 mt-3"
-                                           onclick='addQuantity(<?php echo $value["idMenu"]; ?>)'>Ajouter à mon panier
-                                            <span><i class="fa fa-long-arrow-right"></i></span></a>
-                                    </div>
-                                </div>
-                            </div>
 
-                            <?php $count++;
-                        } ?>
-                    <?php } ?>
-                </div>
-            </div>
+                    <?php $count++;
+                } ?>
+            <?php } ?>
         </div>
+    </div>
+    </div>
 </section>
 <!-- Deshes Area End -->
 
@@ -150,7 +155,8 @@ if (isActivated() && isConnected()) {
                         <div class="customer-text">
                             <h5>adame nesane</h5>
                             <span><i>Chief Customer</i></span>
-                            <p class="pt-3">You're had. Subdue grass Meat us winged years you'll doesn't. fruit two also
+                            <p class="pt-3">You're had. Subdue grass Meat us winged years you'll doesn't. fruit two
+                                also
                                 won one yielding creepeth third give may never lie alternet food.</p>
                         </div>
                     </div>
@@ -161,7 +167,8 @@ if (isActivated() && isConnected()) {
                         <div class="customer-text">
                             <h5>adam nahan</h5>
                             <span><i>Chief Customer</i></span>
-                            <p class="pt-3">You're had. Subdue grass Meat us winged years you'll doesn't. fruit two also
+                            <p class="pt-3">You're had. Subdue grass Meat us winged years you'll doesn't. fruit two
+                                also
                                 won one yielding creepeth third give may never lie alternet food.</p>
                         </div>
                     </div>
@@ -172,7 +179,8 @@ if (isActivated() && isConnected()) {
                         <div class="customer-text">
                             <h5>adame nesane</h5>
                             <span><i>Chief Customer</i></span>
-                            <p class="pt-3">You're had. Subdue grass Meat us winged years you'll doesn't. fruit two also
+                            <p class="pt-3">You're had. Subdue grass Meat us winged years you'll doesn't. fruit two
+                                also
                                 won one yielding creepeth third give may never lie alternet food.</p>
                         </div>
                     </div>
@@ -191,7 +199,8 @@ if (isActivated() && isConnected()) {
                 <div class="col-md-4">
                     <div class="single-widget single-widget1">
                         <a href="index.html"><img src="assets/images/logo/logo.png" alt=""></a>
-                        <p class="mt-3">Which morning fourth great won't is to fly bearing man. Called unto shall seed,
+                        <p class="mt-3">Which morning fourth great won't is to fly bearing man. Called unto shall
+                            seed,
                             deep, herb set seed land divide after over first creeping. First creature set upon stars
                             deep male gathered said she'd an image spirit our</p>
                     </div>
