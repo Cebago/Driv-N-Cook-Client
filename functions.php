@@ -106,6 +106,10 @@ function isActivated(){
     }
 }
 
+/**
+ * @param $value
+ * @return array|int
+ */
 function getMenus($value){
     $pdo = connectDB();
     $queryPrepared = $pdo->prepare("SELECT productName, available FROM PRODUCTS, SOLDIN, MENUS, TRUCK, STORE, WAREHOUSES, COMPOSE, INGREDIENTS, TRUCKWAREHOUSE

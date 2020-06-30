@@ -7,23 +7,29 @@ if (isActivated() && isConnected()) {
     include 'header.php';
     $printedMenus = 0;
     $pdo = connectDB();
-    $queryPrepared = $pdo->prepare("SELECT menuName, menuImage, menuPrice, idMenu, truck, quantity FROM MENUS, TRUCK, CARTMENU WHERE MENUS.truck = TRUCK.idTruck AND truck = :truck");
-    $queryPrepared->execute([":truck" => $_GET["idTruck"]]);
-    $result = $queryPrepared->fetchAll(PDO::FETCH_ASSOC);
 
     $queryPrepared = $pdo->prepare("SELECT truckName FROM TRUCK WHERE idTruck = :idTruck");
     $queryPrepared->execute([":idTruck" => $_GET["idTruck"]]);
     $truck = $queryPrepared->fetchAll(PDO::FETCH_ASSOC);
 
     $queryPrepared = $pdo->prepare("SELECT idCart FROM CART, USER WHERE user = idUser AND emailAddress = :email ORDER BY idCart DESC LIMIT 1");
-    $queryPrepared->execute([":email"=>$_SESSION["email"]]);
-    $idCart = $queryPrepared->fetchAll(PDO::FETCH_ASSOC);
+    $queryPrepared->execute([":email" => $_SESSION["email"]]);
+    $idCart = $queryPrepared->fetch(PDO::FETCH_ASSOC);
+
+    $queryPrepared = $pdo->prepare("SELECT menuName, menuImage, menuPrice, idMenu, truck, quantity FROM MENUS, TRUCK, CARTMENU, CART WHERE MENUS.truck = TRUCK.idTruck AND idCart = :cart AND menu = idMenu AND idCart = cart");
+    $queryPrepared->execute([":cart" => $idCart["idCart"]]);
+    $result = $queryPrepared->fetchAll(PDO::FETCH_ASSOC);
+
+
+//if (isset($_GET["idTruck"])){
+//    header("Location: cartMenu.php?idTruck=1");
+//}
 
     ?>
 
     <?php include "navbar.php"; ?>
-    <body onload="getOpenDays('<?php echo $_GET["idTruck"]; ?>//')">
-    <body>
+<body onload="getOpenDays('<?php echo $_GET["idTruck"]; ?>//')">
+<body>
 
 <!-- Banner Area Starts -->
 <section class="banner-area banner-area2 menu-bg text-center">
@@ -39,69 +45,59 @@ if (isActivated() && isConnected()) {
     </div>
 </section>
 <!-- Food Area starts -->
-<section class="food-area section-padding3">
-
-    <!--    <div class="container">-->
-    <!--        <div class="row">-->
-    <!--            <div class="col-md-3 ml-5 mt-4">-->
-    <!--                <div class="tab-content card mt-1" id="myTabContent">-->
-    <!--                    <div class="tab-pane fade show active" id="openDays" role="tabpanel" aria-labelledby="home-tab">-->
-    <!--                        <table class="table" id="openTable">-->
-    <!--                            <thead class="thead-dark">-->
-    <!--                            <tr>-->
-    <!--                                <th scope="col">Jour de la semaine</th>-->
-    <!--                                <th scope="col">Ouverture</th>-->
-    <!--                                <th scope="col">Fermeture</th>-->
-    <!--                            </tr>-->
-    <!--                            </thead>-->
-    <!--                            <tbody id="tableBody">-->
-    <!--                            </tbody>-->
-    <!--                        </table>-->
-    <!--                    </div>-->
-    <!--                </div>-->
-    <!--            </div>-->
-
-<!--    <div class="col-md-5 mt-4">-->
-        <h3>Nos menus</h3>
-        <?php foreach ($result as $value) {
-            $products = getMenus($value);
-        if (empty($products))
-            continue;
-        $printedMenus++;
-        ?>
-
-        <div class="col-md-4 col-sm-4">
-            <div class="single-food">
-                <div class="food-img">
-                    <img src="<?php echo $value["menuImage"] ?>" class="img-fluid" alt="">
-                </div>
-                <div class="food-content">
-                    <div class="d-flex justify-content-between">
-                        <h5><?php echo $value["menuName"] ?></h5>
-                        <ul>
-                            <?php foreach ($products as $product) {
-                                echo "<li>" . $product["productName"] . "</li>";
-                            } ?>
-                        </ul>
-                        <span class="style-change" id="<?php echo 'priceUnitary'.$value['idMenu']; ?>"><?php echo number_format($value["menuPrice"], 2) . "€" ?></span>
-                        <span class="style-change" id="<?php $value["idMenu"];?>"><?php echo $value["quantity"]; ?></span>
-                    </div>
-                    <button type="button"
-                            onclick='addQuantity(<?php foreach ($idCart as $cartNb){ echo $cartNb["idCart"].", ".$value["idMenu"];?>)'
-                            class="btn btn-sm btn-success ml-1"><i class="fas fa-plus"></i></button>
-                    <button type="button"
-                            onclick='deleteQuantity(<?php echo $cartNb["idCart"].", ".$value["idMenu"]; } ?>)'
-                            class="btn btn-sm btn-danger ml-1"><i class="fas fa-minus"></i></button>
-                </div>
-            </div>
+<section class="food-area section-padding4">
+    <div class="container">
+        <div class="section-top2 text-center">
+            <h3><span>Nos menus</span></h3>
         </div>
+        <div class="row">
 
-<!--    </div>-->
-    <!--        </div>-->
-    <!--    </div>-->
-    <!-- Banner Area End -->
+            <?php foreach ($result as $value) {
+                $products = getMenus($value);
+                if (empty($products)) {
+                    $queryPrepared = $pdo->prepare("DELETE FROM CARTMENU WHERE cart = :cart AND menu = :menu");
+                    $queryPrepared->execute([
+                        ":cart" => $idCart["idCart"],
+                        ":menu" => $value["idMenu"]
+                    ]);
+                    continue;
+                }
+                    $printedMenus++;
+                ?>
+                <div class="col-md-5 col-sm-4">
+                    <div class="single-food">
+                        <div class="food-img">
+                            <img src="<?php echo $value["menuImage"] ?>" class="img-fluid" alt="">
+                        </div>
+                        <div class="food-content">
+                            <div class="d-flex justify-content-between">
+                                <h5><?php echo $value["menuName"] ?></h5>
+                                <ul>
+                                    <?php foreach ($products as $product) {
+                                        echo "<li>" . $product["productName"] . "</li>";
+                                    } ?>
+                                </ul>
+                                <span class="style-change"><?php echo number_format($value["menuPrice"], 2) . "€" ?></span>
+                            </div>
+                            <div class="d-flex justify-content-between">
+                                <span class="style-change"
+                                      id="input<?php echo $value["idMenu"]; ?>"><?php echo $value["quantity"]; ?></span>
+                            </div>
+                            <button type="button"
+                                    onclick='deleteQuantity(<?php echo $idCart["idCart"] . ", " . $value["idMenu"]; ?>,this)'
+                                    class="btn btn-sm btn-danger ml-1" id="<?php echo $value["idMenu"] ?>"><i
+                                        class="fas fa-minus"></i></button>
+                            <button type="button"
+                                    onclick='addQuantity(<?php echo $idCart["idCart"] . ", " . $value["idMenu"]; ?>)'
+                                    class="btn btn-sm btn-success ml-1"><i class="fas fa-plus"></i></button>
+                        </div>
+                    </div>
+                </div>
 
-    <?php } ?>
+            <?php } ?>
+
+        </div>
+    </div>
 
 </section>
 <!-- Food Area End -->

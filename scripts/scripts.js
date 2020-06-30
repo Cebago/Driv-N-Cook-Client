@@ -151,19 +151,17 @@ function showMap() {
 // }
 
 
-function deleteQuantity(cart,menu) {
-    let input = document.getElementById(menu);
-    // let inputPrice = document.getElementById('priceId'+ingredient);
-    // let inputPriceUnitary = document.getElementById('priceUnitary'+ingredient);
+function deleteQuantity(cart,menu,thisParameter) {
+
+    let input = document.getElementById("input"+menu);
     const count = document.getElementById('count');
 
-    if (Number(input.innerText) > 0){
+    if (Number(input.innerText) >= 1){
 
-        count.innerText = Number(count.innerText) + 1;
+        count.innerText = Number(count.innerText) - 1;
+        input.innerText = Number(input.innerText) - 1;
 
-        // inputPrice.innerText = (parseFloat(inputPrice.innerText) - parseFloat(inputPriceUnitary.innerText)).toFixed(2)+'€';
-
-        document.getElementById(menu).removeAttribute("disabled");
+        thisParameter.removeAttribute("disabled");
 
         const request = new XMLHttpRequest();
         request.onreadystatechange = function() {
@@ -175,10 +173,11 @@ function deleteQuantity(cart,menu) {
                 }
             }
         };
-        request.open('GET', 'functions/deleteIngredient.php?cart='+cart+'&menu='+menu);
+        request.open('GET', 'functions/deleteMenu.php?cart='+cart+'&menu='+menu);
         request.send();
+        console.log("COUCOU");
     }else {
-        document.getElementById(menu).setAttribute("disabled","true");
+        thisParameter.setAttribute("disabled","true");
 
     }
 
@@ -186,15 +185,11 @@ function deleteQuantity(cart,menu) {
 
 function addQuantity(cart,menu) {
 
-    let input = document.getElementById(menu);
-    //let inputPrice = document.getElementById('priceId'+menu);
-    // let inputPriceUnitary = document.getElementById('priceUnitary'+menu);
-
+    let input = document.getElementById("input"+menu);
     const count = document.getElementById('count');
+
     count.innerText = Number(count.innerText) + 1;
-
-
-    // inputPrice.innerText = (parseFloat(inputPrice.innerText) +  parseFloat(inputPriceUnitary.innerText)).toFixed(2) + '€';
+    input.innerText = Number(input.innerText) + 1;
 
     const request = new XMLHttpRequest();
     request.onreadystatechange = function () {
@@ -206,7 +201,7 @@ function addQuantity(cart,menu) {
             }
         }
     };
-    request.open('GET', 'functions/addMenu.php?idMenu='+ menu);
+    request.open('GET', 'functions/addMenu.php?cart='+cart+'&menu='+menu);
     request.send();
 
 

@@ -48,6 +48,26 @@
       "es_ES" : "Nos robaron",
       "en_EN" : "We were robed",
       "fr_FR" : "On s'est fait dévalisé"
+    },
+    "Horaire du camion" : {
+      "es_ES" : "Horario de camiones",
+      "en_EN" : "Truck schedule",
+      "fr_FR" : "Horaire du camion"
+    },
+    "Jour de la semaine" : {
+      "es_ES" : "Día de la semana",
+      "en_EN" : "Day of the week",
+      "fr_FR" : "Jour de la semaine"
+    },
+    "Ouverture" : {
+      "es_ES" : "Abierto",
+      "en_EN" : "Open",
+      "fr_FR" : "Ouverture"
+    },
+    "Fermeture" : {
+      "es_ES" : "Cerrado",
+      "en_EN" : "Close",
+      "fr_FR" : "Fermeture"
     }
   }
 }
