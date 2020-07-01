@@ -39,6 +39,28 @@
       "es_ES" : "Descubre los <span class=\"prime-color\">sabores</span><br><span class=\"style-change\">de <span class=\"prime-color\">Driv'n</span>Cook</span>",
       "en_EN" : "Discover the <span class=\"prime-color\">flavors</span><br><span class=\"style-change\">of <span class=\"prime-color\">Driv'n</span>Cook</span>",
       "fr_FR" : "Découvrez les <span class=\"prime-color\">saveurs</span><br><span class=\"style-change\">de <span class=\"prime-color\">Driv'n</span>Cook</span>"
+    },
+    "Nos menus" : {
+      "es_ES" : "Nuestros menús",
+      "en_EN" : "Our menus"
+    },
+    "titreViewTrucks1" : {
+      "es_ES" : "Tenemos los camiones, usted tiene la opción",
+      "en_EN" : "We have the trucks, you have the choice.",
+      "fr_FR" : "Nous avons les camions, vous avez le choix."
+    },
+    "Ouvert" : {
+      "es_ES" : "Abierto",
+      "en_EN" : "Open"
+    },
+    "Fermé" : {
+      "es_ES" : "Cerrado",
+      "en_EN" : "Closed"
+    },
+    "Tous" : {
+      "es_ES" : "Todos",
+      "en_EN" : "All"
     }
+
   }
 }
