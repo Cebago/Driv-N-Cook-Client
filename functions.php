@@ -26,6 +26,41 @@ function login($email){
     $_SESSION["email"] = $email;
 }
 
+/**
+ * @return array
+ */
+
+function getTrucks(){
+    $pdo = connectDB();
+    $queryPrepared = $pdo->prepare("SELECT idTruck, truckName, truckPicture, categorie FROM TRUCK;");
+    $queryPrepared->execute();
+    return $queryPrepared->fetchAll(PDO::FETCH_ASSOC);
+}
+
+/**
+ * @param $idTruck
+ * @return bool
+ */
+function isOpen($idTruck){
+    $translateDay = [
+        1 => "Lundi",
+        2 => "Mardi",
+        3 => "Mercredi",
+        4 => "Jeudi",
+        5 => "Vendredi",
+        6 => "Samedi",
+        7 => "Dimanche",
+    ];
+    $pdo = connectDB();
+    $queryPrepared = $pdo->prepare("SELECT * FROM OPENDAYS WHERE openDay = :currentDay AND startHour < current_time() AND endHour > current_time() AND truck = :idTruck;");
+    $queryPrepared->execute([":currentDay" => $translateDay[date("N")], ":idTruck" => $idTruck]);
+    return !empty($queryPrepared->fetch());
+
+}
+
+/**
+ * @return bool
+ */
 function isConnected(){
     if(!empty($_SESSION["email"])
         && !empty($_SESSION["token"]) ){
@@ -64,13 +99,9 @@ function isActivated(){
             ":token"=>$token
         ]);
         $isActivated = $queryPrepared->fetch();
-        $isActivated = $isActivated["isActivated"];
-        if ($isActivated == 1){
-            return true;
-        }else{
-            return false;
-        }
+        return $isActivated["isActivated"];
     }
+    return false;
 }
 
 function isAdmin(){
@@ -104,10 +135,36 @@ function logout($email){
     $queryPrepared->execute([":email"=>$email]);
 }
 
+/**
+ * @param $text
+ * @param $tabLang
+ * @param $setLanguage
+ */
 function getTranslate($text, $tabLang, $setLanguage){
     //si la value existe on traduit, sinon on laisse le texte pas défault
     if(array_key_exists($text,$tabLang) && array_key_exists($setLanguage, $tabLang[$text]) )
         echo $tabLang[$text][$setLanguage];
     else
         echo $text;
+}
+
+/**
+ * @return bool|mixed
+ */
+function getUserInfos(){
+    if(!empty($_SESSION["email"]) && !empty($_SESSION["token"]) ){
+        $email = $_SESSION["email"];
+        $token = $_SESSION["token"];
+        $pdo = connectDB();
+        $queryPrepared = $pdo->prepare("SELECT idUser, firstname, lastname, emailAddress FROM USER, USERTOKEN WHERE emailAddress = :email 
+                                          AND USERTOKEN.token = :token 
+                                          AND user = idUser 
+                                          AND tokenType = 'Site'");
+        $queryPrepared->execute([
+            ":email"=>$email,
+            ":token"=>$token
+        ]);
+        return $queryPrepared->fetch    (PDO::FETCH_ASSOC);
+    }
+    return false;
 }

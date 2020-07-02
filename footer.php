@@ -9,7 +9,6 @@
         <script src="assets/js/vendor/wow.min.js"></script>
         <script src="assets/js/vendor/owl-carousel.min.js"></script>
         <script src="assets/js/vendor/jquery.datetimepicker.full.min.js"></script>
-        <script src="assets/js/vendor/jquery.nice-select.min.js"></script>
         <script src="assets/js/main.js"></script>
         <script src="assets/js/function.js"></script>
     </body>
