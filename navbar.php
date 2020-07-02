@@ -33,7 +33,7 @@ if(isset($_COOKIE['Lang'])){
             <div class="row">
                 <div class="col-lg-2">
                     <div class="logo-area">
-                        <a href="index.html"><img src="./img/logo.png" alt="logo"></a>
+                        <a href="home.php"><img src="./img/logo.png" alt="logo"></a>
                     </div>
 
                 </div>
@@ -45,10 +45,10 @@ if(isset($_COOKIE['Lang'])){
                     </div>
                     <div class="main-menu">
                         <ul>
-                            <li class="active"><a href="index.html"><?php getTranslate("accueil", $tabLang, $setLanguage);?></a></li>
+                            <li class="active"><a href="home.php"><?php getTranslate("accueil", $tabLang, $setLanguage);?></a></li>
                             <li><a href="viewTrucks.php"><?php getTranslate("nos camions", $tabLang, $setLanguage);?></a></li>
                             <li><a href="menu.html"><?php getTranslate("evenements", $tabLang, $setLanguage);?></a></li>
-                            <li><a href="http://franchises.drivncook.fr"><?php getTranslate("rejoignez-nous", $tabLang, $setLanguage);?></a></li>
+                            <li><a href="./assets/three-js/examples/test.html"><?php getTranslate("rejoignez-nous", $tabLang, $setLanguage);?></a></li>
                             <li class="nav-item dropdown">
                                 <a class="nav-link dropdown-toggle" id="dropdown09" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span class="flag-icon <?php echo $headerTabLang[$setLanguage]["icon"] ?>"> </span> <?php echo $headerTabLang[$setLanguage]["name"] ?></a>
                                 <div class="dropdown-menu bg-info border-light" aria-labelledby="dropdown09">
