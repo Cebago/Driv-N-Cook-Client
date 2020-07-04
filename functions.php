@@ -177,3 +177,16 @@ function getTranslate($text, $tabLang, $setLanguage){
     else
         echo $text;
 }
+
+/**
+ * @param $email
+ * @return mixed
+ */
+function lastCart($email)
+{
+    $pdo = connectDB();
+    $queryPrepared = $pdo->prepare("SELECT idCart FROM USER, CART WHERE user = idUser AND emailAddress = :email ORDER BY idCart DESC LIMIT 1");
+    $queryPrepared->execute([":email" => $email]);
+    $idCart = $queryPrepared->fetch(PDO::FETCH_ASSOC);
+    return $idCart["idCart"];
+}

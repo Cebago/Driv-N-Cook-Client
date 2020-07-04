@@ -64,7 +64,7 @@ if (isActivated() && isConnected()) {
                 }
                     $printedMenus++;
                 ?>
-                <div class="col-md-5 col-sm-4">
+                <div class="col-md-5 col-sm-4" id="delete<?php echo $value["idMenu"];?>">
                     <div class="single-food">
                         <div class="food-img">
                             <img src="<?php echo $value["menuImage"] ?>" class="img-fluid" alt="">
@@ -90,6 +90,9 @@ if (isActivated() && isConnected()) {
                             <button type="button"
                                     onclick='addQuantity(<?php echo $idCart["idCart"] . ", " . $value["idMenu"]; ?>)'
                                     class="btn btn-sm btn-success ml-1"><i class="fas fa-plus"></i></button>
+                            <button type="button"
+                                    onclick='completelyDelete(<?php echo $idCart["idCart"].', '. $value["idMenu"]; ?>)'
+                                    class="btn btn-sm btn-secondary ml-1 pull-right">Supprimer</i></button>
                         </div>
                     </div>
                 </div>
@@ -97,6 +100,10 @@ if (isActivated() && isConnected()) {
             <?php } ?>
 
         </div>
+    </div>
+
+    <div class="pull-right col-md-3">
+        <a href="payment.php" class="template-btn template-btn2 mt-4">Payer</a>
     </div>
 
 </section>

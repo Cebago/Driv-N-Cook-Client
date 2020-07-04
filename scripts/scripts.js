@@ -175,9 +175,6 @@ function deleteQuantity(cart,menu,thisParameter) {
         };
         request.open('GET', 'functions/deleteMenu.php?cart='+cart+'&menu='+menu);
         request.send();
-        console.log("COUCOU");
-    }else {
-        thisParameter.setAttribute("disabled","true");
 
     }
 
@@ -204,6 +201,26 @@ function addQuantity(cart,menu) {
     request.open('GET', 'functions/addMenu.php?cart='+cart+'&menu='+menu);
     request.send();
 
+}
 
+function completelyDelete(cart, menu) {
+
+    const count = document.getElementById('count');
+    let deleteMenu = document.getElementById("delete"+menu);
+    deleteMenu.remove();
+    count.innerText = Number(count.innerText) - 1;
+
+    const request = new XMLHttpRequest();
+    request.onreadystatechange = function () {
+        if (request.readyState === 4) {
+            if (request.status === 200) {
+                if (request.responseText !== "") {
+                    alert(request.responseText);
+                }
+            }
+        }
+    };
+    request.open('GET', 'functions/completelyDelete.php?cart='+cart+'&menu='+menu);
+    request.send();
 
 }
