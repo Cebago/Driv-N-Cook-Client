@@ -1,5 +1,5 @@
-import { Material } from './Material.js';
-import { Color } from '../math/Color.js';
+import {Material} from './Material.js';
+import {Color} from '../math/Color.js';
 
 /**
  * @author mrdoob / http://mrdoob.com/
@@ -15,32 +15,32 @@ import { Color } from '../math/Color.js';
  * }
  */
 
-function LineBasicMaterial( parameters ) {
+function LineBasicMaterial(parameters) {
 
-	Material.call( this );
+	Material.call(this);
 
 	this.type = 'LineBasicMaterial';
 
-	this.color = new Color( 0xffffff );
+	this.color = new Color(0xffffff);
 
 	this.linewidth = 1;
 	this.linecap = 'round';
 	this.linejoin = 'round';
 
-	this.setValues( parameters );
+	this.setValues(parameters);
 
 }
 
-LineBasicMaterial.prototype = Object.create( Material.prototype );
+LineBasicMaterial.prototype = Object.create(Material.prototype);
 LineBasicMaterial.prototype.constructor = LineBasicMaterial;
 
 LineBasicMaterial.prototype.isLineBasicMaterial = true;
 
-LineBasicMaterial.prototype.copy = function ( source ) {
+LineBasicMaterial.prototype.copy = function (source) {
 
-	Material.prototype.copy.call( this, source );
+	Material.prototype.copy.call(this, source);
 
-	this.color.copy( source.color );
+	this.color.copy(source.color);
 
 	this.linewidth = source.linewidth;
 	this.linecap = source.linecap;
@@ -51,4 +51,4 @@ LineBasicMaterial.prototype.copy = function ( source ) {
 };
 
 
-export { LineBasicMaterial };
+export {LineBasicMaterial};

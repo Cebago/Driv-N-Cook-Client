@@ -3,9 +3,9 @@
  * Developed as part of a project at University of Applied Sciences and Arts Northwestern Switzerland (www.fhnw.ch)
  */
 
-QUnit.module( "MassUndoAndRedo" );
+QUnit.module("MassUndoAndRedo");
 
-QUnit.test( "MassUndoAndRedo (stress test)", function( assert ) {
+QUnit.test("MassUndoAndRedo (stress test)", function (assert) {
 
 	var editor = new Editor();
 
@@ -13,43 +13,43 @@ QUnit.test( "MassUndoAndRedo (stress test)", function( assert ) {
 
 	// add objects
 	var i = 0;
-	while ( i < MAX_OBJECTS ) {
+	while (i < MAX_OBJECTS) {
 
-		var object = aSphere( 'Sphere #' + i );
-		var cmd = new AddObjectCommand( object );
+		var object = aSphere('Sphere #' + i);
+		var cmd = new AddObjectCommand(object);
 		cmd.updatable = false;
-		editor.execute( cmd );
+		editor.execute(cmd);
 
-		i ++;
+		i++;
 
 	}
 
-	assert.ok( editor.scene.children.lenght = MAX_OBJECTS,
-		"OK, " + MAX_OBJECTS + " objects have been added" );
+	assert.ok(editor.scene.children.lenght = MAX_OBJECTS,
+		"OK, " + MAX_OBJECTS + " objects have been added");
 
 	// remove all objects
 	i = 0;
-	while ( i < MAX_OBJECTS ) {
+	while (i < MAX_OBJECTS) {
 
 		editor.undo();
-		i ++;
+		i++;
 
 	}
 
 
-	assert.ok( editor.scene.children.length == 0,
-		"OK, all objects have been removed by undos" );
+	assert.ok(editor.scene.children.length == 0,
+		"OK, all objects have been removed by undos");
 
 
 	i = 0;
-	while ( i < MAX_OBJECTS ) {
+	while (i < MAX_OBJECTS) {
 
 		editor.redo();
-		i ++;
+		i++;
 
 	}
 
-	assert.ok( editor.scene.children.lenght = MAX_OBJECTS,
-		"OK, " + MAX_OBJECTS + " objects have been added again by redos" );
+	assert.ok(editor.scene.children.lenght = MAX_OBJECTS,
+		"OK, " + MAX_OBJECTS + " objects have been added again by redos");
 
-} );
+});

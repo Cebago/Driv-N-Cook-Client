@@ -1,8 +1,4 @@
-import {
-	Camera,
-	Scene,
-	WebGLRenderer
-} from '../../../src/Three';
+import {Camera, Scene, WebGLRenderer} from '../../../src/Three';
 
 export interface AsciiEffectOptions {
 	resolution?: number;
@@ -15,10 +11,12 @@ export interface AsciiEffectOptions {
 
 export class AsciiEffect {
 
-	constructor( renderer: WebGLRenderer, charSet?: string, options?: AsciiEffectOptions );
 	domElement: HTMLElement;
 
-	render( scene: Scene, camera: Camera ): void;
-	setSize( width: number, height: number ): void;
+	constructor(renderer: WebGLRenderer, charSet?: string, options?: AsciiEffectOptions);
+
+	render(scene: Scene, camera: Camera): void;
+
+	setSize(width: number, height: number): void;
 
 }

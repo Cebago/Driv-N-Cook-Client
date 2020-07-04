@@ -1,9 +1,7 @@
-import { Node } from '../core/Node';
-import { NodeMaterial } from './NodeMaterial';
+import {Node} from '../core/Node';
+import {NodeMaterial} from './NodeMaterial';
 
 export class StandardNodeMaterial extends NodeMaterial {
-
-	constructor();
 
 	color: Node;
 	alpha: Node;
@@ -23,5 +21,7 @@ export class StandardNodeMaterial extends NodeMaterial {
 	mask: Node;
 	position: Node;
 	sheen: Node;
+
+	constructor();
 
 }

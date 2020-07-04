@@ -1,7 +1,7 @@
-import { LinearFilter } from '../constants.js';
-import { FileLoader } from './FileLoader.js';
-import { CompressedTexture } from '../textures/CompressedTexture.js';
-import { Loader } from './Loader.js';
+import {LinearFilter} from '../constants.js';
+import {FileLoader} from './FileLoader.js';
+import {CompressedTexture} from '../textures/CompressedTexture.js';
+import {Loader} from './Loader.js';
 
 /**
  * @author mrdoob / http://mrdoob.com/
@@ -11,17 +11,17 @@ import { Loader } from './Loader.js';
  * Sub classes have to implement the parse() method which will be used in load().
  */
 
-function CompressedTextureLoader( manager ) {
+function CompressedTextureLoader(manager) {
 
-	Loader.call( this, manager );
+	Loader.call(this, manager);
 
 }
 
-CompressedTextureLoader.prototype = Object.assign( Object.create( Loader.prototype ), {
+CompressedTextureLoader.prototype = Object.assign(Object.create(Loader.prototype), {
 
 	constructor: CompressedTextureLoader,
 
-	load: function ( url, onLoad, onProgress, onError ) {
+	load: function (url, onLoad, onProgress, onError) {
 
 		var scope = this;
 
@@ -30,17 +30,17 @@ CompressedTextureLoader.prototype = Object.assign( Object.create( Loader.prototy
 		var texture = new CompressedTexture();
 		texture.image = images;
 
-		var loader = new FileLoader( this.manager );
-		loader.setPath( this.path );
-		loader.setResponseType( 'arraybuffer' );
+		var loader = new FileLoader(this.manager);
+		loader.setPath(this.path);
+		loader.setResponseType('arraybuffer');
 
-		function loadTexture( i ) {
+		function loadTexture(i) {
 
-			loader.load( url[ i ], function ( buffer ) {
+			loader.load(url[i], function (buffer) {
 
-				var texDatas = scope.parse( buffer, true );
+				var texDatas = scope.parse(buffer, true);
 
-				images[ i ] = {
+				images[i] = {
 					width: texDatas.width,
 					height: texDatas.height,
 					format: texDatas.format,
@@ -49,29 +49,29 @@ CompressedTextureLoader.prototype = Object.assign( Object.create( Loader.prototy
 
 				loaded += 1;
 
-				if ( loaded === 6 ) {
+				if (loaded === 6) {
 
-					if ( texDatas.mipmapCount === 1 )
+					if (texDatas.mipmapCount === 1)
 						texture.minFilter = LinearFilter;
 
 					texture.format = texDatas.format;
 					texture.needsUpdate = true;
 
-					if ( onLoad ) onLoad( texture );
+					if (onLoad) onLoad(texture);
 
 				}
 
-			}, onProgress, onError );
+			}, onProgress, onError);
 
 		}
 
-		if ( Array.isArray( url ) ) {
+		if (Array.isArray(url)) {
 
 			var loaded = 0;
 
-			for ( var i = 0, il = url.length; i < il; ++ i ) {
+			for (var i = 0, il = url.length; i < il; ++i) {
 
-				loadTexture( i );
+				loadTexture(i);
 
 			}
 
@@ -79,24 +79,24 @@ CompressedTextureLoader.prototype = Object.assign( Object.create( Loader.prototy
 
 			// compressed cubemap texture stored in a single DDS file
 
-			loader.load( url, function ( buffer ) {
+			loader.load(url, function (buffer) {
 
-				var texDatas = scope.parse( buffer, true );
+				var texDatas = scope.parse(buffer, true);
 
-				if ( texDatas.isCubemap ) {
+				if (texDatas.isCubemap) {
 
 					var faces = texDatas.mipmaps.length / texDatas.mipmapCount;
 
-					for ( var f = 0; f < faces; f ++ ) {
+					for (var f = 0; f < faces; f++) {
 
-						images[ f ] = { mipmaps: [] };
+						images[f] = {mipmaps: []};
 
-						for ( var i = 0; i < texDatas.mipmapCount; i ++ ) {
+						for (var i = 0; i < texDatas.mipmapCount; i++) {
 
-							images[ f ].mipmaps.push( texDatas.mipmaps[ f * texDatas.mipmapCount + i ] );
-							images[ f ].format = texDatas.format;
-							images[ f ].width = texDatas.width;
-							images[ f ].height = texDatas.height;
+							images[f].mipmaps.push(texDatas.mipmaps[f * texDatas.mipmapCount + i]);
+							images[f].format = texDatas.format;
+							images[f].width = texDatas.width;
+							images[f].height = texDatas.height;
 
 						}
 
@@ -110,7 +110,7 @@ CompressedTextureLoader.prototype = Object.assign( Object.create( Loader.prototy
 
 				}
 
-				if ( texDatas.mipmapCount === 1 ) {
+				if (texDatas.mipmapCount === 1) {
 
 					texture.minFilter = LinearFilter;
 
@@ -119,9 +119,9 @@ CompressedTextureLoader.prototype = Object.assign( Object.create( Loader.prototy
 				texture.format = texDatas.format;
 				texture.needsUpdate = true;
 
-				if ( onLoad ) onLoad( texture );
+				if (onLoad) onLoad(texture);
 
-			}, onProgress, onError );
+			}, onProgress, onError);
 
 		}
 
@@ -129,7 +129,7 @@ CompressedTextureLoader.prototype = Object.assign( Object.create( Loader.prototy
 
 	}
 
-} );
+});
 
 
-export { CompressedTextureLoader };
+export {CompressedTextureLoader};

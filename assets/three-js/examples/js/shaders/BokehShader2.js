@@ -9,42 +9,41 @@
  */
 
 
-
 THREE.BokehShader = {
 
 	uniforms: {
 
-		"textureWidth": { value: 1.0 },
-		"textureHeight": { value: 1.0 },
+		"textureWidth": {value: 1.0},
+		"textureHeight": {value: 1.0},
 
-		"focalDepth": { value: 1.0 },
-		"focalLength": { value: 24.0 },
-		"fstop": { value: 0.9 },
+		"focalDepth": {value: 1.0},
+		"focalLength": {value: 24.0},
+		"fstop": {value: 0.9},
 
-		"tColor": { value: null },
-		"tDepth": { value: null },
+		"tColor": {value: null},
+		"tDepth": {value: null},
 
-		"maxblur": { value: 1.0 },
+		"maxblur": {value: 1.0},
 
-		"showFocus": { value: 0 },
-		"manualdof": { value: 0 },
-		"vignetting": { value: 0 },
-		"depthblur": { value: 0 },
+		"showFocus": {value: 0},
+		"manualdof": {value: 0},
+		"vignetting": {value: 0},
+		"depthblur": {value: 0},
 
-		"threshold": { value: 0.5 },
-		"gain": { value: 2.0 },
-		"bias": { value: 0.5 },
-		"fringe": { value: 0.7 },
+		"threshold": {value: 0.5},
+		"gain": {value: 2.0},
+		"bias": {value: 0.5},
+		"fringe": {value: 0.7},
 
-		"znear": { value: 0.1 },
-		"zfar": { value: 100 },
+		"znear": {value: 0.1},
+		"zfar": {value: 100},
 
-		"noise": { value: 1 },
-		"dithering": { value: 0.0001 },
-		"pentagon": { value: 0 },
+		"noise": {value: 1},
+		"dithering": {value: 0.0001},
+		"pentagon": {value: 0},
 
-		"shaderFocus": { value: 1 },
-		"focusCoords": { value: new THREE.Vector2() }
+		"shaderFocus": {value: 1},
+		"focusCoords": {value: new THREE.Vector2()}
 
 
 	},
@@ -60,7 +59,7 @@ THREE.BokehShader = {
 
 		"}"
 
-	].join( "\n" ),
+	].join("\n"),
 
 	fragmentShader: [
 
@@ -351,7 +350,7 @@ THREE.BokehShader = {
 		"	gl_FragColor.a = 1.0;",
 		"} "
 
-	].join( "\n" )
+	].join("\n")
 
 };
 
@@ -359,8 +358,8 @@ THREE.BokehDepthShader = {
 
 	uniforms: {
 
-		"mNear": { value: 1.0 },
-		"mFar": { value: 1000.0 },
+		"mNear": {value: 1.0},
+		"mFar": {value: 1000.0},
 
 	},
 
@@ -377,7 +376,7 @@ THREE.BokehDepthShader = {
 
 		"}"
 
-	].join( "\n" ),
+	].join("\n"),
 
 	fragmentShader: [
 
@@ -393,6 +392,6 @@ THREE.BokehDepthShader = {
 
 		"} "
 
-	].join( "\n" )
+	].join("\n")
 
 };

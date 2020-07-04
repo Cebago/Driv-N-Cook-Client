@@ -46,7 +46,7 @@ import {
 	Vector2
 } from "../../../build/three.module.js";
 
-function LWO2Parser( IFFParser ) {
+function LWO2Parser(IFFParser) {
 
 	this.IFF = IFFParser;
 
@@ -63,7 +63,7 @@ LWO2Parser.prototype = {
 
 		var blockID = this.IFF.reader.getIDTag();
 		var length = this.IFF.reader.getUint32(); // size of data in bytes
-		if ( length > this.IFF.reader.dv.byteLength - this.IFF.reader.offset ) {
+		if (length > this.IFF.reader.dv.byteLength - this.IFF.reader.offset) {
 
 			this.IFF.reader.offset -= 4;
 			length = this.IFF.reader.getUint16();
@@ -74,10 +74,10 @@ LWO2Parser.prototype = {
 		this.IFF.debugger.length = length;
 
 		// Data types may be found in either LWO2 OR LWO3 spec
-		switch ( blockID ) {
+		switch (blockID) {
 
 			case 'FORM': // form blocks may consist of sub -chunks or sub-forms
-				this.IFF.parseForm( length );
+				this.IFF.parseForm(length);
 				break;
 
 			// SKIPPED CHUNKS
@@ -191,15 +191,15 @@ LWO2Parser.prototype = {
 			case 'VCOL':
 			case 'ENAB':
 				this.IFF.debugger.skipped = true;
-				this.IFF.reader.skip( length );
+				this.IFF.reader.skip(length);
 				break;
 
 			case 'SURF':
-				this.IFF.parseSurfaceLwo2( length );
+				this.IFF.parseSurfaceLwo2(length);
 				break;
 
 			case 'CLIP':
-				this.IFF.parseClipLwo2( length );
+				this.IFF.parseClipLwo2(length);
 				break;
 
 			// Texture node chunks (not in spec)
@@ -218,8 +218,8 @@ LWO2Parser.prototype = {
 			case 'IINY':
 			case 'IINZ':
 			case 'IREF': // possibly a VX for reused texture nodes
-				if ( length === 4 ) this.IFF.currentNode[ blockID ] = this.IFF.reader.getInt32();
-				else this.IFF.reader.skip( length );
+				if (length === 4) this.IFF.currentNode[blockID] = this.IFF.reader.getInt32();
+				else this.IFF.reader.skip(length);
 				break;
 
 			case 'OTAG':
@@ -227,37 +227,37 @@ LWO2Parser.prototype = {
 				break;
 
 			case 'LAYR':
-				this.IFF.parseLayer( length );
+				this.IFF.parseLayer(length);
 				break;
 
 			case 'PNTS':
-				this.IFF.parsePoints( length );
+				this.IFF.parsePoints(length);
 				break;
 
 			case 'VMAP':
-				this.IFF.parseVertexMapping( length );
+				this.IFF.parseVertexMapping(length);
 				break;
 
 			case 'AUVU':
 			case 'AUVN':
-				this.IFF.reader.skip( length - 1 );
+				this.IFF.reader.skip(length - 1);
 				this.IFF.reader.getVariableLengthIndex(); // VX
 				break;
 
 			case 'POLS':
-				this.IFF.parsePolygonList( length );
+				this.IFF.parsePolygonList(length);
 				break;
 
 			case 'TAGS':
-				this.IFF.parseTagStrings( length );
+				this.IFF.parseTagStrings(length);
 				break;
 
 			case 'PTAG':
-				this.IFF.parsePolygonTagMapping( length );
+				this.IFF.parsePolygonTagMapping(length);
 				break;
 
 			case 'VMAD':
-				this.IFF.parseVertexMapping( length, true );
+				this.IFF.parseVertexMapping(length, true);
 				break;
 
 			// Misc CHUNKS
@@ -278,7 +278,7 @@ LWO2Parser.prototype = {
 
 			// Image Map Layer
 			case 'WRAP':
-				this.IFF.currentForm.wrap = { w: this.IFF.reader.getUint16(), h: this.IFF.reader.getUint16() };
+				this.IFF.currentForm.wrap = {w: this.IFF.reader.getUint16(), h: this.IFF.reader.getUint16()};
 				break;
 
 			case 'IMAG':
@@ -315,28 +315,28 @@ LWO2Parser.prototype = {
 
 			case 'NNME':
 				this.IFF.currentForm.refName = this.IFF.reader.getString();
-				this.IFF.currentSurface.nodes[ this.IFF.currentForm.refName ] = this.IFF.currentForm;
+				this.IFF.currentSurface.nodes[this.IFF.currentForm.refName] = this.IFF.currentForm;
 				break;
 
 			// Nodal Blocks : connections
 			case 'INME':
-				if ( ! this.IFF.currentForm.nodeName ) this.IFF.currentForm.nodeName = [];
-				this.IFF.currentForm.nodeName.push( this.IFF.reader.getString() );
+				if (!this.IFF.currentForm.nodeName) this.IFF.currentForm.nodeName = [];
+				this.IFF.currentForm.nodeName.push(this.IFF.reader.getString());
 				break;
 
 			case 'IINN':
-				if ( ! this.IFF.currentForm.inputNodeName ) this.IFF.currentForm.inputNodeName = [];
-				this.IFF.currentForm.inputNodeName.push( this.IFF.reader.getString() );
+				if (!this.IFF.currentForm.inputNodeName) this.IFF.currentForm.inputNodeName = [];
+				this.IFF.currentForm.inputNodeName.push(this.IFF.reader.getString());
 				break;
 
 			case 'IINM':
-				if ( ! this.IFF.currentForm.inputName ) this.IFF.currentForm.inputName = [];
-				this.IFF.currentForm.inputName.push( this.IFF.reader.getString() );
+				if (!this.IFF.currentForm.inputName) this.IFF.currentForm.inputName = [];
+				this.IFF.currentForm.inputName.push(this.IFF.reader.getString());
 				break;
 
 			case 'IONM':
-				if ( ! this.IFF.currentForm.inputOutputName ) this.IFF.currentForm.inputOutputName = [];
-				this.IFF.currentForm.inputOutputName.push( this.IFF.reader.getString() );
+				if (!this.IFF.currentForm.inputOutputName) this.IFF.currentForm.inputOutputName = [];
+				this.IFF.currentForm.inputOutputName.push(this.IFF.reader.getString());
 				break;
 
 			case 'FNAM':
@@ -344,55 +344,55 @@ LWO2Parser.prototype = {
 				break;
 
 			case 'CHAN': // NOTE: ENVL Forms may also have CHAN chunk, however ENVL is currently ignored
-				if ( length === 4 ) this.IFF.currentForm.textureChannel = this.IFF.reader.getIDTag();
-				else this.IFF.reader.skip( length );
+				if (length === 4) this.IFF.currentForm.textureChannel = this.IFF.reader.getIDTag();
+				else this.IFF.reader.skip(length);
 				break;
 
 			// LWO2 Spec chunks: these are needed since the SURF FORMs are often in LWO2 format
 			case 'SMAN':
 				var maxSmoothingAngle = this.IFF.reader.getFloat32();
-				this.IFF.currentSurface.attributes.smooth = ( maxSmoothingAngle < 0 ) ? false : true;
+				this.IFF.currentSurface.attributes.smooth = (maxSmoothingAngle < 0) ? false : true;
 				break;
 
 			// LWO2: Basic Surface Parameters
 			case 'COLR':
-				this.IFF.currentSurface.attributes.Color = { value: this.IFF.reader.getFloat32Array( 3 ) };
-				this.IFF.reader.skip( 2 ); // VX: envelope
+				this.IFF.currentSurface.attributes.Color = {value: this.IFF.reader.getFloat32Array(3)};
+				this.IFF.reader.skip(2); // VX: envelope
 				break;
 
 			case 'LUMI':
-				this.IFF.currentSurface.attributes.Luminosity = { value: this.IFF.reader.getFloat32() };
-				this.IFF.reader.skip( 2 );
+				this.IFF.currentSurface.attributes.Luminosity = {value: this.IFF.reader.getFloat32()};
+				this.IFF.reader.skip(2);
 				break;
 
 			case 'SPEC':
-				this.IFF.currentSurface.attributes.Specular = { value: this.IFF.reader.getFloat32() };
-				this.IFF.reader.skip( 2 );
+				this.IFF.currentSurface.attributes.Specular = {value: this.IFF.reader.getFloat32()};
+				this.IFF.reader.skip(2);
 				break;
 
 			case 'DIFF':
-				this.IFF.currentSurface.attributes.Diffuse = { value: this.IFF.reader.getFloat32() };
-				this.IFF.reader.skip( 2 );
+				this.IFF.currentSurface.attributes.Diffuse = {value: this.IFF.reader.getFloat32()};
+				this.IFF.reader.skip(2);
 				break;
 
 			case 'REFL':
-				this.IFF.currentSurface.attributes.Reflection = { value: this.IFF.reader.getFloat32() };
-				this.IFF.reader.skip( 2 );
+				this.IFF.currentSurface.attributes.Reflection = {value: this.IFF.reader.getFloat32()};
+				this.IFF.reader.skip(2);
 				break;
 
 			case 'GLOS':
-				this.IFF.currentSurface.attributes.Glossiness = { value: this.IFF.reader.getFloat32() };
-				this.IFF.reader.skip( 2 );
+				this.IFF.currentSurface.attributes.Glossiness = {value: this.IFF.reader.getFloat32()};
+				this.IFF.reader.skip(2);
 				break;
 
 			case 'TRAN':
 				this.IFF.currentSurface.attributes.opacity = this.IFF.reader.getFloat32();
-				this.IFF.reader.skip( 2 );
+				this.IFF.reader.skip(2);
 				break;
 
 			case 'BUMP':
 				this.IFF.currentSurface.attributes.bumpStrength = this.IFF.reader.getFloat32();
-				this.IFF.reader.skip( 2 );
+				this.IFF.reader.skip(2);
 				break;
 
 			case 'SIDE':
@@ -405,7 +405,7 @@ LWO2Parser.prototype = {
 
 			case 'RIND':
 				this.IFF.currentSurface.attributes.refractiveIndex = this.IFF.reader.getFloat32();
-				this.IFF.reader.skip( 2 );
+				this.IFF.reader.skip(2);
 				break;
 
 			case 'TIMG':
@@ -413,16 +413,16 @@ LWO2Parser.prototype = {
 				break;
 
 			case 'IMAP':
-				this.IFF.reader.skip( 2 );
+				this.IFF.reader.skip(2);
 				break;
 
 			case 'TMAP':
 				this.IFF.debugger.skipped = true;
-				this.IFF.reader.skip( length ); // needs implementing
+				this.IFF.reader.skip(length); // needs implementing
 				break;
 
 			case 'IUVI': // uv channel name
-				this.IFF.currentNode.UVChannel = this.IFF.reader.getString( length );
+				this.IFF.currentNode.UVChannel = this.IFF.reader.getString(length);
 				break;
 
 			case 'IUTL': // widthWrappingMode: 0 = Reset, 1 = Repeat, 2 = Mirror, 3 = Edge
@@ -438,11 +438,11 @@ LWO2Parser.prototype = {
 				break;
 
 			default:
-				this.IFF.parseUnknownCHUNK( blockID, length );
+				this.IFF.parseUnknownCHUNK(blockID, length);
 
 		}
 
-		if ( blockID != 'FORM' ) {
+		if (blockID != 'FORM') {
 
 			this.IFF.debugger.node = 1;
 			this.IFF.debugger.nodeID = blockID;
@@ -450,7 +450,7 @@ LWO2Parser.prototype = {
 
 		}
 
-		if ( this.IFF.reader.offset >= this.IFF.currentFormEnd ) {
+		if (this.IFF.reader.offset >= this.IFF.currentFormEnd) {
 
 			this.IFF.currentForm = this.IFF.parentForm;
 
@@ -460,7 +460,7 @@ LWO2Parser.prototype = {
 
 };
 
-function LWO3Parser( IFFParser ) {
+function LWO3Parser(IFFParser) {
 
 	this.IFF = IFFParser;
 
@@ -482,10 +482,10 @@ LWO3Parser.prototype = {
 		this.IFF.debugger.length = length;
 
 		// Data types may be found in either LWO2 OR LWO3 spec
-		switch ( blockID ) {
+		switch (blockID) {
 
 			case 'FORM': // form blocks may consist of sub -chunks or sub-forms
-				this.IFF.parseForm( length );
+				this.IFF.parseForm(length);
 				break;
 
 			// SKIPPED CHUNKS
@@ -542,7 +542,7 @@ LWO3Parser.prototype = {
 			// Texture Mapping Form skipped
 			case 'CSYS':
 
-				// Surface CHUNKs skipped
+			// Surface CHUNKs skipped
 			case 'OPAQ': // top level 'opacity' checkbox
 			case 'CMAP': // clip map
 
@@ -589,7 +589,7 @@ LWO3Parser.prototype = {
 			case 'VCOL':
 			case 'ENAB':
 				this.IFF.debugger.skipped = true;
-				this.IFF.reader.skip( length );
+				this.IFF.reader.skip(length);
 				break;
 
 			// Texture node chunks (not in spec)
@@ -608,8 +608,8 @@ LWO3Parser.prototype = {
 			case 'IINY':
 			case 'IINZ':
 			case 'IREF': // possibly a VX for reused texture nodes
-				if ( length === 4 ) this.IFF.currentNode[ blockID ] = this.IFF.reader.getInt32();
-				else this.IFF.reader.skip( length );
+				if (length === 4) this.IFF.currentNode[blockID] = this.IFF.reader.getInt32();
+				else this.IFF.reader.skip(length);
 				break;
 
 			case 'OTAG':
@@ -617,31 +617,31 @@ LWO3Parser.prototype = {
 				break;
 
 			case 'LAYR':
-				this.IFF.parseLayer( length );
+				this.IFF.parseLayer(length);
 				break;
 
 			case 'PNTS':
-				this.IFF.parsePoints( length );
+				this.IFF.parsePoints(length);
 				break;
 
 			case 'VMAP':
-				this.IFF.parseVertexMapping( length );
+				this.IFF.parseVertexMapping(length);
 				break;
 
 			case 'POLS':
-				this.IFF.parsePolygonList( length );
+				this.IFF.parsePolygonList(length);
 				break;
 
 			case 'TAGS':
-				this.IFF.parseTagStrings( length );
+				this.IFF.parseTagStrings(length);
 				break;
 
 			case 'PTAG':
-				this.IFF.parsePolygonTagMapping( length );
+				this.IFF.parsePolygonTagMapping(length);
 				break;
 
 			case 'VMAD':
-				this.IFF.parseVertexMapping( length, true );
+				this.IFF.parseVertexMapping(length, true);
 				break;
 
 			// Misc CHUNKS
@@ -662,7 +662,7 @@ LWO3Parser.prototype = {
 
 			// Image Map Layer
 			case 'WRAP':
-				this.IFF.currentForm.wrap = { w: this.IFF.reader.getUint16(), h: this.IFF.reader.getUint16() };
+				this.IFF.currentForm.wrap = {w: this.IFF.reader.getUint16(), h: this.IFF.reader.getUint16()};
 				break;
 
 			case 'IMAG':
@@ -699,28 +699,28 @@ LWO3Parser.prototype = {
 
 			case 'NNME':
 				this.IFF.currentForm.refName = this.IFF.reader.getString();
-				this.IFF.currentSurface.nodes[ this.IFF.currentForm.refName ] = this.IFF.currentForm;
+				this.IFF.currentSurface.nodes[this.IFF.currentForm.refName] = this.IFF.currentForm;
 				break;
 
 			// Nodal Blocks : connections
 			case 'INME':
-				if ( ! this.IFF.currentForm.nodeName ) this.IFF.currentForm.nodeName = [];
-				this.IFF.currentForm.nodeName.push( this.IFF.reader.getString() );
+				if (!this.IFF.currentForm.nodeName) this.IFF.currentForm.nodeName = [];
+				this.IFF.currentForm.nodeName.push(this.IFF.reader.getString());
 				break;
 
 			case 'IINN':
-				if ( ! this.IFF.currentForm.inputNodeName ) this.IFF.currentForm.inputNodeName = [];
-				this.IFF.currentForm.inputNodeName.push( this.IFF.reader.getString() );
+				if (!this.IFF.currentForm.inputNodeName) this.IFF.currentForm.inputNodeName = [];
+				this.IFF.currentForm.inputNodeName.push(this.IFF.reader.getString());
 				break;
 
 			case 'IINM':
-				if ( ! this.IFF.currentForm.inputName ) this.IFF.currentForm.inputName = [];
-				this.IFF.currentForm.inputName.push( this.IFF.reader.getString() );
+				if (!this.IFF.currentForm.inputName) this.IFF.currentForm.inputName = [];
+				this.IFF.currentForm.inputName.push(this.IFF.reader.getString());
 				break;
 
 			case 'IONM':
-				if ( ! this.IFF.currentForm.inputOutputName ) this.IFF.currentForm.inputOutputName = [];
-				this.IFF.currentForm.inputOutputName.push( this.IFF.reader.getString() );
+				if (!this.IFF.currentForm.inputOutputName) this.IFF.currentForm.inputOutputName = [];
+				this.IFF.currentForm.inputOutputName.push(this.IFF.reader.getString());
 				break;
 
 			case 'FNAM':
@@ -728,55 +728,55 @@ LWO3Parser.prototype = {
 				break;
 
 			case 'CHAN': // NOTE: ENVL Forms may also have CHAN chunk, however ENVL is currently ignored
-				if ( length === 4 ) this.IFF.currentForm.textureChannel = this.IFF.reader.getIDTag();
-				else this.IFF.reader.skip( length );
+				if (length === 4) this.IFF.currentForm.textureChannel = this.IFF.reader.getIDTag();
+				else this.IFF.reader.skip(length);
 				break;
 
 			// LWO2 Spec chunks: these are needed since the SURF FORMs are often in LWO2 format
 			case 'SMAN':
 				var maxSmoothingAngle = this.IFF.reader.getFloat32();
-				this.IFF.currentSurface.attributes.smooth = ( maxSmoothingAngle < 0 ) ? false : true;
+				this.IFF.currentSurface.attributes.smooth = (maxSmoothingAngle < 0) ? false : true;
 				break;
 
 			// LWO2: Basic Surface Parameters
 			case 'COLR':
-				this.IFF.currentSurface.attributes.Color = { value: this.IFF.reader.getFloat32Array( 3 ) };
-				this.IFF.reader.skip( 2 ); // VX: envelope
+				this.IFF.currentSurface.attributes.Color = {value: this.IFF.reader.getFloat32Array(3)};
+				this.IFF.reader.skip(2); // VX: envelope
 				break;
 
 			case 'LUMI':
-				this.IFF.currentSurface.attributes.Luminosity = { value: this.IFF.reader.getFloat32() };
-				this.IFF.reader.skip( 2 );
+				this.IFF.currentSurface.attributes.Luminosity = {value: this.IFF.reader.getFloat32()};
+				this.IFF.reader.skip(2);
 				break;
 
 			case 'SPEC':
-				this.IFF.currentSurface.attributes.Specular = { value: this.IFF.reader.getFloat32() };
-				this.IFF.reader.skip( 2 );
+				this.IFF.currentSurface.attributes.Specular = {value: this.IFF.reader.getFloat32()};
+				this.IFF.reader.skip(2);
 				break;
 
 			case 'DIFF':
-				this.IFF.currentSurface.attributes.Diffuse = { value: this.IFF.reader.getFloat32() };
-				this.IFF.reader.skip( 2 );
+				this.IFF.currentSurface.attributes.Diffuse = {value: this.IFF.reader.getFloat32()};
+				this.IFF.reader.skip(2);
 				break;
 
 			case 'REFL':
-				this.IFF.currentSurface.attributes.Reflection = { value: this.IFF.reader.getFloat32() };
-				this.IFF.reader.skip( 2 );
+				this.IFF.currentSurface.attributes.Reflection = {value: this.IFF.reader.getFloat32()};
+				this.IFF.reader.skip(2);
 				break;
 
 			case 'GLOS':
-				this.IFF.currentSurface.attributes.Glossiness = { value: this.IFF.reader.getFloat32() };
-				this.IFF.reader.skip( 2 );
+				this.IFF.currentSurface.attributes.Glossiness = {value: this.IFF.reader.getFloat32()};
+				this.IFF.reader.skip(2);
 				break;
 
 			case 'TRAN':
 				this.IFF.currentSurface.attributes.opacity = this.IFF.reader.getFloat32();
-				this.IFF.reader.skip( 2 );
+				this.IFF.reader.skip(2);
 				break;
 
 			case 'BUMP':
 				this.IFF.currentSurface.attributes.bumpStrength = this.IFF.reader.getFloat32();
-				this.IFF.reader.skip( 2 );
+				this.IFF.reader.skip(2);
 				break;
 
 			case 'SIDE':
@@ -789,7 +789,7 @@ LWO3Parser.prototype = {
 
 			case 'RIND':
 				this.IFF.currentSurface.attributes.refractiveIndex = this.IFF.reader.getFloat32();
-				this.IFF.reader.skip( 2 );
+				this.IFF.reader.skip(2);
 				break;
 
 			case 'TIMG':
@@ -801,7 +801,7 @@ LWO3Parser.prototype = {
 				break;
 
 			case 'IUVI': // uv channel name
-				this.IFF.currentNode.UVChannel = this.IFF.reader.getString( length );
+				this.IFF.currentNode.UVChannel = this.IFF.reader.getString(length);
 				break;
 
 			case 'IUTL': // widthWrappingMode: 0 = Reset, 1 = Repeat, 2 = Mirror, 3 = Edge
@@ -812,11 +812,11 @@ LWO3Parser.prototype = {
 				break;
 
 			default:
-				this.IFF.parseUnknownCHUNK( blockID, length );
+				this.IFF.parseUnknownCHUNK(blockID, length);
 
 		}
 
-		if ( blockID != 'FORM' ) {
+		if (blockID != 'FORM') {
 
 			this.IFF.debugger.node = 1;
 			this.IFF.debugger.nodeID = blockID;
@@ -824,7 +824,7 @@ LWO3Parser.prototype = {
 
 		}
 
-		if ( this.IFF.reader.offset >= this.IFF.currentFormEnd ) {
+		if (this.IFF.reader.offset >= this.IFF.currentFormEnd) {
 
 			this.IFF.currentForm = this.IFF.parentForm;
 
@@ -868,7 +868,7 @@ LWO3Parser.prototype = {
  *
  **/
 
-function IFFParser( ) {
+function IFFParser() {
 
 	this.debugger = new Debugger();
 	// this.debugger.enable(); // un-comment to log IFF hierarchy.
@@ -879,9 +879,9 @@ IFFParser.prototype = {
 
 	constructor: IFFParser,
 
-	parse: function ( buffer ) {
+	parse: function (buffer) {
 
-		this.reader = new DataViewReader( buffer );
+		this.reader = new DataViewReader(buffer);
 
 		this.tree = {
 			materials: {},
@@ -896,17 +896,17 @@ IFFParser.prototype = {
 
 		this.parseTopForm();
 
-		if ( this.tree.format === undefined ) return;
+		if (this.tree.format === undefined) return;
 
-		if ( this.tree.format === 'LWO2' ) {
+		if (this.tree.format === 'LWO2') {
 
-			this.parser = new LWO2Parser( this );
-			while ( ! this.reader.endOfFile() ) this.parser.parseBlock();
+			this.parser = new LWO2Parser(this);
+			while (!this.reader.endOfFile()) this.parser.parseBlock();
 
-		} else if ( this.tree.format === 'LWO3' ) {
+		} else if (this.tree.format === 'LWO3') {
 
-			this.parser = new LWO3Parser( this );
-			while ( ! this.reader.endOfFile() ) this.parser.parseBlock();
+			this.parser = new LWO3Parser(this);
+			while (!this.reader.endOfFile()) this.parser.parseBlock();
 
 		}
 
@@ -923,9 +923,9 @@ IFFParser.prototype = {
 
 		var topForm = this.reader.getIDTag();
 
-		if ( topForm !== 'FORM' ) {
+		if (topForm !== 'FORM') {
 
-			console.warn( "LWOLoader: Top-level FORM missing." );
+			console.warn("LWOLoader: Top-level FORM missing.");
 			return;
 
 		}
@@ -937,11 +937,11 @@ IFFParser.prototype = {
 
 		var type = this.reader.getIDTag();
 
-		if ( type === 'LWO2' ) {
+		if (type === 'LWO2') {
 
 			this.tree.format = type;
 
-		} else if ( type === 'LWO3' ) {
+		} else if (type === 'LWO3') {
 
 			this.tree.format = type;
 
@@ -962,11 +962,11 @@ IFFParser.prototype = {
 
 	// Forms are organisational and can contain any number of sub chunks and sub forms
 	// FORM ::= 'FORM'[ID4], length[U4], type[ID4], ( chunk[CHUNK] | form[FORM] ) * }
-	parseForm( length ) {
+	parseForm(length) {
 
 		var type = this.reader.getIDTag();
 
-		switch ( type ) {
+		switch (type) {
 
 			// SKIPPED FORMS
 			// if skipForm( length ) is called, the entire form and any sub forms and chunks are skipped
@@ -995,7 +995,7 @@ IFFParser.prototype = {
 			case 'VMLA':
 			case 'VMLB':
 				this.debugger.skipped = true;
-				this.skipForm( length ); // not currently supported
+				this.skipForm(length); // not currently supported
 				break;
 
 			// if break; is called directly, the position in the lwoTree is not created
@@ -1025,23 +1025,23 @@ IFFParser.prototype = {
 			case 'IBMP':
 			case 'IUTD':
 			case 'IVTD':
-				this.parseTextureNodeAttribute( type );
+				this.parseTextureNodeAttribute(type);
 				break;
 
 			case 'ENVL':
-				this.parseEnvelope( length );
+				this.parseEnvelope(length);
 				break;
 
-				// CLIP FORM AND SUB FORMS
+			// CLIP FORM AND SUB FORMS
 
 			case 'CLIP':
-				if ( this.tree.format === 'LWO2' ) {
+				if (this.tree.format === 'LWO2') {
 
-					this.parseForm( length );
+					this.parseForm(length);
 
 				} else {
 
-					this.parseClip( length );
+					this.parseClip(length);
 
 				}
 
@@ -1052,86 +1052,86 @@ IFFParser.prototype = {
 				break;
 
 			case 'XREF': // clone of another STIL
-				this.reader.skip( 8 ); // unknown
+				this.reader.skip(8); // unknown
 				this.currentForm.referenceTexture = {
 					index: this.reader.getUint32(),
 					refName: this.reader.getString() // internal unique ref
 				};
 				break;
 
-				// Not in spec, used by texture nodes
+			// Not in spec, used by texture nodes
 
 			case 'IMST':
-				this.parseImageStateForm( length );
+				this.parseImageStateForm(length);
 				break;
 
-				// SURF FORM AND SUB FORMS
+			// SURF FORM AND SUB FORMS
 
 			case 'SURF':
-				this.parseSurfaceForm( length );
+				this.parseSurfaceForm(length);
 				break;
 
 			case 'VALU': // Not in spec
-				this.parseValueForm( length );
+				this.parseValueForm(length);
 				break;
 
 			case 'NTAG':
-				this.parseSubNode( length );
+				this.parseSubNode(length);
 				break;
 
 			case 'ATTR': // BSDF Node Attributes
 			case 'SATR': // Standard Node Attributes
-				this.setupForm( 'attributes', length );
+				this.setupForm('attributes', length);
 				break;
 
 			case 'NCON':
-				this.parseConnections( length );
+				this.parseConnections(length);
 				break;
 
 			case 'SSHA':
 				this.parentForm = this.currentForm;
 				this.currentForm = this.currentSurface;
-				this.setupForm( 'surfaceShader', length );
+				this.setupForm('surfaceShader', length);
 				break;
 
 			case 'SSHD':
-				this.setupForm( 'surfaceShaderData', length );
+				this.setupForm('surfaceShaderData', length);
 				break;
 
 			case 'ENTR': // Not in spec
-				this.parseEntryForm( length );
+				this.parseEntryForm(length);
 				break;
 
-				// Image Map Layer
+			// Image Map Layer
 
 			case 'IMAP':
-				this.parseImageMap( length );
+				this.parseImageMap(length);
 				break;
 
 			case 'TAMP':
-				this.parseXVAL( 'amplitude', length );
+				this.parseXVAL('amplitude', length);
 				break;
 
-				//Texture Mapping Form
+			//Texture Mapping Form
 
 			case 'TMAP':
-				this.setupForm( 'textureMap', length );
+				this.setupForm('textureMap', length);
 				break;
 
 			case 'CNTR':
-				this.parseXVAL3( 'center', length );
+				this.parseXVAL3('center', length);
 				break;
 
 			case 'SIZE':
-				this.parseXVAL3( 'scale', length );
+				this.parseXVAL3('scale', length);
 				break;
 
 			case 'ROTA':
-				this.parseXVAL3( 'rotation', length );
+				this.parseXVAL3('rotation', length);
 				break;
 
 			default:
-				this.parseUnknownForm( type, length );
+				this.parseUnknownForm(type, length);
 
 		}
 
@@ -1141,49 +1141,49 @@ IFFParser.prototype = {
 
 	},
 
-	setupForm( type, length ) {
+	setupForm(type, length) {
 
-		if ( ! this.currentForm ) this.currentForm = this.currentNode;
+		if (!this.currentForm) this.currentForm = this.currentNode;
 
 		this.currentFormEnd = this.reader.offset + length;
 		this.parentForm = this.currentForm;
 
-		if ( ! this.currentForm[ type ] ) {
+		if (!this.currentForm[type]) {
 
-			this.currentForm[ type ] = {};
-			this.currentForm = this.currentForm[ type ];
+			this.currentForm[type] = {};
+			this.currentForm = this.currentForm[type];
 
 
 		} else {
 
 			// should never see this unless there's a bug in the reader
-			console.warn( 'LWOLoader: form already exists on parent: ', type, this.currentForm );
+			console.warn('LWOLoader: form already exists on parent: ', type, this.currentForm);
 
-			this.currentForm = this.currentForm[ type ];
+			this.currentForm = this.currentForm[type];
 
 		}
 
 
 	},
 
-	skipForm( length ) {
+	skipForm(length) {
 
-		this.reader.skip( length - 4 );
-
-	},
-
-	parseUnknownForm( type, length ) {
-
-		console.warn( 'LWOLoader: unknown FORM encountered: ' + type, length );
-
-		printBuffer( this.reader.dv.buffer, this.reader.offset, length - 4 );
-		this.reader.skip( length - 4 );
+		this.reader.skip(length - 4);
 
 	},
 
-	parseSurfaceForm( length ) {
+	parseUnknownForm(type, length) {
 
-		this.reader.skip( 8 ); // unknown Uint32 x2
+		console.warn('LWOLoader: unknown FORM encountered: ' + type, length);
+
+		printBuffer(this.reader.dv.buffer, this.reader.offset, length - 4);
+		this.reader.skip(length - 4);
+
+	},
+
+	parseSurfaceForm(length) {
+
+		this.reader.skip(8); // unknown Uint32 x2
 
 		var name = this.reader.getString();
 
@@ -1196,7 +1196,7 @@ IFFParser.prototype = {
 			source: this.reader.getString(),
 		};
 
-		this.tree.materials[ name ] = surface;
+		this.tree.materials[name] = surface;
 		this.currentSurface = surface;
 
 		this.parentForm = this.tree.materials;
@@ -1205,7 +1205,7 @@ IFFParser.prototype = {
 
 	},
 
-	parseSurfaceLwo2( length ) {
+	parseSurfaceLwo2(length) {
 
 		var name = this.reader.getString();
 
@@ -1217,7 +1217,7 @@ IFFParser.prototype = {
 			source: this.reader.getString(),
 		};
 
-		this.tree.materials[ name ] = surface;
+		this.tree.materials[name] = surface;
 		this.currentSurface = surface;
 
 		this.parentForm = this.tree.materials;
@@ -1226,13 +1226,13 @@ IFFParser.prototype = {
 
 	},
 
-	parseSubNode( length ) {
+	parseSubNode(length) {
 
 		// parse the NRNM CHUNK of the subnode FORM to get
 		// a meaningful name for the subNode
 		// some subnodes can be renamed, but Input and Surface cannot
 
-		this.reader.skip( 8 ); // NRNM + length
+		this.reader.skip(8); // NRNM + length
 		var name = this.reader.getString();
 
 		var node = {
@@ -1247,7 +1247,7 @@ IFFParser.prototype = {
 	},
 
 	// collect attributes from all nodes at the top level of a surface
-	parseConnections( length ) {
+	parseConnections(length) {
 
 		this.currentFormEnd = this.reader.offset + length;
 		this.parentForm = this.currentForm;
@@ -1257,13 +1257,13 @@ IFFParser.prototype = {
 	},
 
 	// surface node attribute data, e.g. specular, roughness etc
-	parseEntryForm( length ) {
+	parseEntryForm(length) {
 
-		this.reader.skip( 8 ); // NAME + length
+		this.reader.skip(8); // NAME + length
 		var name = this.reader.getString();
 		this.currentForm = this.currentNode.attributes;
 
-		this.setupForm( name, length );
+		this.setupForm(name, length);
 
 	},
 
@@ -1271,27 +1271,27 @@ IFFParser.prototype = {
 	// sub form of entry form
 	parseValueForm() {
 
-		this.reader.skip( 8 ); // unknown + length
+		this.reader.skip(8); // unknown + length
 
 		var valueType = this.reader.getString();
 
-		if ( valueType === 'double' ) {
+		if (valueType === 'double') {
 
 			this.currentForm.value = this.reader.getUint64();
 
-		} else if ( valueType === 'int' ) {
+		} else if (valueType === 'int') {
 
 			this.currentForm.value = this.reader.getUint32();
 
-		} else if ( valueType === 'vparam' ) {
+		} else if (valueType === 'vparam') {
 
-			this.reader.skip( 24 );
+			this.reader.skip(24);
 			this.currentForm.value = this.reader.getFloat64();
 
-		} else if ( valueType === 'vparam3' ) {
+		} else if (valueType === 'vparam3') {
 
-			this.reader.skip( 24 );
-			this.currentForm.value = this.reader.getFloat64Array( 3 );
+			this.reader.skip(24);
+			this.currentForm.value = this.reader.getFloat64Array(3);
 
 		}
 
@@ -1301,47 +1301,47 @@ IFFParser.prototype = {
 	// Data other thanmipMapLevel unknown
 	parseImageStateForm() {
 
-		this.reader.skip( 8 ); // unknown
+		this.reader.skip(8); // unknown
 
 		this.currentForm.mipMapLevel = this.reader.getFloat32();
 
 	},
 
 	// LWO2 style image data node OR LWO3 textures defined at top level in editor (not as SURF node)
-	parseImageMap( length ) {
+	parseImageMap(length) {
 
 		this.currentFormEnd = this.reader.offset + length;
 		this.parentForm = this.currentForm;
 
-		if ( ! this.currentForm.maps ) this.currentForm.maps = [];
+		if (!this.currentForm.maps) this.currentForm.maps = [];
 
 		var map = {};
-		this.currentForm.maps.push( map );
+		this.currentForm.maps.push(map);
 		this.currentForm = map;
 
-		this.reader.skip( 10 ); // unknown, could be an issue if it contains a VX
+		this.reader.skip(10); // unknown, could be an issue if it contains a VX
 
 	},
 
-	parseTextureNodeAttribute( type ) {
+	parseTextureNodeAttribute(type) {
 
-		this.reader.skip( 28 ); // FORM + length + VPRM + unknown + Uint32 x2 + float32
+		this.reader.skip(28); // FORM + length + VPRM + unknown + Uint32 x2 + float32
 
-		this.reader.skip( 20 ); // FORM + length + VPVL + float32 + Uint32
+		this.reader.skip(20); // FORM + length + VPVL + float32 + Uint32
 
-		switch ( type ) {
+		switch (type) {
 
 			case 'ISCL':
-				this.currentNode.scale = this.reader.getFloat32Array( 3 );
+				this.currentNode.scale = this.reader.getFloat32Array(3);
 				break;
 			case 'IPOS':
-				this.currentNode.position = this.reader.getFloat32Array( 3 );
+				this.currentNode.position = this.reader.getFloat32Array(3);
 				break;
 			case 'IROT':
-				this.currentNode.rotation = this.reader.getFloat32Array( 3 );
+				this.currentNode.rotation = this.reader.getFloat32Array(3);
 				break;
 			case 'IFAL':
-				this.currentNode.falloff = this.reader.getFloat32Array( 3 );
+				this.currentNode.falloff = this.reader.getFloat32Array(3);
 				break;
 
 			case 'IBMP':
@@ -1356,15 +1356,15 @@ IFFParser.prototype = {
 
 		}
 
-		this.reader.skip( 2 ); // unknown
+		this.reader.skip(2); // unknown
 
 
 	},
 
 	// ENVL forms are currently ignored
-	parseEnvelope( length ) {
+	parseEnvelope(length) {
 
-		this.reader.skip( length - 4 ); // skipping  entirely for now
+		this.reader.skip(length - 4); // skipping  entirely for now
 
 	},
 
@@ -1374,14 +1374,14 @@ IFFParser.prototype = {
 
 	// clips can either be defined inside a surface node, or at the top
 	// level and they have a different format in each case
-	parseClip( length ) {
+	parseClip(length) {
 
 		var tag = this.reader.getIDTag();
 
 		// inside surface node
-		if ( tag === 'FORM' ) {
+		if (tag === 'FORM') {
 
-			this.reader.skip( 16 );
+			this.reader.skip(16);
 
 			this.currentNode.fileName = this.reader.getString();
 
@@ -1390,22 +1390,22 @@ IFFParser.prototype = {
 		}
 
 		// otherwise top level
-		this.reader.setOffset( this.reader.offset - 4 );
+		this.reader.setOffset(this.reader.offset - 4);
 
 		this.currentFormEnd = this.reader.offset + length;
 		this.parentForm = this.currentForm;
 
-		this.reader.skip( 8 ); // unknown
+		this.reader.skip(8); // unknown
 
 		var texture = {
 			index: this.reader.getUint32()
 		};
-		this.tree.textures.push( texture );
+		this.tree.textures.push(texture);
 		this.currentForm = texture;
 
 	},
 
-	parseClipLwo2( length ) {
+	parseClipLwo2(length) {
 
 		var texture = {
 			index: this.reader.getUint32(),
@@ -1413,18 +1413,18 @@ IFFParser.prototype = {
 		};
 
 		// seach STIL block
-		while ( true ) {
+		while (true) {
 
 			var tag = this.reader.getIDTag();
 			var n_length = this.reader.getUint16();
-			if ( tag === 'STIL' ) {
+			if (tag === 'STIL') {
 
 				texture.fileName = this.reader.getString();
 				break;
 
 			}
 
-			if ( n_length >= length ) {
+			if (n_length >= length) {
 
 				break;
 
@@ -1432,41 +1432,41 @@ IFFParser.prototype = {
 
 		}
 
-		this.tree.textures.push( texture );
+		this.tree.textures.push(texture);
 		this.currentForm = texture;
 
 	},
 
 	parseImage() {
 
-		this.reader.skip( 8 ); // unknown
+		this.reader.skip(8); // unknown
 		this.currentForm.fileName = this.reader.getString();
 
 	},
 
-	parseXVAL( type, length ) {
+	parseXVAL(type, length) {
 
 		var endOffset = this.reader.offset + length - 4;
-		this.reader.skip( 8 );
+		this.reader.skip(8);
 
-		this.currentForm[ type ] = this.reader.getFloat32();
+		this.currentForm[type] = this.reader.getFloat32();
 
-		this.reader.setOffset( endOffset ); // set end offset directly to skip optional envelope
+		this.reader.setOffset(endOffset); // set end offset directly to skip optional envelope
 
 	},
 
-	parseXVAL3( type, length ) {
+	parseXVAL3(type, length) {
 
 		var endOffset = this.reader.offset + length - 4;
-		this.reader.skip( 8 );
+		this.reader.skip(8);
 
-		this.currentForm[ type ] = {
+		this.currentForm[type] = {
 			x: this.reader.getFloat32(),
 			y: this.reader.getFloat32(),
 			z: this.reader.getFloat32(),
 		};
 
-		this.reader.setOffset( endOffset );
+		this.reader.setOffset(endOffset);
 
 	},
 
@@ -1474,9 +1474,9 @@ IFFParser.prototype = {
 	// OTAG { type[ID4], tag-string[S0] }
 	parseObjectTag() {
 
-		if ( ! this.tree.objectTags ) this.tree.objectTags = {};
+		if (!this.tree.objectTags) this.tree.objectTags = {};
 
-		this.tree.objectTags[ this.reader.getIDTag() ] = {
+		this.tree.objectTags[this.reader.getIDTag()] = {
 			tagString: this.reader.getString()
 		};
 
@@ -1484,35 +1484,35 @@ IFFParser.prototype = {
 
 	// Signals the start of a new layer. All the data chunks which follow will be included in this layer until another layer chunk is encountered.
 	// LAYR: number[U2], flags[U2], pivot[VEC12], name[S0], parent[U2]
-	parseLayer( length ) {
+	parseLayer(length) {
 
 		var layer = {
 			number: this.reader.getUint16(),
 			flags: this.reader.getUint16(), // If the least significant bit of flags is set, the layer is hidden.
-			pivot: this.reader.getFloat32Array( 3 ), // Note: this seems to be superflous, as the geometry is translated when pivot is present
+			pivot: this.reader.getFloat32Array(3), // Note: this seems to be superflous, as the geometry is translated when pivot is present
 			name: this.reader.getString(),
 		};
 
-		this.tree.layers.push( layer );
+		this.tree.layers.push(layer);
 		this.currentLayer = layer;
 
-		var parsedLength = 16 + stringOffset( this.currentLayer.name ); // index ( 2 ) + flags( 2 ) + pivot( 12 ) + stringlength
+		var parsedLength = 16 + stringOffset(this.currentLayer.name); // index ( 2 ) + flags( 2 ) + pivot( 12 ) + stringlength
 
 		// if we have not reached then end of the layer block, there must be a parent defined
-		this.currentLayer.parent = ( parsedLength < length ) ? this.reader.getUint16() : - 1; // omitted or -1 for no parent
+		this.currentLayer.parent = (parsedLength < length) ? this.reader.getUint16() : -1; // omitted or -1 for no parent
 
 	},
 
 	// VEC12 * ( F4 + F4 + F4 ) array of x,y,z vectors
 	// Converting from left to right handed coordinate system:
 	// x -> -x and switch material FrontSide -> BackSide
-	parsePoints( length ) {
+	parsePoints(length) {
 
 		this.currentPoints = [];
-		for ( var i = 0; i < length / 4; i += 3 ) {
+		for (var i = 0; i < length / 4; i += 3) {
 
 			// z -> -z to match three.js right handed coords
-			this.currentPoints.push( this.reader.getFloat32(), this.reader.getFloat32(), - this.reader.getFloat32() );
+			this.currentPoints.push(this.reader.getFloat32(), this.reader.getFloat32(), -this.reader.getFloat32());
 
 		}
 
@@ -1528,13 +1528,13 @@ IFFParser.prototype = {
 	// if they exist. The vector values in the VMAD will then replace those in the
 	// corresponding VMAP, but only for calculations involving the specified polygons.
 	// VMAD { type[ID4], dimension[U2], name[S0], ( vert[VX], poly[VX], value[F4] # dimension ) * }
-	parseVertexMapping( length, discontinuous ) {
+	parseVertexMapping(length, discontinuous) {
 
 		var finalOffset = this.reader.offset + length;
 
 		var channelName = this.reader.getString();
 
-		if ( this.reader.offset === finalOffset ) {
+		if (this.reader.offset === finalOffset) {
 
 			// then we are in a texture node and the VMAP chunk is just a reference to a UV channel name
 			this.currentForm.UVChannel = channelName;
@@ -1543,23 +1543,23 @@ IFFParser.prototype = {
 		}
 
 		// otherwise reset to initial length and parse normal VMAP CHUNK
-		this.reader.setOffset( this.reader.offset - stringOffset( channelName ) );
+		this.reader.setOffset(this.reader.offset - stringOffset(channelName));
 
 		var type = this.reader.getIDTag();
 
 		this.reader.getUint16(); // dimension
 		var name = this.reader.getString();
 
-		var remainingLength = length - 6 - stringOffset( name );
+		var remainingLength = length - 6 - stringOffset(name);
 
-		switch ( type ) {
+		switch (type) {
 
 			case 'TXUV':
-				this.parseUVMapping( name, finalOffset, discontinuous );
+				this.parseUVMapping(name, finalOffset, discontinuous);
 				break;
 			case 'MORF':
 			case 'SPOT':
-				this.parseMorphTargets( name, finalOffset, type ); // can't be discontinuous
+				this.parseMorphTargets(name, finalOffset, type); // can't be discontinuous
 				break;
 			// unsupported VMAPs
 			case 'APSL':
@@ -1569,37 +1569,37 @@ IFFParser.prototype = {
 			case 'PICK':
 			case 'RGB ':
 			case 'RGBA':
-				this.reader.skip( remainingLength );
+				this.reader.skip(remainingLength);
 				break;
 			default:
-				console.warn( 'LWOLoader: unknown vertex map type: ' + type );
-				this.reader.skip( remainingLength );
+				console.warn('LWOLoader: unknown vertex map type: ' + type);
+				this.reader.skip(remainingLength);
 
 		}
 
 	},
 
-	parseUVMapping( name, finalOffset, discontinuous ) {
+	parseUVMapping(name, finalOffset, discontinuous) {
 
 		var uvIndices = [];
 		var polyIndices = [];
 		var uvs = [];
 
-		while ( this.reader.offset < finalOffset ) {
+		while (this.reader.offset < finalOffset) {
 
-			uvIndices.push( this.reader.getVariableLengthIndex() );
+			uvIndices.push(this.reader.getVariableLengthIndex());
 
-			if ( discontinuous ) polyIndices.push( this.reader.getVariableLengthIndex() );
+			if (discontinuous) polyIndices.push(this.reader.getVariableLengthIndex());
 
-			uvs.push( this.reader.getFloat32(), this.reader.getFloat32() );
+			uvs.push(this.reader.getFloat32(), this.reader.getFloat32());
 
 		}
 
-		if ( discontinuous ) {
+		if (discontinuous) {
 
-			if ( ! this.currentLayer.discontinuousUVs ) this.currentLayer.discontinuousUVs = {};
+			if (!this.currentLayer.discontinuousUVs) this.currentLayer.discontinuousUVs = {};
 
-			this.currentLayer.discontinuousUVs[ name ] = {
+			this.currentLayer.discontinuousUVs[name] = {
 				uvIndices: uvIndices,
 				polyIndices: polyIndices,
 				uvs: uvs,
@@ -1607,9 +1607,9 @@ IFFParser.prototype = {
 
 		} else {
 
-			if ( ! this.currentLayer.uvs ) this.currentLayer.uvs = {};
+			if (!this.currentLayer.uvs) this.currentLayer.uvs = {};
 
-			this.currentLayer.uvs[ name ] = {
+			this.currentLayer.uvs[name] = {
 				uvIndices: uvIndices,
 				uvs: uvs,
 			};
@@ -1618,24 +1618,24 @@ IFFParser.prototype = {
 
 	},
 
-	parseMorphTargets( name, finalOffset, type ) {
+	parseMorphTargets(name, finalOffset, type) {
 
 		var indices = [];
 		var points = [];
 
-		type = ( type === 'MORF' ) ? 'relative' : 'absolute';
+		type = (type === 'MORF') ? 'relative' : 'absolute';
 
-		while ( this.reader.offset < finalOffset ) {
+		while (this.reader.offset < finalOffset) {
 
-			indices.push( this.reader.getVariableLengthIndex() );
+			indices.push(this.reader.getVariableLengthIndex());
 			// z -> -z to match three.js right handed coords
-			points.push( this.reader.getFloat32(), this.reader.getFloat32(), - this.reader.getFloat32() );
+			points.push(this.reader.getFloat32(), this.reader.getFloat32(), -this.reader.getFloat32());
 
 		}
 
-		if ( ! this.currentLayer.morphTargets ) this.currentLayer.morphTargets = {};
+		if (!this.currentLayer.morphTargets) this.currentLayer.morphTargets = {};
 
-		this.currentLayer.morphTargets[ name ] = {
+		this.currentLayer.morphTargets[name] = {
 			indices: indices,
 			points: points,
 			type: type,
@@ -1645,7 +1645,7 @@ IFFParser.prototype = {
 
 	// A list of polygons for the current layer.
 	// POLS { type[ID4], ( numvert+flags[U2], vert[VX] # numvert ) * }
-	parsePolygonList( length ) {
+	parsePolygonList(length) {
 
 		var finalOffset = this.reader.offset + length;
 		var type = this.reader.getIDTag();
@@ -1655,15 +1655,15 @@ IFFParser.prototype = {
 		// hold a list of polygon sizes, to be split up later
 		var polygonDimensions = [];
 
-		while ( this.reader.offset < finalOffset ) {
+		while (this.reader.offset < finalOffset) {
 
 			var numverts = this.reader.getUint16();
 
 			//var flags = numverts & 64512; // 6 high order bits are flags - ignoring for now
 			numverts = numverts & 1023; // remaining ten low order bits are vertex num
-			polygonDimensions.push( numverts );
+			polygonDimensions.push(numverts);
 
-			for ( var j = 0; j < numverts; j ++ ) indices.push( this.reader.getVariableLengthIndex() );
+			for (var j = 0; j < numverts; j++) indices.push(this.reader.getVariableLengthIndex());
 
 		}
 
@@ -1675,8 +1675,8 @@ IFFParser.prototype = {
 		};
 
 		// Note: assuming that all polys will be lines or points if the first is
-		if ( polygonDimensions[ 0 ] === 1 ) geometryData.type = 'points';
-		else if ( polygonDimensions[ 0 ] === 2 ) geometryData.type = 'lines';
+		if (polygonDimensions[0] === 1) geometryData.type = 'points';
+		else if (polygonDimensions[0] === 2) geometryData.type = 'lines';
 
 		this.currentLayer.geometry = geometryData;
 
@@ -1684,61 +1684,61 @@ IFFParser.prototype = {
 
 	// Lists the tag strings that can be associated with polygons by the PTAG chunk.
 	// TAGS { tag-string[S0] * }
-	parseTagStrings( length ) {
+	parseTagStrings(length) {
 
-		this.tree.tags = this.reader.getStringArray( length );
+		this.tree.tags = this.reader.getStringArray(length);
 
 	},
 
 	// Associates tags of a given type with polygons in the most recent POLS chunk.
 	// PTAG { type[ID4], ( poly[VX], tag[U2] ) * }
-	parsePolygonTagMapping( length ) {
+	parsePolygonTagMapping(length) {
 
 		var finalOffset = this.reader.offset + length;
 		var type = this.reader.getIDTag();
-		if ( type === 'SURF' ) this.parseMaterialIndices( finalOffset );
+		if (type === 'SURF') this.parseMaterialIndices(finalOffset);
 		else { //PART, SMGP, COLR not supported
 
-			this.reader.skip( length - 4 );
+			this.reader.skip(length - 4);
 
 		}
 
 	},
 
-	parseMaterialIndices( finalOffset ) {
+	parseMaterialIndices(finalOffset) {
 
 		// array holds polygon index followed by material index
 		this.currentLayer.geometry.materialIndices = [];
 
-		while ( this.reader.offset < finalOffset ) {
+		while (this.reader.offset < finalOffset) {
 
 			var polygonIndex = this.reader.getVariableLengthIndex();
 			var materialIndex = this.reader.getUint16();
 
-			this.currentLayer.geometry.materialIndices.push( polygonIndex, materialIndex );
+			this.currentLayer.geometry.materialIndices.push(polygonIndex, materialIndex);
 
 		}
 
 	},
 
-	parseUnknownCHUNK( blockID, length ) {
+	parseUnknownCHUNK(blockID, length) {
 
-		console.warn( 'LWOLoader: unknown chunk type: ' + blockID + ' length: ' + length );
+		console.warn('LWOLoader: unknown chunk type: ' + blockID + ' length: ' + length);
 
 		// print the chunk plus some bytes padding either side
 		// printBuffer( this.reader.dv.buffer, this.reader.offset - 20, length + 40 );
 
-		var data = this.reader.getString( length );
+		var data = this.reader.getString(length);
 
-		this.currentForm[ blockID ] = data;
+		this.currentForm[blockID] = data;
 
 	}
 
 };
 
-function DataViewReader( buffer ) {
+function DataViewReader(buffer) {
 
-	this.dv = new DataView( buffer );
+	this.dv = new DataView(buffer);
 	this.offset = 0;
 
 }
@@ -1753,15 +1753,15 @@ DataViewReader.prototype = {
 
 	},
 
-	setOffset( offset ) {
+	setOffset(offset) {
 
-		if ( offset > 0 && offset < this.dv.buffer.byteLength ) {
+		if (offset > 0 && offset < this.dv.buffer.byteLength) {
 
 			this.offset = offset;
 
 		} else {
 
-			console.error( 'LWOLoader: invalid buffer offset' );
+			console.error('LWOLoader: invalid buffer offset');
 
 		}
 
@@ -1769,12 +1769,12 @@ DataViewReader.prototype = {
 
 	endOfFile: function () {
 
-		if ( this.offset >= this.size() ) return true;
+		if (this.offset >= this.size()) return true;
 		return false;
 
 	},
 
-	skip: function ( length ) {
+	skip: function (length) {
 
 		this.offset += length;
 
@@ -1782,7 +1782,7 @@ DataViewReader.prototype = {
 
 	getUint8: function () {
 
-		var value = this.dv.getUint8( this.offset );
+		var value = this.dv.getUint8(this.offset);
 		this.offset += 1;
 		return value;
 
@@ -1790,7 +1790,7 @@ DataViewReader.prototype = {
 
 	getUint16: function () {
 
-		var value = this.dv.getUint16( this.offset );
+		var value = this.dv.getUint16(this.offset);
 		this.offset += 2;
 		return value;
 
@@ -1798,7 +1798,7 @@ DataViewReader.prototype = {
 
 	getInt32: function () {
 
-		var value = this.dv.getInt32( this.offset, false );
+		var value = this.dv.getInt32(this.offset, false);
 		this.offset += 4;
 		return value;
 
@@ -1806,7 +1806,7 @@ DataViewReader.prototype = {
 
 	getUint32: function () {
 
-		var value = this.dv.getUint32( this.offset, false );
+		var value = this.dv.getUint32(this.offset, false);
 		this.offset += 4;
 		return value;
 
@@ -1824,19 +1824,19 @@ DataViewReader.prototype = {
 
 	getFloat32: function () {
 
-		var value = this.dv.getFloat32( this.offset, false );
+		var value = this.dv.getFloat32(this.offset, false);
 		this.offset += 4;
 		return value;
 
 	},
 
-	getFloat32Array: function ( size ) {
+	getFloat32Array: function (size) {
 
 		var a = [];
 
-		for ( var i = 0; i < size; i ++ ) {
+		for (var i = 0; i < size; i++) {
 
-			a.push( this.getFloat32() );
+			a.push(this.getFloat32());
 
 		}
 
@@ -1846,19 +1846,19 @@ DataViewReader.prototype = {
 
 	getFloat64: function () {
 
-		var value = this.dv.getFloat64( this.offset, this.littleEndian );
+		var value = this.dv.getFloat64(this.offset, this.littleEndian);
 		this.offset += 8;
 		return value;
 
 	},
 
-	getFloat64Array: function ( size ) {
+	getFloat64Array: function (size) {
 
 		var a = [];
 
-		for ( var i = 0; i < size; i ++ ) {
+		for (var i = 0; i < size; i++) {
 
-			a.push( this.getFloat64() );
+			a.push(this.getFloat64());
 
 		}
 
@@ -1876,7 +1876,7 @@ DataViewReader.prototype = {
 
 		var firstByte = this.getUint8();
 
-		if ( firstByte === 255 ) {
+		if (firstByte === 255) {
 
 			return this.getUint8() * 65536 + this.getUint8() * 256 + this.getUint8();
 
@@ -1889,22 +1889,22 @@ DataViewReader.prototype = {
 	// An ID tag is a sequence of 4 bytes containing 7-bit ASCII values
 	getIDTag() {
 
-		return this.getString( 4 );
+		return this.getString(4);
 
 	},
 
-	getString: function ( size ) {
+	getString: function (size) {
 
-		if ( size === 0 ) return;
+		if (size === 0) return;
 
 		// note: safari 9 doesn't support Uint8Array.indexOf; create intermediate array instead
 		var a = [];
 
-		if ( size ) {
+		if (size) {
 
-			for ( var i = 0; i < size; i ++ ) {
+			for (var i = 0; i < size; i++) {
 
-				a[ i ] = this.getUint8();
+				a[i] = this.getUint8();
 
 			}
 
@@ -1913,28 +1913,28 @@ DataViewReader.prototype = {
 			var currentChar;
 			var len = 0;
 
-			while ( currentChar !== 0 ) {
+			while (currentChar !== 0) {
 
 				currentChar = this.getUint8();
-				if ( currentChar !== 0 ) a.push( currentChar );
-				len ++;
+				if (currentChar !== 0) a.push(currentChar);
+				len++;
 
 			}
 
-			if ( ! isEven( len + 1 ) ) this.getUint8(); // if string with terminating nullbyte is uneven, extra nullbyte is added
+			if (!isEven(len + 1)) this.getUint8(); // if string with terminating nullbyte is uneven, extra nullbyte is added
 
 		}
 
-		return LoaderUtils.decodeText( new Uint8Array( a ) );
+		return LoaderUtils.decodeText(new Uint8Array(a));
 
 	},
 
-	getStringArray: function ( size ) {
+	getStringArray: function (size) {
 
-		var a = this.getString( size );
-		a = a.split( '\0' );
+		var a = this.getString(size);
+		a = a.split('\0');
 
-		return a.filter( Boolean ); // return array with any empty strings removed
+		return a.filter(Boolean); // return array with any empty strings removed
 
 	}
 
@@ -1942,7 +1942,7 @@ DataViewReader.prototype = {
 
 // ************** DEBUGGER  **************
 
-function Debugger( ) {
+function Debugger() {
 
 	this.active = false;
 	this.depth = 0;
@@ -1962,11 +1962,11 @@ Debugger.prototype = {
 
 	log: function () {
 
-		if ( ! this.active ) return;
+		if (!this.active) return;
 
 		var nodeType;
 
-		switch ( this.node ) {
+		switch (this.node) {
 
 			case 0:
 				nodeType = "FORM";
@@ -1983,19 +1983,19 @@ Debugger.prototype = {
 		}
 
 		console.log(
-			"| ".repeat( this.depth ) +
+			"| ".repeat(this.depth) +
 			nodeType,
 			this.nodeID,
 			`( ${this.offset} ) -> ( ${this.dataOffset + this.length} )`,
-			( ( this.node == 0 ) ? " {" : "" ),
-			( ( this.skipped ) ? "SKIPPED" : "" ),
-			( ( this.node == 0 && this.skipped ) ? "}" : "" )
+			((this.node == 0) ? " {" : ""),
+			((this.skipped) ? "SKIPPED" : ""),
+			((this.node == 0 && this.skipped) ? "}" : "")
 		);
 
-		if ( this.node == 0 && ! this.skipped ) {
+		if (this.node == 0 && !this.skipped) {
 
 			this.depth += 1;
-			this.formList.push( this.dataOffset + this.length );
+			this.formList.push(this.dataOffset + this.length);
 
 		}
 
@@ -2005,15 +2005,15 @@ Debugger.prototype = {
 
 	closeForms: function () {
 
-		if ( ! this.active ) return;
+		if (!this.active) return;
 
-		for ( var i = this.formList.length - 1; i >= 0; i -- ) {
+		for (var i = this.formList.length - 1; i >= 0; i--) {
 
-			if ( this.offset >= this.formList[ i ] ) {
+			if (this.offset >= this.formList[i]) {
 
 				this.depth -= 1;
-				console.log( "| ".repeat( this.depth ) + "}" );
-				this.formList.splice( - 1, 1 );
+				console.log("| ".repeat(this.depth) + "}");
+				this.formList.splice(-1, 1);
 
 			}
 
@@ -2025,7 +2025,7 @@ Debugger.prototype = {
 
 // ************** UTILITY FUNCTIONS **************
 
-function isEven( num ) {
+function isEven(num) {
 
 	return num % 2;
 
@@ -2033,75 +2033,75 @@ function isEven( num ) {
 
 // calculate the length of the string in the buffer
 // this will be string.length + nullbyte + optional padbyte to make the length even
-function stringOffset( string ) {
+function stringOffset(string) {
 
-	return string.length + 1 + ( isEven( string.length + 1 ) ? 1 : 0 );
+	return string.length + 1 + (isEven(string.length + 1) ? 1 : 0);
 
 }
 
 // for testing purposes, dump buffer to console
 // printBuffer( this.reader.dv.buffer, this.reader.offset, length );
-function printBuffer( buffer, from, to ) {
+function printBuffer(buffer, from, to) {
 
-	console.log( LoaderUtils.decodeText( new Uint8Array( buffer, from, to ) ) );
+	console.log(LoaderUtils.decodeText(new Uint8Array(buffer, from, to)));
 
 }
 
 var lwoTree;
 
-var LWOLoader = function ( manager, parameters ) {
+var LWOLoader = function (manager, parameters) {
 
-	Loader.call( this, manager );
+	Loader.call(this, manager);
 
 	parameters = parameters || {};
 
-	this.resourcePath = ( parameters.resourcePath !== undefined ) ? parameters.resourcePath : '';
+	this.resourcePath = (parameters.resourcePath !== undefined) ? parameters.resourcePath : '';
 
 };
 
-LWOLoader.prototype = Object.assign( Object.create( Loader.prototype ), {
+LWOLoader.prototype = Object.assign(Object.create(Loader.prototype), {
 
 	constructor: LWOLoader,
 
-	load: function ( url, onLoad, onProgress, onError ) {
+	load: function (url, onLoad, onProgress, onError) {
 
 		var scope = this;
 
-		var path = ( scope.path === '' ) ? extractParentUrl( url, 'Objects' ) : scope.path;
+		var path = (scope.path === '') ? extractParentUrl(url, 'Objects') : scope.path;
 
 		// give the mesh a default name based on the filename
-		var modelName = url.split( path ).pop().split( '.' )[ 0 ];
+		var modelName = url.split(path).pop().split('.')[0];
 
-		var loader = new FileLoader( this.manager );
-		loader.setPath( scope.path );
-		loader.setResponseType( 'arraybuffer' );
+		var loader = new FileLoader(this.manager);
+		loader.setPath(scope.path);
+		loader.setResponseType('arraybuffer');
 
-		loader.load( url, function ( buffer ) {
+		loader.load(url, function (buffer) {
 
 			// console.time( 'Total parsing: ' );
-			onLoad( scope.parse( buffer, path, modelName ) );
+			onLoad(scope.parse(buffer, path, modelName));
 			// console.timeEnd( 'Total parsing: ' );
 
-		}, onProgress, onError );
+		}, onProgress, onError);
 
 	},
 
-	parse: function ( iffBuffer, path, modelName ) {
+	parse: function (iffBuffer, path, modelName) {
 
-		lwoTree = new IFFParser().parse( iffBuffer );
+		lwoTree = new IFFParser().parse(iffBuffer);
 
 		// console.log( 'lwoTree', lwoTree );
 
-		var textureLoader = new TextureLoader( this.manager ).setPath( this.resourcePath || path ).setCrossOrigin( this.crossOrigin );
+		var textureLoader = new TextureLoader(this.manager).setPath(this.resourcePath || path).setCrossOrigin(this.crossOrigin);
 
-		return new LWOTreeParser( textureLoader ).parse( modelName );
+		return new LWOTreeParser(textureLoader).parse(modelName);
 
 	}
 
-} );
+});
 
 // Parse the lwoTree object
-function LWOTreeParser( textureLoader ) {
+function LWOTreeParser(textureLoader) {
 
 	this.textureLoader = textureLoader;
 
@@ -2111,9 +2111,9 @@ LWOTreeParser.prototype = {
 
 	constructor: LWOTreeParser,
 
-	parse: function ( modelName ) {
+	parse: function (modelName) {
 
-		this.materials = new MaterialParser( this.textureLoader ).parse();
+		this.materials = new MaterialParser(this.textureLoader).parse();
 		this.defaultLayerName = modelName;
 
 		this.meshes = this.parseLayers();
@@ -2136,39 +2136,39 @@ LWOTreeParser.prototype = {
 		var geometryParser = new GeometryParser();
 
 		var scope = this;
-		lwoTree.layers.forEach( function ( layer ) {
+		lwoTree.layers.forEach(function (layer) {
 
-			var geometry = geometryParser.parse( layer.geometry, layer );
+			var geometry = geometryParser.parse(layer.geometry, layer);
 
-			var mesh = scope.parseMesh( geometry, layer );
+			var mesh = scope.parseMesh(geometry, layer);
 
-			meshes[ layer.number ] = mesh;
+			meshes[layer.number] = mesh;
 
-			if ( layer.parent === - 1 ) finalMeshes.push( mesh );
-			else meshes[ layer.parent ].add( mesh );
+			if (layer.parent === -1) finalMeshes.push(mesh);
+			else meshes[layer.parent].add(mesh);
 
 
-		} );
+		});
 
-		this.applyPivots( finalMeshes );
+		this.applyPivots(finalMeshes);
 
 		return finalMeshes;
 
 	},
 
-	parseMesh( geometry, layer ) {
+	parseMesh(geometry, layer) {
 
 		var mesh;
 
-		var materials = this.getMaterials( geometry.userData.matNames, layer.geometry.type );
+		var materials = this.getMaterials(geometry.userData.matNames, layer.geometry.type);
 
-		this.duplicateUVs( geometry, materials );
+		this.duplicateUVs(geometry, materials);
 
-		if ( layer.geometry.type === 'points' ) mesh = new Points( geometry, materials );
-		else if ( layer.geometry.type === 'lines' ) mesh = new LineSegments( geometry, materials );
-		else mesh = new Mesh( geometry, materials );
+		if (layer.geometry.type === 'points') mesh = new Points(geometry, materials);
+		else if (layer.geometry.type === 'lines') mesh = new LineSegments(geometry, materials);
+		else mesh = new Mesh(geometry, materials);
 
-		if ( layer.name ) mesh.name = layer.name;
+		if (layer.name) mesh.name = layer.name;
 		else mesh.name = this.defaultLayerName + '_layer_' + layer.number;
 
 		mesh.userData.pivot = layer.pivot;
@@ -2178,118 +2178,118 @@ LWOTreeParser.prototype = {
 	},
 
 	// TODO: may need to be reversed in z to convert LWO to three.js coordinates
-	applyPivots( meshes ) {
+	applyPivots(meshes) {
 
-		meshes.forEach( function ( mesh ) {
+		meshes.forEach(function (mesh) {
 
-			mesh.traverse( function ( child ) {
+			mesh.traverse(function (child) {
 
 				var pivot = child.userData.pivot;
 
-				child.position.x += pivot[ 0 ];
-				child.position.y += pivot[ 1 ];
-				child.position.z += pivot[ 2 ];
+				child.position.x += pivot[0];
+				child.position.y += pivot[1];
+				child.position.z += pivot[2];
 
-				if ( child.parent ) {
+				if (child.parent) {
 
 					var parentPivot = child.parent.userData.pivot;
 
-					child.position.x -= parentPivot[ 0 ];
-					child.position.y -= parentPivot[ 1 ];
-					child.position.z -= parentPivot[ 2 ];
+					child.position.x -= parentPivot[0];
+					child.position.y -= parentPivot[1];
+					child.position.z -= parentPivot[2];
 
 				}
 
-			} );
+			});
 
-		} );
+		});
 
 	},
 
-	getMaterials( namesArray, type ) {
+	getMaterials(namesArray, type) {
 
 		var materials = [];
 
 		var scope = this;
 
-		namesArray.forEach( function ( name, i ) {
+		namesArray.forEach(function (name, i) {
 
-			materials[ i ] = scope.getMaterialByName( name );
+			materials[i] = scope.getMaterialByName(name);
 
-		} );
+		});
 
 		// convert materials to line or point mats if required
-		if ( type === 'points' || type === 'lines' ) {
+		if (type === 'points' || type === 'lines') {
 
-			materials.forEach( function ( mat, i ) {
+			materials.forEach(function (mat, i) {
 
 				var spec = {
 					color: mat.color,
 				};
 
-				if ( type === 'points' ) {
+				if (type === 'points') {
 
 					spec.size = 0.1;
 					spec.map = mat.map;
 					spec.morphTargets = mat.morphTargets;
-					materials[ i ] = new PointsMaterial( spec );
+					materials[i] = new PointsMaterial(spec);
 
-				} else if ( type === 'lines' ) {
+				} else if (type === 'lines') {
 
-					materials[ i ] = new LineBasicMaterial( spec );
+					materials[i] = new LineBasicMaterial(spec);
 
 				}
 
-			} );
+			});
 
 		}
 
 		// if there is only one material, return that directly instead of array
-		var filtered = materials.filter( Boolean );
-		if ( filtered.length === 1 ) return filtered[ 0 ];
+		var filtered = materials.filter(Boolean);
+		if (filtered.length === 1) return filtered[0];
 
 		return materials;
 
 	},
 
-	getMaterialByName( name ) {
+	getMaterialByName(name) {
 
-		return this.materials.filter( function ( m ) {
+		return this.materials.filter(function (m) {
 
 			return m.name === name;
 
-		} )[ 0 ];
+		})[0];
 
 	},
 
 	// If the material has an aoMap, duplicate UVs
-	duplicateUVs( geometry, materials ) {
+	duplicateUVs(geometry, materials) {
 
 		var duplicateUVs = false;
 
-		if ( ! Array.isArray( materials ) ) {
+		if (!Array.isArray(materials)) {
 
-			if ( materials.aoMap ) duplicateUVs = true;
+			if (materials.aoMap) duplicateUVs = true;
 
 		} else {
 
-			materials.forEach( function ( material ) {
+			materials.forEach(function (material) {
 
-				if ( material.aoMap ) duplicateUVs = true;
+				if (material.aoMap) duplicateUVs = true;
 
-			} );
+			});
 
 		}
 
-		if ( ! duplicateUVs ) return;
+		if (!duplicateUVs) return;
 
-		geometry.setAttribute( 'uv2', new BufferAttribute( geometry.attributes.uv.array, 2 ) );
+		geometry.setAttribute('uv2', new BufferAttribute(geometry.attributes.uv.array, 2));
 
 	},
 
 };
 
-function MaterialParser( textureLoader ) {
+function MaterialParser(textureLoader) {
 
 	this.textureLoader = textureLoader;
 
@@ -2304,15 +2304,15 @@ MaterialParser.prototype = {
 		var materials = [];
 		this.textures = {};
 
-		for ( var name in lwoTree.materials ) {
+		for (var name in lwoTree.materials) {
 
-			if ( lwoTree.format === 'LWO3' ) {
+			if (lwoTree.format === 'LWO3') {
 
-				materials.push( this.parseMaterial( lwoTree.materials[ name ], name, lwoTree.textures ) );
+				materials.push(this.parseMaterial(lwoTree.materials[name], name, lwoTree.textures));
 
-			} else if ( lwoTree.format === 'LWO2' ) {
+			} else if (lwoTree.format === 'LWO2') {
 
-				materials.push( this.parseMaterialLwo2( lwoTree.materials[ name ], name, lwoTree.textures ) );
+				materials.push(this.parseMaterialLwo2(lwoTree.materials[name], name, lwoTree.textures));
 
 			}
 
@@ -2322,74 +2322,76 @@ MaterialParser.prototype = {
 
 	},
 
-	parseMaterial( materialData, name, textures ) {
+	parseMaterial(materialData, name, textures) {
 
 		var params = {
 			name: name,
-			side: this.getSide( materialData.attributes ),
-			flatShading: this.getSmooth( materialData.attributes ),
+			side: this.getSide(materialData.attributes),
+			flatShading: this.getSmooth(materialData.attributes),
 		};
 
-		var connections = this.parseConnections( materialData.connections, materialData.nodes );
+		var connections = this.parseConnections(materialData.connections, materialData.nodes);
 
-		var maps = this.parseTextureNodes( connections.maps );
+		var maps = this.parseTextureNodes(connections.maps);
 
-		this.parseAttributeImageMaps( connections.attributes, textures, maps, materialData.maps );
+		this.parseAttributeImageMaps(connections.attributes, textures, maps, materialData.maps);
 
-		var attributes = this.parseAttributes( connections.attributes, maps );
+		var attributes = this.parseAttributes(connections.attributes, maps);
 
-		this.parseEnvMap( connections, maps, attributes );
+		this.parseEnvMap(connections, maps, attributes);
 
-		params = Object.assign( maps, params );
-		params = Object.assign( params, attributes );
+		params = Object.assign(maps, params);
+		params = Object.assign(params, attributes);
 
-		var materialType = this.getMaterialType( connections.attributes );
+		var materialType = this.getMaterialType(connections.attributes);
 
-		return new materialType( params );
+		return new materialType(params);
 
 	},
 
-	parseMaterialLwo2( materialData, name/*, textures*/ ) {
+	parseMaterialLwo2(materialData, name/*, textures*/) {
 
 		var params = {
 			name: name,
-			side: this.getSide( materialData.attributes ),
-			flatShading: this.getSmooth( materialData.attributes ),
+			side: this.getSide(materialData.attributes),
+			flatShading: this.getSmooth(materialData.attributes),
 		};
 
-		var attributes = this.parseAttributes( materialData.attributes, {} );
-		params = Object.assign( params, attributes );
-		return new MeshPhongMaterial( params );
+		var attributes = this.parseAttributes(materialData.attributes, {});
+		params = Object.assign(params, attributes);
+		return new MeshPhongMaterial(params);
 
 	},
 
 	// Note: converting from left to right handed coords by switching x -> -x in vertices, and
 	// then switching mat FrontSide -> BackSide
 	// NB: this means that FrontSide and BackSide have been switched!
-	getSide( attributes ) {
+	getSide(attributes) {
 
-		if ( ! attributes.side ) return BackSide;
+		if (!attributes.side) return BackSide;
 
-		switch ( attributes.side ) {
+		switch (attributes.side) {
 
 			case 0:
 			case 1:
 				return BackSide;
-			case 2: return FrontSide;
-			case 3: return DoubleSide;
+			case 2:
+				return FrontSide;
+			case 3:
+				return DoubleSide;
 
 		}
 
 	},
 
-	getSmooth( attributes ) {
+	getSmooth(attributes) {
 
-		if ( ! attributes.smooth ) return true;
-		return ! attributes.smooth;
+		if (!attributes.smooth) return true;
+		return !attributes.smooth;
 
 	},
 
-	parseConnections( connections, nodes ) {
+	parseConnections(connections, nodes) {
 
 		var materialConnections = {
 			maps: {}
@@ -2400,60 +2402,60 @@ MaterialParser.prototype = {
 		var nodeName = connections.nodeName;
 
 		var scope = this;
-		inputName.forEach( function ( name, index ) {
+		inputName.forEach(function (name, index) {
 
-			if ( name === 'Material' ) {
+			if (name === 'Material') {
 
-				var matNode = scope.getNodeByRefName( inputNodeName[ index ], nodes );
+				var matNode = scope.getNodeByRefName(inputNodeName[index], nodes);
 				materialConnections.attributes = matNode.attributes;
 				materialConnections.envMap = matNode.fileName;
-				materialConnections.name = inputNodeName[ index ];
+				materialConnections.name = inputNodeName[index];
 
 			}
 
-		} );
+		});
 
-		nodeName.forEach( function ( name, index ) {
+		nodeName.forEach(function (name, index) {
 
-			if ( name === materialConnections.name ) {
+			if (name === materialConnections.name) {
 
-				materialConnections.maps[ inputName[ index ] ] = scope.getNodeByRefName( inputNodeName[ index ], nodes );
+				materialConnections.maps[inputName[index]] = scope.getNodeByRefName(inputNodeName[index], nodes);
 
 			}
 
-		} );
+		});
 
 		return materialConnections;
 
 	},
 
-	getNodeByRefName( refName, nodes ) {
+	getNodeByRefName(refName, nodes) {
 
-		for ( var name in nodes ) {
+		for (var name in nodes) {
 
-			if ( nodes[ name ].refName === refName ) return nodes[ name ];
+			if (nodes[name].refName === refName) return nodes[name];
 
 		}
 
 	},
 
-	parseTextureNodes( textureNodes ) {
+	parseTextureNodes(textureNodes) {
 
 		var maps = {};
 
-		for ( var name in textureNodes ) {
+		for (var name in textureNodes) {
 
-			var node = textureNodes[ name ];
+			var node = textureNodes[name];
 			var path = node.fileName;
 
-			if ( ! path ) return;
+			if (!path) return;
 
-			var texture = this.loadTexture( path );
+			var texture = this.loadTexture(path);
 
-			if ( node.widthWrappingMode !== undefined ) texture.wrapS = this.getWrappingType( node.widthWrappingMode );
-			if ( node.heightWrappingMode !== undefined ) texture.wrapT = this.getWrappingType( node.heightWrappingMode );
+			if (node.widthWrappingMode !== undefined) texture.wrapS = this.getWrappingType(node.widthWrappingMode);
+			if (node.heightWrappingMode !== undefined) texture.wrapT = this.getWrappingType(node.heightWrappingMode);
 
-			switch ( name ) {
+			switch (name) {
 
 				case 'Color':
 					maps.map = texture;
@@ -2484,7 +2486,7 @@ MaterialParser.prototype = {
 					break;
 				case 'Normal':
 					maps.normalMap = texture;
-					if ( node.amplitude !== undefined ) maps.normalScale = new Vector2( node.amplitude, node.amplitude );
+					if (node.amplitude !== undefined) maps.normalScale = new Vector2(node.amplitude, node.amplitude);
 					break;
 				case 'Bump':
 					maps.bumpMap = texture;
@@ -2495,7 +2497,7 @@ MaterialParser.prototype = {
 		}
 
 		// LWO BSDF materials can have both spec and rough, but this is not valid in three
-		if ( maps.roughnessMap && maps.specularMap ) delete maps.specularMap;
+		if (maps.roughnessMap && maps.specularMap) delete maps.specularMap;
 
 		return maps;
 
@@ -2503,25 +2505,25 @@ MaterialParser.prototype = {
 
 	// maps can also be defined on individual material attributes, parse those here
 	// This occurs on Standard (Phong) surfaces
-	parseAttributeImageMaps( attributes, textures, maps ) {
+	parseAttributeImageMaps(attributes, textures, maps) {
 
-		for ( var name in attributes ) {
+		for (var name in attributes) {
 
-			var attribute = attributes[ name ];
+			var attribute = attributes[name];
 
-			if ( attribute.maps ) {
+			if (attribute.maps) {
 
-				var mapData = attribute.maps[ 0 ];
+				var mapData = attribute.maps[0];
 
-				var path = this.getTexturePathByIndex( mapData.imageIndex, textures );
-				if ( ! path ) return;
+				var path = this.getTexturePathByIndex(mapData.imageIndex, textures);
+				if (!path) return;
 
-				var texture = this.loadTexture( path );
+				var texture = this.loadTexture(path);
 
-				if ( mapData.wrap !== undefined ) texture.wrapS = this.getWrappingType( mapData.wrap.w );
-				if ( mapData.wrap !== undefined ) texture.wrapT = this.getWrappingType( mapData.wrap.h );
+				if (mapData.wrap !== undefined) texture.wrapS = this.getWrappingType(mapData.wrap.w);
+				if (mapData.wrap !== undefined) texture.wrapT = this.getWrappingType(mapData.wrap.h);
 
-				switch ( name ) {
+				switch (name) {
 
 					case 'Color':
 						maps.map = texture;
@@ -2565,46 +2567,46 @@ MaterialParser.prototype = {
 
 	},
 
-	parseAttributes( attributes, maps ) {
+	parseAttributes(attributes, maps) {
 
 		var params = {};
 
 		// don't use color data if color map is present
-		if ( attributes.Color && ! maps.map ) {
+		if (attributes.Color && !maps.map) {
 
-			params.color = new Color().fromArray( attributes.Color.value );
+			params.color = new Color().fromArray(attributes.Color.value);
 
 		} else params.color = new Color();
 
 
-		if ( attributes.Transparency && attributes.Transparency.value !== 0 ) {
+		if (attributes.Transparency && attributes.Transparency.value !== 0) {
 
 			params.opacity = 1 - attributes.Transparency.value;
 			params.transparent = true;
 
 		}
 
-		if ( attributes[ 'Bump Height' ] ) params.bumpScale = attributes[ 'Bump Height' ].value * 0.1;
+		if (attributes['Bump Height']) params.bumpScale = attributes['Bump Height'].value * 0.1;
 
-		if ( attributes[ 'Refraction Index' ] ) params.refractionRatio = 1 / attributes[ 'Refraction Index' ].value;
+		if (attributes['Refraction Index']) params.refractionRatio = 1 / attributes['Refraction Index'].value;
 
-		this.parsePhysicalAttributes( params, attributes, maps );
-		this.parseStandardAttributes( params, attributes, maps );
-		this.parsePhongAttributes( params, attributes, maps );
+		this.parsePhysicalAttributes(params, attributes, maps);
+		this.parseStandardAttributes(params, attributes, maps);
+		this.parsePhongAttributes(params, attributes, maps);
 
 		return params;
 
 	},
 
-	parsePhysicalAttributes( params, attributes/*, maps*/ ) {
+	parsePhysicalAttributes(params, attributes/*, maps*/) {
 
-		if ( attributes.Clearcoat && attributes.Clearcoat.value > 0 ) {
+		if (attributes.Clearcoat && attributes.Clearcoat.value > 0) {
 
 			params.clearcoat = attributes.Clearcoat.value;
 
-			if ( attributes[ 'Clearcoat Gloss' ] ) {
+			if (attributes['Clearcoat Gloss']) {
 
-				params.clearcoatRoughness = 0.5 * ( 1 - attributes[ 'Clearcoat Gloss' ].value );
+				params.clearcoatRoughness = 0.5 * (1 - attributes['Clearcoat Gloss'].value);
 
 			}
 
@@ -2612,95 +2614,95 @@ MaterialParser.prototype = {
 
 	},
 
-	parseStandardAttributes( params, attributes, maps ) {
+	parseStandardAttributes(params, attributes, maps) {
 
 
-		if ( attributes.Luminous ) {
+		if (attributes.Luminous) {
 
 			params.emissiveIntensity = attributes.Luminous.value;
 
-			if ( attributes[ 'Luminous Color' ] && ! maps.emissive ) {
+			if (attributes['Luminous Color'] && !maps.emissive) {
 
-				params.emissive = new Color().fromArray( attributes[ 'Luminous Color' ].value );
+				params.emissive = new Color().fromArray(attributes['Luminous Color'].value);
 
 			} else {
 
-				params.emissive = new Color( 0x808080 );
+				params.emissive = new Color(0x808080);
 
 			}
 
 		}
 
-		if ( attributes.Roughness && ! maps.roughnessMap ) params.roughness = attributes.Roughness.value;
-		if ( attributes.Metallic && ! maps.metalnessMap ) params.metalness = attributes.Metallic.value;
+		if (attributes.Roughness && !maps.roughnessMap) params.roughness = attributes.Roughness.value;
+		if (attributes.Metallic && !maps.metalnessMap) params.metalness = attributes.Metallic.value;
 
 	},
 
-	parsePhongAttributes( params, attributes, maps ) {
+	parsePhongAttributes(params, attributes, maps) {
 
-		if ( attributes.Diffuse ) params.color.multiplyScalar( attributes.Diffuse.value );
+		if (attributes.Diffuse) params.color.multiplyScalar(attributes.Diffuse.value);
 
-		if ( attributes.Reflection ) {
+		if (attributes.Reflection) {
 
 			params.reflectivity = attributes.Reflection.value;
 			params.combine = AddOperation;
 
 		}
 
-		if ( attributes.Luminosity ) {
+		if (attributes.Luminosity) {
 
 			params.emissiveIntensity = attributes.Luminosity.value;
 
-			if ( ! maps.emissiveMap && ! maps.map ) {
+			if (!maps.emissiveMap && !maps.map) {
 
 				params.emissive = params.color;
 
 			} else {
 
-				params.emissive = new Color( 0x808080 );
+				params.emissive = new Color(0x808080);
 
 			}
 
 		}
 
 		// parse specular if there is no roughness - we will interpret the material as 'Phong' in this case
-		if ( ! attributes.Roughness && attributes.Specular && ! maps.specularMap ) {
+		if (!attributes.Roughness && attributes.Specular && !maps.specularMap) {
 
-			if ( attributes[ 'Color Highlight' ] ) {
+			if (attributes['Color Highlight']) {
 
-				params.specular = new Color().setScalar( attributes.Specular.value ).lerp( params.color.clone().multiplyScalar( attributes.Specular.value ), attributes[ 'Color Highlight' ].value );
+				params.specular = new Color().setScalar(attributes.Specular.value).lerp(params.color.clone().multiplyScalar(attributes.Specular.value), attributes['Color Highlight'].value);
 
 			} else {
 
-				params.specular = new Color().setScalar( attributes.Specular.value );
+				params.specular = new Color().setScalar(attributes.Specular.value);
 
 			}
 
 		}
 
-		if ( params.specular && attributes.Glossiness ) params.shininess = 7 + Math.pow( 2, attributes.Glossiness.value * 12 + 2 );
+		if (params.specular && attributes.Glossiness) params.shininess = 7 + Math.pow(2, attributes.Glossiness.value * 12 + 2);
 
 	},
 
-	parseEnvMap( connections, maps, attributes ) {
+	parseEnvMap(connections, maps, attributes) {
 
-		if ( connections.envMap ) {
+		if (connections.envMap) {
 
-			var envMap = this.loadTexture( connections.envMap );
+			var envMap = this.loadTexture(connections.envMap);
 
-			if ( attributes.transparent && attributes.opacity < 0.999 ) {
+			if (attributes.transparent && attributes.opacity < 0.999) {
 
 				envMap.mapping = EquirectangularRefractionMapping;
 
 				// Reflectivity and refraction mapping don't work well together in Phong materials
-				if ( attributes.reflectivity !== undefined ) {
+				if (attributes.reflectivity !== undefined) {
 
 					delete attributes.reflectivity;
 					delete attributes.combine;
 
 				}
 
-				if ( attributes.metalness !== undefined ) {
+				if (attributes.metalness !== undefined) {
 
 					delete attributes.metalness;
 
@@ -2715,25 +2717,25 @@ MaterialParser.prototype = {
 	},
 
 	// get texture defined at top level by its index
-	getTexturePathByIndex( index ) {
+	getTexturePathByIndex(index) {
 
 		var fileName = '';
 
-		if ( ! lwoTree.textures ) return fileName;
+		if (!lwoTree.textures) return fileName;
 
-		lwoTree.textures.forEach( function ( texture ) {
+		lwoTree.textures.forEach(function (texture) {
 
-			if ( texture.index === index ) fileName = texture.fileName;
+			if (texture.index === index) fileName = texture.fileName;
 
-		} );
+		});
 
 		return fileName;
 
 	},
 
-	loadTexture( path ) {
+	loadTexture(path) {
 
-		if ( ! path ) return null;
+		if (!path) return null;
 
 		var texture;
 
@@ -2743,7 +2745,7 @@ MaterialParser.prototype = {
 			undefined,
 			function () {
 
-				console.warn( 'LWOLoader: non-standard resource hierarchy. Use \`resourcePath\` parameter to specify root content directory.' );
+				console.warn('LWOLoader: non-standard resource hierarchy. Use \`resourcePath\` parameter to specify root content directory.');
 
 			}
 		);
@@ -2753,55 +2755,59 @@ MaterialParser.prototype = {
 	},
 
 	// 0 = Reset, 1 = Repeat, 2 = Mirror, 3 = Edge
-	getWrappingType( num ) {
+	getWrappingType(num) {
 
-		switch ( num ) {
+		switch (num) {
 
 			case 0:
-				console.warn( 'LWOLoader: "Reset" texture wrapping type is not supported in three.js' );
+				console.warn('LWOLoader: "Reset" texture wrapping type is not supported in three.js');
 				return ClampToEdgeWrapping;
-			case 1: return RepeatWrapping;
-			case 2: return MirroredRepeatWrapping;
-			case 3: return ClampToEdgeWrapping;
+			case 1:
+				return RepeatWrapping;
+			case 2:
+				return MirroredRepeatWrapping;
+			case 3:
+				return ClampToEdgeWrapping;
 
 		}
 
 	},
 
-	getMaterialType( nodeData ) {
+	getMaterialType(nodeData) {
 
-		if ( nodeData.Clearcoat && nodeData.Clearcoat.value > 0 ) return MeshPhysicalMaterial;
-		if ( nodeData.Roughness ) return MeshStandardMaterial;
+		if (nodeData.Clearcoat && nodeData.Clearcoat.value > 0) return MeshPhysicalMaterial;
+		if (nodeData.Roughness) return MeshStandardMaterial;
 		return MeshPhongMaterial;
 
 	}
 
 };
 
-function GeometryParser() {}
+function GeometryParser() {
+}
 
 GeometryParser.prototype = {
 
 	constructor: GeometryParser,
 
-	parse( geoData, layer ) {
+	parse(geoData, layer) {
 
 		var geometry = new BufferGeometry();
 
-		geometry.setAttribute( 'position', new Float32BufferAttribute( geoData.points, 3 ) );
+		geometry.setAttribute('position', new Float32BufferAttribute(geoData.points, 3));
 
-		var indices = this.splitIndices( geoData.vertexIndices, geoData.polygonDimensions );
-		geometry.setIndex( indices );
+		var indices = this.splitIndices(geoData.vertexIndices, geoData.polygonDimensions);
+		geometry.setIndex(indices);
 
-		this.parseGroups( geometry, geoData );
+		this.parseGroups(geometry, geoData);
 
 		geometry.computeVertexNormals();
 
-		this.parseUVs( geometry, layer, indices );
-		this.parseMorphTargets( geometry, layer, indices );
+		this.parseUVs(geometry, layer, indices);
+		this.parseMorphTargets(geometry, layer, indices);
 
 		// TODO: z may need to be reversed to account for coordinate system change
-		geometry.translate( - layer.pivot[ 0 ], - layer.pivot[ 1 ], - layer.pivot[ 2 ] );
+		geometry.translate(-layer.pivot[0], -layer.pivot[1], -layer.pivot[2]);
 
 		// var userData = geometry.userData;
 		// geometry = geometry.toNonIndexed()
@@ -2812,61 +2818,60 @@ GeometryParser.prototype = {
 	},
 
 	// split quads into tris
-	splitIndices( indices, polygonDimensions ) {
+	splitIndices(indices, polygonDimensions) {
 
 		var remappedIndices = [];
 
 		var i = 0;
-		polygonDimensions.forEach( function ( dim ) {
+		polygonDimensions.forEach(function (dim) {
 
-			if ( dim < 4 ) {
+			if (dim < 4) {
 
-				for ( var k = 0; k < dim; k ++ ) remappedIndices.push( indices[ i + k ] );
+				for (var k = 0; k < dim; k++) remappedIndices.push(indices[i + k]);
 
-			} else if ( dim === 4 ) {
+			} else if (dim === 4) {
 
 				remappedIndices.push(
-					indices[ i ],
-					indices[ i + 1 ],
-					indices[ i + 2 ],
+					indices[i],
+					indices[i + 1],
+					indices[i + 2],
 
-					indices[ i ],
-					indices[ i + 2 ],
-					indices[ i + 3 ]
-
+					indices[i],
+					indices[i + 2],
+					indices[i + 3]
 				);
 
-			} else if ( dim > 4 ) {
+			} else if (dim > 4) {
 
-				for ( var k = 1; k < dim - 1; k ++ ) {
+				for (var k = 1; k < dim - 1; k++) {
 
-					remappedIndices.push( indices[ i ], indices[ i + k ], indices[ i + k + 1 ] );
+					remappedIndices.push(indices[i], indices[i + k], indices[i + k + 1]);
 
 				}
 
-				console.warn( 'LWOLoader: polygons with greater than 4 sides are not supported' );
+				console.warn('LWOLoader: polygons with greater than 4 sides are not supported');
 
 			}
 
 			i += dim;
 
-		} );
+		});
 
 		return remappedIndices;
 
 	},
 
 	// NOTE: currently ignoring poly indices and assuming that they are intelligently ordered
-	parseGroups( geometry, geoData ) {
+	parseGroups(geometry, geoData) {
 
 		var tags = lwoTree.tags;
 		var matNames = [];
 
 		var elemSize = 3;
-		if ( geoData.type === 'lines' ) elemSize = 2;
-		if ( geoData.type === 'points' ) elemSize = 1;
+		if (geoData.type === 'lines') elemSize = 2;
+		if (geoData.type === 'points') elemSize = 1;
 
-		var remappedIndices = this.splitMaterialIndices( geoData.polygonDimensions, geoData.materialIndices );
+		var remappedIndices = this.splitMaterialIndices(geoData.polygonDimensions, geoData.materialIndices);
 
 		var indexNum = 0; // create new indices in numerical order
 		var indexPairs = {}; // original indices mapped to numerical indices
@@ -2876,31 +2881,31 @@ GeometryParser.prototype = {
 		var prevStart = 0;
 		var currentCount = 0;
 
-		for ( var i = 0; i < remappedIndices.length; i += 2 ) {
+		for (var i = 0; i < remappedIndices.length; i += 2) {
 
-			var materialIndex = remappedIndices[ i + 1 ];
+			var materialIndex = remappedIndices[i + 1];
 
-			if ( i === 0 ) matNames[ indexNum ] = tags[ materialIndex ];
+			if (i === 0) matNames[indexNum] = tags[materialIndex];
 
-			if ( prevMaterialIndex === undefined ) prevMaterialIndex = materialIndex;
+			if (prevMaterialIndex === undefined) prevMaterialIndex = materialIndex;
 
-			if ( materialIndex !== prevMaterialIndex ) {
+			if (materialIndex !== prevMaterialIndex) {
 
 				var currentIndex;
-				if ( indexPairs[ tags[ prevMaterialIndex ] ] ) {
+				if (indexPairs[tags[prevMaterialIndex]]) {
 
-					currentIndex = indexPairs[ tags[ prevMaterialIndex ] ];
+					currentIndex = indexPairs[tags[prevMaterialIndex]];
 
 				} else {
 
 					currentIndex = indexNum;
-					indexPairs[ tags[ prevMaterialIndex ] ] = indexNum;
-					matNames[ indexNum ] = tags[ prevMaterialIndex ];
-					indexNum ++;
+					indexPairs[tags[prevMaterialIndex]] = indexNum;
+					matNames[indexNum] = tags[prevMaterialIndex];
+					indexNum++;
 
 				}
 
-				geometry.addGroup( prevStart, currentCount, currentIndex );
+				geometry.addGroup(prevStart, currentCount, currentIndex);
 
 				prevStart += currentCount;
 
@@ -2914,22 +2919,22 @@ GeometryParser.prototype = {
 		}
 
 		// the loop above doesn't add the last group, do that here.
-		if ( geometry.groups.length > 0 ) {
+		if (geometry.groups.length > 0) {
 
 			var currentIndex;
-			if ( indexPairs[ tags[ materialIndex ] ] ) {
+			if (indexPairs[tags[materialIndex]]) {
 
-				currentIndex = indexPairs[ tags[ materialIndex ] ];
+				currentIndex = indexPairs[tags[materialIndex]];
 
 			} else {
 
 				currentIndex = indexNum;
-				indexPairs[ tags[ materialIndex ] ] = indexNum;
-				matNames[ indexNum ] = tags[ materialIndex ];
+				indexPairs[tags[materialIndex]] = indexNum;
+				matNames[indexNum] = tags[materialIndex];
 
 			}
 
-			geometry.addGroup( prevStart, currentCount, currentIndex );
+			geometry.addGroup(prevStart, currentCount, currentIndex);
 
 		}
 
@@ -2938,32 +2943,32 @@ GeometryParser.prototype = {
 
 	},
 
-	splitMaterialIndices( polygonDimensions, indices ) {
+	splitMaterialIndices(polygonDimensions, indices) {
 
 		var remappedIndices = [];
 
-		polygonDimensions.forEach( function ( dim, i ) {
+		polygonDimensions.forEach(function (dim, i) {
 
-			if ( dim <= 3 ) {
+			if (dim <= 3) {
 
-				remappedIndices.push( indices[ i * 2 ], indices[ i * 2 + 1 ] );
+				remappedIndices.push(indices[i * 2], indices[i * 2 + 1]);
 
-			} else if ( dim === 4 ) {
+			} else if (dim === 4) {
 
-				remappedIndices.push( indices[ i * 2 ], indices[ i * 2 + 1 ], indices[ i * 2 ], indices[ i * 2 + 1 ] );
+				remappedIndices.push(indices[i * 2], indices[i * 2 + 1], indices[i * 2], indices[i * 2 + 1]);
 
 			} else {
 
-				 // ignore > 4 for now
-				for ( var k = 0; k < dim - 2; k ++ ) {
+				// ignore > 4 for now
+				for (var k = 0; k < dim - 2; k++) {
 
-					remappedIndices.push( indices[ i * 2 ], indices[ i * 2 + 1 ] );
+					remappedIndices.push(indices[i * 2], indices[i * 2 + 1]);
 
 				}
 
 			}
 
-		} );
+		});
 
 		return remappedIndices;
 
@@ -2978,68 +2983,68 @@ GeometryParser.prototype = {
 	// 4: UV maps can be VMAP or VMAD (discontinuous, to allow for seams). In practice, most
 	// UV maps are defined as partially VMAP and partially VMAD
 	// VMADs are currently not supported
-	parseUVs( geometry, layer ) {
+	parseUVs(geometry, layer) {
 
 		// start by creating a UV map set to zero for the whole geometry
-		var remappedUVs = Array.from( Array( geometry.attributes.position.count * 2 ), function () {
+		var remappedUVs = Array.from(Array(geometry.attributes.position.count * 2), function () {
 
 			return 0;
 
-		} );
+		});
 
-		for ( var name in layer.uvs ) {
+		for (var name in layer.uvs) {
 
-			var uvs = layer.uvs[ name ].uvs;
-			var uvIndices = layer.uvs[ name ].uvIndices;
+			var uvs = layer.uvs[name].uvs;
+			var uvIndices = layer.uvs[name].uvIndices;
 
-			uvIndices.forEach( function ( i, j ) {
+			uvIndices.forEach(function (i, j) {
 
-				remappedUVs[ i * 2 ] = uvs[ j * 2 ];
-				remappedUVs[ i * 2 + 1 ] = uvs[ j * 2 + 1 ];
+				remappedUVs[i * 2] = uvs[j * 2];
+				remappedUVs[i * 2 + 1] = uvs[j * 2 + 1];
 
-			} );
+			});
 
 		}
 
-		geometry.setAttribute( 'uv', new Float32BufferAttribute( remappedUVs, 2 ) );
+		geometry.setAttribute('uv', new Float32BufferAttribute(remappedUVs, 2));
 
 	},
 
-	parseMorphTargets( geometry, layer ) {
+	parseMorphTargets(geometry, layer) {
 
 		var num = 0;
-		for ( var name in layer.morphTargets ) {
+		for (var name in layer.morphTargets) {
 
 			var remappedPoints = geometry.attributes.position.array.slice();
 
-			if ( ! geometry.morphAttributes.position ) geometry.morphAttributes.position = [];
+			if (!geometry.morphAttributes.position) geometry.morphAttributes.position = [];
 
-			var morphPoints = layer.morphTargets[ name ].points;
-			var morphIndices = layer.morphTargets[ name ].indices;
-			var type = layer.morphTargets[ name ].type;
+			var morphPoints = layer.morphTargets[name].points;
+			var morphIndices = layer.morphTargets[name].indices;
+			var type = layer.morphTargets[name].type;
 
-			morphIndices.forEach( function ( i, j ) {
+			morphIndices.forEach(function (i, j) {
 
-				if ( type === 'relative' ) {
+				if (type === 'relative') {
 
-					remappedPoints[ i * 3 ] += morphPoints[ j * 3 ];
-					remappedPoints[ i * 3 + 1 ] += morphPoints[ j * 3 + 1 ];
-					remappedPoints[ i * 3 + 2 ] += morphPoints[ j * 3 + 2 ];
+					remappedPoints[i * 3] += morphPoints[j * 3];
+					remappedPoints[i * 3 + 1] += morphPoints[j * 3 + 1];
+					remappedPoints[i * 3 + 2] += morphPoints[j * 3 + 2];
 
 				} else {
 
-					remappedPoints[ i * 3 ] = morphPoints[ j * 3 ];
-					remappedPoints[ i * 3 + 1 ] = morphPoints[ j * 3 + 1 ];
-					remappedPoints[ i * 3 + 2 ] = morphPoints[ j * 3 + 2 ];
+					remappedPoints[i * 3] = morphPoints[j * 3];
+					remappedPoints[i * 3 + 1] = morphPoints[j * 3 + 1];
+					remappedPoints[i * 3 + 2] = morphPoints[j * 3 + 2];
 
 				}
 
-			} );
+			});
 
-			geometry.morphAttributes.position[ num ] = new Float32BufferAttribute( remappedPoints, 3 );
-			geometry.morphAttributes.position[ num ].name = name;
+			geometry.morphAttributes.position[num] = new Float32BufferAttribute(remappedPoints, 3);
+			geometry.morphAttributes.position[num].name = name;
 
-			num ++;
+			num++;
 
 		}
 
@@ -3052,14 +3057,14 @@ GeometryParser.prototype = {
 
 // ************** UTILITY FUNCTIONS **************
 
-function extractParentUrl( url, dir ) {
+function extractParentUrl(url, dir) {
 
-	var index = url.indexOf( dir );
+	var index = url.indexOf(dir);
 
-	if ( index === - 1 ) return './';
+	if (index === -1) return './';
 
-	return url.substr( 0, index );
+	return url.substr(0, index);
 
 }
 
-export { LWOLoader };
+export {LWOLoader};

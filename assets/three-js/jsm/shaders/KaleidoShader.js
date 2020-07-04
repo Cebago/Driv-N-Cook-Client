@@ -16,9 +16,9 @@ var KaleidoShader = {
 
 	uniforms: {
 
-		"tDiffuse": { value: null },
-		"sides": { value: 6.0 },
-		"angle": { value: 0.0 }
+		"tDiffuse": {value: null},
+		"sides": {value: 6.0},
+		"angle": {value: 0.0}
 
 	},
 
@@ -33,7 +33,7 @@ var KaleidoShader = {
 
 		"}"
 
-	].join( "\n" ),
+	].join("\n"),
 
 	fragmentShader: [
 
@@ -57,8 +57,8 @@ var KaleidoShader = {
 
 		"}"
 
-	].join( "\n" )
+	].join("\n")
 
 };
 
-export { KaleidoShader };
+export {KaleidoShader};

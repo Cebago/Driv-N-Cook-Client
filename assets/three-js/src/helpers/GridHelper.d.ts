@@ -1,5 +1,5 @@
-import { Color } from './../math/Color';
-import { LineSegments } from './../objects/LineSegments';
+import {Color} from './../math/Color';
+import {LineSegments} from './../objects/LineSegments';
 
 export class GridHelper extends LineSegments {
 
@@ -9,9 +9,10 @@ export class GridHelper extends LineSegments {
 		color1?: Color | number,
 		color2?: Color | number
 	);
+
 	/**
 	 * @deprecated Colors should be specified in the constructor.
 	 */
-	setColors( color1?: Color | number, color2?: Color | number ): void;
+	setColors(color1?: Color | number, color2?: Color | number): void;
 
 }

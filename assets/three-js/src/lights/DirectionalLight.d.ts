@@ -1,7 +1,7 @@
-import { Color } from './../math/Color';
-import { Object3D } from './../core/Object3D';
-import { DirectionalLightShadow } from './DirectionalLightShadow';
-import { Light } from './Light';
+import {Color} from './../math/Color';
+import {Object3D} from './../core/Object3D';
+import {DirectionalLightShadow} from './DirectionalLightShadow';
+import {Light} from './Light';
 
 /**
  * @example
@@ -14,20 +14,18 @@ import { Light } from './Light';
  */
 export class DirectionalLight extends Light {
 
-	constructor( color?: Color | string | number, intensity?: number );
-
 	/**
 	 * Target used for shadow camera orientation.
 	 */
 	target: Object3D;
-
 	/**
 	 * Light's intensity.
 	 * Default — 1.0.
 	 */
 	intensity: number;
-
 	shadow: DirectionalLightShadow;
 	readonly isDirectionalLight: true;
+
+	constructor(color?: Color | string | number, intensity?: number);
 
 }

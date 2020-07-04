@@ -2,48 +2,48 @@
  * @author sunag / http://www.sunag.com.br/
  */
 
-import { Node } from './Node.js';
+import {Node} from './Node.js';
 
-function AttributeNode( name, type ) {
+function AttributeNode(name, type) {
 
-	Node.call( this, type );
+	Node.call(this, type);
 
 	this.name = name;
 
 }
 
-AttributeNode.prototype = Object.create( Node.prototype );
+AttributeNode.prototype = Object.create(Node.prototype);
 AttributeNode.prototype.constructor = AttributeNode;
 AttributeNode.prototype.nodeType = "Attribute";
 
-AttributeNode.prototype.getAttributeType = function ( builder ) {
+AttributeNode.prototype.getAttributeType = function (builder) {
 
-	return typeof this.type === 'number' ? builder.getConstructorFromLength( this.type ) : this.type;
-
-};
-
-AttributeNode.prototype.getType = function ( builder ) {
-
-	var type = this.getAttributeType( builder );
-
-	return builder.getTypeByFormat( type );
+	return typeof this.type === 'number' ? builder.getConstructorFromLength(this.type) : this.type;
 
 };
 
-AttributeNode.prototype.generate = function ( builder, output ) {
+AttributeNode.prototype.getType = function (builder) {
 
-	var type = this.getAttributeType( builder );
+	var type = this.getAttributeType(builder);
 
-	var attribute = builder.getAttribute( this.name, type ),
-		name = builder.isShader( 'vertex' ) ? this.name : attribute.varying.name;
-
-	return builder.format( name, this.getType( builder ), output );
+	return builder.getTypeByFormat(type);
 
 };
 
-AttributeNode.prototype.copy = function ( source ) {
+AttributeNode.prototype.generate = function (builder, output) {
 
-	Node.prototype.copy.call( this, source );
+	var type = this.getAttributeType(builder);
+
+	var attribute = builder.getAttribute(this.name, type),
+		name = builder.isShader('vertex') ? this.name : attribute.varying.name;
+
+	return builder.format(name, this.getType(builder), output);
+
+};
+
+AttributeNode.prototype.copy = function (source) {
+
+	Node.prototype.copy.call(this, source);
 
 	this.type = source.type;
 
@@ -51,13 +51,13 @@ AttributeNode.prototype.copy = function ( source ) {
 
 };
 
-AttributeNode.prototype.toJSON = function ( meta ) {
+AttributeNode.prototype.toJSON = function (meta) {
 
-	var data = this.getJSONNode( meta );
+	var data = this.getJSONNode(meta);
 
-	if ( ! data ) {
+	if (!data) {
 
-		data = this.createJSONNode( meta );
+		data = this.createJSONNode(meta);
 
 		data.type = this.type;
 
@@ -67,4 +67,4 @@ AttributeNode.prototype.toJSON = function ( meta ) {
 
 };
 
-export { AttributeNode };
+export {AttributeNode};

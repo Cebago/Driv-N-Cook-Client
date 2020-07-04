@@ -1,5 +1,5 @@
-import { Color } from './../math/Color';
-import { MaterialParameters, Material } from './Material';
+import {Color} from './../math/Color';
+import {Material, MaterialParameters} from './Material';
 
 export interface LineBasicMaterialParameters extends MaterialParameters {
 	color?: Color | string | number;
@@ -10,13 +10,13 @@ export interface LineBasicMaterialParameters extends MaterialParameters {
 
 export class LineBasicMaterial extends Material {
 
-	constructor( parameters?: LineBasicMaterialParameters );
-
 	color: Color;
 	linewidth: number;
 	linecap: string;
 	linejoin: string;
 
-	setValues( parameters: LineBasicMaterialParameters ): void;
+	constructor(parameters?: LineBasicMaterialParameters);
+
+	setValues(parameters: LineBasicMaterialParameters): void;
 
 }

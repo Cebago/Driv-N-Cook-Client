@@ -1,4 +1,4 @@
-import { Group } from '../../objects/Group.js';
+import {Group} from '../../objects/Group.js';
 
 /**
  * @author Mugen87 / https://github.com/Mugen87
@@ -11,13 +11,13 @@ function WebXRController() {
 
 }
 
-Object.assign( WebXRController.prototype, {
+Object.assign(WebXRController.prototype, {
 
 	constructor: WebXRController,
 
 	getTargetRaySpace: function () {
 
-		if ( this._targetRay === null ) {
+		if (this._targetRay === null) {
 
 			this._targetRay = new Group();
 			this._targetRay.matrixAutoUpdate = false;
@@ -31,7 +31,7 @@ Object.assign( WebXRController.prototype, {
 
 	getGripSpace: function () {
 
-		if ( this._grip === null ) {
+		if (this._grip === null) {
 
 			this._grip = new Group();
 			this._grip.matrixAutoUpdate = false;
@@ -43,17 +43,17 @@ Object.assign( WebXRController.prototype, {
 
 	},
 
-	dispatchEvent: function ( event ) {
+	dispatchEvent: function (event) {
 
-		if ( this._targetRay !== null ) {
+		if (this._targetRay !== null) {
 
-			this._targetRay.dispatchEvent( event );
+			this._targetRay.dispatchEvent(event);
 
 		}
 
-		if ( this._grip !== null ) {
+		if (this._grip !== null) {
 
-			this._grip.dispatchEvent( event );
+			this._grip.dispatchEvent(event);
 
 		}
 
@@ -61,17 +61,17 @@ Object.assign( WebXRController.prototype, {
 
 	},
 
-	disconnect: function ( inputSource ) {
+	disconnect: function (inputSource) {
 
-		this.dispatchEvent( { type: 'disconnected', data: inputSource } );
+		this.dispatchEvent({type: 'disconnected', data: inputSource});
 
-		if ( this._targetRay !== null ) {
+		if (this._targetRay !== null) {
 
 			this._targetRay.visible = false;
 
 		}
 
-		if ( this._grip !== null ) {
+		if (this._grip !== null) {
 
 			this._grip.visible = false;
 
@@ -81,7 +81,7 @@ Object.assign( WebXRController.prototype, {
 
 	},
 
-	update: function ( inputSource, frame, referenceSpace ) {
+	update: function (inputSource, frame, referenceSpace) {
 
 		var inputPose = null;
 		var gripPose = null;
@@ -89,29 +89,29 @@ Object.assign( WebXRController.prototype, {
 		var targetRay = this._targetRay;
 		var grip = this._grip;
 
-		if ( inputSource ) {
+		if (inputSource) {
 
-			if ( targetRay !== null ) {
+			if (targetRay !== null) {
 
-				inputPose = frame.getPose( inputSource.targetRaySpace, referenceSpace );
+				inputPose = frame.getPose(inputSource.targetRaySpace, referenceSpace);
 
-				if ( inputPose !== null ) {
+				if (inputPose !== null) {
 
-					targetRay.matrix.fromArray( inputPose.transform.matrix );
-					targetRay.matrix.decompose( targetRay.position, targetRay.rotation, targetRay.scale );
+					targetRay.matrix.fromArray(inputPose.transform.matrix);
+					targetRay.matrix.decompose(targetRay.position, targetRay.rotation, targetRay.scale);
 
 				}
 
 			}
 
-			if ( grip !== null && inputSource.gripSpace ) {
+			if (grip !== null && inputSource.gripSpace) {
 
-				gripPose = frame.getPose( inputSource.gripSpace, referenceSpace );
+				gripPose = frame.getPose(inputSource.gripSpace, referenceSpace);
 
-				if ( gripPose !== null ) {
+				if (gripPose !== null) {
 
-					grip.matrix.fromArray( gripPose.transform.matrix );
-					grip.matrix.decompose( grip.position, grip.rotation, grip.scale );
+					grip.matrix.fromArray(gripPose.transform.matrix);
+					grip.matrix.decompose(grip.position, grip.rotation, grip.scale);
 
 				}
 
@@ -119,15 +119,15 @@ Object.assign( WebXRController.prototype, {
 
 		}
 
-		if ( targetRay !== null ) {
+		if (targetRay !== null) {
 
-			targetRay.visible = ( inputPose !== null );
+			targetRay.visible = (inputPose !== null);
 
 		}
 
-		if ( grip !== null ) {
+		if (grip !== null) {
 
-			grip.visible = ( gripPose !== null );
+			grip.visible = (gripPose !== null);
 
 		}
 
@@ -135,7 +135,7 @@ Object.assign( WebXRController.prototype, {
 
 	}
 
-} );
+});
 
 
-export { WebXRController };
+export {WebXRController};

@@ -1,5 +1,5 @@
-import { Loader } from './Loader';
-import { LoadingManager } from './LoadingManager';
+import {Loader} from './Loader';
+import {LoadingManager} from './LoadingManager';
 
 /**
  * A loader for loading an image.
@@ -7,13 +7,13 @@ import { LoadingManager } from './LoadingManager';
  */
 export class ImageLoader extends Loader {
 
-	constructor( manager?: LoadingManager );
+	constructor(manager?: LoadingManager);
 
 	load(
 		url: string,
-		onLoad?: ( image: HTMLImageElement ) => void,
-		onProgress?: ( event: ProgressEvent ) => void,
-		onError?: ( event: ErrorEvent ) => void
+		onLoad?: (image: HTMLImageElement) => void,
+		onProgress?: (event: ProgressEvent) => void,
+		onError?: (event: ErrorEvent) => void
 	): HTMLImageElement;
 
 }

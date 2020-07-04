@@ -1,8 +1,6 @@
-import {
-	ShaderMaterial,
-} from '../../../src/Three';
+import {ShaderMaterial,} from '../../../src/Three';
 
-import { Pass } from './Pass';
+import {Pass} from './Pass';
 
 export interface HalftonePassParameters {
 	shape?: number;
@@ -19,9 +17,10 @@ export interface HalftonePassParameters {
 
 export class HalftonePass extends Pass {
 
-	constructor( width: number, height: number, params: HalftonePassParameters );
 	uniforms: object;
 	material: ShaderMaterial;
 	fsQuad: object;
+
+	constructor(width: number, height: number, params: HalftonePassParameters);
 
 }

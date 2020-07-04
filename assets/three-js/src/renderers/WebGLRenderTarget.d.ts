@@ -1,8 +1,8 @@
-import { Vector4 } from './../math/Vector4';
-import { Texture } from './../textures/Texture';
-import { DepthTexture } from './../textures/DepthTexture';
-import { EventDispatcher } from './../core/EventDispatcher';
-import { Wrapping, TextureFilter, TextureDataType } from '../constants';
+import {Vector4} from './../math/Vector4';
+import {Texture} from './../textures/Texture';
+import {DepthTexture} from './../textures/DepthTexture';
+import {EventDispatcher} from './../core/EventDispatcher';
+import {TextureDataType, TextureFilter, Wrapping} from '../constants';
 
 export interface WebGLRenderTargetOptions {
 	wrapS?: Wrapping;
@@ -20,12 +20,6 @@ export interface WebGLRenderTargetOptions {
 
 export class WebGLRenderTarget extends EventDispatcher {
 
-	constructor(
-		width: number,
-		height: number,
-		options?: WebGLRenderTargetOptions
-	);
-
 	uuid: string;
 	width: number;
 	height: number;
@@ -37,7 +31,6 @@ export class WebGLRenderTarget extends EventDispatcher {
 	stencilBuffer: boolean;
 	depthTexture: DepthTexture;
 	readonly isWebGLRenderTarget: true;
-
 	/**
 	 * @deprecated Use {@link Texture#wrapS texture.wrapS} instead.
 	 */
@@ -79,9 +72,18 @@ export class WebGLRenderTarget extends EventDispatcher {
 	 */
 	generateMipmaps: any;
 
-	setSize( width: number, height: number ): void;
+	constructor(
+		width: number,
+		height: number,
+		options?: WebGLRenderTargetOptions
+	);
+
+	setSize(width: number, height: number): void;
+
 	clone(): this;
-	copy( source: WebGLRenderTarget ): this;
+
+	copy(source: WebGLRenderTarget): this;
+
 	dispose(): void;
 
 }

@@ -1,14 +1,12 @@
-import { Object3D } from './../core/Object3D';
-import { AudioListener } from './AudioListener';
-import { AudioContext } from './AudioContext';
+import {Object3D} from './../core/Object3D';
+import {AudioListener} from './AudioListener';
+import {AudioContext} from './AudioContext';
 
 // Extras / Audio /////////////////////////////////////////////////////////////////////
 
 export class Audio<NodeType extends AudioNode = GainNode> extends Object3D {
 
-	constructor( listener: AudioListener );
 	type: 'Audio';
-
 	listener: AudioListener;
 	context: AudioContext;
 	gain: GainNode;
@@ -27,34 +25,61 @@ export class Audio<NodeType extends AudioNode = GainNode> extends Object3D {
 	source: AudioBufferSourceNode;
 	filters: any[];
 
+	constructor(listener: AudioListener);
+
 	getOutput(): NodeType;
-	setNodeSource( audioNode: AudioBufferSourceNode ): this;
-	setMediaElementSource( mediaElement: HTMLMediaElement ): this;
-	setMediaStreamSource( mediaStream: MediaStream ): this;
-	setBuffer( audioBuffer: AudioBuffer ): this;
-	play( delay?: number ): this;
+
+	setNodeSource(audioNode: AudioBufferSourceNode): this;
+
+	setMediaElementSource(mediaElement: HTMLMediaElement): this;
+
+	setMediaStreamSource(mediaStream: MediaStream): this;
+
+	setBuffer(audioBuffer: AudioBuffer): this;
+
+	play(delay?: number): this;
+
 	onEnded(): void;
+
 	pause(): this;
+
 	stop(): this;
+
 	connect(): this;
+
 	disconnect(): this;
-	setDetune( value: number ): this;
+
+	setDetune(value: number): this;
+
 	getDetune(): number;
+
 	getFilters(): any[];
-	setFilters( value: any[] ): this;
+
+	setFilters(value: any[]): this;
+
 	getFilter(): any;
-	setFilter( filter: any ): this;
-	setPlaybackRate( value: number ): this;
+
+	setFilter(filter: any): this;
+
+	setPlaybackRate(value: number): this;
+
 	getPlaybackRate(): number;
+
 	getLoop(): boolean;
-	setLoop( value: boolean ): this;
-	setLoopStart( value: number ): this;
-	setLoopEnd( value: number ): this;
+
+	setLoop(value: boolean): this;
+
+	setLoopStart(value: number): this;
+
+	setLoopEnd(value: number): this;
+
 	getVolume(): number;
-	setVolume( value: number ): this;
+
+	setVolume(value: number): this;
+
 	/**
 	 * @deprecated Use {@link AudioLoader} instead.
 	 */
-	load( file: string ): Audio;
+	load(file: string): Audio;
 
 }

@@ -10,9 +10,9 @@ THREE.AfterimageShader = {
 
 	uniforms: {
 
-		"damp": { value: 0.96 },
-		"tOld": { value: null },
-		"tNew": { value: null }
+		"damp": {value: 0.96},
+		"tOld": {value: null},
+		"tNew": {value: null}
 
 	},
 
@@ -27,7 +27,7 @@ THREE.AfterimageShader = {
 
 		"}"
 
-	].join( "\n" ),
+	].join("\n"),
 
 	fragmentShader: [
 
@@ -55,6 +55,6 @@ THREE.AfterimageShader = {
 
 		"}"
 
-	].join( "\n" )
+	].join("\n")
 
 };

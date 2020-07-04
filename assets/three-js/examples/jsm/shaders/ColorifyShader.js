@@ -4,16 +4,14 @@
  * Colorify shader
  */
 
-import {
-	Color
-} from "../../../build/three.module.js";
+import {Color} from "../../../build/three.module.js";
 
 var ColorifyShader = {
 
 	uniforms: {
 
-		"tDiffuse": { value: null },
-		"color": { value: new Color( 0xffffff ) }
+		"tDiffuse": {value: null},
+		"color": {value: new Color(0xffffff)}
 
 	},
 
@@ -28,7 +26,7 @@ var ColorifyShader = {
 
 		"}"
 
-	].join( "\n" ),
+	].join("\n"),
 
 	fragmentShader: [
 
@@ -48,8 +46,8 @@ var ColorifyShader = {
 
 		"}"
 
-	].join( "\n" )
+	].join("\n")
 
 };
 
-export { ColorifyShader };
+export {ColorifyShader};

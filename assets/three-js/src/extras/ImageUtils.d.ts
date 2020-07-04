@@ -1,5 +1,5 @@
-import { Mapping } from '../constants';
-import { Texture } from '../textures/Texture';
+import {Mapping} from '../constants';
+import {Texture} from '../textures/Texture';
 
 export namespace ImageUtils {
 
@@ -18,8 +18,8 @@ export namespace ImageUtils {
 	export function loadTexture(
 		url: string,
 		mapping?: Mapping,
-		onLoad?: ( texture: Texture ) => void,
-		onError?: ( message: string ) => void
+		onLoad?: (texture: Texture) => void,
+		onError?: (message: string) => void
 	): Texture;
 
 	/**
@@ -28,7 +28,7 @@ export namespace ImageUtils {
 	export function loadTextureCube(
 		array: string[],
 		mapping?: Mapping,
-		onLoad?: ( texture: Texture ) => void,
-		onError?: ( message: string ) => void
+		onLoad?: (texture: Texture) => void,
+		onError?: (message: string) => void
 	): Texture;
 }

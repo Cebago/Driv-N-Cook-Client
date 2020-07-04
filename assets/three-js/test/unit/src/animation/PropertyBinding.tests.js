@@ -4,70 +4,70 @@
  */
 /* global QUnit */
 
-import { PropertyBinding } from '../../../../src/animation/PropertyBinding';
-import { BoxGeometry } from '../../../../src/geometries/BoxGeometry';
-import { Mesh } from '../../../../src/objects/Mesh';
-import { MeshBasicMaterial } from '../../../../src/materials/MeshBasicMaterial';
+import {PropertyBinding} from '../../../../src/animation/PropertyBinding';
+import {BoxGeometry} from '../../../../src/geometries/BoxGeometry';
+import {Mesh} from '../../../../src/objects/Mesh';
+import {MeshBasicMaterial} from '../../../../src/materials/MeshBasicMaterial';
 
-export default QUnit.module( 'Animation', () => {
+export default QUnit.module('Animation', () => {
 
-	QUnit.module( 'PropertyBinding', () => {
+	QUnit.module('PropertyBinding', () => {
 
 		// INSTANCING
-		QUnit.todo( "Instancing", ( assert ) => {
+		QUnit.todo("Instancing", (assert) => {
 
-			assert.ok( false, "everything's gonna be alright" );
+			assert.ok(false, "everything's gonna be alright");
 
-		} );
+		});
 
 		// STATIC STUFF
-		QUnit.todo( "Composite", ( assert ) => {
+		QUnit.todo("Composite", (assert) => {
 
-			assert.ok( false, "everything's gonna be alright" );
+			assert.ok(false, "everything's gonna be alright");
 
-		} );
+		});
 
-		QUnit.todo( "create", ( assert ) => {
+		QUnit.todo("create", (assert) => {
 
-			assert.ok( false, "everything's gonna be alright" );
+			assert.ok(false, "everything's gonna be alright");
 
-		} );
+		});
 
-		QUnit.test( 'sanitizeNodeName', ( assert ) => {
+		QUnit.test('sanitizeNodeName', (assert) => {
 
 			assert.equal(
-				PropertyBinding.sanitizeNodeName( 'valid-name-123_' ),
+				PropertyBinding.sanitizeNodeName('valid-name-123_'),
 				'valid-name-123_',
 				'Leaves valid name intact.'
 			);
 
 			assert.equal(
-				PropertyBinding.sanitizeNodeName( '急須' ),
+				PropertyBinding.sanitizeNodeName('急須'),
 				'急須',
 				'Leaves non-latin unicode characters intact.'
 			);
 
 			assert.equal(
-				PropertyBinding.sanitizeNodeName( 'space separated name 123_ -' ),
+				PropertyBinding.sanitizeNodeName('space separated name 123_ -'),
 				'space_separated_name_123__-',
 				'Replaces spaces with underscores.'
 			);
 
 			assert.equal(
-				PropertyBinding.sanitizeNodeName( '"Mátyás" %_* 😇' ),
+				PropertyBinding.sanitizeNodeName('"Mátyás" %_* 😇'),
 				'"Mátyás"_%_*_😇',
 				'Allows various punctuation and symbols.'
 			);
 
 			assert.equal(
-				PropertyBinding.sanitizeNodeName( '/invalid: name ^123.[_]' ),
+				PropertyBinding.sanitizeNodeName('/invalid: name ^123.[_]'),
 				'invalid_name_^123_',
 				'Strips reserved characters.'
 			);
 
-		} );
+		});
 
-		QUnit.test( 'parseTrackName', ( assert ) => {
+		QUnit.test('parseTrackName', (assert) => {
 
 			var paths = [
 
@@ -274,63 +274,63 @@ export default QUnit.module( 'Animation', () => {
 
 			];
 
-			paths.forEach( function ( path ) {
+			paths.forEach(function (path) {
 
 				assert.smartEqual(
-					PropertyBinding.parseTrackName( path[ 0 ] ),
-					path[ 1 ],
-					'Parses track name: ' + path[ 0 ]
+					PropertyBinding.parseTrackName(path[0]),
+					path[1],
+					'Parses track name: ' + path[0]
 				);
 
-			} );
+			});
 
-		} );
+		});
 
-		QUnit.todo( "findNode", ( assert ) => {
+		QUnit.todo("findNode", (assert) => {
 
-			assert.ok( false, "everything's gonna be alright" );
+			assert.ok(false, "everything's gonna be alright");
 
-		} );
+		});
 
 		// PUBLIC STUFF
-		QUnit.todo( "BindingType", ( assert ) => {
+		QUnit.todo("BindingType", (assert) => {
 
-			assert.ok( false, "everything's gonna be alright" );
+			assert.ok(false, "everything's gonna be alright");
 
-		} );
+		});
 
-		QUnit.todo( "Versioning", ( assert ) => {
+		QUnit.todo("Versioning", (assert) => {
 
-			assert.ok( false, "everything's gonna be alright" );
+			assert.ok(false, "everything's gonna be alright");
 
-		} );
+		});
 
-		QUnit.todo( "GetterByBindingType", ( assert ) => {
+		QUnit.todo("GetterByBindingType", (assert) => {
 
-			assert.ok( false, "everything's gonna be alright" );
+			assert.ok(false, "everything's gonna be alright");
 
-		} );
+		});
 
-		QUnit.todo( "SetterByBindingTypeAndVersioning", ( assert ) => {
+		QUnit.todo("SetterByBindingTypeAndVersioning", (assert) => {
 
-			assert.ok( false, "everything's gonna be alright" );
+			assert.ok(false, "everything's gonna be alright");
 
-		} );
+		});
 
-		QUnit.todo( "getValue", ( assert ) => {
+		QUnit.todo("getValue", (assert) => {
 
-			assert.ok( false, "everything's gonna be alright" );
+			assert.ok(false, "everything's gonna be alright");
 
-		} );
+		});
 
-		QUnit.test( 'setValue', ( assert ) => {
+		QUnit.test('setValue', (assert) => {
 
 			var paths = [
 				'.material.opacity',
 				'.material[opacity]'
 			];
 
-			paths.forEach( function ( path ) {
+			paths.forEach(function (path) {
 
 				var originalValue = 0;
 				var expectedValue = 1;
@@ -338,9 +338,9 @@ export default QUnit.module( 'Animation', () => {
 				var geometry = new BoxGeometry();
 				var material = new MeshBasicMaterial();
 				material.opacity = originalValue;
-				var mesh = new Mesh( geometry, material );
+				var mesh = new Mesh(geometry, material);
 
-				var binding = new PropertyBinding( mesh, path, null );
+				var binding = new PropertyBinding(mesh, path, null);
 				binding.bind();
 
 				assert.equal(
@@ -349,29 +349,29 @@ export default QUnit.module( 'Animation', () => {
 					'Sets property of material with "' + path + '" (pre-setValue)'
 				);
 
-				binding.setValue( [ expectedValue ], 0 );
+				binding.setValue([expectedValue], 0);
 				assert.equal(
 					material.opacity,
 					expectedValue,
 					'Sets property of material with "' + path + '" (post-setValue)'
 				);
 
-			} );
+			});
 
-		} );
+		});
 
-		QUnit.todo( "bind", ( assert ) => {
+		QUnit.todo("bind", (assert) => {
 
-			assert.ok( false, "everything's gonna be alright" );
+			assert.ok(false, "everything's gonna be alright");
 
-		} );
+		});
 
-		QUnit.todo( "unbind", ( assert ) => {
+		QUnit.todo("unbind", (assert) => {
 
-			assert.ok( false, "everything's gonna be alright" );
+			assert.ok(false, "everything's gonna be alright");
 
-		} );
+		});
 
-	} );
+	});
 
-} );
+});

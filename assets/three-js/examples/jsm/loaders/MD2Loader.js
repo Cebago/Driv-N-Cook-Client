@@ -11,120 +11,120 @@ import {
 	Vector3
 } from "../../../build/three.module.js";
 
-var MD2Loader = function ( manager ) {
+var MD2Loader = function (manager) {
 
-	Loader.call( this, manager );
+	Loader.call(this, manager);
 
 };
 
-MD2Loader.prototype = Object.assign( Object.create( Loader.prototype ), {
+MD2Loader.prototype = Object.assign(Object.create(Loader.prototype), {
 
 	constructor: MD2Loader,
 
-	load: function ( url, onLoad, onProgress, onError ) {
+	load: function (url, onLoad, onProgress, onError) {
 
 		var scope = this;
 
-		var loader = new FileLoader( scope.manager );
-		loader.setPath( scope.path );
-		loader.setResponseType( 'arraybuffer' );
-		loader.load( url, function ( buffer ) {
+		var loader = new FileLoader(scope.manager);
+		loader.setPath(scope.path);
+		loader.setResponseType('arraybuffer');
+		loader.load(url, function (buffer) {
 
-			onLoad( scope.parse( buffer ) );
+			onLoad(scope.parse(buffer));
 
-		}, onProgress, onError );
+		}, onProgress, onError);
 
 	},
 
-	parse: ( function () {
+	parse: (function () {
 
 		var normalData = [
-			[ - 0.525731, 0.000000, 0.850651 ], [ - 0.442863, 0.238856, 0.864188 ],
-			[ - 0.295242, 0.000000, 0.955423 ], [ - 0.309017, 0.500000, 0.809017 ],
-			[ - 0.162460, 0.262866, 0.951056 ], [ 0.000000, 0.000000, 1.000000 ],
-			[ 0.000000, 0.850651, 0.525731 ], [ - 0.147621, 0.716567, 0.681718 ],
-			[ 0.147621, 0.716567, 0.681718 ], [ 0.000000, 0.525731, 0.850651 ],
-			[ 0.309017, 0.500000, 0.809017 ], [ 0.525731, 0.000000, 0.850651 ],
-			[ 0.295242, 0.000000, 0.955423 ], [ 0.442863, 0.238856, 0.864188 ],
-			[ 0.162460, 0.262866, 0.951056 ], [ - 0.681718, 0.147621, 0.716567 ],
-			[ - 0.809017, 0.309017, 0.500000 ], [ - 0.587785, 0.425325, 0.688191 ],
-			[ - 0.850651, 0.525731, 0.000000 ], [ - 0.864188, 0.442863, 0.238856 ],
-			[ - 0.716567, 0.681718, 0.147621 ], [ - 0.688191, 0.587785, 0.425325 ],
-			[ - 0.500000, 0.809017, 0.309017 ], [ - 0.238856, 0.864188, 0.442863 ],
-			[ - 0.425325, 0.688191, 0.587785 ], [ - 0.716567, 0.681718, - 0.147621 ],
-			[ - 0.500000, 0.809017, - 0.309017 ], [ - 0.525731, 0.850651, 0.000000 ],
-			[ 0.000000, 0.850651, - 0.525731 ], [ - 0.238856, 0.864188, - 0.442863 ],
-			[ 0.000000, 0.955423, - 0.295242 ], [ - 0.262866, 0.951056, - 0.162460 ],
-			[ 0.000000, 1.000000, 0.000000 ], [ 0.000000, 0.955423, 0.295242 ],
-			[ - 0.262866, 0.951056, 0.162460 ], [ 0.238856, 0.864188, 0.442863 ],
-			[ 0.262866, 0.951056, 0.162460 ], [ 0.500000, 0.809017, 0.309017 ],
-			[ 0.238856, 0.864188, - 0.442863 ], [ 0.262866, 0.951056, - 0.162460 ],
-			[ 0.500000, 0.809017, - 0.309017 ], [ 0.850651, 0.525731, 0.000000 ],
-			[ 0.716567, 0.681718, 0.147621 ], [ 0.716567, 0.681718, - 0.147621 ],
-			[ 0.525731, 0.850651, 0.000000 ], [ 0.425325, 0.688191, 0.587785 ],
-			[ 0.864188, 0.442863, 0.238856 ], [ 0.688191, 0.587785, 0.425325 ],
-			[ 0.809017, 0.309017, 0.500000 ], [ 0.681718, 0.147621, 0.716567 ],
-			[ 0.587785, 0.425325, 0.688191 ], [ 0.955423, 0.295242, 0.000000 ],
-			[ 1.000000, 0.000000, 0.000000 ], [ 0.951056, 0.162460, 0.262866 ],
-			[ 0.850651, - 0.525731, 0.000000 ], [ 0.955423, - 0.295242, 0.000000 ],
-			[ 0.864188, - 0.442863, 0.238856 ], [ 0.951056, - 0.162460, 0.262866 ],
-			[ 0.809017, - 0.309017, 0.500000 ], [ 0.681718, - 0.147621, 0.716567 ],
-			[ 0.850651, 0.000000, 0.525731 ], [ 0.864188, 0.442863, - 0.238856 ],
-			[ 0.809017, 0.309017, - 0.500000 ], [ 0.951056, 0.162460, - 0.262866 ],
-			[ 0.525731, 0.000000, - 0.850651 ], [ 0.681718, 0.147621, - 0.716567 ],
-			[ 0.681718, - 0.147621, - 0.716567 ], [ 0.850651, 0.000000, - 0.525731 ],
-			[ 0.809017, - 0.309017, - 0.500000 ], [ 0.864188, - 0.442863, - 0.238856 ],
-			[ 0.951056, - 0.162460, - 0.262866 ], [ 0.147621, 0.716567, - 0.681718 ],
-			[ 0.309017, 0.500000, - 0.809017 ], [ 0.425325, 0.688191, - 0.587785 ],
-			[ 0.442863, 0.238856, - 0.864188 ], [ 0.587785, 0.425325, - 0.688191 ],
-			[ 0.688191, 0.587785, - 0.425325 ], [ - 0.147621, 0.716567, - 0.681718 ],
-			[ - 0.309017, 0.500000, - 0.809017 ], [ 0.000000, 0.525731, - 0.850651 ],
-			[ - 0.525731, 0.000000, - 0.850651 ], [ - 0.442863, 0.238856, - 0.864188 ],
-			[ - 0.295242, 0.000000, - 0.955423 ], [ - 0.162460, 0.262866, - 0.951056 ],
-			[ 0.000000, 0.000000, - 1.000000 ], [ 0.295242, 0.000000, - 0.955423 ],
-			[ 0.162460, 0.262866, - 0.951056 ], [ - 0.442863, - 0.238856, - 0.864188 ],
-			[ - 0.309017, - 0.500000, - 0.809017 ], [ - 0.162460, - 0.262866, - 0.951056 ],
-			[ 0.000000, - 0.850651, - 0.525731 ], [ - 0.147621, - 0.716567, - 0.681718 ],
-			[ 0.147621, - 0.716567, - 0.681718 ], [ 0.000000, - 0.525731, - 0.850651 ],
-			[ 0.309017, - 0.500000, - 0.809017 ], [ 0.442863, - 0.238856, - 0.864188 ],
-			[ 0.162460, - 0.262866, - 0.951056 ], [ 0.238856, - 0.864188, - 0.442863 ],
-			[ 0.500000, - 0.809017, - 0.309017 ], [ 0.425325, - 0.688191, - 0.587785 ],
-			[ 0.716567, - 0.681718, - 0.147621 ], [ 0.688191, - 0.587785, - 0.425325 ],
-			[ 0.587785, - 0.425325, - 0.688191 ], [ 0.000000, - 0.955423, - 0.295242 ],
-			[ 0.000000, - 1.000000, 0.000000 ], [ 0.262866, - 0.951056, - 0.162460 ],
-			[ 0.000000, - 0.850651, 0.525731 ], [ 0.000000, - 0.955423, 0.295242 ],
-			[ 0.238856, - 0.864188, 0.442863 ], [ 0.262866, - 0.951056, 0.162460 ],
-			[ 0.500000, - 0.809017, 0.309017 ], [ 0.716567, - 0.681718, 0.147621 ],
-			[ 0.525731, - 0.850651, 0.000000 ], [ - 0.238856, - 0.864188, - 0.442863 ],
-			[ - 0.500000, - 0.809017, - 0.309017 ], [ - 0.262866, - 0.951056, - 0.162460 ],
-			[ - 0.850651, - 0.525731, 0.000000 ], [ - 0.716567, - 0.681718, - 0.147621 ],
-			[ - 0.716567, - 0.681718, 0.147621 ], [ - 0.525731, - 0.850651, 0.000000 ],
-			[ - 0.500000, - 0.809017, 0.309017 ], [ - 0.238856, - 0.864188, 0.442863 ],
-			[ - 0.262866, - 0.951056, 0.162460 ], [ - 0.864188, - 0.442863, 0.238856 ],
-			[ - 0.809017, - 0.309017, 0.500000 ], [ - 0.688191, - 0.587785, 0.425325 ],
-			[ - 0.681718, - 0.147621, 0.716567 ], [ - 0.442863, - 0.238856, 0.864188 ],
-			[ - 0.587785, - 0.425325, 0.688191 ], [ - 0.309017, - 0.500000, 0.809017 ],
-			[ - 0.147621, - 0.716567, 0.681718 ], [ - 0.425325, - 0.688191, 0.587785 ],
-			[ - 0.162460, - 0.262866, 0.951056 ], [ 0.442863, - 0.238856, 0.864188 ],
-			[ 0.162460, - 0.262866, 0.951056 ], [ 0.309017, - 0.500000, 0.809017 ],
-			[ 0.147621, - 0.716567, 0.681718 ], [ 0.000000, - 0.525731, 0.850651 ],
-			[ 0.425325, - 0.688191, 0.587785 ], [ 0.587785, - 0.425325, 0.688191 ],
-			[ 0.688191, - 0.587785, 0.425325 ], [ - 0.955423, 0.295242, 0.000000 ],
-			[ - 0.951056, 0.162460, 0.262866 ], [ - 1.000000, 0.000000, 0.000000 ],
-			[ - 0.850651, 0.000000, 0.525731 ], [ - 0.955423, - 0.295242, 0.000000 ],
-			[ - 0.951056, - 0.162460, 0.262866 ], [ - 0.864188, 0.442863, - 0.238856 ],
-			[ - 0.951056, 0.162460, - 0.262866 ], [ - 0.809017, 0.309017, - 0.500000 ],
-			[ - 0.864188, - 0.442863, - 0.238856 ], [ - 0.951056, - 0.162460, - 0.262866 ],
-			[ - 0.809017, - 0.309017, - 0.500000 ], [ - 0.681718, 0.147621, - 0.716567 ],
-			[ - 0.681718, - 0.147621, - 0.716567 ], [ - 0.850651, 0.000000, - 0.525731 ],
-			[ - 0.688191, 0.587785, - 0.425325 ], [ - 0.587785, 0.425325, - 0.688191 ],
-			[ - 0.425325, 0.688191, - 0.587785 ], [ - 0.425325, - 0.688191, - 0.587785 ],
-			[ - 0.587785, - 0.425325, - 0.688191 ], [ - 0.688191, - 0.587785, - 0.425325 ]
+			[-0.525731, 0.000000, 0.850651], [-0.442863, 0.238856, 0.864188],
+			[-0.295242, 0.000000, 0.955423], [-0.309017, 0.500000, 0.809017],
+			[-0.162460, 0.262866, 0.951056], [0.000000, 0.000000, 1.000000],
+			[0.000000, 0.850651, 0.525731], [-0.147621, 0.716567, 0.681718],
+			[0.147621, 0.716567, 0.681718], [0.000000, 0.525731, 0.850651],
+			[0.309017, 0.500000, 0.809017], [0.525731, 0.000000, 0.850651],
+			[0.295242, 0.000000, 0.955423], [0.442863, 0.238856, 0.864188],
+			[0.162460, 0.262866, 0.951056], [-0.681718, 0.147621, 0.716567],
+			[-0.809017, 0.309017, 0.500000], [-0.587785, 0.425325, 0.688191],
+			[-0.850651, 0.525731, 0.000000], [-0.864188, 0.442863, 0.238856],
+			[-0.716567, 0.681718, 0.147621], [-0.688191, 0.587785, 0.425325],
+			[-0.500000, 0.809017, 0.309017], [-0.238856, 0.864188, 0.442863],
+			[-0.425325, 0.688191, 0.587785], [-0.716567, 0.681718, -0.147621],
+			[-0.500000, 0.809017, -0.309017], [-0.525731, 0.850651, 0.000000],
+			[0.000000, 0.850651, -0.525731], [-0.238856, 0.864188, -0.442863],
+			[0.000000, 0.955423, -0.295242], [-0.262866, 0.951056, -0.162460],
+			[0.000000, 1.000000, 0.000000], [0.000000, 0.955423, 0.295242],
+			[-0.262866, 0.951056, 0.162460], [0.238856, 0.864188, 0.442863],
+			[0.262866, 0.951056, 0.162460], [0.500000, 0.809017, 0.309017],
+			[0.238856, 0.864188, -0.442863], [0.262866, 0.951056, -0.162460],
+			[0.500000, 0.809017, -0.309017], [0.850651, 0.525731, 0.000000],
+			[0.716567, 0.681718, 0.147621], [0.716567, 0.681718, -0.147621],
+			[0.525731, 0.850651, 0.000000], [0.425325, 0.688191, 0.587785],
+			[0.864188, 0.442863, 0.238856], [0.688191, 0.587785, 0.425325],
+			[0.809017, 0.309017, 0.500000], [0.681718, 0.147621, 0.716567],
+			[0.587785, 0.425325, 0.688191], [0.955423, 0.295242, 0.000000],
+			[1.000000, 0.000000, 0.000000], [0.951056, 0.162460, 0.262866],
+			[0.850651, -0.525731, 0.000000], [0.955423, -0.295242, 0.000000],
+			[0.864188, -0.442863, 0.238856], [0.951056, -0.162460, 0.262866],
+			[0.809017, -0.309017, 0.500000], [0.681718, -0.147621, 0.716567],
+			[0.850651, 0.000000, 0.525731], [0.864188, 0.442863, -0.238856],
+			[0.809017, 0.309017, -0.500000], [0.951056, 0.162460, -0.262866],
+			[0.525731, 0.000000, -0.850651], [0.681718, 0.147621, -0.716567],
+			[0.681718, -0.147621, -0.716567], [0.850651, 0.000000, -0.525731],
+			[0.809017, -0.309017, -0.500000], [0.864188, -0.442863, -0.238856],
+			[0.951056, -0.162460, -0.262866], [0.147621, 0.716567, -0.681718],
+			[0.309017, 0.500000, -0.809017], [0.425325, 0.688191, -0.587785],
+			[0.442863, 0.238856, -0.864188], [0.587785, 0.425325, -0.688191],
+			[0.688191, 0.587785, -0.425325], [-0.147621, 0.716567, -0.681718],
+			[-0.309017, 0.500000, -0.809017], [0.000000, 0.525731, -0.850651],
+			[-0.525731, 0.000000, -0.850651], [-0.442863, 0.238856, -0.864188],
+			[-0.295242, 0.000000, -0.955423], [-0.162460, 0.262866, -0.951056],
+			[0.000000, 0.000000, -1.000000], [0.295242, 0.000000, -0.955423],
+			[0.162460, 0.262866, -0.951056], [-0.442863, -0.238856, -0.864188],
+			[-0.309017, -0.500000, -0.809017], [-0.162460, -0.262866, -0.951056],
+			[0.000000, -0.850651, -0.525731], [-0.147621, -0.716567, -0.681718],
+			[0.147621, -0.716567, -0.681718], [0.000000, -0.525731, -0.850651],
+			[0.309017, -0.500000, -0.809017], [0.442863, -0.238856, -0.864188],
+			[0.162460, -0.262866, -0.951056], [0.238856, -0.864188, -0.442863],
+			[0.500000, -0.809017, -0.309017], [0.425325, -0.688191, -0.587785],
+			[0.716567, -0.681718, -0.147621], [0.688191, -0.587785, -0.425325],
+			[0.587785, -0.425325, -0.688191], [0.000000, -0.955423, -0.295242],
+			[0.000000, -1.000000, 0.000000], [0.262866, -0.951056, -0.162460],
+			[0.000000, -0.850651, 0.525731], [0.000000, -0.955423, 0.295242],
+			[0.238856, -0.864188, 0.442863], [0.262866, -0.951056, 0.162460],
+			[0.500000, -0.809017, 0.309017], [0.716567, -0.681718, 0.147621],
+			[0.525731, -0.850651, 0.000000], [-0.238856, -0.864188, -0.442863],
+			[-0.500000, -0.809017, -0.309017], [-0.262866, -0.951056, -0.162460],
+			[-0.850651, -0.525731, 0.000000], [-0.716567, -0.681718, -0.147621],
+			[-0.716567, -0.681718, 0.147621], [-0.525731, -0.850651, 0.000000],
+			[-0.500000, -0.809017, 0.309017], [-0.238856, -0.864188, 0.442863],
+			[-0.262866, -0.951056, 0.162460], [-0.864188, -0.442863, 0.238856],
+			[-0.809017, -0.309017, 0.500000], [-0.688191, -0.587785, 0.425325],
+			[-0.681718, -0.147621, 0.716567], [-0.442863, -0.238856, 0.864188],
+			[-0.587785, -0.425325, 0.688191], [-0.309017, -0.500000, 0.809017],
+			[-0.147621, -0.716567, 0.681718], [-0.425325, -0.688191, 0.587785],
+			[-0.162460, -0.262866, 0.951056], [0.442863, -0.238856, 0.864188],
+			[0.162460, -0.262866, 0.951056], [0.309017, -0.500000, 0.809017],
+			[0.147621, -0.716567, 0.681718], [0.000000, -0.525731, 0.850651],
+			[0.425325, -0.688191, 0.587785], [0.587785, -0.425325, 0.688191],
+			[0.688191, -0.587785, 0.425325], [-0.955423, 0.295242, 0.000000],
+			[-0.951056, 0.162460, 0.262866], [-1.000000, 0.000000, 0.000000],
+			[-0.850651, 0.000000, 0.525731], [-0.955423, -0.295242, 0.000000],
+			[-0.951056, -0.162460, 0.262866], [-0.864188, 0.442863, -0.238856],
+			[-0.951056, 0.162460, -0.262866], [-0.809017, 0.309017, -0.500000],
+			[-0.864188, -0.442863, -0.238856], [-0.951056, -0.162460, -0.262866],
+			[-0.809017, -0.309017, -0.500000], [-0.681718, 0.147621, -0.716567],
+			[-0.681718, -0.147621, -0.716567], [-0.850651, 0.000000, -0.525731],
+			[-0.688191, 0.587785, -0.425325], [-0.587785, 0.425325, -0.688191],
+			[-0.425325, 0.688191, -0.587785], [-0.425325, -0.688191, -0.587785],
+			[-0.587785, -0.425325, -0.688191], [-0.688191, -0.587785, -0.425325]
 		];
 
-		return function ( buffer ) {
+		return function (buffer) {
 
-			var data = new DataView( buffer );
+			var data = new DataView(buffer);
 
 			// http://tfc.duke.free.fr/coding/md2-specs-en.html
 
@@ -137,22 +137,22 @@ MD2Loader.prototype = Object.assign( Object.create( Loader.prototype ), {
 				'offset_skins', 'offset_st', 'offset_tris', 'offset_frames', 'offset_glcmds', 'offset_end'
 			];
 
-			for ( var i = 0; i < headerNames.length; i ++ ) {
+			for (var i = 0; i < headerNames.length; i++) {
 
-				header[ headerNames[ i ] ] = data.getInt32( i * 4, true );
+				header[headerNames[i]] = data.getInt32(i * 4, true);
 
 			}
 
-			if ( header.ident !== 844121161 || header.version !== 8 ) {
+			if (header.ident !== 844121161 || header.version !== 8) {
 
-				console.error( 'Not a valid MD2 file' );
+				console.error('Not a valid MD2 file');
 				return;
 
 			}
 
-			if ( header.offset_end !== data.byteLength ) {
+			if (header.offset_end !== data.byteLength) {
 
-				console.error( 'Corrupted MD2 file' );
+				console.error('Corrupted MD2 file');
 				return;
 
 			}
@@ -166,12 +166,12 @@ MD2Loader.prototype = Object.assign( Object.create( Loader.prototype ), {
 			var uvsTemp = [];
 			var offset = header.offset_st;
 
-			for ( var i = 0, l = header.num_st; i < l; i ++ ) {
+			for (var i = 0, l = header.num_st; i < l; i++) {
 
-				var u = data.getInt16( offset + 0, true );
-				var v = data.getInt16( offset + 2, true );
+				var u = data.getInt16(offset + 0, true);
+				var v = data.getInt16(offset + 2, true);
 
-				uvsTemp.push( u / header.skinwidth, 1 - ( v / header.skinheight ) );
+				uvsTemp.push(u / header.skinwidth, 1 - (v / header.skinheight));
 
 				offset += 4;
 
@@ -184,18 +184,18 @@ MD2Loader.prototype = Object.assign( Object.create( Loader.prototype ), {
 			var vertexIndices = [];
 			var uvIndices = [];
 
-			for ( var i = 0, l = header.num_tris; i < l; i ++ ) {
+			for (var i = 0, l = header.num_tris; i < l; i++) {
 
 				vertexIndices.push(
-					data.getUint16( offset + 0, true ),
-					data.getUint16( offset + 2, true ),
-					data.getUint16( offset + 4, true )
+					data.getUint16(offset + 0, true),
+					data.getUint16(offset + 2, true),
+					data.getUint16(offset + 4, true)
 				);
 
 				uvIndices.push(
-					data.getUint16( offset + 6, true ),
-					data.getUint16( offset + 8, true ),
-					data.getUint16( offset + 10, true )
+					data.getUint16(offset + 6, true),
+					data.getUint16(offset + 8, true),
+					data.getUint16(offset + 10, true)
 				);
 
 				offset += 12;
@@ -212,56 +212,56 @@ MD2Loader.prototype = Object.assign( Object.create( Loader.prototype ), {
 
 			offset = header.offset_frames;
 
-			for ( var i = 0, l = header.num_frames; i < l; i ++ ) {
+			for (var i = 0, l = header.num_frames; i < l; i++) {
 
 				scale.set(
-					data.getFloat32( offset + 0, true ),
-					data.getFloat32( offset + 4, true ),
-					data.getFloat32( offset + 8, true )
+					data.getFloat32(offset + 0, true),
+					data.getFloat32(offset + 4, true),
+					data.getFloat32(offset + 8, true)
 				);
 
 				translation.set(
-					data.getFloat32( offset + 12, true ),
-					data.getFloat32( offset + 16, true ),
-					data.getFloat32( offset + 20, true )
+					data.getFloat32(offset + 12, true),
+					data.getFloat32(offset + 16, true),
+					data.getFloat32(offset + 20, true)
 				);
 
 				offset += 24;
 
-				for ( var j = 0; j < 16; j ++ ) {
+				for (var j = 0; j < 16; j++) {
 
-					var character = data.getUint8( offset + j, true );
-					if ( character === 0 ) break;
+					var character = data.getUint8(offset + j, true);
+					if (character === 0) break;
 
-					string[ j ] = character;
+					string[j] = character;
 
 				}
 
 				var frame = {
-					name: String.fromCharCode.apply( null, string ),
+					name: String.fromCharCode.apply(null, string),
 					vertices: [],
 					normals: []
 				};
 
 				offset += 16;
 
-				for ( var j = 0; j < header.num_vertices; j ++ ) {
+				for (var j = 0; j < header.num_vertices; j++) {
 
-					var x = data.getUint8( offset ++, true );
-					var y = data.getUint8( offset ++, true );
-					var z = data.getUint8( offset ++, true );
-					var n = normalData[ data.getUint8( offset ++, true ) ];
+					var x = data.getUint8(offset++, true);
+					var y = data.getUint8(offset++, true);
+					var z = data.getUint8(offset++, true);
+					var n = normalData[data.getUint8(offset++, true)];
 
 					x = x * scale.x + translation.x;
 					y = y * scale.y + translation.y;
 					z = z * scale.z + translation.z;
 
-					frame.vertices.push( x, z, y ); // convert to Y-up
-					frame.normals.push( n[ 0 ], n[ 2 ], n[ 1 ] ); // convert to Y-up
+					frame.vertices.push(x, z, y); // convert to Y-up
+					frame.normals.push(n[0], n[2], n[1]); // convert to Y-up
 
 				}
 
-				frames.push( frame );
+				frames.push(frame);
 
 			}
 
@@ -271,101 +271,101 @@ MD2Loader.prototype = Object.assign( Object.create( Loader.prototype ), {
 			var normals = [];
 			var uvs = [];
 
-			var verticesTemp = frames[ 0 ].vertices;
-			var normalsTemp = frames[ 0 ].normals;
+			var verticesTemp = frames[0].vertices;
+			var normalsTemp = frames[0].normals;
 
-			for ( var i = 0, l = vertexIndices.length; i < l; i ++ ) {
+			for (var i = 0, l = vertexIndices.length; i < l; i++) {
 
-				var vertexIndex = vertexIndices[ i ];
+				var vertexIndex = vertexIndices[i];
 				var stride = vertexIndex * 3;
 
 				//
 
-				var x = verticesTemp[ stride ];
-				var y = verticesTemp[ stride + 1 ];
-				var z = verticesTemp[ stride + 2 ];
+				var x = verticesTemp[stride];
+				var y = verticesTemp[stride + 1];
+				var z = verticesTemp[stride + 2];
 
-				positions.push( x, y, z );
-
-				//
-
-				var nx = normalsTemp[ stride ];
-				var ny = normalsTemp[ stride + 1 ];
-				var nz = normalsTemp[ stride + 2 ];
-
-				normals.push( nx, ny, nz );
+				positions.push(x, y, z);
 
 				//
 
-				var uvIndex = uvIndices[ i ];
+				var nx = normalsTemp[stride];
+				var ny = normalsTemp[stride + 1];
+				var nz = normalsTemp[stride + 2];
+
+				normals.push(nx, ny, nz);
+
+				//
+
+				var uvIndex = uvIndices[i];
 				stride = uvIndex * 2;
 
-				var u = uvsTemp[ stride ];
-				var v = uvsTemp[ stride + 1 ];
+				var u = uvsTemp[stride];
+				var v = uvsTemp[stride + 1];
 
-				uvs.push( u, v );
+				uvs.push(u, v);
 
 			}
 
-			geometry.setAttribute( 'position', new Float32BufferAttribute( positions, 3 ) );
-			geometry.setAttribute( 'normal', new Float32BufferAttribute( normals, 3 ) );
-			geometry.setAttribute( 'uv', new Float32BufferAttribute( uvs, 2 ) );
+			geometry.setAttribute('position', new Float32BufferAttribute(positions, 3));
+			geometry.setAttribute('normal', new Float32BufferAttribute(normals, 3));
+			geometry.setAttribute('uv', new Float32BufferAttribute(uvs, 2));
 
 			// animation
 
 			var morphPositions = [];
 			var morphNormals = [];
 
-			for ( var i = 0, l = frames.length; i < l; i ++ ) {
+			for (var i = 0, l = frames.length; i < l; i++) {
 
-				var frame = frames[ i ];
+				var frame = frames[i];
 				var attributeName = frame.name;
 
-				if ( frame.vertices.length > 0 ) {
+				if (frame.vertices.length > 0) {
 
 					var positions = [];
 
-					for ( var j = 0, jl = vertexIndices.length; j < jl; j ++ ) {
+					for (var j = 0, jl = vertexIndices.length; j < jl; j++) {
 
-						var vertexIndex = vertexIndices[ j ];
+						var vertexIndex = vertexIndices[j];
 						var stride = vertexIndex * 3;
 
-						var x = frame.vertices[ stride ];
-						var y = frame.vertices[ stride + 1 ];
-						var z = frame.vertices[ stride + 2 ];
+						var x = frame.vertices[stride];
+						var y = frame.vertices[stride + 1];
+						var z = frame.vertices[stride + 2];
 
-						positions.push( x, y, z );
+						positions.push(x, y, z);
 
 					}
 
-					var positionAttribute = new Float32BufferAttribute( positions, 3 );
+					var positionAttribute = new Float32BufferAttribute(positions, 3);
 					positionAttribute.name = attributeName;
 
-					morphPositions.push( positionAttribute );
+					morphPositions.push(positionAttribute);
 
 				}
 
-				if ( frame.normals.length > 0 ) {
+				if (frame.normals.length > 0) {
 
 					var normals = [];
 
-					for ( var j = 0, jl = vertexIndices.length; j < jl; j ++ ) {
+					for (var j = 0, jl = vertexIndices.length; j < jl; j++) {
 
-						var vertexIndex = vertexIndices[ j ];
+						var vertexIndex = vertexIndices[j];
 						var stride = vertexIndex * 3;
 
-						var nx = frame.normals[ stride ];
-						var ny = frame.normals[ stride + 1 ];
-						var nz = frame.normals[ stride + 2 ];
+						var nx = frame.normals[stride];
+						var ny = frame.normals[stride + 1];
+						var nz = frame.normals[stride + 2];
 
-						normals.push( nx, ny, nz );
+						normals.push(nx, ny, nz);
 
 					}
 
-					var normalAttribute = new Float32BufferAttribute( normals, 3 );
+					var normalAttribute = new Float32BufferAttribute(normals, 3);
 					normalAttribute.name = attributeName;
 
-					morphNormals.push( normalAttribute );
+					morphNormals.push(normalAttribute);
 
 				}
 
@@ -375,14 +375,14 @@ MD2Loader.prototype = Object.assign( Object.create( Loader.prototype ), {
 			geometry.morphAttributes.normal = morphNormals;
 			geometry.morphTargetsRelative = false;
 
-			geometry.animations = AnimationClip.CreateClipsFromMorphTargetSequences( frames, 10 );
+			geometry.animations = AnimationClip.CreateClipsFromMorphTargetSequences(frames, 10);
 
 			return geometry;
 
 		};
 
-	} )()
+	})()
 
-} );
+});
 
-export { MD2Loader };
+export {MD2Loader};

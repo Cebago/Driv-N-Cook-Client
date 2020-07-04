@@ -1,9 +1,7 @@
-import { Node } from '../core/Node';
-import { NodeMaterial } from './NodeMaterial';
+import {Node} from '../core/Node';
+import {NodeMaterial} from './NodeMaterial';
 
 export class PhongNodeMaterial extends NodeMaterial {
-
-	constructor();
 
 	color: Node;
 	alpha: Node;
@@ -19,5 +17,7 @@ export class PhongNodeMaterial extends NodeMaterial {
 	environmentAlpha: Node;
 	mask: Node;
 	position: Node;
+
+	constructor();
 
 }

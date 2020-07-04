@@ -13,9 +13,9 @@ var BrightnessContrastShader = {
 
 	uniforms: {
 
-		"tDiffuse": { value: null },
-		"brightness": { value: 0 },
-		"contrast": { value: 0 }
+		"tDiffuse": {value: null},
+		"brightness": {value: 0},
+		"contrast": {value: 0}
 
 	},
 
@@ -31,7 +31,7 @@ var BrightnessContrastShader = {
 
 		"}"
 
-	].join( "\n" ),
+	].join("\n"),
 
 	fragmentShader: [
 
@@ -55,8 +55,8 @@ var BrightnessContrastShader = {
 
 		"}"
 
-	].join( "\n" )
+	].join("\n")
 
 };
 
-export { BrightnessContrastShader };
+export {BrightnessContrastShader};

@@ -1,4 +1,4 @@
-import { Object3D } from '../core/Object3D.js';
+import {Object3D} from '../core/Object3D.js';
 
 /**
  * @author mikael emtinger / http://gomo.se/
@@ -8,19 +8,19 @@ import { Object3D } from '../core/Object3D.js';
 
 function Bone() {
 
-	Object3D.call( this );
+	Object3D.call(this);
 
 	this.type = 'Bone';
 
 }
 
-Bone.prototype = Object.assign( Object.create( Object3D.prototype ), {
+Bone.prototype = Object.assign(Object.create(Object3D.prototype), {
 
 	constructor: Bone,
 
 	isBone: true
 
-} );
+});
 
 
-export { Bone };
+export {Bone};

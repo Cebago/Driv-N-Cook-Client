@@ -2,28 +2,28 @@
  * @author sunag / http://www.sunag.com.br/
  */
 
-import { TempNode } from '../core/TempNode.js';
-import { ConstNode } from '../core/ConstNode.js';
-import { StructNode } from '../core/StructNode.js';
-import { FunctionNode } from '../core/FunctionNode.js';
-import { FunctionCallNode } from '../core/FunctionCallNode.js';
-import { ExpressionNode } from '../core/ExpressionNode.js';
-import { FloatNode } from '../inputs/FloatNode.js';
-import { OperatorNode } from '../math/OperatorNode.js';
-import { MathNode } from '../math/MathNode.js';
-import { ColorSpaceNode } from '../utils/ColorSpaceNode.js';
+import {TempNode} from '../core/TempNode.js';
+import {ConstNode} from '../core/ConstNode.js';
+import {StructNode} from '../core/StructNode.js';
+import {FunctionNode} from '../core/FunctionNode.js';
+import {FunctionCallNode} from '../core/FunctionCallNode.js';
+import {ExpressionNode} from '../core/ExpressionNode.js';
+import {FloatNode} from '../inputs/FloatNode.js';
+import {OperatorNode} from '../math/OperatorNode.js';
+import {MathNode} from '../math/MathNode.js';
+import {ColorSpaceNode} from '../utils/ColorSpaceNode.js';
 
-function TextureCubeUVNode( value, uv, bias ) {
+function TextureCubeUVNode(value, uv, bias) {
 
-	TempNode.call( this, 'v4' );
+	TempNode.call(this, 'v4');
 
 	this.value = value,
-	this.uv = uv;
+		this.uv = uv;
 	this.bias = bias;
 
 }
 
-TextureCubeUVNode.Nodes = ( function () {
+TextureCubeUVNode.Nodes = (function () {
 
 	var TextureCubeUVData = new StructNode(
 		`struct TextureCubeUVData {
@@ -32,12 +32,12 @@ TextureCubeUVNode.Nodes = ( function () {
 			vec4 br;
 			vec4 bl;
 			vec2 f;
-		}` );
+		}`);
 
-	var cubeUV_maxMipLevel = new ConstNode( `float cubeUV_maxMipLevel 8.0`, true );
-	var cubeUV_minMipLevel = new ConstNode( `float cubeUV_minMipLevel 4.0`, true );
-	var cubeUV_maxTileSize = new ConstNode( `float cubeUV_maxTileSize 256.0`, true );
-	var cubeUV_minTileSize = new ConstNode( `float cubeUV_minTileSize 16.0`, true );
+	var cubeUV_maxMipLevel = new ConstNode(`float cubeUV_maxMipLevel 8.0`, true);
+	var cubeUV_minMipLevel = new ConstNode(`float cubeUV_minMipLevel 4.0`, true);
+	var cubeUV_maxTileSize = new ConstNode(`float cubeUV_maxTileSize 256.0`, true);
+	var cubeUV_minTileSize = new ConstNode(`float cubeUV_minTileSize 16.0`, true);
 
 	// These shader functions convert between the UV coordinates of a single face of
 	// a cubemap, the 0-5 integer index of a cube face, and the direction vector for
@@ -59,7 +59,7 @@ TextureCubeUVNode.Nodes = ( function () {
 						face = direction.y > 0.0 ? 1.0 : 4.0;
 				}
 				return face;
-		}` );
+		}`);
 	getFace.useKeywords = false;
 
 	var getUV = new FunctionNode(
@@ -79,7 +79,7 @@ TextureCubeUVNode.Nodes = ( function () {
 					uv = vec2(-direction.x, direction.y) / abs(direction.z);
 				}
 				return 0.5 * (uv + 1.0);
-		}` );
+		}`);
 	getUV.useKeywords = false;
 
 	var bilinearCubeUV = new FunctionNode(
@@ -106,7 +106,7 @@ TextureCubeUVNode.Nodes = ( function () {
 			uv.y += filterInt * 2.0 * cubeUV_minTileSize;
 			uv.x += 3.0 * max(0.0, cubeUV_maxTileSize - 2.0 * faceSize);
 			uv *= texelSize;
- 
+
 			vec4 tl = texture2D(envMap, uv);
 			uv.x += texelSize;
 			vec4 tr = texture2D(envMap, uv);
@@ -116,28 +116,28 @@ TextureCubeUVNode.Nodes = ( function () {
 			vec4 bl = texture2D(envMap, uv);
 
 			return TextureCubeUVData( tl, tr, br, bl, f );
-		}`, [ TextureCubeUVData, getFace, getUV, cubeUV_maxMipLevel, cubeUV_minMipLevel, cubeUV_maxTileSize, cubeUV_minTileSize ] );
+		}`, [TextureCubeUVData, getFace, getUV, cubeUV_maxMipLevel, cubeUV_minMipLevel, cubeUV_maxTileSize, cubeUV_minTileSize]);
 	bilinearCubeUV.useKeywords = false;
 
 	// These defines must match with PMREMGenerator
 
-	var r0 = new ConstNode( `float r0 1.0`, true );
-	var v0 = new ConstNode( `float v0 0.339`, true );
-	var m0 = new ConstNode( `float m0 -2.0`, true );
-	var r1 = new ConstNode( `float r1 0.8`, true );
-	var v1 = new ConstNode( `float v1 0.276`, true );
-	var m1 = new ConstNode( `float m1 -1.0`, true );
-	var r4 = new ConstNode( `float r4 0.4`, true );
-	var v4 = new ConstNode( `float v4 0.046`, true );
-	var m4 = new ConstNode( `float m4 2.0`, true );
-	var r5 = new ConstNode( `float r5 0.305`, true );
-	var v5 = new ConstNode( `float v5 0.016`, true );
-	var m5 = new ConstNode( `float m5 3.0`, true );
-	var r6 = new ConstNode( `float r6 0.21`, true );
-	var v6 = new ConstNode( `float v6 0.0038`, true );
-	var m6 = new ConstNode( `float m6 4.0`, true );
+	var r0 = new ConstNode(`float r0 1.0`, true);
+	var v0 = new ConstNode(`float v0 0.339`, true);
+	var m0 = new ConstNode(`float m0 -2.0`, true);
+	var r1 = new ConstNode(`float r1 0.8`, true);
+	var v1 = new ConstNode(`float v1 0.276`, true);
+	var m1 = new ConstNode(`float m1 -1.0`, true);
+	var r4 = new ConstNode(`float r4 0.4`, true);
+	var v4 = new ConstNode(`float v4 0.046`, true);
+	var m4 = new ConstNode(`float m4 2.0`, true);
+	var r5 = new ConstNode(`float r5 0.305`, true);
+	var v5 = new ConstNode(`float v5 0.016`, true);
+	var m5 = new ConstNode(`float m5 3.0`, true);
+	var r6 = new ConstNode(`float r6 0.21`, true);
+	var v6 = new ConstNode(`float v6 0.0038`, true);
+	var m6 = new ConstNode(`float m6 4.0`, true);
 
-	var defines = [ r0, v0, m0, r1, v1, m1, r4, v4, m4, r5, v5, m5, r6, v6, m6 ];
+	var defines = [r0, v0, m0, r1, v1, m1, r4, v4, m4, r5, v5, m5, r6, v6, m6];
 
 	var roughnessToMip = new FunctionNode(
 		`float roughnessToMip(float roughness) {
@@ -154,7 +154,7 @@ TextureCubeUVNode.Nodes = ( function () {
 				mip = -2.0 * log2(1.16 * roughness);// 1.16 = 1.79^0.25
 			}
 			return mip;
-		}`, defines );
+		}`, defines);
 
 	return {
 		bilinearCubeUV: bilinearCubeUV,
@@ -163,45 +163,45 @@ TextureCubeUVNode.Nodes = ( function () {
 		cubeUV_maxMipLevel: cubeUV_maxMipLevel
 	};
 
-} )();
+})();
 
-TextureCubeUVNode.prototype = Object.create( TempNode.prototype );
+TextureCubeUVNode.prototype = Object.create(TempNode.prototype);
 TextureCubeUVNode.prototype.constructor = TextureCubeUVNode;
 TextureCubeUVNode.prototype.nodeType = "TextureCubeUV";
 
-TextureCubeUVNode.prototype.bilinearCubeUV = function ( builder, texture, uv, mipInt ) {
+TextureCubeUVNode.prototype.bilinearCubeUV = function (builder, texture, uv, mipInt) {
 
-	var bilinearCubeUV = new FunctionCallNode( TextureCubeUVNode.Nodes.bilinearCubeUV, [ texture, uv, mipInt ] );
+	var bilinearCubeUV = new FunctionCallNode(TextureCubeUVNode.Nodes.bilinearCubeUV, [texture, uv, mipInt]);
 
-	this.colorSpaceTL = this.colorSpaceTL || new ColorSpaceNode( new ExpressionNode( '', 'v4' ) );
-	this.colorSpaceTL.fromDecoding( builder.getTextureEncodingFromMap( this.value.value ) );
-	this.colorSpaceTL.input.parse( bilinearCubeUV.build( builder ) + '.tl' );
+	this.colorSpaceTL = this.colorSpaceTL || new ColorSpaceNode(new ExpressionNode('', 'v4'));
+	this.colorSpaceTL.fromDecoding(builder.getTextureEncodingFromMap(this.value.value));
+	this.colorSpaceTL.input.parse(bilinearCubeUV.build(builder) + '.tl');
 
-	this.colorSpaceTR = this.colorSpaceTR || new ColorSpaceNode( new ExpressionNode( '', 'v4' ) );
-	this.colorSpaceTR.fromDecoding( builder.getTextureEncodingFromMap( this.value.value ) );
-	this.colorSpaceTR.input.parse( bilinearCubeUV.build( builder ) + '.tr' );
+	this.colorSpaceTR = this.colorSpaceTR || new ColorSpaceNode(new ExpressionNode('', 'v4'));
+	this.colorSpaceTR.fromDecoding(builder.getTextureEncodingFromMap(this.value.value));
+	this.colorSpaceTR.input.parse(bilinearCubeUV.build(builder) + '.tr');
 
-	this.colorSpaceBL = this.colorSpaceBL || new ColorSpaceNode( new ExpressionNode( '', 'v4' ) );
-	this.colorSpaceBL.fromDecoding( builder.getTextureEncodingFromMap( this.value.value ) );
-	this.colorSpaceBL.input.parse( bilinearCubeUV.build( builder ) + '.bl' );
+	this.colorSpaceBL = this.colorSpaceBL || new ColorSpaceNode(new ExpressionNode('', 'v4'));
+	this.colorSpaceBL.fromDecoding(builder.getTextureEncodingFromMap(this.value.value));
+	this.colorSpaceBL.input.parse(bilinearCubeUV.build(builder) + '.bl');
 
-	this.colorSpaceBR = this.colorSpaceBR || new ColorSpaceNode( new ExpressionNode( '', 'v4' ) );
-	this.colorSpaceBR.fromDecoding( builder.getTextureEncodingFromMap( this.value.value ) );
-	this.colorSpaceBR.input.parse( bilinearCubeUV.build( builder ) + '.br' );
+	this.colorSpaceBR = this.colorSpaceBR || new ColorSpaceNode(new ExpressionNode('', 'v4'));
+	this.colorSpaceBR.fromDecoding(builder.getTextureEncodingFromMap(this.value.value));
+	this.colorSpaceBR.input.parse(bilinearCubeUV.build(builder) + '.br');
 
 	// add a custom context for fix incompatibility with the core
 	// include ColorSpace function only for vertex shader (in fragment shader color space functions is added automatically by core)
 	// this should be removed in the future
 	// context.include =: is used to include or not functions if used FunctionNode
 	// context.ignoreCache =: not create temp variables nodeT0..9 to optimize the code
-	var context = { include: builder.isShader( 'vertex' ), ignoreCache: true };
+	var context = {include: builder.isShader('vertex'), ignoreCache: true};
 
-	builder.addContext( context );
+	builder.addContext(context);
 
-	this.colorSpaceTLExp = new ExpressionNode( this.colorSpaceTL.build( builder, 'v4' ), 'v4' );
-	this.colorSpaceTRExp = new ExpressionNode( this.colorSpaceTR.build( builder, 'v4' ), 'v4' );
-	this.colorSpaceBLExp = new ExpressionNode( this.colorSpaceBL.build( builder, 'v4' ), 'v4' );
-	this.colorSpaceBRExp = new ExpressionNode( this.colorSpaceBR.build( builder, 'v4' ), 'v4' );
+	this.colorSpaceTLExp = new ExpressionNode(this.colorSpaceTL.build(builder, 'v4'), 'v4');
+	this.colorSpaceTRExp = new ExpressionNode(this.colorSpaceTR.build(builder, 'v4'), 'v4');
+	this.colorSpaceBLExp = new ExpressionNode(this.colorSpaceBL.build(builder, 'v4'), 'v4');
+	this.colorSpaceBRExp = new ExpressionNode(this.colorSpaceBR.build(builder, 'v4'), 'v4');
 
 	// end custom context
 
@@ -209,37 +209,37 @@ TextureCubeUVNode.prototype.bilinearCubeUV = function ( builder, texture, uv, mi
 
 	// --
 
-	var output = new ExpressionNode( `mix( mix( cubeUV_TL, cubeUV_TR, cubeUV.f.x ), mix( cubeUV_BL, cubeUV_BR, cubeUV.f.x ), cubeUV.f.y )`, 'v4' );
-	output.keywords[ 'cubeUV_TL' ] = this.colorSpaceTLExp;
-	output.keywords[ 'cubeUV_TR' ] = this.colorSpaceTRExp;
-	output.keywords[ 'cubeUV_BL' ] = this.colorSpaceBLExp;
-	output.keywords[ 'cubeUV_BR' ] = this.colorSpaceBRExp;
-	output.keywords[ 'cubeUV' ] = bilinearCubeUV;
+	var output = new ExpressionNode(`mix( mix( cubeUV_TL, cubeUV_TR, cubeUV.f.x ), mix( cubeUV_BL, cubeUV_BR, cubeUV.f.x ), cubeUV.f.y )`, 'v4');
+	output.keywords['cubeUV_TL'] = this.colorSpaceTLExp;
+	output.keywords['cubeUV_TR'] = this.colorSpaceTRExp;
+	output.keywords['cubeUV_BL'] = this.colorSpaceBLExp;
+	output.keywords['cubeUV_BR'] = this.colorSpaceBRExp;
+	output.keywords['cubeUV'] = bilinearCubeUV;
 
 	return output;
 
 };
 
-TextureCubeUVNode.prototype.generate = function ( builder, output ) {
+TextureCubeUVNode.prototype.generate = function (builder, output) {
 
-	if ( builder.isShader( 'fragment' ) ) {
+	if (builder.isShader('fragment')) {
 
 		var uv = this.uv;
 		var bias = this.bias || builder.context.roughness;
 
-		var mipV = new FunctionCallNode( TextureCubeUVNode.Nodes.roughnessToMip, [ bias ] );
-		var mip = new MathNode( mipV, TextureCubeUVNode.Nodes.m0, TextureCubeUVNode.Nodes.cubeUV_maxMipLevel, MathNode.CLAMP );
-		var mipInt	= new MathNode( mip, MathNode.FLOOR );
-		var mipF	= new MathNode( mip, MathNode.FRACT );
+		var mipV = new FunctionCallNode(TextureCubeUVNode.Nodes.roughnessToMip, [bias]);
+		var mip = new MathNode(mipV, TextureCubeUVNode.Nodes.m0, TextureCubeUVNode.Nodes.cubeUV_maxMipLevel, MathNode.CLAMP);
+		var mipInt = new MathNode(mip, MathNode.FLOOR);
+		var mipF = new MathNode(mip, MathNode.FRACT);
 
-		var color0 = this.bilinearCubeUV( builder, this.value, uv, mipInt );
-		var color1 = this.bilinearCubeUV( builder, this.value, uv, new OperatorNode(
+		var color0 = this.bilinearCubeUV(builder, this.value, uv, mipInt);
+		var color1 = this.bilinearCubeUV(builder, this.value, uv, new OperatorNode(
 			mipInt,
-			new FloatNode( 1 ).setReadonly( true ),
+			new FloatNode(1).setReadonly(true),
 			OperatorNode.ADD
-		) );
+		));
 
-		var color1Mix = new MathNode( color0, color1, mipF, MathNode.MIX );
+		var color1Mix = new MathNode(color0, color1, mipF, MathNode.MIX);
 
 		/*
 		// TODO: Optimize this in the future
@@ -252,29 +252,29 @@ TextureCubeUVNode.prototype.generate = function ( builder, output ) {
 		);
 		*/
 
-		return builder.format( color1Mix.build( builder ), 'v4', output );
+		return builder.format(color1Mix.build(builder), 'v4', output);
 
 	} else {
 
-		console.warn( "THREE.TextureCubeUVNode is not compatible with " + builder.shader + " shader." );
+		console.warn("THREE.TextureCubeUVNode is not compatible with " + builder.shader + " shader.");
 
-		return builder.format( 'vec4( 0.0 )', this.getType( builder ), output );
+		return builder.format('vec4( 0.0 )', this.getType(builder), output);
 
 	}
 
 };
 
-TextureCubeUVNode.prototype.toJSON = function ( meta ) {
+TextureCubeUVNode.prototype.toJSON = function (meta) {
 
-	var data = this.getJSONNode( meta );
+	var data = this.getJSONNode(meta);
 
-	if ( ! data ) {
+	if (!data) {
 
-		data = this.createJSONNode( meta );
+		data = this.createJSONNode(meta);
 
-		data.value = this.value.toJSON( meta ).uuid;
-		data.uv = this.uv.toJSON( meta ).uuid;
-		data.bias = this.bias.toJSON( meta ).uuid;
+		data.value = this.value.toJSON(meta).uuid;
+		data.uv = this.uv.toJSON(meta).uuid;
+		data.bias = this.bias.toJSON(meta).uuid;
 
 	}
 
@@ -282,4 +282,4 @@ TextureCubeUVNode.prototype.toJSON = function ( meta ) {
 
 };
 
-export { TextureCubeUVNode };
+export {TextureCubeUVNode};

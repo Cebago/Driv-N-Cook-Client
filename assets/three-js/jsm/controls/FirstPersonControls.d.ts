@@ -1,15 +1,9 @@
-import {
-	Camera,
-	Vector3
-} from '../../../src/Three';
+import {Camera, Vector3} from '../../../src/Three';
 
 export class FirstPersonControls {
 
-	constructor( object: Camera, domElement?: HTMLElement );
-
 	object: Camera;
 	domElement: HTMLElement | HTMLDocument;
-
 	enabled: boolean;
 	movementSpeed: number;
 	lookSpeed: number;
@@ -25,9 +19,14 @@ export class FirstPersonControls {
 	verticalMax: number;
 	mouseDragOn: boolean;
 
+	constructor(object: Camera, domElement?: HTMLElement);
+
 	handleResize(): void;
-	lookAt( x: number | Vector3, y: number, z: number ): this;
-	update( delta: number ): this;
+
+	lookAt(x: number | Vector3, y: number, z: number): this;
+
+	update(delta: number): this;
+
 	dispose(): void;
 
 }

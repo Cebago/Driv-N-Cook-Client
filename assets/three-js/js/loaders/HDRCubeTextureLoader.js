@@ -1,33 +1,33 @@
 /**
-* @author Prashant Sharma / spidersharma03
-* @author Ben Houston / http://clara.io / bhouston
-*/
+ * @author Prashant Sharma / spidersharma03
+ * @author Ben Houston / http://clara.io / bhouston
+ */
 
-THREE.HDRCubeTextureLoader = function ( manager ) {
+THREE.HDRCubeTextureLoader = function (manager) {
 
-	THREE.Loader.call( this, manager );
+	THREE.Loader.call(this, manager);
 
 	this.hdrLoader = new THREE.RGBELoader();
 	this.type = THREE.UnsignedByteType;
 
 };
 
-THREE.HDRCubeTextureLoader.prototype = Object.assign( Object.create( THREE.Loader.prototype ), {
+THREE.HDRCubeTextureLoader.prototype = Object.assign(Object.create(THREE.Loader.prototype), {
 
 	constructor: THREE.HDRCubeTextureLoader,
 
-	load: function ( urls, onLoad, onProgress, onError ) {
+	load: function (urls, onLoad, onProgress, onError) {
 
-		if ( ! Array.isArray( urls ) ) {
+		if (!Array.isArray(urls)) {
 
-			console.warn( 'THREE.HDRCubeTextureLoader signature has changed. Use .setDataType() instead.' );
+			console.warn('THREE.HDRCubeTextureLoader signature has changed. Use .setDataType() instead.');
 
-			this.setDataType( urls );
+			this.setDataType(urls);
 
 			urls = onLoad;
 			onLoad = onProgress;
 			onProgress = onError;
-			onError = arguments[ 4 ];
+			onError = arguments[4];
 
 		}
 
@@ -35,7 +35,7 @@ THREE.HDRCubeTextureLoader.prototype = Object.assign( Object.create( THREE.Loade
 
 		texture.type = this.type;
 
-		switch ( texture.type ) {
+		switch (texture.type) {
 
 			case THREE.UnsignedByteType:
 
@@ -70,22 +70,22 @@ THREE.HDRCubeTextureLoader.prototype = Object.assign( Object.create( THREE.Loade
 
 		var loaded = 0;
 
-		function loadHDRData( i, onLoad, onProgress, onError ) {
+		function loadHDRData(i, onLoad, onProgress, onError) {
 
-			new THREE.FileLoader( scope.manager )
-				.setPath( scope.path )
-				.setResponseType( 'arraybuffer' )
-				.load( urls[ i ], function ( buffer ) {
+			new THREE.FileLoader(scope.manager)
+				.setPath(scope.path)
+				.setResponseType('arraybuffer')
+				.load(urls[i], function (buffer) {
 
-					loaded ++;
+					loaded++;
 
-					var texData = scope.hdrLoader.parse( buffer );
+					var texData = scope.hdrLoader.parse(buffer);
 
-					if ( ! texData ) return;
+					if (!texData) return;
 
-					if ( texData.data !== undefined ) {
+					if (texData.data !== undefined) {
 
-						var dataTexture = new THREE.DataTexture( texData.data, texData.width, texData.height );
+						var dataTexture = new THREE.DataTexture(texData.data, texData.width, texData.height);
 
 						dataTexture.type = texture.type;
 						dataTexture.encoding = texture.encoding;
@@ -94,24 +94,24 @@ THREE.HDRCubeTextureLoader.prototype = Object.assign( Object.create( THREE.Loade
 						dataTexture.magFilter = texture.magFilter;
 						dataTexture.generateMipmaps = texture.generateMipmaps;
 
-						texture.images[ i ] = dataTexture;
+						texture.images[i] = dataTexture;
 
 					}
 
-					if ( loaded === 6 ) {
+					if (loaded === 6) {
 
 						texture.needsUpdate = true;
-						if ( onLoad ) onLoad( texture );
+						if (onLoad) onLoad(texture);
 
 					}
 
-				}, onProgress, onError );
+				}, onProgress, onError);
 
 		}
 
-		for ( var i = 0; i < urls.length; i ++ ) {
+		for (var i = 0; i < urls.length; i++) {
 
-			loadHDRData( i, onLoad, onProgress, onError );
+			loadHDRData(i, onLoad, onProgress, onError);
 
 		}
 
@@ -119,13 +119,13 @@ THREE.HDRCubeTextureLoader.prototype = Object.assign( Object.create( THREE.Loade
 
 	},
 
-	setDataType: function ( value ) {
+	setDataType: function (value) {
 
 		this.type = value;
-		this.hdrLoader.setDataType( value );
+		this.hdrLoader.setDataType(value);
 
 		return this;
 
 	}
 
-} );
+});

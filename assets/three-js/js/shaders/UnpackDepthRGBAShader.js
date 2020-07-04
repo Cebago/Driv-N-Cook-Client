@@ -9,8 +9,8 @@ THREE.UnpackDepthRGBAShader = {
 
 	uniforms: {
 
-		"tDiffuse": { value: null },
-		"opacity": { value: 1.0 }
+		"tDiffuse": {value: null},
+		"opacity": {value: 1.0}
 
 	},
 
@@ -25,7 +25,7 @@ THREE.UnpackDepthRGBAShader = {
 
 		"}"
 
-	].join( "\n" ),
+	].join("\n"),
 
 	fragmentShader: [
 
@@ -44,6 +44,6 @@ THREE.UnpackDepthRGBAShader = {
 
 		"}"
 
-	].join( "\n" )
+	].join("\n")
 
 };

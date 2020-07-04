@@ -2,15 +2,15 @@
  * @author munrocket / https://github.com/munrocket
  */
 
-( function () {
+(function () {
 
 	/* Deterministic random */
 
 	let seed = Math.PI / 4;
 	window.Math.random = function () {
 
-		const x = Math.sin( seed ++ ) * 10000;
-		return x - Math.floor( x );
+		const x = Math.sin(seed++) * 10000;
+		return x - Math.floor(x);
 
 	};
 
@@ -31,23 +31,23 @@
 	window.chromeRenderStarted = false;
 	window.chromeRenderFinished = false;
 	const RAF = window.requestAnimationFrame;
-	window.requestAnimationFrame = function ( cb ) {
+	window.requestAnimationFrame = function (cb) {
 
-		if ( ! chromeRenderStarted ) {
+		if (!chromeRenderStarted) {
 
-			setTimeout( function () {
+			setTimeout(function () {
 
-				requestAnimationFrame( cb );
+				requestAnimationFrame(cb);
 
-			}, 50 );
+			}, 50);
 
 		} else {
 
-			RAF( function () {
+			RAF(function () {
 
-				if ( frameId ++ < chromeMaxFrameId ) {
+				if (frameId++ < chromeMaxFrameId) {
 
-					cb( now() );
+					cb(now());
 
 				} else {
 
@@ -55,7 +55,7 @@
 
 				}
 
-			} );
+			});
 
 		}
 
@@ -67,18 +67,19 @@
 	let play = HTMLVideoElement.prototype.play;
 	HTMLVideoElement.prototype.play = async function () {
 
-		play.call( this );
-		this.addEventListener( 'timeupdate', () => this.pause() );
+		play.call(this);
+		this.addEventListener('timeupdate', () => this.pause());
 
 		function renew() {
 
 			this.load();
-			play.call( this );
-			RAF( renew );
+			play.call(this);
+			RAF(renew);
 
 		}
-		RAF( renew );
+
+		RAF(renew);
 
 	};
 
-}() );
+}());

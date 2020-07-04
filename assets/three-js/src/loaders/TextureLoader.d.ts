@@ -1,6 +1,6 @@
-import { Loader } from './Loader';
-import { LoadingManager } from './LoadingManager';
-import { Texture } from './../textures/Texture';
+import {Loader} from './Loader';
+import {LoadingManager} from './LoadingManager';
+import {Texture} from './../textures/Texture';
 
 /**
  * Class for loading a texture.
@@ -8,13 +8,13 @@ import { Texture } from './../textures/Texture';
  */
 export class TextureLoader extends Loader {
 
-	constructor( manager?: LoadingManager );
+	constructor(manager?: LoadingManager);
 
 	load(
 		url: string,
-		onLoad?: ( texture: Texture ) => void,
-		onProgress?: ( event: ProgressEvent ) => void,
-		onError?: ( event: ErrorEvent ) => void
+		onLoad?: (texture: Texture) => void,
+		onProgress?: (event: ProgressEvent) => void,
+		onError?: (event: ErrorEvent) => void
 	): Texture;
 
 }

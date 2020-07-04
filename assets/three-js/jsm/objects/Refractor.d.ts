@@ -1,10 +1,4 @@
-import {
-	Mesh,
-	BufferGeometry,
-	Color,
-	TextureEncoding,
-	WebGLRenderTarget
-} from '../../../src/Three';
+import {BufferGeometry, Color, Mesh, TextureEncoding, WebGLRenderTarget} from '../../../src/Three';
 
 export interface RefractorOptions {
 	color?: Color;
@@ -17,7 +11,7 @@ export interface RefractorOptions {
 
 export class Refractor extends Mesh {
 
-	constructor( geometry?: BufferGeometry, options?: RefractorOptions );
+	constructor(geometry?: BufferGeometry, options?: RefractorOptions);
 
 	getRenderTarget(): WebGLRenderTarget;
 

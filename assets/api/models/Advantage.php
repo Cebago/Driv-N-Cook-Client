@@ -1,7 +1,8 @@
 <?php
 
 
-class Advantage implements JsonSerializable {
+class Advantage implements JsonSerializable
+{
     private int $idAdvantage;
     private int $points;
     private string $name;

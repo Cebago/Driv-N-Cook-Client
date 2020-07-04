@@ -39,7 +39,7 @@ THREE.GodRaysDepthMaskShader = {
 
 		"}"
 
-	].join( "\n" ),
+	].join("\n"),
 
 	fragmentShader: [
 
@@ -54,7 +54,7 @@ THREE.GodRaysDepthMaskShader = {
 
 		"}"
 
-	].join( "\n" )
+	].join("\n")
 
 };
 
@@ -85,7 +85,7 @@ THREE.GodRaysGenerateShader = {
 			value: 1.0
 		},
 		vSunPositionScreenSpace: {
-			value: new THREE.Vector2( 0.5, 0.5 )
+			value: new THREE.Vector2(0.5, 0.5)
 		}
 
 	},
@@ -101,7 +101,7 @@ THREE.GodRaysGenerateShader = {
 
 		"}"
 
-	].join( "\n" ),
+	].join("\n"),
 
 	fragmentShader: [
 
@@ -187,7 +187,7 @@ THREE.GodRaysGenerateShader = {
 
 		"}"
 
-	].join( "\n" )
+	].join("\n")
 
 };
 
@@ -213,7 +213,7 @@ THREE.GodRaysCombineShader = {
 		},
 
 		vSunPositionScreenSpace: {
-			value: new THREE.Vector2( 0.5, 0.5 )
+			value: new THREE.Vector2(0.5, 0.5)
 		}
 
 	},
@@ -229,7 +229,7 @@ THREE.GodRaysCombineShader = {
 
 		"}"
 
-	].join( "\n" ),
+	].join("\n"),
 
 	fragmentShader: [
 
@@ -252,7 +252,7 @@ THREE.GodRaysCombineShader = {
 
 		"}"
 
-	].join( "\n" )
+	].join("\n")
 
 };
 
@@ -267,7 +267,7 @@ THREE.GodRaysFakeSunShader = {
 	uniforms: {
 
 		vSunPositionScreenSpace: {
-			value: new THREE.Vector2( 0.5, 0.5 )
+			value: new THREE.Vector2(0.5, 0.5)
 		},
 
 		fAspect: {
@@ -275,11 +275,11 @@ THREE.GodRaysFakeSunShader = {
 		},
 
 		sunColor: {
-			value: new THREE.Color( 0xffee00 )
+			value: new THREE.Color(0xffee00)
 		},
 
 		bgColor: {
-			value: new THREE.Color( 0x000000 )
+			value: new THREE.Color(0x000000)
 		}
 
 	},
@@ -295,7 +295,7 @@ THREE.GodRaysFakeSunShader = {
 
 		"}"
 
-	].join( "\n" ),
+	].join("\n"),
 
 	fragmentShader: [
 
@@ -323,6 +323,6 @@ THREE.GodRaysFakeSunShader = {
 
 		"}"
 
-	].join( "\n" )
+	].join("\n")
 
 };

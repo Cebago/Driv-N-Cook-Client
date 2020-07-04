@@ -3,7 +3,7 @@
  * Developed as part of a project at University of Applied Sciences and Arts Northwestern Switzerland (www.fhnw.ch)
  */
 
-import { Command } from '../Command.js';
+import {Command} from '../Command.js';
 
 /**
  * @param editor Editor
@@ -12,9 +12,9 @@ import { Command } from '../Command.js';
  * @param newValue number, string, boolean or object
  * @constructor
  */
-var SetValueCommand = function ( editor, object, attributeName, newValue ) {
+var SetValueCommand = function (editor, object, attributeName, newValue) {
 
-	Command.call( this, editor );
+	Command.call(this, editor);
 
 	this.type = 'SetValueCommand';
 	this.name = 'Set ' + attributeName;
@@ -22,7 +22,7 @@ var SetValueCommand = function ( editor, object, attributeName, newValue ) {
 
 	this.object = object;
 	this.attributeName = attributeName;
-	this.oldValue = ( object !== undefined ) ? object[ attributeName ] : undefined;
+	this.oldValue = (object !== undefined) ? object[attributeName] : undefined;
 	this.newValue = newValue;
 
 };
@@ -31,21 +31,21 @@ SetValueCommand.prototype = {
 
 	execute: function () {
 
-		this.object[ this.attributeName ] = this.newValue;
-		this.editor.signals.objectChanged.dispatch( this.object );
+		this.object[this.attributeName] = this.newValue;
+		this.editor.signals.objectChanged.dispatch(this.object);
 		// this.editor.signals.sceneGraphChanged.dispatch();
 
 	},
 
 	undo: function () {
 
-		this.object[ this.attributeName ] = this.oldValue;
-		this.editor.signals.objectChanged.dispatch( this.object );
+		this.object[this.attributeName] = this.oldValue;
+		this.editor.signals.objectChanged.dispatch(this.object);
 		// this.editor.signals.sceneGraphChanged.dispatch();
 
 	},
 
-	update: function ( cmd ) {
+	update: function (cmd) {
 
 		this.newValue = cmd.newValue;
 
@@ -53,7 +53,7 @@ SetValueCommand.prototype = {
 
 	toJSON: function () {
 
-		var output = Command.prototype.toJSON.call( this );
+		var output = Command.prototype.toJSON.call(this);
 
 		output.objectUuid = this.object.uuid;
 		output.attributeName = this.attributeName;
@@ -64,17 +64,17 @@ SetValueCommand.prototype = {
 
 	},
 
-	fromJSON: function ( json ) {
+	fromJSON: function (json) {
 
-		Command.prototype.fromJSON.call( this, json );
+		Command.prototype.fromJSON.call(this, json);
 
 		this.attributeName = json.attributeName;
 		this.oldValue = json.oldValue;
 		this.newValue = json.newValue;
-		this.object = this.editor.objectByUuid( json.objectUuid );
+		this.object = this.editor.objectByUuid(json.objectUuid);
 
 	}
 
 };
 
-export { SetValueCommand };
+export {SetValueCommand};

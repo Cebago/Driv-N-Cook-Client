@@ -1,9 +1,4 @@
-import {
-	Loader,
-	LoadingManager,
-	Material,
-	Object3D
-} from '../../../src/Three';
+import {Loader, LoadingManager, Material, Object3D} from '../../../src/Three';
 
 export interface LWO {
 	materials: Material[];
@@ -13,17 +8,18 @@ export interface LWO {
 export interface LWOLoaderParameters {
 
 	/**
-	* Base content delivery folder path, use when it differs from Lightwave default structure
-	*/
+	 * Base content delivery folder path, use when it differs from Lightwave default structure
+	 */
 	resourcePath?: string;
 
 }
 
 export class LWOLoader extends Loader {
 
-	constructor( manager?: LoadingManager, parameters?: LWOLoaderParameters );
+	constructor(manager?: LoadingManager, parameters?: LWOLoaderParameters);
 
-	load( url: string, onLoad: ( lwo: LWO ) => void, onProgress?: ( event: ProgressEvent ) => void, onError?: ( event: ErrorEvent ) => void ) : void;
-	parse( data: ArrayBuffer, path: string, modelName: string ): LWO;
+	load(url: string, onLoad: (lwo: LWO) => void, onProgress?: (event: ProgressEvent) => void, onError?: (event: ErrorEvent) => void): void;
+
+	parse(data: ArrayBuffer, path: string, modelName: string): LWO;
 
 }

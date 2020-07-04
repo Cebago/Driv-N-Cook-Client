@@ -2,30 +2,30 @@
  * @author mrdoob / http://mrdoob.com/
  */
 
-THREE.CSS2DObject = function ( element ) {
+THREE.CSS2DObject = function (element) {
 
-	THREE.Object3D.call( this );
+	THREE.Object3D.call(this);
 
 	this.element = element;
 	this.element.style.position = 'absolute';
 
-	this.addEventListener( 'removed', function () {
+	this.addEventListener('removed', function () {
 
-		this.traverse( function ( object ) {
+		this.traverse(function (object) {
 
-			if ( object.element instanceof Element && object.element.parentNode !== null ) {
+			if (object.element instanceof Element && object.element.parentNode !== null) {
 
-				object.element.parentNode.removeChild( object.element );
+				object.element.parentNode.removeChild(object.element);
 
 			}
 
-		} );
+		});
 
-	} );
+	});
 
 };
 
-THREE.CSS2DObject.prototype = Object.create( THREE.Object3D.prototype );
+THREE.CSS2DObject.prototype = Object.create(THREE.Object3D.prototype);
 THREE.CSS2DObject.prototype.constructor = THREE.CSS2DObject;
 
 //
@@ -45,7 +45,7 @@ THREE.CSS2DRenderer = function () {
 		objects: new WeakMap()
 	};
 
-	var domElement = document.createElement( 'div' );
+	var domElement = document.createElement('div');
 	domElement.style.overflow = 'hidden';
 
 	this.domElement = domElement;
@@ -59,7 +59,7 @@ THREE.CSS2DRenderer = function () {
 
 	};
 
-	this.setSize = function ( width, height ) {
+	this.setSize = function (width, height) {
 
 		_width = width;
 		_height = height;
@@ -72,44 +72,44 @@ THREE.CSS2DRenderer = function () {
 
 	};
 
-	var renderObject = function ( object, scene, camera ) {
+	var renderObject = function (object, scene, camera) {
 
-		if ( object instanceof THREE.CSS2DObject ) {
+		if (object instanceof THREE.CSS2DObject) {
 
-			object.onBeforeRender( _this, scene, camera );
+			object.onBeforeRender(_this, scene, camera);
 
-			vector.setFromMatrixPosition( object.matrixWorld );
-			vector.applyMatrix4( viewProjectionMatrix );
+			vector.setFromMatrixPosition(object.matrixWorld);
+			vector.applyMatrix4(viewProjectionMatrix);
 
 			var element = object.element;
-			var style = 'translate(-50%,-50%) translate(' + ( vector.x * _widthHalf + _widthHalf ) + 'px,' + ( - vector.y * _heightHalf + _heightHalf ) + 'px)';
+			var style = 'translate(-50%,-50%) translate(' + (vector.x * _widthHalf + _widthHalf) + 'px,' + (-vector.y * _heightHalf + _heightHalf) + 'px)';
 
 			element.style.WebkitTransform = style;
 			element.style.MozTransform = style;
 			element.style.oTransform = style;
 			element.style.transform = style;
 
-			element.style.display = ( object.visible && vector.z >= - 1 && vector.z <= 1 ) ? '' : 'none';
+			element.style.display = (object.visible && vector.z >= -1 && vector.z <= 1) ? '' : 'none';
 
 			var objectData = {
-				distanceToCameraSquared: getDistanceToSquared( camera, object )
+				distanceToCameraSquared: getDistanceToSquared(camera, object)
 			};
 
-			cache.objects.set( object, objectData );
+			cache.objects.set(object, objectData);
 
-			if ( element.parentNode !== domElement ) {
+			if (element.parentNode !== domElement) {
 
-				domElement.appendChild( element );
+				domElement.appendChild(element);
 
 			}
 
-			object.onAfterRender( _this, scene, camera );
+			object.onAfterRender(_this, scene, camera);
 
 		}
 
-		for ( var i = 0, l = object.children.length; i < l; i ++ ) {
+		for (var i = 0, l = object.children.length; i < l; i++) {
 
-			renderObject( object.children[ i ], scene, camera );
+			renderObject(object.children[i], scene, camera);
 
 		}
 
@@ -120,62 +120,62 @@ THREE.CSS2DRenderer = function () {
 		var a = new THREE.Vector3();
 		var b = new THREE.Vector3();
 
-		return function ( object1, object2 ) {
+		return function (object1, object2) {
 
-			a.setFromMatrixPosition( object1.matrixWorld );
-			b.setFromMatrixPosition( object2.matrixWorld );
+			a.setFromMatrixPosition(object1.matrixWorld);
+			b.setFromMatrixPosition(object2.matrixWorld);
 
-			return a.distanceToSquared( b );
+			return a.distanceToSquared(b);
 
 		};
 
 	}();
 
-	var filterAndFlatten = function ( scene ) {
+	var filterAndFlatten = function (scene) {
 
 		var result = [];
 
-		scene.traverse( function ( object ) {
+		scene.traverse(function (object) {
 
-			if ( object instanceof THREE.CSS2DObject ) result.push( object );
+			if (object instanceof THREE.CSS2DObject) result.push(object);
 
-		} );
+		});
 
 		return result;
 
 	};
 
-	var zOrder = function ( scene ) {
+	var zOrder = function (scene) {
 
-		var sorted = filterAndFlatten( scene ).sort( function ( a, b ) {
+		var sorted = filterAndFlatten(scene).sort(function (a, b) {
 
-			var distanceA = cache.objects.get( a ).distanceToCameraSquared;
-			var distanceB = cache.objects.get( b ).distanceToCameraSquared;
+			var distanceA = cache.objects.get(a).distanceToCameraSquared;
+			var distanceB = cache.objects.get(b).distanceToCameraSquared;
 
 			return distanceA - distanceB;
 
-		} );
+		});
 
 		var zMax = sorted.length;
 
-		for ( var i = 0, l = sorted.length; i < l; i ++ ) {
+		for (var i = 0, l = sorted.length; i < l; i++) {
 
-			sorted[ i ].element.style.zIndex = zMax - i;
+			sorted[i].element.style.zIndex = zMax - i;
 
 		}
 
 	};
 
-	this.render = function ( scene, camera ) {
+	this.render = function (scene, camera) {
 
-		if ( scene.autoUpdate === true ) scene.updateMatrixWorld();
-		if ( camera.parent === null ) camera.updateMatrixWorld();
+		if (scene.autoUpdate === true) scene.updateMatrixWorld();
+		if (camera.parent === null) camera.updateMatrixWorld();
 
-		viewMatrix.copy( camera.matrixWorldInverse );
-		viewProjectionMatrix.multiplyMatrices( camera.projectionMatrix, viewMatrix );
+		viewMatrix.copy(camera.matrixWorldInverse);
+		viewProjectionMatrix.multiplyMatrices(camera.projectionMatrix, viewMatrix);
 
-		renderObject( scene, scene, camera );
-		zOrder( scene );
+		renderObject(scene, scene, camera);
+		zOrder(scene);
 
 	};
 

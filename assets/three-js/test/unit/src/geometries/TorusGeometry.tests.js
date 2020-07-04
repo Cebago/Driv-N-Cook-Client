@@ -4,17 +4,15 @@
  */
 /* global QUnit */
 
-import { runStdGeometryTests } from '../../qunit-utils';
-import {
-	TorusBufferGeometry
-} from '../../../../src/geometries/TorusGeometry';
+import {runStdGeometryTests} from '../../qunit-utils';
+import {TorusBufferGeometry} from '../../../../src/geometries/TorusGeometry';
 
-export default QUnit.module( 'Geometries', () => {
+export default QUnit.module('Geometries', () => {
 
-	QUnit.module( 'TorusBufferGeometry', ( hooks ) => {
+	QUnit.module('TorusBufferGeometry', (hooks) => {
 
 		var geometries = undefined;
-		hooks.beforeEach( function () {
+		hooks.beforeEach(function () {
 
 			const parameters = {
 				radius: 10,
@@ -26,36 +24,36 @@ export default QUnit.module( 'Geometries', () => {
 
 			geometries = [
 				new TorusBufferGeometry(),
-				new TorusBufferGeometry( parameters.radius ),
-				new TorusBufferGeometry( parameters.radius, parameters.tube ),
-				new TorusBufferGeometry( parameters.radius, parameters.tube, parameters.radialSegments ),
-				new TorusBufferGeometry( parameters.radius, parameters.tube, parameters.radialSegments, parameters.tubularSegments ),
-				new TorusBufferGeometry( parameters.radius, parameters.tube, parameters.radialSegments, parameters.tubularSegments, parameters.arc ),
+				new TorusBufferGeometry(parameters.radius),
+				new TorusBufferGeometry(parameters.radius, parameters.tube),
+				new TorusBufferGeometry(parameters.radius, parameters.tube, parameters.radialSegments),
+				new TorusBufferGeometry(parameters.radius, parameters.tube, parameters.radialSegments, parameters.tubularSegments),
+				new TorusBufferGeometry(parameters.radius, parameters.tube, parameters.radialSegments, parameters.tubularSegments, parameters.arc),
 			];
 
-		} );
+		});
 
 		// INHERITANCE
-		QUnit.todo( "Extending", ( assert ) => {
+		QUnit.todo("Extending", (assert) => {
 
-			assert.ok( false, "everything's gonna be alright" );
+			assert.ok(false, "everything's gonna be alright");
 
-		} );
+		});
 
 		// INSTANCING
-		QUnit.todo( "Instancing", ( assert ) => {
+		QUnit.todo("Instancing", (assert) => {
 
-			assert.ok( false, "everything's gonna be alright" );
+			assert.ok(false, "everything's gonna be alright");
 
-		} );
+		});
 
 		// OTHERS
-		QUnit.test( 'Standard geometry tests', ( assert ) => {
+		QUnit.test('Standard geometry tests', (assert) => {
 
-			runStdGeometryTests( assert, geometries );
+			runStdGeometryTests(assert, geometries);
 
-		} );
+		});
 
-	} );
+	});
 
-} );
+});

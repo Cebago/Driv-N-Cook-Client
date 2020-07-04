@@ -3,21 +3,21 @@
  * Developed as part of a project at University of Applied Sciences and Arts Northwestern Switzerland (www.fhnw.ch)
  */
 
-import { Command } from '../Command.js';
+import {Command} from '../Command.js';
 
 /**
  * @param editor Editor
  * @param cmdArray array containing command objects
  * @constructor
  */
-var MultiCmdsCommand = function ( editor, cmdArray ) {
+var MultiCmdsCommand = function (editor, cmdArray) {
 
-	Command.call( this, editor );
+	Command.call(this, editor);
 
 	this.type = 'MultiCmdsCommand';
 	this.name = 'Multiple Changes';
 
-	this.cmdArray = ( cmdArray !== undefined ) ? cmdArray : [];
+	this.cmdArray = (cmdArray !== undefined) ? cmdArray : [];
 
 };
 
@@ -27,9 +27,9 @@ MultiCmdsCommand.prototype = {
 
 		this.editor.signals.sceneGraphChanged.active = false;
 
-		for ( var i = 0; i < this.cmdArray.length; i ++ ) {
+		for (var i = 0; i < this.cmdArray.length; i++) {
 
-			this.cmdArray[ i ].execute();
+			this.cmdArray[i].execute();
 
 		}
 
@@ -42,9 +42,9 @@ MultiCmdsCommand.prototype = {
 
 		this.editor.signals.sceneGraphChanged.active = false;
 
-		for ( var i = this.cmdArray.length - 1; i >= 0; i -- ) {
+		for (var i = this.cmdArray.length - 1; i >= 0; i--) {
 
-			this.cmdArray[ i ].undo();
+			this.cmdArray[i].undo();
 
 		}
 
@@ -55,12 +55,12 @@ MultiCmdsCommand.prototype = {
 
 	toJSON: function () {
 
-		var output = Command.prototype.toJSON.call( this );
+		var output = Command.prototype.toJSON.call(this);
 
 		var cmds = [];
-		for ( var i = 0; i < this.cmdArray.length; i ++ ) {
+		for (var i = 0; i < this.cmdArray.length; i++) {
 
-			cmds.push( this.cmdArray[ i ].toJSON() );
+			cmds.push(this.cmdArray[i].toJSON());
 
 		}
 		output.cmds = cmds;
@@ -69,16 +69,16 @@ MultiCmdsCommand.prototype = {
 
 	},
 
-	fromJSON: function ( json ) {
+	fromJSON: function (json) {
 
-		Command.prototype.fromJSON.call( this, json );
+		Command.prototype.fromJSON.call(this, json);
 
 		var cmds = json.cmds;
-		for ( var i = 0; i < cmds.length; i ++ ) {
+		for (var i = 0; i < cmds.length; i++) {
 
-			var cmd = new window[ cmds[ i ].type ]();	// creates a new object of type "json.type"
-			cmd.fromJSON( cmds[ i ] );
-			this.cmdArray.push( cmd );
+			var cmd = new window[cmds[i].type]();	// creates a new object of type "json.type"
+			cmd.fromJSON(cmds[i]);
+			this.cmdArray.push(cmd);
 
 		}
 
@@ -86,4 +86,4 @@ MultiCmdsCommand.prototype = {
 
 };
 
-export { MultiCmdsCommand };
+export {MultiCmdsCommand};

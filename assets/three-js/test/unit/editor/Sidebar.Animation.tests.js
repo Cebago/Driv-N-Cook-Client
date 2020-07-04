@@ -3,18 +3,16 @@
  */
 /* global QUnit */
 
-import { NothingsIsExportedYet } from '../../../editor/js/Sidebar.Animation';
+export default QUnit.module('Editor', () => {
 
-export default QUnit.module( 'Editor', () => {
+	QUnit.module.todo('Sidebar.Animation', () => {
 
-	QUnit.module.todo( 'Sidebar.Animation', () => {
+		QUnit.test('write me !', (assert) => {
 
-		QUnit.test( 'write me !', ( assert ) => {
+			assert.ok(false, "everything's gonna be alright");
 
-			assert.ok( false, "everything's gonna be alright" );
+		});
 
-		} );
+	});
 
-	} );
-
-} );
+});

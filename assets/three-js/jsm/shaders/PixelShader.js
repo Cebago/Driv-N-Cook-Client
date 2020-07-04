@@ -10,9 +10,9 @@ var PixelShader = {
 
 	uniforms: {
 
-		"tDiffuse": { value: null },
-		"resolution": { value: null },
-		"pixelSize": { value: 1. },
+		"tDiffuse": {value: null},
+		"resolution": {value: null},
+		"pixelSize": {value: 1.},
 
 	},
 
@@ -27,7 +27,7 @@ var PixelShader = {
 
 		"}"
 
-	].join( "\n" ),
+	].join("\n"),
 
 	fragmentShader: [
 
@@ -45,7 +45,7 @@ var PixelShader = {
 
 		"}"
 
-	].join( "\n" )
+	].join("\n")
 };
 
-export { PixelShader };
+export {PixelShader};

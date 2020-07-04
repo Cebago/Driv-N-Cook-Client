@@ -2,11 +2,11 @@
  * @author sunag / http://www.sunag.com.br/
  */
 
-import { FloatNode } from '../inputs/FloatNode.js';
+import {FloatNode} from '../inputs/FloatNode.js';
 
-function MaxMIPLevelNode( texture ) {
+function MaxMIPLevelNode(texture) {
 
-	FloatNode.call( this );
+	FloatNode.call(this);
 
 	this.texture = texture;
 
@@ -14,23 +14,23 @@ function MaxMIPLevelNode( texture ) {
 
 }
 
-MaxMIPLevelNode.prototype = Object.create( FloatNode.prototype );
+MaxMIPLevelNode.prototype = Object.create(FloatNode.prototype);
 MaxMIPLevelNode.prototype.constructor = MaxMIPLevelNode;
 MaxMIPLevelNode.prototype.nodeType = "MaxMIPLevel";
 
-Object.defineProperties( MaxMIPLevelNode.prototype, {
+Object.defineProperties(MaxMIPLevelNode.prototype, {
 
 	value: {
 
 		get: function () {
 
-			if ( this.maxMIPLevel === 0 ) {
+			if (this.maxMIPLevel === 0) {
 
 				var image = this.texture.value.image;
 
-				if ( Array.isArray( image ) ) image = image[ 0 ];
+				if (Array.isArray(image)) image = image[0];
 
-				this.maxMIPLevel = image !== undefined ? Math.log( Math.max( image.width, image.height ) ) * Math.LOG2E : 0;
+				this.maxMIPLevel = image !== undefined ? Math.log(Math.max(image.width, image.height)) * Math.LOG2E : 0;
 
 			}
 
@@ -38,19 +38,20 @@ Object.defineProperties( MaxMIPLevelNode.prototype, {
 
 		},
 
-		set: function () { }
+		set: function () {
+		}
 
 	}
 
-} );
+});
 
-MaxMIPLevelNode.prototype.toJSON = function ( meta ) {
+MaxMIPLevelNode.prototype.toJSON = function (meta) {
 
-	var data = this.getJSONNode( meta );
+	var data = this.getJSONNode(meta);
 
-	if ( ! data ) {
+	if (!data) {
 
-		data = this.createJSONNode( meta );
+		data = this.createJSONNode(meta);
 
 		data.texture = this.texture.uuid;
 
@@ -60,4 +61,4 @@ MaxMIPLevelNode.prototype.toJSON = function ( meta ) {
 
 };
 
-export { MaxMIPLevelNode };
+export {MaxMIPLevelNode};

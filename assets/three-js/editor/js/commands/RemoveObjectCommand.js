@@ -3,7 +3,7 @@
  * Developed as part of a project at University of Applied Sciences and Arts Northwestern Switzerland (www.fhnw.ch)
  */
 
-import { Command } from '../Command.js';
+import {Command} from '../Command.js';
 
 import * as THREE from '../../../build/three.module.js';
 
@@ -12,18 +12,18 @@ import * as THREE from '../../../build/three.module.js';
  * @param object THREE.Object3D
  * @constructor
  */
-var RemoveObjectCommand = function ( editor, object ) {
+var RemoveObjectCommand = function (editor, object) {
 
-	Command.call( this, editor );
+	Command.call(this, editor);
 
 	this.type = 'RemoveObjectCommand';
 	this.name = 'Remove Object';
 
 	this.object = object;
-	this.parent = ( object !== undefined ) ? object.parent : undefined;
-	if ( this.parent !== undefined ) {
+	this.parent = (object !== undefined) ? object.parent : undefined;
+	if (this.parent !== undefined) {
 
-		this.index = this.parent.children.indexOf( this.object );
+		this.index = this.parent.children.indexOf(this.object);
 
 	}
 
@@ -33,21 +33,21 @@ RemoveObjectCommand.prototype = {
 
 	execute: function () {
 
-		this.editor.removeObject( this.object );
+		this.editor.removeObject(this.object);
 		this.editor.deselect();
 
 	},
 
 	undo: function () {
 
-		this.editor.addObject( this.object, this.parent, this.index );
-		this.editor.select( this.object );
+		this.editor.addObject(this.object, this.parent, this.index);
+		this.editor.select(this.object);
 
 	},
 
 	toJSON: function () {
 
-		var output = Command.prototype.toJSON.call( this );
+		var output = Command.prototype.toJSON.call(this);
 		output.object = this.object.toJSON();
 		output.index = this.index;
 		output.parentUuid = this.parent.uuid;
@@ -56,12 +56,12 @@ RemoveObjectCommand.prototype = {
 
 	},
 
-	fromJSON: function ( json ) {
+	fromJSON: function (json) {
 
-		Command.prototype.fromJSON.call( this, json );
+		Command.prototype.fromJSON.call(this, json);
 
-		this.parent = this.editor.objectByUuid( json.parentUuid );
-		if ( this.parent === undefined ) {
+		this.parent = this.editor.objectByUuid(json.parentUuid);
+		if (this.parent === undefined) {
 
 			this.parent = this.editor.scene;
 
@@ -69,11 +69,11 @@ RemoveObjectCommand.prototype = {
 
 		this.index = json.index;
 
-		this.object = this.editor.objectByUuid( json.object.object.uuid );
-		if ( this.object === undefined ) {
+		this.object = this.editor.objectByUuid(json.object.object.uuid);
+		if (this.object === undefined) {
 
 			var loader = new THREE.ObjectLoader();
-			this.object = loader.parse( json.object );
+			this.object = loader.parse(json.object);
 
 		}
 
@@ -81,4 +81,4 @@ RemoveObjectCommand.prototype = {
 
 };
 
-export { RemoveObjectCommand };
+export {RemoveObjectCommand};

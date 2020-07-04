@@ -11,7 +11,7 @@ var GammaCorrectionShader = {
 
 	uniforms: {
 
-		"tDiffuse": { value: null }
+		"tDiffuse": {value: null}
 
 	},
 
@@ -26,7 +26,7 @@ var GammaCorrectionShader = {
 
 		"}"
 
-	].join( "\n" ),
+	].join("\n"),
 
 	fragmentShader: [
 
@@ -42,8 +42,8 @@ var GammaCorrectionShader = {
 
 		"}"
 
-	].join( "\n" )
+	].join("\n")
 
 };
 
-export { GammaCorrectionShader };
+export {GammaCorrectionShader};

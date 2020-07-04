@@ -13,9 +13,9 @@ var HueSaturationShader = {
 
 	uniforms: {
 
-		"tDiffuse": { value: null },
-		"hue": { value: 0 },
-		"saturation": { value: 0 }
+		"tDiffuse": {value: null},
+		"hue": {value: 0},
+		"saturation": {value: 0}
 
 	},
 
@@ -31,7 +31,7 @@ var HueSaturationShader = {
 
 		"}"
 
-	].join( "\n" ),
+	].join("\n"),
 
 	fragmentShader: [
 
@@ -66,8 +66,8 @@ var HueSaturationShader = {
 
 		"}"
 
-	].join( "\n" )
+	].join("\n")
 
 };
 
-export { HueSaturationShader };
+export {HueSaturationShader};

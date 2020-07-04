@@ -1,6 +1,6 @@
-import { Color } from './../math/Color';
-import { Texture } from './../textures/Texture';
-import { MaterialParameters, Material } from './Material';
+import {Color} from './../math/Color';
+import {Texture} from './../textures/Texture';
+import {Material, MaterialParameters} from './Material';
 
 export interface SpriteMaterialParameters extends MaterialParameters {
 	color?: Color | string | number;
@@ -12,8 +12,6 @@ export interface SpriteMaterialParameters extends MaterialParameters {
 
 export class SpriteMaterial extends Material {
 
-	constructor( parameters?: SpriteMaterialParameters );
-
 	color: Color;
 	map: Texture | null;
 	alphaMap: Texture | null;
@@ -21,7 +19,10 @@ export class SpriteMaterial extends Material {
 	sizeAttenuation: boolean;
 	readonly isSpriteMaterial: true;
 
-	setValues( parameters: SpriteMaterialParameters ): void;
-	copy( source: SpriteMaterial ): this;
+	constructor(parameters?: SpriteMaterialParameters);
+
+	setValues(parameters: SpriteMaterialParameters): void;
+
+	copy(source: SpriteMaterial): this;
 
 }

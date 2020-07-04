@@ -1,17 +1,7 @@
-import { Geometry } from './../core/Geometry';
-import { BufferGeometry } from './../core/BufferGeometry';
+import {Geometry} from './../core/Geometry';
+import {BufferGeometry} from './../core/BufferGeometry';
 
 export class SphereBufferGeometry extends BufferGeometry {
-
-	constructor(
-		radius?: number,
-		widthSegments?: number,
-		heightSegments?: number,
-		phiStart?: number,
-		phiLength?: number,
-		thetaStart?: number,
-		thetaLength?: number
-	);
 
 	parameters: {
 		radius: number;
@@ -23,12 +13,32 @@ export class SphereBufferGeometry extends BufferGeometry {
 		thetaLength: number;
 	};
 
+	constructor(
+		radius?: number,
+		widthSegments?: number,
+		heightSegments?: number,
+		phiStart?: number,
+		phiLength?: number,
+		thetaStart?: number,
+		thetaLength?: number
+	);
+
 }
 
 /**
  * A class for generating sphere geometries
  */
 export class SphereGeometry extends Geometry {
+
+	parameters: {
+		radius: number;
+		widthSegments: number;
+		heightSegments: number;
+		phiStart: number;
+		phiLength: number;
+		thetaStart: number;
+		thetaLength: number;
+	};
 
 	/**
 	 * The geometry is created by sweeping and calculating vertexes around the Y axis (horizontal sweep) and the Z axis (vertical sweep). Thus, incomplete spheres (akin to 'sphere slices') can be created through the use of different values of phiStart, phiLength, thetaStart and thetaLength, in order to define the points in which we start (or end) calculating those vertices.
@@ -50,15 +60,5 @@ export class SphereGeometry extends Geometry {
 		thetaStart?: number,
 		thetaLength?: number
 	);
-
-	parameters: {
-		radius: number;
-		widthSegments: number;
-		heightSegments: number;
-		phiStart: number;
-		phiLength: number;
-		thetaStart: number;
-		thetaLength: number;
-	};
 
 }

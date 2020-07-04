@@ -1,16 +1,14 @@
-import {
-	Camera,
-	Scene,
-	WebGLRenderer
-} from '../../../src/Three';
+import {Camera, Scene, WebGLRenderer} from '../../../src/Three';
 
 export class PeppersGhostEffect {
 
-	constructor( renderer: WebGLRenderer );
 	cameraDistance: number;
 	reflectFromAbove: boolean;
 
-	render( scene: Scene, camera: Camera ): void;
-	setSize( width: number, height: number ): void;
+	constructor(renderer: WebGLRenderer);
+
+	render(scene: Scene, camera: Camera): void;
+
+	setSize(width: number, height: number): void;
 
 }

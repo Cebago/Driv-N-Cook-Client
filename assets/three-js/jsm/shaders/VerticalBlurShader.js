@@ -16,8 +16,8 @@ var VerticalBlurShader = {
 
 	uniforms: {
 
-		"tDiffuse": { value: null },
-		"v": { value: 1.0 / 512.0 }
+		"tDiffuse": {value: null},
+		"v": {value: 1.0 / 512.0}
 
 	},
 
@@ -32,7 +32,7 @@ var VerticalBlurShader = {
 
 		"}"
 
-	].join( "\n" ),
+	].join("\n"),
 
 	fragmentShader: [
 
@@ -59,8 +59,8 @@ var VerticalBlurShader = {
 
 		"}"
 
-	].join( "\n" )
+	].join("\n")
 
 };
 
-export { VerticalBlurShader };
+export {VerticalBlurShader};

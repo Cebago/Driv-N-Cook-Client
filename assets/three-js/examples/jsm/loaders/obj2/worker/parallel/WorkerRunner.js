@@ -17,24 +17,24 @@ ObjectManipulator.prototype = {
 	 * @param {Object} params The parameter object
 	 * @param {boolean} forceCreation Force the creation of a property
 	 */
-	applyProperties: function ( objToAlter, params, forceCreation ) {
+	applyProperties: function (objToAlter, params, forceCreation) {
 
 		// fast-fail
-		if ( objToAlter === undefined || objToAlter === null || params === undefined || params === null ) return;
+		if (objToAlter === undefined || objToAlter === null || params === undefined || params === null) return;
 
 		let property, funcName, values;
-		for ( property in params ) {
+		for (property in params) {
 
-			funcName = 'set' + property.substring( 0, 1 ).toLocaleUpperCase() + property.substring( 1 );
-			values = params[ property ];
+			funcName = 'set' + property.substring(0, 1).toLocaleUpperCase() + property.substring(1);
+			values = params[property];
 
-			if ( typeof objToAlter[ funcName ] === 'function' ) {
+			if (typeof objToAlter[funcName] === 'function') {
 
-				objToAlter[ funcName ]( values );
+				objToAlter[funcName](values);
 
-			} else if ( objToAlter.hasOwnProperty( property ) || forceCreation ) {
+			} else if (objToAlter.hasOwnProperty(property) || forceCreation) {
 
-				objToAlter[ property ] = values;
+				objToAlter[property] = values;
 
 			}
 
@@ -43,7 +43,7 @@ ObjectManipulator.prototype = {
 	}
 };
 
-const DefaultWorkerPayloadHandler = function ( parser ) {
+const DefaultWorkerPayloadHandler = function (parser) {
 
 	this.parser = parser;
 	this.logging = {
@@ -57,65 +57,65 @@ DefaultWorkerPayloadHandler.prototype = {
 
 	constructor: DefaultWorkerPayloadHandler,
 
-	handlePayload: function ( payload ) {
+	handlePayload: function (payload) {
 
-		if ( payload.logging ) {
+		if (payload.logging) {
 
 			this.logging.enabled = payload.logging.enabled === true;
 			this.logging.debug = payload.logging.debug === true;
 
 		}
 
-		if ( payload.cmd === 'parse' ) {
+		if (payload.cmd === 'parse') {
 
 			let scope = this;
 			let callbacks = {
-				callbackOnAssetAvailable: function ( payload ) {
+				callbackOnAssetAvailable: function (payload) {
 
-					self.postMessage( payload );
+					self.postMessage(payload);
 
 				},
-				callbackOnProgress: function ( text ) {
+				callbackOnProgress: function (text) {
 
-					if ( scope.logging.enabled && scope.logging.debug ) console.debug( 'WorkerRunner: progress: ' + text );
+					if (scope.logging.enabled && scope.logging.debug) console.debug('WorkerRunner: progress: ' + text);
 
 				}
 			};
 
 			let parser = this.parser;
-			if ( typeof parser[ 'setLogging' ] === 'function' ) {
+			if (typeof parser['setLogging'] === 'function') {
 
-				parser.setLogging( this.logging.enabled, this.logging.debug );
+				parser.setLogging(this.logging.enabled, this.logging.debug);
 
 			}
 
 			let objectManipulator = new ObjectManipulator();
-			objectManipulator.applyProperties( parser, payload.params, false );
-			objectManipulator.applyProperties( parser, callbacks, false );
+			objectManipulator.applyProperties(parser, payload.params, false);
+			objectManipulator.applyProperties(parser, callbacks, false);
 
 			let arraybuffer = payload.data.input;
 			let executeFunctionName = 'execute';
-			if ( typeof parser.getParseFunctionName === 'function' ) executeFunctionName = parser.getParseFunctionName();
-			if ( payload.usesMeshDisassembler ) {
+			if (typeof parser.getParseFunctionName === 'function') executeFunctionName = parser.getParseFunctionName();
+			if (payload.usesMeshDisassembler) {
 
 				// TODO: Allow to plug and use generic MeshDisassembler
 
 			} else {
 
-				parser[ executeFunctionName ]( arraybuffer, payload.data.options );
+				parser[executeFunctionName](arraybuffer, payload.data.options);
 
 			}
 
-			if ( this.logging.enabled ) console.log( 'WorkerRunner: Run complete!' );
+			if (this.logging.enabled) console.log('WorkerRunner: Run complete!');
 
-			self.postMessage( {
+			self.postMessage({
 				cmd: 'completeOverall',
 				msg: 'WorkerRunner completed run.'
-			} );
+			});
 
 		} else {
 
-			console.error( 'WorkerRunner: Received unknown command: ' + payload.cmd );
+			console.error('WorkerRunner: Received unknown command: ' + payload.cmd);
 
 		}
 
@@ -127,18 +127,18 @@ DefaultWorkerPayloadHandler.prototype = {
  * Default implementation of the WorkerRunner responsible for creation and configuration of the parser within the worker.
  * @constructor
  */
-const WorkerRunner = function ( payloadHandler ) {
+const WorkerRunner = function (payloadHandler) {
 
 	this.payloadHandler = payloadHandler;
 
 	let scope = this;
-	let scopedRunner = function ( event ) {
+	let scopedRunner = function (event) {
 
-		scope.processMessage( event.data );
+		scope.processMessage(event.data);
 
 	};
 
-	self.addEventListener( 'message', scopedRunner, false );
+	self.addEventListener('message', scopedRunner, false);
 
 };
 
@@ -151,9 +151,9 @@ WorkerRunner.prototype = {
 	 *
 	 * @param {Object} payload Raw mesh description (buffers, params, materials) used to build one to many meshes.
 	 */
-	processMessage: function ( payload ) {
+	processMessage: function (payload) {
 
-		this.payloadHandler.handlePayload( payload );
+		this.payloadHandler.handlePayload(payload);
 
 	}
 

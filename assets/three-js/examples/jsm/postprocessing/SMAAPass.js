@@ -12,33 +12,31 @@ import {
 	UniformsUtils,
 	WebGLRenderTarget
 } from "../../../build/three.module.js";
-import { Pass } from "../postprocessing/Pass.js";
-import { SMAAEdgesShader } from "../shaders/SMAAShader.js";
-import { SMAAWeightsShader } from "../shaders/SMAAShader.js";
-import { SMAABlendShader } from "../shaders/SMAAShader.js";
+import {Pass} from "../postprocessing/Pass.js";
+import {SMAABlendShader, SMAAEdgesShader, SMAAWeightsShader} from "../shaders/SMAAShader.js";
 
-var SMAAPass = function ( width, height ) {
+var SMAAPass = function (width, height) {
 
-	Pass.call( this );
+	Pass.call(this);
 
 	// render targets
 
-	this.edgesRT = new WebGLRenderTarget( width, height, {
+	this.edgesRT = new WebGLRenderTarget(width, height, {
 		depthBuffer: false,
 		stencilBuffer: false,
 		generateMipmaps: false,
 		minFilter: LinearFilter,
 		format: RGBFormat
-	} );
+	});
 	this.edgesRT.texture.name = "SMAAPass.edges";
 
-	this.weightsRT = new WebGLRenderTarget( width, height, {
+	this.weightsRT = new WebGLRenderTarget(width, height, {
 		depthBuffer: false,
 		stencilBuffer: false,
 		generateMipmaps: false,
 		minFilter: LinearFilter,
 		format: RGBAFormat
-	} );
+	});
 	this.weightsRT.texture.name = "SMAAPass.weights";
 
 	// textures
@@ -80,111 +78,111 @@ var SMAAPass = function ( width, height ) {
 
 	// materials - pass 1
 
-	if ( SMAAEdgesShader === undefined ) {
+	if (SMAAEdgesShader === undefined) {
 
-		console.error( "SMAAPass relies on SMAAShader" );
+		console.error("SMAAPass relies on SMAAShader");
 
 	}
 
-	this.uniformsEdges = UniformsUtils.clone( SMAAEdgesShader.uniforms );
+	this.uniformsEdges = UniformsUtils.clone(SMAAEdgesShader.uniforms);
 
-	this.uniformsEdges[ "resolution" ].value.set( 1 / width, 1 / height );
+	this.uniformsEdges["resolution"].value.set(1 / width, 1 / height);
 
-	this.materialEdges = new ShaderMaterial( {
-		defines: Object.assign( {}, SMAAEdgesShader.defines ),
+	this.materialEdges = new ShaderMaterial({
+		defines: Object.assign({}, SMAAEdgesShader.defines),
 		uniforms: this.uniformsEdges,
 		vertexShader: SMAAEdgesShader.vertexShader,
 		fragmentShader: SMAAEdgesShader.fragmentShader
-	} );
+	});
 
 	// materials - pass 2
 
-	this.uniformsWeights = UniformsUtils.clone( SMAAWeightsShader.uniforms );
+	this.uniformsWeights = UniformsUtils.clone(SMAAWeightsShader.uniforms);
 
-	this.uniformsWeights[ "resolution" ].value.set( 1 / width, 1 / height );
-	this.uniformsWeights[ "tDiffuse" ].value = this.edgesRT.texture;
-	this.uniformsWeights[ "tArea" ].value = this.areaTexture;
-	this.uniformsWeights[ "tSearch" ].value = this.searchTexture;
+	this.uniformsWeights["resolution"].value.set(1 / width, 1 / height);
+	this.uniformsWeights["tDiffuse"].value = this.edgesRT.texture;
+	this.uniformsWeights["tArea"].value = this.areaTexture;
+	this.uniformsWeights["tSearch"].value = this.searchTexture;
 
-	this.materialWeights = new ShaderMaterial( {
-		defines: Object.assign( {}, SMAAWeightsShader.defines ),
+	this.materialWeights = new ShaderMaterial({
+		defines: Object.assign({}, SMAAWeightsShader.defines),
 		uniforms: this.uniformsWeights,
 		vertexShader: SMAAWeightsShader.vertexShader,
 		fragmentShader: SMAAWeightsShader.fragmentShader
-	} );
+	});
 
 	// materials - pass 3
 
-	this.uniformsBlend = UniformsUtils.clone( SMAABlendShader.uniforms );
+	this.uniformsBlend = UniformsUtils.clone(SMAABlendShader.uniforms);
 
-	this.uniformsBlend[ "resolution" ].value.set( 1 / width, 1 / height );
-	this.uniformsBlend[ "tDiffuse" ].value = this.weightsRT.texture;
+	this.uniformsBlend["resolution"].value.set(1 / width, 1 / height);
+	this.uniformsBlend["tDiffuse"].value = this.weightsRT.texture;
 
-	this.materialBlend = new ShaderMaterial( {
+	this.materialBlend = new ShaderMaterial({
 		uniforms: this.uniformsBlend,
 		vertexShader: SMAABlendShader.vertexShader,
 		fragmentShader: SMAABlendShader.fragmentShader
-	} );
+	});
 
 	this.needsSwap = false;
 
-	this.fsQuad = new Pass.FullScreenQuad( null );
+	this.fsQuad = new Pass.FullScreenQuad(null);
 
 };
 
-SMAAPass.prototype = Object.assign( Object.create( Pass.prototype ), {
+SMAAPass.prototype = Object.assign(Object.create(Pass.prototype), {
 
 	constructor: SMAAPass,
 
-	render: function ( renderer, writeBuffer, readBuffer/*, deltaTime, maskActive*/ ) {
+	render: function (renderer, writeBuffer, readBuffer/*, deltaTime, maskActive*/) {
 
 		// pass 1
 
-		this.uniformsEdges[ "tDiffuse" ].value = readBuffer.texture;
+		this.uniformsEdges["tDiffuse"].value = readBuffer.texture;
 
 		this.fsQuad.material = this.materialEdges;
 
-		renderer.setRenderTarget( this.edgesRT );
-		if ( this.clear ) renderer.clear();
-		this.fsQuad.render( renderer );
+		renderer.setRenderTarget(this.edgesRT);
+		if (this.clear) renderer.clear();
+		this.fsQuad.render(renderer);
 
 		// pass 2
 
 		this.fsQuad.material = this.materialWeights;
 
-		renderer.setRenderTarget( this.weightsRT );
-		if ( this.clear ) renderer.clear();
-		this.fsQuad.render( renderer );
+		renderer.setRenderTarget(this.weightsRT);
+		if (this.clear) renderer.clear();
+		this.fsQuad.render(renderer);
 
 		// pass 3
 
-		this.uniformsBlend[ "tColor" ].value = readBuffer.texture;
+		this.uniformsBlend["tColor"].value = readBuffer.texture;
 
 		this.fsQuad.material = this.materialBlend;
 
-		if ( this.renderToScreen ) {
+		if (this.renderToScreen) {
 
-			renderer.setRenderTarget( null );
-			this.fsQuad.render( renderer );
+			renderer.setRenderTarget(null);
+			this.fsQuad.render(renderer);
 
 		} else {
 
-			renderer.setRenderTarget( writeBuffer );
-			if ( this.clear ) renderer.clear();
-			this.fsQuad.render( renderer );
+			renderer.setRenderTarget(writeBuffer);
+			if (this.clear) renderer.clear();
+			this.fsQuad.render(renderer);
 
 		}
 
 	},
 
-	setSize: function ( width, height ) {
+	setSize: function (width, height) {
 
-		this.edgesRT.setSize( width, height );
-		this.weightsRT.setSize( width, height );
+		this.edgesRT.setSize(width, height);
+		this.weightsRT.setSize(width, height);
 
-		this.materialEdges.uniforms[ 'resolution' ].value.set( 1 / width, 1 / height );
-		this.materialWeights.uniforms[ 'resolution' ].value.set( 1 / width, 1 / height );
-		this.materialBlend.uniforms[ 'resolution' ].value.set( 1 / width, 1 / height );
+		this.materialEdges.uniforms['resolution'].value.set(1 / width, 1 / height);
+		this.materialWeights.uniforms['resolution'].value.set(1 / width, 1 / height);
+		this.materialBlend.uniforms['resolution'].value.set(1 / width, 1 / height);
 
 	},
 
@@ -200,6 +198,6 @@ SMAAPass.prototype = Object.assign( Object.create( Pass.prototype ), {
 
 	}
 
-} );
+});
 
-export { SMAAPass };
+export {SMAAPass};

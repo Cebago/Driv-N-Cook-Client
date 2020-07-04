@@ -2,12 +2,12 @@
  * @author sunag / http://www.sunag.com.br/
  */
 
-import { TempNode } from '../core/TempNode.js';
-import { NodeLib } from '../core/NodeLib.js';
+import {TempNode} from '../core/TempNode.js';
+import {NodeLib} from '../core/NodeLib.js';
 
-function PositionNode( scope ) {
+function PositionNode(scope) {
 
-	TempNode.call( this, 'v3' );
+	TempNode.call(this, 'v3');
 
 	this.scope = scope || PositionNode.LOCAL;
 
@@ -18,13 +18,13 @@ PositionNode.WORLD = 'world';
 PositionNode.VIEW = 'view';
 PositionNode.PROJECTION = 'projection';
 
-PositionNode.prototype = Object.create( TempNode.prototype );
+PositionNode.prototype = Object.create(TempNode.prototype);
 PositionNode.prototype.constructor = PositionNode;
 PositionNode.prototype.nodeType = "Position";
 
-PositionNode.prototype.getType = function ( ) {
+PositionNode.prototype.getType = function () {
 
-	switch ( this.scope ) {
+	switch (this.scope) {
 
 		case PositionNode.PROJECTION:
 
@@ -36,9 +36,9 @@ PositionNode.prototype.getType = function ( ) {
 
 };
 
-PositionNode.prototype.getShared = function ( /* builder */ ) {
+PositionNode.prototype.getShared = function ( /* builder */) {
 
-	switch ( this.scope ) {
+	switch (this.scope) {
 
 		case PositionNode.LOCAL:
 		case PositionNode.WORLD:
@@ -51,15 +51,15 @@ PositionNode.prototype.getShared = function ( /* builder */ ) {
 
 };
 
-PositionNode.prototype.generate = function ( builder, output ) {
+PositionNode.prototype.generate = function (builder, output) {
 
 	var result;
 
-	switch ( this.scope ) {
+	switch (this.scope) {
 
 		case PositionNode.LOCAL:
 
-			if ( builder.isShader( 'vertex' ) ) {
+			if (builder.isShader('vertex')) {
 
 				result = 'transformed';
 
@@ -75,7 +75,7 @@ PositionNode.prototype.generate = function ( builder, output ) {
 
 		case PositionNode.WORLD:
 
-			if ( builder.isShader( 'vertex' ) ) {
+			if (builder.isShader('vertex')) {
 
 				return '( modelMatrix * vec4( transformed, 1.0 ) ).xyz';
 
@@ -91,25 +91,25 @@ PositionNode.prototype.generate = function ( builder, output ) {
 
 		case PositionNode.VIEW:
 
-			result = builder.isShader( 'vertex' ) ? '-mvPosition.xyz' : 'vViewPosition';
+			result = builder.isShader('vertex') ? '-mvPosition.xyz' : 'vViewPosition';
 
 			break;
 
 		case PositionNode.PROJECTION:
 
-			result = builder.isShader( 'vertex' ) ? '( projectionMatrix * modelViewMatrix * vec4( position, 1.0 ) )' : 'vec4( 0.0 )';
+			result = builder.isShader('vertex') ? '( projectionMatrix * modelViewMatrix * vec4( position, 1.0 ) )' : 'vec4( 0.0 )';
 
 			break;
 
 	}
 
-	return builder.format( result, this.getType( builder ), output );
+	return builder.format(result, this.getType(builder), output);
 
 };
 
-PositionNode.prototype.copy = function ( source ) {
+PositionNode.prototype.copy = function (source) {
 
-	TempNode.prototype.copy.call( this, source );
+	TempNode.prototype.copy.call(this, source);
 
 	this.scope = source.scope;
 
@@ -117,13 +117,13 @@ PositionNode.prototype.copy = function ( source ) {
 
 };
 
-PositionNode.prototype.toJSON = function ( meta ) {
+PositionNode.prototype.toJSON = function (meta) {
 
-	var data = this.getJSONNode( meta );
+	var data = this.getJSONNode(meta);
 
-	if ( ! data ) {
+	if (!data) {
 
-		data = this.createJSONNode( meta );
+		data = this.createJSONNode(meta);
 
 		data.scope = this.scope;
 
@@ -133,22 +133,22 @@ PositionNode.prototype.toJSON = function ( meta ) {
 
 };
 
-NodeLib.addKeyword( 'position', function () {
+NodeLib.addKeyword('position', function () {
 
 	return new PositionNode();
 
-} );
+});
 
-NodeLib.addKeyword( 'worldPosition', function () {
+NodeLib.addKeyword('worldPosition', function () {
 
-	return new PositionNode( PositionNode.WORLD );
+	return new PositionNode(PositionNode.WORLD);
 
-} );
+});
 
-NodeLib.addKeyword( 'viewPosition', function () {
+NodeLib.addKeyword('viewPosition', function () {
 
-	return new PositionNode( PositionNode.VIEW );
+	return new PositionNode(PositionNode.VIEW);
 
-} );
+});
 
-export { PositionNode };
+export {PositionNode};

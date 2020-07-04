@@ -1,14 +1,13 @@
-import {
-	Mesh,
-} from '../../../src/Three';
+import {Mesh,} from '../../../src/Three';
 
-import { LineMaterial } from './LineMaterial';
-import { LineSegmentsGeometry } from './LineSegmentsGeometry';
+import {LineMaterial} from './LineMaterial';
+import {LineSegmentsGeometry} from './LineSegmentsGeometry';
 
 export class LineSegments2 extends Mesh {
 
-	constructor( geometry?: LineSegmentsGeometry, material?: LineMaterial );
 	readonly isLineSegments2: true;
+
+	constructor(geometry?: LineSegmentsGeometry, material?: LineMaterial);
 
 	computeLineDistances(): this;
 

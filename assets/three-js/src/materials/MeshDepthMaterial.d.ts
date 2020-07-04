@@ -1,6 +1,6 @@
-import { DepthPackingStrategies } from '../constants';
-import { MaterialParameters, Material } from './Material';
-import { Texture } from './../textures/Texture';
+import {DepthPackingStrategies} from '../constants';
+import {Material, MaterialParameters} from './Material';
+import {Texture} from './../textures/Texture';
 
 export interface MeshDepthMaterialParameters extends MaterialParameters {
 	map?: Texture | null;
@@ -15,8 +15,6 @@ export interface MeshDepthMaterialParameters extends MaterialParameters {
 
 export class MeshDepthMaterial extends Material {
 
-	constructor( parameters?: MeshDepthMaterialParameters );
-
 	map: Texture | null;
 	alphaMap: Texture | null;
 	depthPacking: DepthPackingStrategies;
@@ -26,6 +24,8 @@ export class MeshDepthMaterial extends Material {
 	wireframe: boolean;
 	wireframeLinewidth: number;
 
-	setValues( parameters: MeshDepthMaterialParameters ): void;
+	constructor(parameters?: MeshDepthMaterialParameters);
+
+	setValues(parameters: MeshDepthMaterialParameters): void;
 
 }

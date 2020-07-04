@@ -3,9 +3,9 @@ function getOpenDays(idtruck) {
     table.innerText = "";
 
     const request = new XMLHttpRequest();
-    request.onreadystatechange = function() {
-        if(request.readyState === 4) {
-            if(request.status === 200) {
+    request.onreadystatechange = function () {
+        if (request.readyState === 4) {
+            if (request.status === 200) {
                 let myJson = JSON.parse(request.responseText);
                 const tbody = document.getElementById("tableBody");
                 for (let i = 0; i < myJson.length; i++) {
@@ -47,9 +47,9 @@ function refreshTable() {
     const content = document.getElementById("tablebody");
 
     const request = new XMLHttpRequest();
-    request.onreadystatechange = function() {
-        if(request.readyState === 4) {
-            if(request.status === 200) {
+    request.onreadystatechange = function () {
+        if (request.readyState === 4) {
+            if (request.status === 200) {
                 //console.log(request.responseText);
                 content.innerHTML = request.responseText;
             }
@@ -61,8 +61,8 @@ function refreshTable() {
 
 function showMap() {
     let opt = {  //point où regarder
-        center: new google.maps.LatLng(48.8376962,2.3896693),
-        zoom: 8 ,
+        center: new google.maps.LatLng(48.8376962, 2.3896693),
+        zoom: 8,
         mapTypeId: google.maps.MapTypeId.ROADMAP
     };
     var map;
@@ -79,8 +79,8 @@ function showMap() {
                     for (let i = 0; i < myJson.length; i++) {
 
                         let geocoder = new google.maps.Geocoder; //affiche la localisation du camion
-                        let latlng = {lat: parseFloat(myJson[i]["lat"]), lng: parseFloat(myJson[i]["lng"])  };
-                        geocoder.geocode({'location': latlng}, function(results, status) {
+                        let latlng = {lat: parseFloat(myJson[i]["lat"]), lng: parseFloat(myJson[i]["lng"])};
+                        geocoder.geocode({'location': latlng}, function (results, status) {
                             if (status === 'OK') {
                                 if (results[0]) {
                                     var marker = new google.maps.Marker({
@@ -91,9 +91,9 @@ function showMap() {
                                     var smallInfoString = '<div id="content" class="dataInfos">' +
                                         '<div id="siteNotice">' +
                                         '</div>' +
-                                        '<h5>'+myJson[i]["truckName"]+'</h5>' +
-                                        '<img src = "'+myJson[i]["truckPicture"]+'" style="width: 100px">'+
-                                        '<div>'+results[i].formatted_address+'</div>'+
+                                        '<h5>' + myJson[i]["truckName"] + '</h5>' +
+                                        '<img src = "' + myJson[i]["truckPicture"] + '" style="width: 100px">' +
+                                        '<div>' + results[i].formatted_address + '</div>' +
                                         '<div id="bodyContent">' +
                                         '</div>';
                                     let smallInfo = new google.maps.InfoWindow({
@@ -109,7 +109,7 @@ function showMap() {
                                     });
                                     marker.addListener('click', function () {
                                         window.open(
-                                            'http://127.0.0.1/Driv-N-Cook-Client/truck.php?idTruck='+myJson[i]["idTruck"],
+                                            'http://127.0.0.1/Driv-N-Cook-Client/truck.php?idTruck=' + myJson[i]["idTruck"],
                                             '_blank'
                                         );
                                     });
@@ -131,16 +131,16 @@ function showMap() {
     request.send();
 }
 
-function filterTruck(){
+function filterTruck() {
     let closed = document.getElementsByClassName("isClosed");
-    for(let i =0; i < closed.length; i++) {
+    for (let i = 0; i < closed.length; i++) {
         closed[i].parentElement.parentElement.parentElement.parentElement.style.display = "none";
     }
 }
 
 function removeFilterTruck() {
     let closed = document.getElementsByClassName("isClosed");
-    for(let i =0; i < closed.length; i++) {
+    for (let i = 0; i < closed.length; i++) {
         closed[i].parentElement.parentElement.parentElement.parentElement.style.display = "block";
     }
 }

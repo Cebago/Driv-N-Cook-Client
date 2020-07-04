@@ -1,11 +1,11 @@
-import {
-	Vector3
-} from '../../../src/Three';
+import {Vector3} from '../../../src/Three';
 
 export interface RandomGenerator {
 	random(): number;
+
 	getSeed(): number;
-	setSeed( seed: number ): void;
+
+	setSeed(seed: number): void;
 }
 
 export interface LightningSegment {
@@ -58,9 +58,9 @@ export interface RayParameters {
 	up1?: Vector3;
 	radius0?: number;
 	radius1?: number;
-	radius0Factor? : number;
-	radius1Factor? : number;
-	minRadius? : number;
+	radius0Factor?: number;
+	radius1Factor?: number;
+	minRadius?: number;
 
 	isEternal?: boolean;
 	birthTime?: number;
@@ -80,14 +80,11 @@ export interface RayParameters {
 	randomGenerator?: RandomGenerator;
 	noiseSeed?: number;
 
-	onDecideSubrayCreation?: ( segment: LightningSegment, lightningStrike: LightningStrike ) => void;
-	onSubrayCreation?: ( segment: LightningSegment, parentSubray: LightningSubray, childSubray: LightningSubray, lightningStrike: LightningStrike ) => void;
+	onDecideSubrayCreation?: (segment: LightningSegment, lightningStrike: LightningStrike) => void;
+	onSubrayCreation?: (segment: LightningSegment, parentSubray: LightningSubray, childSubray: LightningSubray, lightningStrike: LightningStrike) => void;
 }
 
 export class LightningStrike {
-
-	constructor( rayParameters?: RayParameters );
-	copyParameters( dest?: RayParameters, source?: RayParameters ): RayParameters;
 
 	// Ray states
 	static readonly RAY_INITIALIZED: number;
@@ -96,12 +93,16 @@ export class LightningStrike {
 	static readonly RAY_STEADY: number;
 	static readonly RAY_VANISHING: number;
 	static readonly RAY_EXTINGUISHED: number;
-
 	state: number;
 
-	update( time: number ): void;
+	constructor(rayParameters?: RayParameters);
 
-	copy( source: LightningStrike ): LightningStrike;
+	copyParameters(dest?: RayParameters, source?: RayParameters): RayParameters;
+
+	update(time: number): void;
+
+	copy(source: LightningStrike): LightningStrike;
+
 	clone(): LightningStrike;
 
 }

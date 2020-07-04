@@ -1,7 +1,7 @@
-import { Color } from './../math/Color';
-import { Texture } from './../textures/Texture';
-import { MaterialParameters, Material } from './Material';
-import { Combine } from '../constants';
+import {Color} from './../math/Color';
+import {Texture} from './../textures/Texture';
+import {Material, MaterialParameters} from './Material';
+import {Combine} from '../constants';
 
 export interface MeshLambertMaterialParameters extends MaterialParameters {
 	color?: Color | string | number;
@@ -30,8 +30,6 @@ export interface MeshLambertMaterialParameters extends MaterialParameters {
 
 export class MeshLambertMaterial extends Material {
 
-	constructor( parameters?: MeshLambertMaterialParameters );
-
 	color: Color;
 	emissive: Color;
 	emissiveIntensity: number;
@@ -55,6 +53,8 @@ export class MeshLambertMaterial extends Material {
 	morphTargets: boolean;
 	morphNormals: boolean;
 
-	setValues( parameters: MeshLambertMaterialParameters ): void;
+	constructor(parameters?: MeshLambertMaterialParameters);
+
+	setValues(parameters: MeshLambertMaterialParameters): void;
 
 }

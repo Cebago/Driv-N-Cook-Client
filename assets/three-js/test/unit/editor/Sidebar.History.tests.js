@@ -3,18 +3,16 @@
  */
 /* global QUnit */
 
-import { NothingsIsExportedYet } from '../../../editor/js/Sidebar.History';
+export default QUnit.module('Editor', () => {
 
-export default QUnit.module( 'Editor', () => {
+	QUnit.module.todo('Sidebar.History', () => {
 
-	QUnit.module.todo( 'Sidebar.History', () => {
+		QUnit.test('write me !', (assert) => {
 
-		QUnit.test( 'write me !', ( assert ) => {
+			assert.ok(false, "everything's gonna be alright");
 
-			assert.ok( false, "everything's gonna be alright" );
+		});
 
-		} );
+	});
 
-	} );
-
-} );
+});

@@ -14,12 +14,12 @@ THREE.ToonShader1 = {
 
 	uniforms: {
 
-		"uDirLightPos": { value: new THREE.Vector3() },
-		"uDirLightColor": { value: new THREE.Color( 0xeeeeee ) },
+		"uDirLightPos": {value: new THREE.Vector3()},
+		"uDirLightColor": {value: new THREE.Color(0xeeeeee)},
 
-		"uAmbientLightColor": { value: new THREE.Color( 0x050505 ) },
+		"uAmbientLightColor": {value: new THREE.Color(0x050505)},
 
-		"uBaseColor": { value: new THREE.Color( 0xffffff ) }
+		"uBaseColor": {value: new THREE.Color(0xffffff)}
 
 	},
 
@@ -43,7 +43,7 @@ THREE.ToonShader1 = {
 
 		"}"
 
-	].join( "\n" ),
+	].join("\n"),
 
 	fragmentShader: [
 
@@ -82,7 +82,7 @@ THREE.ToonShader1 = {
 
 		"}"
 
-	].join( "\n" )
+	].join("\n")
 
 };
 
@@ -90,16 +90,16 @@ THREE.ToonShader2 = {
 
 	uniforms: {
 
-		"uDirLightPos": { value: new THREE.Vector3() },
-		"uDirLightColor": { value: new THREE.Color( 0xeeeeee ) },
+		"uDirLightPos": {value: new THREE.Vector3()},
+		"uDirLightColor": {value: new THREE.Color(0xeeeeee)},
 
-		"uAmbientLightColor": { value: new THREE.Color( 0x050505 ) },
+		"uAmbientLightColor": {value: new THREE.Color(0x050505)},
 
-		"uBaseColor": { value: new THREE.Color( 0xeeeeee ) },
-		"uLineColor1": { value: new THREE.Color( 0x808080 ) },
-		"uLineColor2": { value: new THREE.Color( 0x000000 ) },
-		"uLineColor3": { value: new THREE.Color( 0x000000 ) },
-		"uLineColor4": { value: new THREE.Color( 0x000000 ) }
+		"uBaseColor": {value: new THREE.Color(0xeeeeee)},
+		"uLineColor1": {value: new THREE.Color(0x808080)},
+		"uLineColor2": {value: new THREE.Color(0x000000)},
+		"uLineColor3": {value: new THREE.Color(0x000000)},
+		"uLineColor4": {value: new THREE.Color(0x000000)}
 
 	},
 
@@ -114,7 +114,7 @@ THREE.ToonShader2 = {
 
 		"}"
 
-	].join( "\n" ),
+	].join("\n"),
 
 	fragmentShader: [
 
@@ -152,7 +152,7 @@ THREE.ToonShader2 = {
 
 		"}"
 
-	].join( "\n" )
+	].join("\n")
 
 };
 
@@ -160,16 +160,16 @@ THREE.ToonShaderHatching = {
 
 	uniforms: {
 
-		"uDirLightPos":	{ value: new THREE.Vector3() },
-		"uDirLightColor": { value: new THREE.Color( 0xeeeeee ) },
+		"uDirLightPos": {value: new THREE.Vector3()},
+		"uDirLightColor": {value: new THREE.Color(0xeeeeee)},
 
-		"uAmbientLightColor": { value: new THREE.Color( 0x050505 ) },
+		"uAmbientLightColor": {value: new THREE.Color(0x050505)},
 
-		"uBaseColor": { value: new THREE.Color( 0xffffff ) },
-		"uLineColor1": { value: new THREE.Color( 0x000000 ) },
-		"uLineColor2": { value: new THREE.Color( 0x000000 ) },
-		"uLineColor3": { value: new THREE.Color( 0x000000 ) },
-		"uLineColor4": { value: new THREE.Color( 0x000000 ) }
+		"uBaseColor": {value: new THREE.Color(0xffffff)},
+		"uLineColor1": {value: new THREE.Color(0x000000)},
+		"uLineColor2": {value: new THREE.Color(0x000000)},
+		"uLineColor3": {value: new THREE.Color(0x000000)},
+		"uLineColor4": {value: new THREE.Color(0x000000)}
 
 	},
 
@@ -184,7 +184,7 @@ THREE.ToonShaderHatching = {
 
 		"}"
 
-	].join( "\n" ),
+	].join("\n"),
 
 	fragmentShader: [
 
@@ -250,7 +250,7 @@ THREE.ToonShaderHatching = {
 
 		"}"
 
-	].join( "\n" )
+	].join("\n")
 
 };
 
@@ -258,13 +258,13 @@ THREE.ToonShaderDotted = {
 
 	uniforms: {
 
-		"uDirLightPos":	{ value: new THREE.Vector3() },
-		"uDirLightColor": { value: new THREE.Color( 0xeeeeee ) },
+		"uDirLightPos": {value: new THREE.Vector3()},
+		"uDirLightColor": {value: new THREE.Color(0xeeeeee)},
 
-		"uAmbientLightColor": { value: new THREE.Color( 0x050505 ) },
+		"uAmbientLightColor": {value: new THREE.Color(0x050505)},
 
-		"uBaseColor": { value: new THREE.Color( 0xffffff ) },
-		"uLineColor1": { value: new THREE.Color( 0x000000 ) }
+		"uBaseColor": {value: new THREE.Color(0xffffff)},
+		"uLineColor1": {value: new THREE.Color(0x000000)}
 
 	},
 
@@ -279,7 +279,7 @@ THREE.ToonShaderDotted = {
 
 		"}"
 
-	].join( "\n" ),
+	].join("\n"),
 
 	fragmentShader: [
 
@@ -325,6 +325,6 @@ THREE.ToonShaderDotted = {
 
 		"}"
 
-	].join( "\n" )
+	].join("\n")
 
 };

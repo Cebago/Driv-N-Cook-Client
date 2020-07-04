@@ -1,13 +1,9 @@
-import {
-	WebGLRenderTarget,
-	ShaderMaterial
-} from '../../../src/Three';
+import {ShaderMaterial, WebGLRenderTarget} from '../../../src/Three';
 
-import { Pass } from './Pass';
+import {Pass} from './Pass';
 
 export class AdaptiveToneMappingPass extends Pass {
 
-	constructor( adaptive?: boolean, resolution?: number );
 	adaptive: boolean;
 	resolution: number;
 	needsInit: number;
@@ -22,13 +18,22 @@ export class AdaptiveToneMappingPass extends Pass {
 	materialToneMap: ShaderMaterial;
 	fsQuad: object;
 
+	constructor(adaptive?: boolean, resolution?: number);
+
 	reset(): void;
-	setAdaptive( adaptive: boolean ): void;
-	setAdaptionRate( rate: number ): void;
-	setMinLuminance( minLum: number ): void;
-	setMaxLuminance( maxLum: number ): void;
-	setAverageLuminance( avgLum: number ): void;
-	setMiddleGrey( middleGrey: number ): void;
+
+	setAdaptive(adaptive: boolean): void;
+
+	setAdaptionRate(rate: number): void;
+
+	setMinLuminance(minLum: number): void;
+
+	setMaxLuminance(maxLum: number): void;
+
+	setAverageLuminance(avgLum: number): void;
+
+	setMiddleGrey(middleGrey: number): void;
+
 	dispose(): void;
 
 }

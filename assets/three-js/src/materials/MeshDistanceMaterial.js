@@ -1,5 +1,5 @@
-import { Material } from './Material.js';
-import { Vector3 } from '../math/Vector3.js';
+import {Material} from './Material.js';
+import {Vector3} from '../math/Vector3.js';
 
 /**
  * @author WestLangley / http://github.com/WestLangley
@@ -24,9 +24,9 @@ import { Vector3 } from '../math/Vector3.js';
  * }
  */
 
-function MeshDistanceMaterial( parameters ) {
+function MeshDistanceMaterial(parameters) {
 
-	Material.call( this );
+	Material.call(this);
 
 	this.type = 'MeshDistanceMaterial';
 
@@ -47,20 +47,20 @@ function MeshDistanceMaterial( parameters ) {
 
 	this.fog = false;
 
-	this.setValues( parameters );
+	this.setValues(parameters);
 
 }
 
-MeshDistanceMaterial.prototype = Object.create( Material.prototype );
+MeshDistanceMaterial.prototype = Object.create(Material.prototype);
 MeshDistanceMaterial.prototype.constructor = MeshDistanceMaterial;
 
 MeshDistanceMaterial.prototype.isMeshDistanceMaterial = true;
 
-MeshDistanceMaterial.prototype.copy = function ( source ) {
+MeshDistanceMaterial.prototype.copy = function (source) {
 
-	Material.prototype.copy.call( this, source );
+	Material.prototype.copy.call(this, source);
 
-	this.referencePosition.copy( source.referencePosition );
+	this.referencePosition.copy(source.referencePosition);
 	this.nearDistance = source.nearDistance;
 	this.farDistance = source.farDistance;
 
@@ -80,4 +80,4 @@ MeshDistanceMaterial.prototype.copy = function ( source ) {
 };
 
 
-export { MeshDistanceMaterial };
+export {MeshDistanceMaterial};

@@ -1,9 +1,4 @@
-import {
-	LoadingManager,
-	CompressedTextureLoader,
-	PixelFormat,
-	CompressedPixelFormat
-} from '../../../src/Three';
+import {CompressedPixelFormat, CompressedTextureLoader, LoadingManager, PixelFormat} from '../../../src/Three';
 
 export interface KTX {
 	mipmaps: object[];
@@ -16,8 +11,8 @@ export interface KTX {
 
 export class KTXLoader extends CompressedTextureLoader {
 
-	constructor( manager?: LoadingManager );
+	constructor(manager?: LoadingManager);
 
-	parse( buffer: ArrayBuffer, loadMipmaps: boolean ) : KTX;
+	parse(buffer: ArrayBuffer, loadMipmaps: boolean): KTX;
 
 }

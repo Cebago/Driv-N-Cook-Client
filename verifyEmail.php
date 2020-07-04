@@ -6,8 +6,8 @@ require "functions.php";
 
 if (isset($_POST["inputEmail"])) {
 
-    if( count($_POST) == 1
-        && !empty($_POST["inputEmail"]) ){
+    if (count($_POST) == 1
+        && !empty($_POST["inputEmail"])) {
 
         $error = false;
         $listOfErrors = [];
@@ -16,20 +16,20 @@ if (isset($_POST["inputEmail"])) {
 
         $email = strtolower(trim($_POST["inputEmail"]));
 
-        if(!filter_var($email, FILTER_VALIDATE_EMAIL)){
+        if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
             $error = true;
             $listOfErrors[] = "L'email n'est pas valide";
         }
-        if(!$error){
+        if (!$error) {
             $pdo = connectDB();
             $queryPrepared = $pdo->prepare("SELECT idUser FROM USER WHERE emailAddress = :email");
-            $queryPrepared->execute([":email"=>$email]);
+            $queryPrepared->execute([":email" => $email]);
             $result = $queryPrepared->fetch();
             $id = $result["idUser"];
-            if(empty($result)){
+            if (empty($result)) {
                 $error = true;
                 $listOfErrors[] = "Aucun compte trouvé";
-            }else{
+            } else {
                 $success = true;
                 $listOfSuccess[] = "Un email vous a été envoyé pour réinitialiser votre mot de passe";
 
@@ -39,25 +39,25 @@ if (isset($_POST["inputEmail"])) {
                                                  AND idUser = user
                                                  AND tokenType = 'Site'");
                 $queryPrepared->execute([
-                    ":token"=>$token,
-                    ":email"=>$email,
-                    ":id"=>$id
+                    ":token" => $token,
+                    ":email" => $email,
+                    ":id" => $id
                 ]);
                 //TODO ENVOYER LE MAIL AVEC LIEN DE REDIRECTION VERS NEWPASSWORD
             }
-            if(!$error){
+            if (!$error) {
                 unset($_POST["inputEmail"]);
                 $_SESSION["success"] = $listOfSuccess;
                 header("Location: forgotPassword");
-            }else{
+            } else {
                 unset($_POST["inputEmail"]);
                 $_SESSION["errors"] = $listOfErrors;
                 header("Location: forgotPassword");
             }
         }
-    }else{
+    } else {
         die("Tentative de Hack .... !!!!");
     }
-}else{
+} else {
     header("Location: login");
 }

@@ -1,15 +1,10 @@
-import { Texture } from './Texture';
-import {
-	Mapping,
-	Wrapping,
-	TextureFilter,
-	PixelFormat,
-	TextureDataType,
-	TextureEncoding,
-} from '../constants';
-import { TypedArray } from '../polyfills';
+import {Texture} from './Texture';
+import {Mapping, PixelFormat, TextureDataType, TextureEncoding, TextureFilter, Wrapping,} from '../constants';
+import {TypedArray} from '../polyfills';
 
 export class DataTexture extends Texture {
+
+	image: ImageData;
 
 	constructor(
 		data: TypedArray,
@@ -25,7 +20,5 @@ export class DataTexture extends Texture {
 		anisotropy?: number,
 		encoding?: TextureEncoding
 	);
-
-	image: ImageData;
 
 }

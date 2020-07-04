@@ -11,8 +11,8 @@ THREE.SobelOperatorShader = {
 
 	uniforms: {
 
-		"tDiffuse": { value: null },
-		"resolution": { value: new THREE.Vector2() }
+		"tDiffuse": {value: null},
+		"resolution": {value: new THREE.Vector2()}
 
 	},
 
@@ -28,7 +28,7 @@ THREE.SobelOperatorShader = {
 
 		"}"
 
-	].join( "\n" ),
+	].join("\n"),
 
 	fragmentShader: [
 
@@ -85,6 +85,6 @@ THREE.SobelOperatorShader = {
 
 		"}"
 
-	].join( "\n" )
+	].join("\n")
 
 };

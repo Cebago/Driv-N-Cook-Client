@@ -1,7 +1,13 @@
-import { Light } from './Light';
-import { Color } from './../math/Color';
+import {Light} from './Light';
+import {Color} from './../math/Color';
 
 export class RectAreaLight extends Light {
+
+	type: string;
+	width: number;
+	height: number;
+	intensity: number;
+	readonly isRectAreaLight: true;
 
 	constructor(
 		color?: Color | string | number,
@@ -9,11 +15,5 @@ export class RectAreaLight extends Light {
 		width?: number,
 		height?: number
 	);
-
-	type: string;
-	width: number;
-	height: number;
-	intensity: number;
-	readonly isRectAreaLight: true;
 
 }

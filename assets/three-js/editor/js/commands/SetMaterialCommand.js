@@ -3,7 +3,7 @@
  * Developed as part of a project at University of Applied Sciences and Arts Northwestern Switzerland (www.fhnw.ch)
  */
 
-import { Command } from '../Command.js';
+import {Command} from '../Command.js';
 
 import * as THREE from '../../../build/three.module.js';
 
@@ -13,9 +13,9 @@ import * as THREE from '../../../build/three.module.js';
  * @param newMaterial THREE.Material
  * @constructor
  */
-var SetMaterialCommand = function ( editor, object, newMaterial, materialSlot ) {
+var SetMaterialCommand = function (editor, object, newMaterial, materialSlot) {
 
-	Command.call( this, editor );
+	Command.call(this, editor);
 
 	this.type = 'SetMaterialCommand';
 	this.name = 'New Material';
@@ -23,7 +23,7 @@ var SetMaterialCommand = function ( editor, object, newMaterial, materialSlot ) 
 	this.object = object;
 	this.materialSlot = materialSlot;
 
-	this.oldMaterial = this.editor.getObjectMaterial( object, materialSlot );
+	this.oldMaterial = this.editor.getObjectMaterial(object, materialSlot);
 	this.newMaterial = newMaterial;
 
 };
@@ -32,21 +32,21 @@ SetMaterialCommand.prototype = {
 
 	execute: function () {
 
-		this.editor.setObjectMaterial( this.object, this.materialSlot, this.newMaterial );
-		this.editor.signals.materialChanged.dispatch( this.newMaterial );
+		this.editor.setObjectMaterial(this.object, this.materialSlot, this.newMaterial);
+		this.editor.signals.materialChanged.dispatch(this.newMaterial);
 
 	},
 
 	undo: function () {
 
-		this.editor.setObjectMaterial( this.object, this.materialSlot, this.oldMaterial );
-		this.editor.signals.materialChanged.dispatch( this.oldMaterial );
+		this.editor.setObjectMaterial(this.object, this.materialSlot, this.oldMaterial);
+		this.editor.signals.materialChanged.dispatch(this.oldMaterial);
 
 	},
 
 	toJSON: function () {
 
-		var output = Command.prototype.toJSON.call( this );
+		var output = Command.prototype.toJSON.call(this);
 
 		output.objectUuid = this.object.uuid;
 		output.oldMaterial = this.oldMaterial.toJSON();
@@ -56,21 +56,21 @@ SetMaterialCommand.prototype = {
 
 	},
 
-	fromJSON: function ( json ) {
+	fromJSON: function (json) {
 
-		Command.prototype.fromJSON.call( this, json );
+		Command.prototype.fromJSON.call(this, json);
 
-		this.object = this.editor.objectByUuid( json.objectUuid );
-		this.oldMaterial = parseMaterial( json.oldMaterial );
-		this.newMaterial = parseMaterial( json.newMaterial );
+		this.object = this.editor.objectByUuid(json.objectUuid);
+		this.oldMaterial = parseMaterial(json.oldMaterial);
+		this.newMaterial = parseMaterial(json.newMaterial);
 
-		function parseMaterial( json ) {
+		function parseMaterial(json) {
 
 			var loader = new THREE.ObjectLoader();
-			var images = loader.parseImages( json.images );
-			var textures = loader.parseTextures( json.textures, images );
-			var materials = loader.parseMaterials( [ json ], textures );
-			return materials[ json.uuid ];
+			var images = loader.parseImages(json.images);
+			var textures = loader.parseTextures(json.textures, images);
+			var materials = loader.parseMaterials([json], textures);
+			return materials[json.uuid];
 
 		}
 
@@ -78,4 +78,4 @@ SetMaterialCommand.prototype = {
 
 };
 
-export { SetMaterialCommand };
+export {SetMaterialCommand};

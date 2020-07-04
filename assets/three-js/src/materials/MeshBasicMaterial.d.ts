@@ -1,7 +1,8 @@
-import { Color } from './../math/Color';
-import { Texture } from './../textures/Texture';
-import { MaterialParameters, Material } from './Material';
-import { Combine } from '../constants';
+import {Color} from './../math/Color';
+import {Texture} from './../textures/Texture';
+import {Material, MaterialParameters} from './Material';
+import {Combine} from '../constants';
+
 /**
  * parameters is an object with one or more properties defining the material's appearance.
  */
@@ -27,8 +28,6 @@ export interface MeshBasicMaterialParameters extends MaterialParameters {
 
 export class MeshBasicMaterial extends Material {
 
-	constructor( parameters?: MeshBasicMaterialParameters );
-
 	color: Color;
 	map: Texture | null;
 	aoMap: Texture | null;
@@ -46,6 +45,8 @@ export class MeshBasicMaterial extends Material {
 	skinning: boolean;
 	morphTargets: boolean;
 
-	setValues( parameters: MeshBasicMaterialParameters ): void;
+	constructor(parameters?: MeshBasicMaterialParameters);
+
+	setValues(parameters: MeshBasicMaterialParameters): void;
 
 }

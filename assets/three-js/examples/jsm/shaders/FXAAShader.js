@@ -8,16 +8,14 @@
  * http://www.glge.org/demos/fxaa/
  */
 
-import {
-	Vector2
-} from "../../../build/three.module.js";
+import {Vector2} from "../../../build/three.module.js";
 
 var FXAAShader = {
 
 	uniforms: {
 
-		"tDiffuse": { value: null },
-		"resolution": { value: new Vector2( 1 / 1024, 1 / 512 ) }
+		"tDiffuse": {value: null},
+		"resolution": {value: new Vector2(1 / 1024, 1 / 512)}
 
 	},
 
@@ -32,7 +30,7 @@ var FXAAShader = {
 
 		"}"
 
-	].join( "\n" ),
+	].join("\n"),
 
 	fragmentShader: [
 		"precision highp float;",
@@ -1114,8 +1112,8 @@ var FXAAShader = {
 		"  // TODO avoid querying texture twice for same texel",
 		"  gl_FragColor.a = texture2D(tDiffuse, vUv).a;",
 		"}"
-	].join( "\n" )
+	].join("\n")
 
 };
 
-export { FXAAShader };
+export {FXAAShader};

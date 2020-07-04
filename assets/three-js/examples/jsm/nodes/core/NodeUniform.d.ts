@@ -1,4 +1,4 @@
-import { Node } from './Node';
+import {Node} from './Node';
 
 export interface NodeUniformParams {
 	name?: string;
@@ -9,11 +9,12 @@ export interface NodeUniformParams {
 
 export class NodeUniform {
 
-	constructor( params?: NodeUniformParams );
 	name: string | undefined;
 	type: string | undefined;
 	node: Node | undefined;
 	needsUpdate: boolean | undefined;
 	value: any;
+
+	constructor(params?: NodeUniformParams);
 
 }

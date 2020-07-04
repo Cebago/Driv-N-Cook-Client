@@ -2,26 +2,26 @@
  * @author sunag / http://www.sunag.com.br/
  */
 
-import { TempNode } from '../core/TempNode.js';
-import { FloatNode } from '../inputs/FloatNode.js';
-import { FunctionNode } from '../core/FunctionNode.js';
-import { NormalNode } from '../accessors/NormalNode.js';
-import { PositionNode } from '../accessors/PositionNode.js';
+import {TempNode} from '../core/TempNode.js';
+import {FloatNode} from '../inputs/FloatNode.js';
+import {FunctionNode} from '../core/FunctionNode.js';
+import {NormalNode} from '../accessors/NormalNode.js';
+import {PositionNode} from '../accessors/PositionNode.js';
 
-function BumpMapNode( value, scale ) {
+function BumpMapNode(value, scale) {
 
-	TempNode.call( this, 'v3' );
+	TempNode.call(this, 'v3');
 
 	this.value = value;
-	this.scale = scale || new FloatNode( 1 );
+	this.scale = scale || new FloatNode(1);
 
 	this.toNormalMap = false;
 
 }
 
-BumpMapNode.Nodes = ( function () {
+BumpMapNode.Nodes = (function () {
 
-	var dHdxy_fwd = new FunctionNode( [
+	var dHdxy_fwd = new FunctionNode([
 
 		// Bump Mapping Unparametrized Surfaces on the GPU by Morten S. Mikkelsen
 		// http://api.unrealengine.com/attachments/Engine/Rendering/LightingAndShadows/BumpMappingWithoutTangentSpace/mm_sfgrad_bump.pdf
@@ -43,9 +43,9 @@ BumpMapNode.Nodes = ( function () {
 
 		"}"
 
-	].join( "\n" ), null, { derivatives: true } );
+	].join("\n"), null, {derivatives: true});
 
-	var perturbNormalArb = new FunctionNode( [
+	var perturbNormalArb = new FunctionNode([
 
 		"vec3 perturbNormalArb( vec3 surf_pos, vec3 surf_norm, vec2 dHdxy ) {",
 
@@ -68,9 +68,9 @@ BumpMapNode.Nodes = ( function () {
 
 		"}"
 
-	].join( "\n" ), [ dHdxy_fwd ], { derivatives: true } );
+	].join("\n"), [dHdxy_fwd], {derivatives: true});
 
-	var bumpToNormal = new FunctionNode( [
+	var bumpToNormal = new FunctionNode([
 		"vec3 bumpToNormal( sampler2D bumpMap, vec2 uv, float scale ) {",
 
 		"	vec2 dSTdx = dFdx( uv );",
@@ -83,7 +83,7 @@ BumpMapNode.Nodes = ( function () {
 		"	return vec3( .5 - ( dBx * scale ), .5 - ( dBy * scale ), 1.0 );",
 
 		"}"
-	].join( "\n" ), null, { derivatives: true } );
+	].join("\n"), null, {derivatives: true});
 
 	return {
 		dHdxy_fwd: dHdxy_fwd,
@@ -91,55 +91,55 @@ BumpMapNode.Nodes = ( function () {
 		bumpToNormal: bumpToNormal
 	};
 
-} )();
+})();
 
-BumpMapNode.prototype = Object.create( TempNode.prototype );
+BumpMapNode.prototype = Object.create(TempNode.prototype);
 BumpMapNode.prototype.constructor = BumpMapNode;
 BumpMapNode.prototype.nodeType = "BumpMap";
 
-BumpMapNode.prototype.generate = function ( builder, output ) {
+BumpMapNode.prototype.generate = function (builder, output) {
 
-	if ( builder.isShader( 'fragment' ) ) {
+	if (builder.isShader('fragment')) {
 
-		if ( this.toNormalMap ) {
+		if (this.toNormalMap) {
 
-			var bumpToNormal = builder.include( BumpMapNode.Nodes.bumpToNormal );
+			var bumpToNormal = builder.include(BumpMapNode.Nodes.bumpToNormal);
 
-			return builder.format( bumpToNormal + '( ' + this.value.build( builder, 'sampler2D' ) + ', ' +
-				this.value.uv.build( builder, 'v2' ) + ', ' +
-				this.scale.build( builder, 'f' ) + ' )', this.getType( builder ), output );
+			return builder.format(bumpToNormal + '( ' + this.value.build(builder, 'sampler2D') + ', ' +
+				this.value.uv.build(builder, 'v2') + ', ' +
+				this.scale.build(builder, 'f') + ' )', this.getType(builder), output);
 
 		} else {
 
-			var derivativeHeight = builder.include( BumpMapNode.Nodes.dHdxy_fwd ),
-				perturbNormalArb = builder.include( BumpMapNode.Nodes.perturbNormalArb );
+			var derivativeHeight = builder.include(BumpMapNode.Nodes.dHdxy_fwd),
+				perturbNormalArb = builder.include(BumpMapNode.Nodes.perturbNormalArb);
 
 			this.normal = this.normal || new NormalNode();
-			this.position = this.position || new PositionNode( PositionNode.VIEW );
+			this.position = this.position || new PositionNode(PositionNode.VIEW);
 
-			var derivativeHeightCode = derivativeHeight + '( ' + this.value.build( builder, 'sampler2D' ) + ', ' +
-				this.value.uv.build( builder, 'v2' ) + ', ' +
-				this.scale.build( builder, 'f' ) + ' )';
+			var derivativeHeightCode = derivativeHeight + '( ' + this.value.build(builder, 'sampler2D') + ', ' +
+				this.value.uv.build(builder, 'v2') + ', ' +
+				this.scale.build(builder, 'f') + ' )';
 
-			return builder.format( perturbNormalArb + '( -' + this.position.build( builder, 'v3' ) + ', ' +
-				this.normal.build( builder, 'v3' ) + ', ' +
-				derivativeHeightCode + ' )', this.getType( builder ), output );
+			return builder.format(perturbNormalArb + '( -' + this.position.build(builder, 'v3') + ', ' +
+				this.normal.build(builder, 'v3') + ', ' +
+				derivativeHeightCode + ' )', this.getType(builder), output);
 
 		}
 
 	} else {
 
-		console.warn( "THREE.BumpMapNode is not compatible with " + builder.shader + " shader." );
+		console.warn("THREE.BumpMapNode is not compatible with " + builder.shader + " shader.");
 
-		return builder.format( 'vec3( 0.0 )', this.getType( builder ), output );
+		return builder.format('vec3( 0.0 )', this.getType(builder), output);
 
 	}
 
 };
 
-BumpMapNode.prototype.copy = function ( source ) {
+BumpMapNode.prototype.copy = function (source) {
 
-	TempNode.prototype.copy.call( this, source );
+	TempNode.prototype.copy.call(this, source);
 
 	this.value = source.value;
 	this.scale = source.scale;
@@ -148,16 +148,16 @@ BumpMapNode.prototype.copy = function ( source ) {
 
 };
 
-BumpMapNode.prototype.toJSON = function ( meta ) {
+BumpMapNode.prototype.toJSON = function (meta) {
 
-	var data = this.getJSONNode( meta );
+	var data = this.getJSONNode(meta);
 
-	if ( ! data ) {
+	if (!data) {
 
-		data = this.createJSONNode( meta );
+		data = this.createJSONNode(meta);
 
-		data.value = this.value.toJSON( meta ).uuid;
-		data.scale = this.scale.toJSON( meta ).uuid;
+		data.value = this.value.toJSON(meta).uuid;
+		data.scale = this.scale.toJSON(meta).uuid;
 
 	}
 
@@ -165,4 +165,4 @@ BumpMapNode.prototype.toJSON = function ( meta ) {
 
 };
 
-export { BumpMapNode };
+export {BumpMapNode};

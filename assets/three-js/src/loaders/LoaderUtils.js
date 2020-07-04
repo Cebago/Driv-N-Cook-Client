@@ -4,11 +4,11 @@
 
 var LoaderUtils = {
 
-	decodeText: function ( array ) {
+	decodeText: function (array) {
 
-		if ( typeof TextDecoder !== 'undefined' ) {
+		if (typeof TextDecoder !== 'undefined') {
 
-			return new TextDecoder().decode( array );
+			return new TextDecoder().decode(array);
 
 		}
 
@@ -17,10 +17,10 @@ var LoaderUtils = {
 
 		var s = '';
 
-		for ( var i = 0, il = array.length; i < il; i ++ ) {
+		for (var i = 0, il = array.length; i < il; i++) {
 
 			// Implicitly assumes little-endian.
-			s += String.fromCharCode( array[ i ] );
+			s += String.fromCharCode(array[i]);
 
 		}
 
@@ -28,9 +28,9 @@ var LoaderUtils = {
 
 			// merges multi-byte utf-8 characters.
 
-			return decodeURIComponent( escape( s ) );
+			return decodeURIComponent(escape(s));
 
-		} catch ( e ) { // see #16358
+		} catch (e) { // see #16358
 
 			return s;
 
@@ -38,16 +38,16 @@ var LoaderUtils = {
 
 	},
 
-	extractUrlBase: function ( url ) {
+	extractUrlBase: function (url) {
 
-		var index = url.lastIndexOf( '/' );
+		var index = url.lastIndexOf('/');
 
-		if ( index === - 1 ) return './';
+		if (index === -1) return './';
 
-		return url.substr( 0, index + 1 );
+		return url.substr(0, index + 1);
 
 	}
 
 };
 
-export { LoaderUtils };
+export {LoaderUtils};

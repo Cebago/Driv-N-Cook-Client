@@ -1,12 +1,7 @@
-import {
-	Object3D,
-	Mesh,
-	Texture
-} from '../../../src/Three';
+import {Mesh, Object3D, Texture} from '../../../src/Three';
 
 export class MD2CharacterComplex {
 
-	constructor();
 	scale: number;
 	animationFPS: number;
 	transitionFrames: number;
@@ -25,7 +20,6 @@ export class MD2CharacterComplex {
 	weapons: Mesh[];
 	currentSkin: number;
 	onLoadComplete: () => void;
-
 	meshes: Mesh[];
 	animations: object[];
 	loadCounter: number;
@@ -36,18 +30,32 @@ export class MD2CharacterComplex {
 	activeAnimation: string;
 	oldAnimation: string;
 
-	enableShadows( enable: boolean ): void;
-	setVisible( enable: boolean ): void;
-	shareParts( original: MD2CharacterComplex ): void;
-	loadParts( config: object ): void;
-	setPlaybackRate( rate: number ): void;
-	setWireframe( wireframeEnabled: boolean ): void;
-	setSkin( index: number ): void;
-	setWeapon( index: number ): void;
-	setAnimation( animationName: string ): void;
-	update( delta: number ): void;
-	updateAnimations( delta: number ): void;
+	constructor();
+
+	enableShadows(enable: boolean): void;
+
+	setVisible(enable: boolean): void;
+
+	shareParts(original: MD2CharacterComplex): void;
+
+	loadParts(config: object): void;
+
+	setPlaybackRate(rate: number): void;
+
+	setWireframe(wireframeEnabled: boolean): void;
+
+	setSkin(index: number): void;
+
+	setWeapon(index: number): void;
+
+	setAnimation(animationName: string): void;
+
+	update(delta: number): void;
+
+	updateAnimations(delta: number): void;
+
 	updateBehaviors(): void;
-	updateMovementModel( delta: number ): void;
+
+	updateMovementModel(delta: number): void;
 
 }

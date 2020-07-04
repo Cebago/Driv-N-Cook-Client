@@ -2,49 +2,46 @@
  * @author sunag / http://www.sunag.com.br/
  */
 
-import {
-	UniformsLib,
-	UniformsUtils
-} from '../../../../../build/three.module.js';
+import {UniformsLib, UniformsUtils} from '../../../../../build/three.module.js';
 
-import { Node } from '../../core/Node.js';
-import { ColorNode } from '../../inputs/ColorNode.js';
-import { FloatNode } from '../../inputs/FloatNode.js';
+import {Node} from '../../core/Node.js';
+import {ColorNode} from '../../inputs/ColorNode.js';
+import {FloatNode} from '../../inputs/FloatNode.js';
 
 function PhongNode() {
 
-	Node.call( this );
+	Node.call(this);
 
-	this.color = new ColorNode( 0xEEEEEE );
-	this.specular = new ColorNode( 0x111111 );
-	this.shininess = new FloatNode( 30 );
+	this.color = new ColorNode(0xEEEEEE);
+	this.specular = new ColorNode(0x111111);
+	this.shininess = new FloatNode(30);
 
 }
 
-PhongNode.prototype = Object.create( Node.prototype );
+PhongNode.prototype = Object.create(Node.prototype);
 PhongNode.prototype.constructor = PhongNode;
 PhongNode.prototype.nodeType = "Phong";
 
-PhongNode.prototype.build = function ( builder ) {
+PhongNode.prototype.build = function (builder) {
 
 	var code;
 
-	builder.define( 'PHONG' );
+	builder.define('PHONG');
 
 	builder.requires.lights = true;
 
-	if ( builder.isShader( 'vertex' ) ) {
+	if (builder.isShader('vertex')) {
 
-		var position = this.position ? this.position.analyzeAndFlow( builder, 'v3', { cache: 'position' } ) : undefined;
+		var position = this.position ? this.position.analyzeAndFlow(builder, 'v3', {cache: 'position'}) : undefined;
 
-		builder.mergeUniform( UniformsUtils.merge( [
+		builder.mergeUniform(UniformsUtils.merge([
 
 			UniformsLib.fog,
 			UniformsLib.lights
 
-		] ) );
+		]));
 
-		builder.addParsCode( [
+		builder.addParsCode([
 			"varying vec3 vViewPosition;",
 
 			"#ifndef FLAT_SHADED",
@@ -60,7 +57,7 @@ PhongNode.prototype.build = function ( builder ) {
 			"#include <shadowmap_pars_vertex>",
 			"#include <logdepthbuf_pars_vertex>",
 			"#include <clipping_planes_pars_vertex>"
-		].join( "\n" ) );
+		].join("\n"));
 
 		var output = [
 			"#include <beginnormal_vertex>",
@@ -78,7 +75,7 @@ PhongNode.prototype.build = function ( builder ) {
 			"#include <begin_vertex>"
 		];
 
-		if ( position ) {
+		if (position) {
 
 			output.push(
 				position.code,
@@ -102,64 +99,64 @@ PhongNode.prototype.build = function ( builder ) {
 			"	#include <fog_vertex>"
 		);
 
-		code = output.join( "\n" );
+		code = output.join("\n");
 
 	} else {
 
 		// analyze all nodes to reuse generate codes
 
-		if ( this.mask ) this.mask.analyze( builder );
+		if (this.mask) this.mask.analyze(builder);
 
-		this.color.analyze( builder, { slot: 'color' } );
-		this.specular.analyze( builder );
-		this.shininess.analyze( builder );
+		this.color.analyze(builder, {slot: 'color'});
+		this.specular.analyze(builder);
+		this.shininess.analyze(builder);
 
-		if ( this.alpha ) this.alpha.analyze( builder );
+		if (this.alpha) this.alpha.analyze(builder);
 
-		if ( this.normal ) this.normal.analyze( builder );
+		if (this.normal) this.normal.analyze(builder);
 
-		if ( this.light ) this.light.analyze( builder, { cache: 'light' } );
+		if (this.light) this.light.analyze(builder, {cache: 'light'});
 
-		if ( this.ao ) this.ao.analyze( builder );
-		if ( this.ambient ) this.ambient.analyze( builder );
-		if ( this.shadow ) this.shadow.analyze( builder );
-		if ( this.emissive ) this.emissive.analyze( builder, { slot: 'emissive' } );
+		if (this.ao) this.ao.analyze(builder);
+		if (this.ambient) this.ambient.analyze(builder);
+		if (this.shadow) this.shadow.analyze(builder);
+		if (this.emissive) this.emissive.analyze(builder, {slot: 'emissive'});
 
-		if ( this.environment ) this.environment.analyze( builder, { slot: 'environment' } );
-		if ( this.environmentAlpha && this.environment ) this.environmentAlpha.analyze( builder );
+		if (this.environment) this.environment.analyze(builder, {slot: 'environment'});
+		if (this.environmentAlpha && this.environment) this.environmentAlpha.analyze(builder);
 
 		// build code
 
-		var mask = this.mask ? this.mask.flow( builder, 'b' ) : undefined;
+		var mask = this.mask ? this.mask.flow(builder, 'b') : undefined;
 
-		var color = this.color.flow( builder, 'c', { slot: 'color' } );
-		var specular = this.specular.flow( builder, 'c' );
-		var shininess = this.shininess.flow( builder, 'f' );
+		var color = this.color.flow(builder, 'c', {slot: 'color'});
+		var specular = this.specular.flow(builder, 'c');
+		var shininess = this.shininess.flow(builder, 'f');
 
-		var alpha = this.alpha ? this.alpha.flow( builder, 'f' ) : undefined;
+		var alpha = this.alpha ? this.alpha.flow(builder, 'f') : undefined;
 
-		var normal = this.normal ? this.normal.flow( builder, 'v3' ) : undefined;
+		var normal = this.normal ? this.normal.flow(builder, 'v3') : undefined;
 
-		var light = this.light ? this.light.flow( builder, 'v3', { cache: 'light' } ) : undefined;
+		var light = this.light ? this.light.flow(builder, 'v3', {cache: 'light'}) : undefined;
 
-		var ao = this.ao ? this.ao.flow( builder, 'f' ) : undefined;
-		var ambient = this.ambient ? this.ambient.flow( builder, 'c' ) : undefined;
-		var shadow = this.shadow ? this.shadow.flow( builder, 'c' ) : undefined;
-		var emissive = this.emissive ? this.emissive.flow( builder, 'c', { slot: 'emissive' } ) : undefined;
+		var ao = this.ao ? this.ao.flow(builder, 'f') : undefined;
+		var ambient = this.ambient ? this.ambient.flow(builder, 'c') : undefined;
+		var shadow = this.shadow ? this.shadow.flow(builder, 'c') : undefined;
+		var emissive = this.emissive ? this.emissive.flow(builder, 'c', {slot: 'emissive'}) : undefined;
 
-		var environment = this.environment ? this.environment.flow( builder, 'c', { slot: 'environment' } ) : undefined;
-		var environmentAlpha = this.environmentAlpha && this.environment ? this.environmentAlpha.flow( builder, 'f' ) : undefined;
+		var environment = this.environment ? this.environment.flow(builder, 'c', {slot: 'environment'}) : undefined;
+		var environmentAlpha = this.environmentAlpha && this.environment ? this.environmentAlpha.flow(builder, 'f') : undefined;
 
 		builder.requires.transparent = alpha !== undefined;
 
-		builder.addParsCode( [
+		builder.addParsCode([
 			"#include <fog_pars_fragment>",
 			"#include <bsdfs>",
 			"#include <lights_pars_begin>",
 			"#include <lights_phong_pars_fragment>",
 			"#include <shadowmap_pars_fragment>",
 			"#include <logdepthbuf_pars_fragment>"
-		].join( "\n" ) );
+		].join("\n"));
 
 		var output = [
 			// prevent undeclared normal
@@ -169,7 +166,7 @@ PhongNode.prototype.build = function ( builder ) {
 			"	BlinnPhongMaterial material;"
 		];
 
-		if ( mask ) {
+		if (mask) {
 
 			output.push(
 				mask.code,
@@ -194,7 +191,7 @@ PhongNode.prototype.build = function ( builder ) {
 			"	float specularStrength = 1.0;" // Ignored in MaterialNode ( replace to specular )
 		);
 
-		if ( alpha ) {
+		if (alpha) {
 
 			output.push(
 				alpha.code,
@@ -207,7 +204,7 @@ PhongNode.prototype.build = function ( builder ) {
 
 		}
 
-		if ( normal ) {
+		if (normal) {
 
 			output.push(
 				normal.code,
@@ -218,7 +215,7 @@ PhongNode.prototype.build = function ( builder ) {
 
 		// optimization for now
 
-		output.push( 'material.diffuseColor = ' + ( light ? 'vec3( 1.0 )' : 'diffuseColor' ) + ';' );
+		output.push('material.diffuseColor = ' + (light ? 'vec3( 1.0 )' : 'diffuseColor') + ';');
 
 		output.push(
 			// accumulation
@@ -230,7 +227,7 @@ PhongNode.prototype.build = function ( builder ) {
 			"#include <lights_fragment_end>"
 		);
 
-		if ( light ) {
+		if (light) {
 
 			output.push(
 				light.code,
@@ -246,7 +243,7 @@ PhongNode.prototype.build = function ( builder ) {
 
 		}
 
-		if ( ao ) {
+		if (ao) {
 
 			output.push(
 				ao.code,
@@ -255,7 +252,7 @@ PhongNode.prototype.build = function ( builder ) {
 
 		}
 
-		if ( ambient ) {
+		if (ambient) {
 
 			output.push(
 				ambient.code,
@@ -264,7 +261,7 @@ PhongNode.prototype.build = function ( builder ) {
 
 		}
 
-		if ( shadow ) {
+		if (shadow) {
 
 			output.push(
 				shadow.code,
@@ -274,7 +271,7 @@ PhongNode.prototype.build = function ( builder ) {
 
 		}
 
-		if ( emissive ) {
+		if (emissive) {
 
 			output.push(
 				emissive.code,
@@ -283,13 +280,13 @@ PhongNode.prototype.build = function ( builder ) {
 
 		}
 
-		output.push( "vec3 outgoingLight = reflectedLight.directDiffuse + reflectedLight.indirectDiffuse + reflectedLight.directSpecular;" );
+		output.push("vec3 outgoingLight = reflectedLight.directDiffuse + reflectedLight.indirectDiffuse + reflectedLight.directSpecular;");
 
-		if ( environment ) {
+		if (environment) {
 
-			output.push( environment.code );
+			output.push(environment.code);
 
-			if ( environmentAlpha ) {
+			if (environmentAlpha) {
 
 				output.push(
 					environmentAlpha.code,
@@ -298,7 +295,7 @@ PhongNode.prototype.build = function ( builder ) {
 
 			} else {
 
-				output.push( "outgoingLight = " + environment.result + ";" );
+				output.push("outgoingLight = " + environment.result + ";");
 
 			}
 
@@ -317,13 +314,13 @@ PhongNode.prototype.build = function ( builder ) {
 		}
 	*/
 
-		if ( alpha ) {
+		if (alpha) {
 
-			output.push( "gl_FragColor = vec4( outgoingLight, " + alpha.result + " );" );
+			output.push("gl_FragColor = vec4( outgoingLight, " + alpha.result + " );");
 
 		} else {
 
-			output.push( "gl_FragColor = vec4( outgoingLight, 1.0 );" );
+			output.push("gl_FragColor = vec4( outgoingLight, 1.0 );");
 
 		}
 
@@ -334,7 +331,7 @@ PhongNode.prototype.build = function ( builder ) {
 			"#include <premultiplied_alpha_fragment>"
 		);
 
-		code = output.join( "\n" );
+		code = output.join("\n");
 
 	}
 
@@ -342,13 +339,13 @@ PhongNode.prototype.build = function ( builder ) {
 
 };
 
-PhongNode.prototype.copy = function ( source ) {
+PhongNode.prototype.copy = function (source) {
 
-	Node.prototype.copy.call( this, source );
+	Node.prototype.copy.call(this, source);
 
 	// vertex
 
-	if ( source.position ) this.position = source.position;
+	if (source.position) this.position = source.position;
 
 	// fragment
 
@@ -356,60 +353,60 @@ PhongNode.prototype.copy = function ( source ) {
 	this.specular = source.specular;
 	this.shininess = source.shininess;
 
-	if ( source.mask ) this.mask = source.mask;
+	if (source.mask) this.mask = source.mask;
 
-	if ( source.alpha ) this.alpha = source.alpha;
+	if (source.alpha) this.alpha = source.alpha;
 
-	if ( source.normal ) this.normal = source.normal;
+	if (source.normal) this.normal = source.normal;
 
-	if ( source.light ) this.light = source.light;
-	if ( source.shadow ) this.shadow = source.shadow;
+	if (source.light) this.light = source.light;
+	if (source.shadow) this.shadow = source.shadow;
 
-	if ( source.ao ) this.ao = source.ao;
+	if (source.ao) this.ao = source.ao;
 
-	if ( source.emissive ) this.emissive = source.emissive;
-	if ( source.ambient ) this.ambient = source.ambient;
+	if (source.emissive) this.emissive = source.emissive;
+	if (source.ambient) this.ambient = source.ambient;
 
-	if ( source.environment ) this.environment = source.environment;
-	if ( source.environmentAlpha ) this.environmentAlpha = source.environmentAlpha;
+	if (source.environment) this.environment = source.environment;
+	if (source.environmentAlpha) this.environmentAlpha = source.environmentAlpha;
 
 	return this;
 
 };
 
-PhongNode.prototype.toJSON = function ( meta ) {
+PhongNode.prototype.toJSON = function (meta) {
 
-	var data = this.getJSONNode( meta );
+	var data = this.getJSONNode(meta);
 
-	if ( ! data ) {
+	if (!data) {
 
-		data = this.createJSONNode( meta );
+		data = this.createJSONNode(meta);
 
 		// vertex
 
-		if ( this.position ) data.position = this.position.toJSON( meta ).uuid;
+		if (this.position) data.position = this.position.toJSON(meta).uuid;
 
 		// fragment
 
-		data.color = this.color.toJSON( meta ).uuid;
-		data.specular = this.specular.toJSON( meta ).uuid;
-		data.shininess = this.shininess.toJSON( meta ).uuid;
+		data.color = this.color.toJSON(meta).uuid;
+		data.specular = this.specular.toJSON(meta).uuid;
+		data.shininess = this.shininess.toJSON(meta).uuid;
 
-		if ( this.mask ) data.mask = this.mask.toJSON( meta ).uuid;
+		if (this.mask) data.mask = this.mask.toJSON(meta).uuid;
 
-		if ( this.alpha ) data.alpha = this.alpha.toJSON( meta ).uuid;
+		if (this.alpha) data.alpha = this.alpha.toJSON(meta).uuid;
 
-		if ( this.normal ) data.normal = this.normal.toJSON( meta ).uuid;
+		if (this.normal) data.normal = this.normal.toJSON(meta).uuid;
 
-		if ( this.light ) data.light = this.light.toJSON( meta ).uuid;
+		if (this.light) data.light = this.light.toJSON(meta).uuid;
 
-		if ( this.ao ) data.ao = this.ao.toJSON( meta ).uuid;
-		if ( this.ambient ) data.ambient = this.ambient.toJSON( meta ).uuid;
-		if ( this.shadow ) data.shadow = this.shadow.toJSON( meta ).uuid;
-		if ( this.emissive ) data.emissive = this.emissive.toJSON( meta ).uuid;
+		if (this.ao) data.ao = this.ao.toJSON(meta).uuid;
+		if (this.ambient) data.ambient = this.ambient.toJSON(meta).uuid;
+		if (this.shadow) data.shadow = this.shadow.toJSON(meta).uuid;
+		if (this.emissive) data.emissive = this.emissive.toJSON(meta).uuid;
 
-		if ( this.environment ) data.environment = this.environment.toJSON( meta ).uuid;
-		if ( this.environmentAlpha ) data.environmentAlpha = this.environmentAlpha.toJSON( meta ).uuid;
+		if (this.environment) data.environment = this.environment.toJSON(meta).uuid;
+		if (this.environmentAlpha) data.environmentAlpha = this.environmentAlpha.toJSON(meta).uuid;
 
 	}
 
@@ -417,4 +414,4 @@ PhongNode.prototype.toJSON = function ( meta ) {
 
 };
 
-export { PhongNode };
+export {PhongNode};

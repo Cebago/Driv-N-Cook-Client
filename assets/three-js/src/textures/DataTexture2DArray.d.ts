@@ -1,5 +1,5 @@
-import { Texture } from './Texture';
-import { TypedArray } from '../polyfills';
+import {Texture} from './Texture';
+import {TypedArray} from '../polyfills';
 
 export class DataTexture2DArray extends Texture {
 

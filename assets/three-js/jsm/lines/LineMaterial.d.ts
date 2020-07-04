@@ -1,9 +1,4 @@
-import {
-	Color,
-	MaterialParameters,
-	ShaderMaterial,
-	Vector2
-} from '../../../src/Three';
+import {Color, MaterialParameters, ShaderMaterial, Vector2} from '../../../src/Three';
 
 export interface LineMaterialParameters extends MaterialParameters {
 	color?: number;
@@ -17,7 +12,6 @@ export interface LineMaterialParameters extends MaterialParameters {
 
 export class LineMaterial extends ShaderMaterial {
 
-	constructor( parameters?: LineMaterialParameters );
 	color: Color;
 	dashed: boolean;
 	dashScale: number;
@@ -27,5 +21,7 @@ export class LineMaterial extends ShaderMaterial {
 	readonly isLineMaterial: true;
 	linewidth: number;
 	resolution: Vector2;
+
+	constructor(parameters?: LineMaterialParameters);
 
 }

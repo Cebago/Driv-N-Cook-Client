@@ -1,12 +1,11 @@
-import {
-	WebGLRenderer,
-	MeshStandardMaterial
-} from '../../../src/Three';
+import {MeshStandardMaterial, WebGLRenderer} from '../../../src/Three';
 
 export class RoughnessMipmapper {
 
-	constructor( renderer:WebGLRenderer );
-	generateMipmaps( material:MeshStandardMaterial ): void;
+	constructor(renderer: WebGLRenderer);
+
+	generateMipmaps(material: MeshStandardMaterial): void;
+
 	dispose(): void;
 
 }

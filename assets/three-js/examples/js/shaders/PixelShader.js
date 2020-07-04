@@ -8,9 +8,9 @@ THREE.PixelShader = {
 
 	uniforms: {
 
-		"tDiffuse": { value: null },
-		"resolution": { value: null },
-		"pixelSize": { value: 1. },
+		"tDiffuse": {value: null},
+		"resolution": {value: null},
+		"pixelSize": {value: 1.},
 
 	},
 
@@ -25,7 +25,7 @@ THREE.PixelShader = {
 
 		"}"
 
-	].join( "\n" ),
+	].join("\n"),
 
 	fragmentShader: [
 
@@ -43,5 +43,5 @@ THREE.PixelShader = {
 
 		"}"
 
-	].join( "\n" )
+	].join("\n")
 };

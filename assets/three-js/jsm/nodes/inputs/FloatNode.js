@@ -2,29 +2,29 @@
  * @author sunag / http://www.sunag.com.br/
  */
 
-import { InputNode } from '../core/InputNode.js';
+import {InputNode} from '../core/InputNode.js';
 
-function FloatNode( value ) {
+function FloatNode(value) {
 
-	InputNode.call( this, 'f' );
+	InputNode.call(this, 'f');
 
 	this.value = value || 0;
 
 }
 
-FloatNode.prototype = Object.create( InputNode.prototype );
+FloatNode.prototype = Object.create(InputNode.prototype);
 FloatNode.prototype.constructor = FloatNode;
 FloatNode.prototype.nodeType = "Float";
 
-FloatNode.prototype.generateReadonly = function ( builder, output, uuid, type/*, ns, needsUpdate */ ) {
+FloatNode.prototype.generateReadonly = function (builder, output, uuid, type/*, ns, needsUpdate */) {
 
-	return builder.format( this.value + ( this.value % 1 ? '' : '.0' ), type, output );
+	return builder.format(this.value + (this.value % 1 ? '' : '.0'), type, output);
 
 };
 
-FloatNode.prototype.copy = function ( source ) {
+FloatNode.prototype.copy = function (source) {
 
-	InputNode.prototype.copy.call( this, source );
+	InputNode.prototype.copy.call(this, source);
 
 	this.value = source.value;
 
@@ -32,17 +32,17 @@ FloatNode.prototype.copy = function ( source ) {
 
 };
 
-FloatNode.prototype.toJSON = function ( meta ) {
+FloatNode.prototype.toJSON = function (meta) {
 
-	var data = this.getJSONNode( meta );
+	var data = this.getJSONNode(meta);
 
-	if ( ! data ) {
+	if (!data) {
 
-		data = this.createJSONNode( meta );
+		data = this.createJSONNode(meta);
 
 		data.value = this.value;
 
-		if ( this.readonly === true ) data.readonly = true;
+		if (this.readonly === true) data.readonly = true;
 
 	}
 
@@ -50,4 +50,4 @@ FloatNode.prototype.toJSON = function ( meta ) {
 
 };
 
-export { FloatNode };
+export {FloatNode};

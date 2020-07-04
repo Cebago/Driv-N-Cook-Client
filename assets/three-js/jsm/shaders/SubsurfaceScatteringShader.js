@@ -8,42 +8,37 @@
  *------------------------------------------------------------------------------------------
  */
 
-import {
-	Color,
-	ShaderChunk,
-	ShaderLib,
-	UniformsUtils
-} from "../../../build/three.module.js";
+import {Color, ShaderChunk, ShaderLib, UniformsUtils} from "../../../build/three.module.js";
 
-function replaceAll( string, find, replace ) {
+function replaceAll(string, find, replace) {
 
-	return string.split( find ).join( replace );
+	return string.split(find).join(replace);
 
 }
 
-var meshphong_frag_head = ShaderChunk[ "meshphong_frag" ].slice( 0, ShaderChunk[ "meshphong_frag" ].indexOf( 'void main() {' ) );
-var meshphong_frag_body = ShaderChunk[ "meshphong_frag" ].slice( ShaderChunk[ "meshphong_frag" ].indexOf( 'void main() {' ) );
+var meshphong_frag_head = ShaderChunk["meshphong_frag"].slice(0, ShaderChunk["meshphong_frag"].indexOf('void main() {'));
+var meshphong_frag_body = ShaderChunk["meshphong_frag"].slice(ShaderChunk["meshphong_frag"].indexOf('void main() {'));
 
 var SubsurfaceScatteringShader = {
 
-	uniforms: UniformsUtils.merge( [
-		ShaderLib[ "phong" ].uniforms,
+	uniforms: UniformsUtils.merge([
+		ShaderLib["phong"].uniforms,
 		{
-			"thicknessMap": { value: null },
-			"thicknessColor": { value: new Color( 0xffffff ) },
-			"thicknessDistortion": { value: 0.1 },
-			"thicknessAmbient": { value: 0.0 },
-			"thicknessAttenuation": { value: 0.1 },
-			"thicknessPower": { value: 2.0 },
-			"thicknessScale": { value: 10.0 }
+			"thicknessMap": {value: null},
+			"thicknessColor": {value: new Color(0xffffff)},
+			"thicknessDistortion": {value: 0.1},
+			"thicknessAmbient": {value: 0.0},
+			"thicknessAttenuation": {value: 0.1},
+			"thicknessPower": {value: 2.0},
+			"thicknessScale": {value: 10.0}
 		}
 
-	] ),
+	]),
 
 	vertexShader: [
 		"#define USE_UV",
-		ShaderChunk[ "meshphong_vert" ],
-	].join( "\n" ),
+		ShaderChunk["meshphong_vert"],
+	].join("\n"),
 
 	fragmentShader: [
 		"#define USE_UV",
@@ -67,10 +62,10 @@ var SubsurfaceScatteringShader = {
 		"	reflectedLight.directDiffuse += scatteringIllu * thicknessAttenuation * directLight.color;",
 		"}",
 
-		meshphong_frag_body.replace( "#include <lights_fragment_begin>",
+		meshphong_frag_body.replace("#include <lights_fragment_begin>",
 
 			replaceAll(
-				ShaderChunk[ 'lights_fragment_begin' ],
+				ShaderChunk['lights_fragment_begin'],
 				'RE_Direct( directLight, geometry, material, reflectedLight );',
 				[
 					"RE_Direct( directLight, geometry, material, reflectedLight );",
@@ -78,13 +73,12 @@ var SubsurfaceScatteringShader = {
 					"#if defined( SUBSURFACE ) && defined( USE_UV )",
 					" RE_Direct_Scattering(directLight, vUv, geometry, reflectedLight);",
 					"#endif",
-				].join( "\n" )
+				].join("\n")
 			),
-
 		),
 
-	].join( "\n" ),
+	].join("\n"),
 
 };
 
-export { SubsurfaceScatteringShader };
+export {SubsurfaceScatteringShader};

@@ -1,17 +1,14 @@
-import {
-	Color,
-	Line,
-	RectAreaLight
-} from '../../../src/Three';
+import {Color, Line, RectAreaLight} from '../../../src/Three';
 
 export class RectAreaLightHelper extends Line {
-
-	constructor( light: RectAreaLight, color?: Color | string | number );
 
 	light: RectAreaLight;
 	color: Color | string | number | undefined;
 
+	constructor(light: RectAreaLight, color?: Color | string | number);
+
 	update(): void;
+
 	dispose(): void;
 
 }

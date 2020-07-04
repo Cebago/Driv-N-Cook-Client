@@ -1,8 +1,8 @@
-import { Color } from './../math/Color';
-import { Texture } from './../textures/Texture';
-import { Vector2 } from './../math/Vector2';
-import { MaterialParameters, Material } from './Material';
-import { NormalMapTypes } from '../constants';
+import {Color} from './../math/Color';
+import {Texture} from './../textures/Texture';
+import {Vector2} from './../math/Vector2';
+import {Material, MaterialParameters} from './Material';
+import {NormalMapTypes} from '../constants';
 
 export interface MeshToonMaterialParameters extends MaterialParameters {
 	/** geometry color in hexadecimal. Default is 0xffffff. */
@@ -40,8 +40,6 @@ export interface MeshToonMaterialParameters extends MaterialParameters {
 
 export class MeshToonMaterial extends Material {
 
-	constructor( parameters?: MeshToonMaterialParameters );
-
 	color: Color;
 	specular: Color;
 	shininess: number;
@@ -72,6 +70,8 @@ export class MeshToonMaterial extends Material {
 	morphTargets: boolean;
 	morphNormals: boolean;
 
-	setValues( parameters: MeshToonMaterialParameters ): void;
+	constructor(parameters?: MeshToonMaterialParameters);
+
+	setValues(parameters: MeshToonMaterialParameters): void;
 
 }

@@ -1,8 +1,8 @@
-import { Color } from './../math/Color';
-import { Texture } from './../textures/Texture';
-import { Vector2 } from './../math/Vector2';
-import { MaterialParameters, Material } from './Material';
-import { Combine, NormalMapTypes } from '../constants';
+import {Color} from './../math/Color';
+import {Texture} from './../textures/Texture';
+import {Vector2} from './../math/Vector2';
+import {Material, MaterialParameters} from './Material';
+import {Combine, NormalMapTypes} from '../constants';
 
 export interface MeshPhongMaterialParameters extends MaterialParameters {
 	/** geometry color in hexadecimal. Default is 0xffffff. */
@@ -43,8 +43,6 @@ export interface MeshPhongMaterialParameters extends MaterialParameters {
 
 export class MeshPhongMaterial extends Material {
 
-	constructor( parameters?: MeshPhongMaterialParameters );
-
 	color: Color;
 	specular: Color;
 	shininess: number;
@@ -82,6 +80,8 @@ export class MeshPhongMaterial extends Material {
 	 */
 	metal: boolean;
 
-	setValues( parameters: MeshPhongMaterialParameters ): void;
+	constructor(parameters?: MeshPhongMaterialParameters);
+
+	setValues(parameters: MeshPhongMaterialParameters): void;
 
 }

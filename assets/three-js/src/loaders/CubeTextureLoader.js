@@ -2,54 +2,54 @@
  * @author mrdoob / http://mrdoob.com/
  */
 
-import { ImageLoader } from './ImageLoader.js';
-import { CubeTexture } from '../textures/CubeTexture.js';
-import { Loader } from './Loader.js';
+import {ImageLoader} from './ImageLoader.js';
+import {CubeTexture} from '../textures/CubeTexture.js';
+import {Loader} from './Loader.js';
 
 
-function CubeTextureLoader( manager ) {
+function CubeTextureLoader(manager) {
 
-	Loader.call( this, manager );
+	Loader.call(this, manager);
 
 }
 
-CubeTextureLoader.prototype = Object.assign( Object.create( Loader.prototype ), {
+CubeTextureLoader.prototype = Object.assign(Object.create(Loader.prototype), {
 
 	constructor: CubeTextureLoader,
 
-	load: function ( urls, onLoad, onProgress, onError ) {
+	load: function (urls, onLoad, onProgress, onError) {
 
 		var texture = new CubeTexture();
 
-		var loader = new ImageLoader( this.manager );
-		loader.setCrossOrigin( this.crossOrigin );
-		loader.setPath( this.path );
+		var loader = new ImageLoader(this.manager);
+		loader.setCrossOrigin(this.crossOrigin);
+		loader.setPath(this.path);
 
 		var loaded = 0;
 
-		function loadTexture( i ) {
+		function loadTexture(i) {
 
-			loader.load( urls[ i ], function ( image ) {
+			loader.load(urls[i], function (image) {
 
-				texture.images[ i ] = image;
+				texture.images[i] = image;
 
-				loaded ++;
+				loaded++;
 
-				if ( loaded === 6 ) {
+				if (loaded === 6) {
 
 					texture.needsUpdate = true;
 
-					if ( onLoad ) onLoad( texture );
+					if (onLoad) onLoad(texture);
 
 				}
 
-			}, undefined, onError );
+			}, undefined, onError);
 
 		}
 
-		for ( var i = 0; i < urls.length; ++ i ) {
+		for (var i = 0; i < urls.length; ++i) {
 
-			loadTexture( i );
+			loadTexture(i);
 
 		}
 
@@ -57,7 +57,7 @@ CubeTextureLoader.prototype = Object.assign( Object.create( Loader.prototype ), 
 
 	}
 
-} );
+});
 
 
-export { CubeTextureLoader };
+export {CubeTextureLoader};

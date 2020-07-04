@@ -1,5 +1,10 @@
 export abstract class Interpolant {
 
+	parameterPositions: any;
+	sampleValues: any;
+	valueSize: number;
+	resultBuffer: any;
+
 	constructor(
 		parameterPositions: any,
 		sampleValues: any,
@@ -7,11 +12,6 @@ export abstract class Interpolant {
 		resultBuffer?: any
 	);
 
-	parameterPositions: any;
-	sampleValues: any;
-	valueSize: number;
-	resultBuffer: any;
-
-	evaluate( time: number ): any;
+	evaluate(time: number): any;
 
 }

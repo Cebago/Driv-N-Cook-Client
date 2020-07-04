@@ -1,11 +1,11 @@
-import { Curve } from '../core/Curve.js';
-import { QuadraticBezier } from '../core/Interpolations.js';
-import { Vector3 } from '../../math/Vector3.js';
+import {Curve} from '../core/Curve.js';
+import {QuadraticBezier} from '../core/Interpolations.js';
+import {Vector3} from '../../math/Vector3.js';
 
 
-function QuadraticBezierCurve3( v0, v1, v2 ) {
+function QuadraticBezierCurve3(v0, v1, v2) {
 
-	Curve.call( this );
+	Curve.call(this);
 
 	this.type = 'QuadraticBezierCurve3';
 
@@ -15,34 +15,34 @@ function QuadraticBezierCurve3( v0, v1, v2 ) {
 
 }
 
-QuadraticBezierCurve3.prototype = Object.create( Curve.prototype );
+QuadraticBezierCurve3.prototype = Object.create(Curve.prototype);
 QuadraticBezierCurve3.prototype.constructor = QuadraticBezierCurve3;
 
 QuadraticBezierCurve3.prototype.isQuadraticBezierCurve3 = true;
 
-QuadraticBezierCurve3.prototype.getPoint = function ( t, optionalTarget ) {
+QuadraticBezierCurve3.prototype.getPoint = function (t, optionalTarget) {
 
 	var point = optionalTarget || new Vector3();
 
 	var v0 = this.v0, v1 = this.v1, v2 = this.v2;
 
 	point.set(
-		QuadraticBezier( t, v0.x, v1.x, v2.x ),
-		QuadraticBezier( t, v0.y, v1.y, v2.y ),
-		QuadraticBezier( t, v0.z, v1.z, v2.z )
+		QuadraticBezier(t, v0.x, v1.x, v2.x),
+		QuadraticBezier(t, v0.y, v1.y, v2.y),
+		QuadraticBezier(t, v0.z, v1.z, v2.z)
 	);
 
 	return point;
 
 };
 
-QuadraticBezierCurve3.prototype.copy = function ( source ) {
+QuadraticBezierCurve3.prototype.copy = function (source) {
 
-	Curve.prototype.copy.call( this, source );
+	Curve.prototype.copy.call(this, source);
 
-	this.v0.copy( source.v0 );
-	this.v1.copy( source.v1 );
-	this.v2.copy( source.v2 );
+	this.v0.copy(source.v0);
+	this.v1.copy(source.v1);
+	this.v2.copy(source.v2);
 
 	return this;
 
@@ -50,7 +50,7 @@ QuadraticBezierCurve3.prototype.copy = function ( source ) {
 
 QuadraticBezierCurve3.prototype.toJSON = function () {
 
-	var data = Curve.prototype.toJSON.call( this );
+	var data = Curve.prototype.toJSON.call(this);
 
 	data.v0 = this.v0.toArray();
 	data.v1 = this.v1.toArray();
@@ -60,17 +60,17 @@ QuadraticBezierCurve3.prototype.toJSON = function () {
 
 };
 
-QuadraticBezierCurve3.prototype.fromJSON = function ( json ) {
+QuadraticBezierCurve3.prototype.fromJSON = function (json) {
 
-	Curve.prototype.fromJSON.call( this, json );
+	Curve.prototype.fromJSON.call(this, json);
 
-	this.v0.fromArray( json.v0 );
-	this.v1.fromArray( json.v1 );
-	this.v2.fromArray( json.v2 );
+	this.v0.fromArray(json.v0);
+	this.v1.fromArray(json.v1);
+	this.v2.fromArray(json.v2);
 
 	return this;
 
 };
 
 
-export { QuadraticBezierCurve3 };
+export {QuadraticBezierCurve3};

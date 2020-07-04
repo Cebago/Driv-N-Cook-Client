@@ -1,40 +1,40 @@
-import { Matrix4 } from '../math/Matrix4.js';
-import { Vector2 } from '../math/Vector2.js';
-import { Vector3 } from '../math/Vector3.js';
-import { Vector4 } from '../math/Vector4.js';
-import { Frustum } from '../math/Frustum.js';
+import {Matrix4} from '../math/Matrix4.js';
+import {Vector2} from '../math/Vector2.js';
+import {Vector3} from '../math/Vector3.js';
+import {Vector4} from '../math/Vector4.js';
+import {Frustum} from '../math/Frustum.js';
 
 /**
  * @author mrdoob / http://mrdoob.com/
  */
 
-function LightShadow( camera ) {
+function LightShadow(camera) {
 
 	this.camera = camera;
 
 	this.bias = 0;
 	this.radius = 1;
 
-	this.mapSize = new Vector2( 512, 512 );
+	this.mapSize = new Vector2(512, 512);
 
 	this.map = null;
 	this.mapPass = null;
 	this.matrix = new Matrix4();
 
 	this._frustum = new Frustum();
-	this._frameExtents = new Vector2( 1, 1 );
+	this._frameExtents = new Vector2(1, 1);
 
 	this._viewportCount = 1;
 
 	this._viewports = [
 
-		new Vector4( 0, 0, 1, 1 )
+		new Vector4(0, 0, 1, 1)
 
 	];
 
 }
 
-Object.assign( LightShadow.prototype, {
+Object.assign(LightShadow.prototype, {
 
 	_projScreenMatrix: new Matrix4(),
 
@@ -54,7 +54,7 @@ Object.assign( LightShadow.prototype, {
 
 	},
 
-	updateMatrices: function ( light ) {
+	updateMatrices: function (light) {
 
 		var shadowCamera = this.camera,
 			shadowMatrix = this.matrix,
@@ -62,15 +62,15 @@ Object.assign( LightShadow.prototype, {
 			lookTarget = this._lookTarget,
 			lightPositionWorld = this._lightPositionWorld;
 
-		lightPositionWorld.setFromMatrixPosition( light.matrixWorld );
-		shadowCamera.position.copy( lightPositionWorld );
+		lightPositionWorld.setFromMatrixPosition(light.matrixWorld);
+		shadowCamera.position.copy(lightPositionWorld);
 
-		lookTarget.setFromMatrixPosition( light.target.matrixWorld );
-		shadowCamera.lookAt( lookTarget );
+		lookTarget.setFromMatrixPosition(light.target.matrixWorld);
+		shadowCamera.lookAt(lookTarget);
 		shadowCamera.updateMatrixWorld();
 
-		projScreenMatrix.multiplyMatrices( shadowCamera.projectionMatrix, shadowCamera.matrixWorldInverse );
-		this._frustum.setFromProjectionMatrix( projScreenMatrix );
+		projScreenMatrix.multiplyMatrices(shadowCamera.projectionMatrix, shadowCamera.matrixWorldInverse);
+		this._frustum.setFromProjectionMatrix(projScreenMatrix);
 
 		shadowMatrix.set(
 			0.5, 0.0, 0.0, 0.5,
@@ -79,14 +79,14 @@ Object.assign( LightShadow.prototype, {
 			0.0, 0.0, 0.0, 1.0
 		);
 
-		shadowMatrix.multiply( shadowCamera.projectionMatrix );
-		shadowMatrix.multiply( shadowCamera.matrixWorldInverse );
+		shadowMatrix.multiply(shadowCamera.projectionMatrix);
+		shadowMatrix.multiply(shadowCamera.matrixWorldInverse);
 
 	},
 
-	getViewport: function ( viewportIndex ) {
+	getViewport: function (viewportIndex) {
 
-		return this._viewports[ viewportIndex ];
+		return this._viewports[viewportIndex];
 
 	},
 
@@ -96,14 +96,14 @@ Object.assign( LightShadow.prototype, {
 
 	},
 
-	copy: function ( source ) {
+	copy: function (source) {
 
 		this.camera = source.camera.clone();
 
 		this.bias = source.bias;
 		this.radius = source.radius;
 
-		this.mapSize.copy( source.mapSize );
+		this.mapSize.copy(source.mapSize);
 
 		return this;
 
@@ -111,7 +111,7 @@ Object.assign( LightShadow.prototype, {
 
 	clone: function () {
 
-		return new this.constructor().copy( this );
+		return new this.constructor().copy(this);
 
 	},
 
@@ -119,18 +119,18 @@ Object.assign( LightShadow.prototype, {
 
 		var object = {};
 
-		if ( this.bias !== 0 ) object.bias = this.bias;
-		if ( this.radius !== 1 ) object.radius = this.radius;
-		if ( this.mapSize.x !== 512 || this.mapSize.y !== 512 ) object.mapSize = this.mapSize.toArray();
+		if (this.bias !== 0) object.bias = this.bias;
+		if (this.radius !== 1) object.radius = this.radius;
+		if (this.mapSize.x !== 512 || this.mapSize.y !== 512) object.mapSize = this.mapSize.toArray();
 
-		object.camera = this.camera.toJSON( false ).object;
+		object.camera = this.camera.toJSON(false).object;
 		delete object.camera.matrix;
 
 		return object;
 
 	}
 
-} );
+});
 
 
-export { LightShadow };
+export {LightShadow};

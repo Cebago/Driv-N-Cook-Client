@@ -3,55 +3,53 @@
  */
 /* global QUnit */
 
-import { WebGLProgram } from '../../../../../src/renderers/webgl/WebGLProgram';
+export default QUnit.module('Renderers', () => {
 
-export default QUnit.module( 'Renderers', () => {
+	QUnit.module('WebGL', () => {
 
-	QUnit.module( 'WebGL', () => {
-
-		QUnit.module( 'WebGLProgram', () => {
+		QUnit.module('WebGLProgram', () => {
 
 			// INSTANCING
-			QUnit.todo( "Instancing", ( assert ) => {
+			QUnit.todo("Instancing", (assert) => {
 
-				assert.ok( false, "everything's gonna be alright" );
+				assert.ok(false, "everything's gonna be alright");
 
-			} );
+			});
 
 			// PROPERTIES
-			QUnit.todo( "uniforms", ( assert ) => {
+			QUnit.todo("uniforms", (assert) => {
 
-				assert.ok( false, "everything's gonna be alright" );
+				assert.ok(false, "everything's gonna be alright");
 
-			} );
+			});
 
-			QUnit.todo( "attributes", ( assert ) => {
+			QUnit.todo("attributes", (assert) => {
 
-				assert.ok( false, "everything's gonna be alright" );
+				assert.ok(false, "everything's gonna be alright");
 
-			} );
+			});
 
 			// PUBLIC STUFF
-			QUnit.todo( "getUniforms", ( assert ) => {
+			QUnit.todo("getUniforms", (assert) => {
 
-				assert.ok( false, "everything's gonna be alright" );
+				assert.ok(false, "everything's gonna be alright");
 
-			} );
+			});
 
-			QUnit.todo( "getAttributes", ( assert ) => {
+			QUnit.todo("getAttributes", (assert) => {
 
-				assert.ok( false, "everything's gonna be alright" );
+				assert.ok(false, "everything's gonna be alright");
 
-			} );
+			});
 
-			QUnit.todo( "destroy", ( assert ) => {
+			QUnit.todo("destroy", (assert) => {
 
-				assert.ok( false, "everything's gonna be alright" );
+				assert.ok(false, "everything's gonna be alright");
 
-			} );
+			});
 
-		} );
+		});
 
-	} );
+	});
 
-} );
+});

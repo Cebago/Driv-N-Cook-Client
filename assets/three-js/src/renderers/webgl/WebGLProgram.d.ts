@@ -1,14 +1,8 @@
-import { WebGLRenderer } from './../WebGLRenderer';
-import { WebGLShader } from './WebGLShader';
-import { WebGLUniforms } from './WebGLUniforms';
+import {WebGLRenderer} from './../WebGLRenderer';
+import {WebGLShader} from './WebGLShader';
+import {WebGLUniforms} from './WebGLUniforms';
 
 export class WebGLProgram {
-
-	constructor(
-		renderer: WebGLRenderer,
-		cacheKey: string,
-		parameters: object
-	);
 
 	name: string;
 	id: number;
@@ -26,8 +20,16 @@ export class WebGLProgram {
 	 */
 	attributes: any;
 
+	constructor(
+		renderer: WebGLRenderer,
+		cacheKey: string,
+		parameters: object
+	);
+
 	getUniforms(): WebGLUniforms;
+
 	getAttributes(): any;
+
 	destroy(): void;
 
 }

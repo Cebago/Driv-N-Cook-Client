@@ -2,13 +2,13 @@
  * @author mrdoob / http://mrdoob.com/
  */
 
-function WebGLIndexedBufferRenderer( gl, extensions, info, capabilities ) {
+function WebGLIndexedBufferRenderer(gl, extensions, info, capabilities) {
 
 	var isWebGL2 = capabilities.isWebGL2;
 
 	var mode;
 
-	function setMode( value ) {
+	function setMode(value) {
 
 		mode = value;
 
@@ -16,49 +16,49 @@ function WebGLIndexedBufferRenderer( gl, extensions, info, capabilities ) {
 
 	var type, bytesPerElement;
 
-	function setIndex( value ) {
+	function setIndex(value) {
 
 		type = value.type;
 		bytesPerElement = value.bytesPerElement;
 
 	}
 
-	function render( start, count ) {
+	function render(start, count) {
 
-		gl.drawElements( mode, count, type, start * bytesPerElement );
+		gl.drawElements(mode, count, type, start * bytesPerElement);
 
-		info.update( count, mode );
+		info.update(count, mode);
 
 	}
 
-	function renderInstances( geometry, start, count, primcount ) {
+	function renderInstances(geometry, start, count, primcount) {
 
-		if ( primcount === 0 ) return;
+		if (primcount === 0) return;
 
 		var extension, methodName;
 
-		if ( isWebGL2 ) {
+		if (isWebGL2) {
 
 			extension = gl;
 			methodName = 'drawElementsInstanced';
 
 		} else {
 
-			extension = extensions.get( 'ANGLE_instanced_arrays' );
+			extension = extensions.get('ANGLE_instanced_arrays');
 			methodName = 'drawElementsInstancedANGLE';
 
-			if ( extension === null ) {
+			if (extension === null) {
 
-				console.error( 'THREE.WebGLIndexedBufferRenderer: using THREE.InstancedBufferGeometry but hardware does not support extension ANGLE_instanced_arrays.' );
+				console.error('THREE.WebGLIndexedBufferRenderer: using THREE.InstancedBufferGeometry but hardware does not support extension ANGLE_instanced_arrays.');
 				return;
 
 			}
 
 		}
 
-		extension[ methodName ]( mode, count, type, start * bytesPerElement, primcount );
+		extension[methodName](mode, count, type, start * bytesPerElement, primcount);
 
-		info.update( count, mode, primcount );
+		info.update(count, mode, primcount);
 
 	}
 
@@ -72,4 +72,4 @@ function WebGLIndexedBufferRenderer( gl, extensions, info, capabilities ) {
 }
 
 
-export { WebGLIndexedBufferRenderer };
+export {WebGLIndexedBufferRenderer};

@@ -1,5 +1,5 @@
-import { InterpolateDiscrete } from '../../constants.js';
-import { KeyframeTrack } from '../KeyframeTrack.js';
+import {InterpolateDiscrete} from '../../constants.js';
+import {KeyframeTrack} from '../KeyframeTrack.js';
 
 /**
  *
@@ -11,13 +11,13 @@ import { KeyframeTrack } from '../KeyframeTrack.js';
  * @author tschw
  */
 
-function BooleanKeyframeTrack( name, times, values ) {
+function BooleanKeyframeTrack(name, times, values) {
 
-	KeyframeTrack.call( this, name, times, values );
+	KeyframeTrack.call(this, name, times, values);
 
 }
 
-BooleanKeyframeTrack.prototype = Object.assign( Object.create( KeyframeTrack.prototype ), {
+BooleanKeyframeTrack.prototype = Object.assign(Object.create(KeyframeTrack.prototype), {
 
 	constructor: BooleanKeyframeTrack,
 
@@ -33,6 +33,6 @@ BooleanKeyframeTrack.prototype = Object.assign( Object.create( KeyframeTrack.pro
 	// representation of a single value and a custom interpolant that
 	// computes "firstValue ^ isOdd( index )".
 
-} );
+});
 
-export { BooleanKeyframeTrack };
+export {BooleanKeyframeTrack};

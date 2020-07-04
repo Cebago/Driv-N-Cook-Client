@@ -10,10 +10,10 @@ var BlendShader = {
 
 	uniforms: {
 
-		"tDiffuse1": { value: null },
-		"tDiffuse2": { value: null },
-		"mixRatio": { value: 0.5 },
-		"opacity": { value: 1.0 }
+		"tDiffuse1": {value: null},
+		"tDiffuse2": {value: null},
+		"mixRatio": {value: 0.5},
+		"opacity": {value: 1.0}
 
 	},
 
@@ -28,7 +28,7 @@ var BlendShader = {
 
 		"}"
 
-	].join( "\n" ),
+	].join("\n"),
 
 	fragmentShader: [
 
@@ -48,8 +48,8 @@ var BlendShader = {
 
 		"}"
 
-	].join( "\n" )
+	].join("\n")
 
 };
 
-export { BlendShader };
+export {BlendShader};

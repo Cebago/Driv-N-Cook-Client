@@ -1,7 +1,7 @@
-import { ShaderMaterialParameters, ShaderMaterial } from './ShaderMaterial';
+import {ShaderMaterial, ShaderMaterialParameters} from './ShaderMaterial';
 
 export class RawShaderMaterial extends ShaderMaterial {
 
-	constructor( parameters?: ShaderMaterialParameters );
+	constructor(parameters?: ShaderMaterialParameters);
 
 }

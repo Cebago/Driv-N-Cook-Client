@@ -2,13 +2,13 @@
  * @author munrocket / https://github.com/munrocket
  */
 
-const puppeteer = require( 'puppeteer' );
-const handler = require( 'serve-handler' );
-const http = require( 'http' );
-const pixelmatch = require( 'pixelmatch' );
-const printImage = require( 'image-output' );
-const png = require( 'pngjs' ).PNG;
-const fs = require( 'fs' );
+const puppeteer = require('puppeteer');
+const handler = require('serve-handler');
+const http = require('http');
+const pixelmatch = require('pixelmatch');
+const printImage = require('image-output');
+const png = require('pngjs').PNG;
+const fs = require('fs');
 
 const port = 1234;
 const pixelThreshold = 0.2; // threshold error in one pixel
@@ -27,11 +27,11 @@ const exceptionList = [
 	'webgl_tiled_forward', // exception for Github Actions
 	'webgl_worker_offscreencanvas', // in a worker, not robust
 
-].concat( ( process.platform === "win32" ) ? [
+].concat((process.platform === "win32") ? [
 
 	'webgl_effects_ascii' // windows fonts not supported
 
-] : [] );
+] : []);
 
 const networkTimeout = 600;
 const networkTax = 2000; // additional timeout for resources size
@@ -41,63 +41,64 @@ const renderTimeout = 1200;
 const maxAttemptId = 3; // progresseve attempts
 const progressFunc = n => 1 + n;
 
-console.green = ( msg ) => console.log( `\x1b[32m${ msg }\x1b[37m` );
-console.red = ( msg ) => console.log( `\x1b[31m${ msg }\x1b[37m` );
-console.null = () => {};
+console.green = (msg) => console.log(`\x1b[32m${msg}\x1b[37m`);
+console.red = (msg) => console.log(`\x1b[31m${msg}\x1b[37m`);
+console.null = () => {
+};
 
 
 /* Launch server */
 
-const server = http.createServer( ( req, resp ) => handler( req, resp ) );
-server.listen( port, async () => await pup );
-server.on( 'SIGINT', () => process.exit( 1 ) );
+const server = http.createServer((req, resp) => handler(req, resp));
+server.listen(port, async () => await pup);
+server.on('SIGINT', () => process.exit(1));
 
 
 /* Launch puppeteer with WebGL support in Linux */
 
-const pup = puppeteer.launch( {
-	headless: ! process.env.VISIBLE,
+const pup = puppeteer.launch({
+	headless: !process.env.VISIBLE,
 	args: [
 		'--use-gl=swiftshader',
 		'--no-sandbox',
 		'--enable-surface-synchronization'
 	]
-} ).then( async browser => {
+}).then(async browser => {
 
 
 	/* Prepare page */
 
-	const page = ( await browser.pages() )[ 0 ];
-	await page.setViewport( { width: 800, height: 600 } );
+	const page = (await browser.pages())[0];
+	await page.setViewport({width: 800, height: 600});
 
-	const cleanPage = fs.readFileSync( 'test/e2e/clean-page.js', 'utf8' );
-	const injection = fs.readFileSync( 'test/e2e/deterministic-injection.js', 'utf8' );
-	await page.evaluateOnNewDocument( injection );
+	const cleanPage = fs.readFileSync('test/e2e/clean-page.js', 'utf8');
+	const injection = fs.readFileSync('test/e2e/deterministic-injection.js', 'utf8');
+	await page.evaluateOnNewDocument(injection);
 
-	page.on( 'console', msg => ( msg.text().slice( 0, 8 ) === 'Warning.' ) ? console.null( msg.text() ) : {} );
-	page.on( 'response', async ( response ) => {
+	page.on('console', msg => (msg.text().slice(0, 8) === 'Warning.') ? console.null(msg.text()) : {});
+	page.on('response', async (response) => {
 
 		try {
 
-			await response.buffer().then( buffer => pageSize += buffer.length );
+			await response.buffer().then(buffer => pageSize += buffer.length);
 
-		} catch ( e ) {
+		} catch (e) {
 
-			console.null( `Warning. Wrong request. \n${ e }` );
+			console.null(`Warning. Wrong request. \n${e}`);
 
 		}
 
-	} );
+	});
 
 
 	/* Find files */
 
-	const exactList = process.argv.slice( 2 ).map( f => f.replace( '.html', '' ) );
+	const exactList = process.argv.slice(2).map(f => f.replace('.html', ''));
 
-	const files = fs.readdirSync( './examples' )
-		.filter( s => s.slice( - 5 ) === '.html' )
-		.map( s => s.slice( 0, s.length - 5 ) )
-		.filter( f => ( process.argv.length > 2 ) ? exactList.includes( f ) : ! exceptionList.includes( f ) );
+	const files = fs.readdirSync('./examples')
+		.filter(s => s.slice(-5) === '.html')
+		.map(s => s.slice(0, s.length - 5))
+		.filter(f => (process.argv.length > 2) ? exactList.includes(f) : !exceptionList.includes(f));
 
 
 	/* Loop for each file, with CI parallelism */
@@ -105,37 +106,37 @@ const pup = puppeteer.launch( {
 	let pageSize, file, attemptProgress;
 	let failedScreenshots = [];
 	const isParallel = 'CI' in process.env;
-	const beginId = isParallel ? Math.floor( parseInt( process.env.CI.slice( 0, 1 ) ) * files.length / 4 ) : 0;
-	const endId = isParallel ? Math.floor( ( parseInt( process.env.CI.slice( - 1 ) ) + 1 ) * files.length / 4 ) : files.length;
+	const beginId = isParallel ? Math.floor(parseInt(process.env.CI.slice(0, 1)) * files.length / 4) : 0;
+	const endId = isParallel ? Math.floor((parseInt(process.env.CI.slice(-1)) + 1) * files.length / 4) : files.length;
 
-	for ( let id = beginId; id < endId; ++ id ) {
+	for (let id = beginId; id < endId; ++id) {
 
 
 		/* At least 3 attempts before fail */
 
 		let attemptId = process.env.MAKE ? 1 : 0;
 
-		while ( attemptId < maxAttemptId ) {
+		while (attemptId < maxAttemptId) {
 
 
 			/* Load target page */
 
-			file = files[ id ];
-			attemptProgress = progressFunc( attemptId );
+			file = files[id];
+			attemptProgress = progressFunc(attemptId);
 			pageSize = 0;
 			global.gc();
 			global.gc();
 
 			try {
 
-				await page.goto( `http://localhost:${ port }/examples/${ file }.html`, {
+				await page.goto(`http://localhost:${port}/examples/${file}.html`, {
 					waitUntil: 'networkidle2',
 					timeout: networkTimeout * attemptProgress
-				} );
+				});
 
 			} catch {
 
-				console.null( 'Warning. Network timeout exceeded...' );
+				console.null('Warning. Network timeout exceeded...');
 
 			}
 
@@ -145,61 +146,61 @@ const pup = puppeteer.launch( {
 
 				/* Render page */
 
-				await page.evaluate( cleanPage );
+				await page.evaluate(cleanPage);
 
-				await page.evaluate( async ( pageSize, pageSizeMinTax, pageSizeMaxTax, networkTax, renderTimeout, attemptProgress ) => {
+				await page.evaluate(async (pageSize, pageSizeMinTax, pageSizeMaxTax, networkTax, renderTimeout, attemptProgress) => {
 
 
 					/* Resource timeout */
 
-					let resourcesSize = Math.min( 1, ( pageSize / 1024 / 1024 - pageSizeMinTax ) / pageSizeMaxTax );
-					await new Promise( resolve => setTimeout( resolve, networkTax * resourcesSize * attemptProgress ) );
+					let resourcesSize = Math.min(1, (pageSize / 1024 / 1024 - pageSizeMinTax) / pageSizeMaxTax);
+					await new Promise(resolve => setTimeout(resolve, networkTax * resourcesSize * attemptProgress));
 
 
 					/* Resolve render promise */
 
 					window.chromeRenderStarted = true;
-					await new Promise( function ( resolve ) {
+					await new Promise(function (resolve) {
 
-						if ( typeof performance.wow === 'undefined' ) {
+						if (typeof performance.wow === 'undefined') {
 
 							performance.wow = performance.now;
 
 						}
 						let renderStart = performance.wow();
-						let waitingLoop = setInterval( function () {
+						let waitingLoop = setInterval(function () {
 
-							let renderEcceded = ( performance.wow() - renderStart > renderTimeout * attemptProgress );
-							if ( window.chromeRenderFinished || renderEcceded ) {
+							let renderEcceded = (performance.wow() - renderStart > renderTimeout * attemptProgress);
+							if (window.chromeRenderFinished || renderEcceded) {
 
-								if ( renderEcceded ) {
+								if (renderEcceded) {
 
-									console.log( 'Warning. Render timeout exceeded...' );
+									console.log('Warning. Render timeout exceeded...');
 
 								}
-								clearInterval( waitingLoop );
+								clearInterval(waitingLoop);
 								resolve();
 
 							}
 
-						}, 0 );
+						}, 0);
 
-					} );
+					});
 
-				}, pageSize, pageSizeMinTax, pageSizeMaxTax, networkTax, renderTimeout, attemptProgress );
+				}, pageSize, pageSizeMinTax, pageSizeMaxTax, networkTax, renderTimeout, attemptProgress);
 
-			} catch ( e ) {
+			} catch (e) {
 
-				if ( ++ attemptId === maxAttemptId ) {
+				if (++attemptId === maxAttemptId) {
 
-					console.red( `WTF? 'Network timeout' is small for your machine. file: ${ file } \n${ e }` );
-					failedScreenshots.push( file );
+					console.red(`WTF? 'Network timeout' is small for your machine. file: ${file} \n${e}`);
+					failedScreenshots.push(file);
 					continue;
 
 				} else {
 
-					console.log( 'Another attempt..' );
-					await new Promise( resolve => setTimeout( resolve, networkTimeout * attemptProgress ) );
+					console.log('Another attempt..');
+					await new Promise(resolve => setTimeout(resolve, networkTimeout * attemptProgress));
 
 				}
 
@@ -208,41 +209,41 @@ const pup = puppeteer.launch( {
 
 			/* Make or diff? */
 
-			if ( process.env.MAKE ) {
+			if (process.env.MAKE) {
 
 
 				/* Make screenshots */
 
 				attemptId = maxAttemptId;
-				await page.screenshot( { path: `./examples/screenshots/${ file }.png` } );
-				printImage( png.sync.read( fs.readFileSync( `./examples/screenshots/${ file }.png` ) ), console );
-				console.green( `file: ${ file } generated` );
+				await page.screenshot({path: `./examples/screenshots/${file}.png`});
+				printImage(png.sync.read(fs.readFileSync(`./examples/screenshots/${file}.png`)), console);
+				console.green(`file: ${file} generated`);
 
 
-			} else if ( fs.existsSync( `./examples/screenshots/${ file }.png` ) ) {
+			} else if (fs.existsSync(`./examples/screenshots/${file}.png`)) {
 
 
 				/* Diff screenshots */
 
-				let actual = png.sync.read( await page.screenshot() );
-				let expected = png.sync.read( fs.readFileSync( `./examples/screenshots/${ file }.png` ) );
-				let diff = new png( { width: actual.width, height: actual.height } );
+				let actual = png.sync.read(await page.screenshot());
+				let expected = png.sync.read(fs.readFileSync(`./examples/screenshots/${file}.png`));
+				let diff = new png({width: actual.width, height: actual.height});
 
 				let numFailedPixels;
 				try {
 
-					numFailedPixels = pixelmatch( expected.data, actual.data, diff.data, actual.width, actual.height, {
+					numFailedPixels = pixelmatch(expected.data, actual.data, diff.data, actual.width, actual.height, {
 						threshold: pixelThreshold,
 						alpha: 0.2,
 						diffMask: process.env.FORCE_COLOR === '0',
-						diffColor: process.env.FORCE_COLOR === '0' ? [ 255, 255, 255 ] : [ 255, 0, 0 ]
-					} );
+						diffColor: process.env.FORCE_COLOR === '0' ? [255, 255, 255] : [255, 0, 0]
+					});
 
 				} catch {
 
 					attemptId = maxAttemptId;
-					console.red( `ERROR! Image sizes does not match in file: ${ file }` );
-					failedScreenshots.push( file );
+					console.red(`ERROR! Image sizes does not match in file: ${file}`);
+					failedScreenshots.push(file);
 					continue;
 
 				}
@@ -251,23 +252,23 @@ const pup = puppeteer.launch( {
 
 				/* Print results */
 
-				if ( numFailedPixels < maxFailedPixels ) {
+				if (numFailedPixels < maxFailedPixels) {
 
 					attemptId = maxAttemptId;
-					console.green( `diff: ${ numFailedPixels.toFixed( 3 ) }, file: ${ file }` );
+					console.green(`diff: ${numFailedPixels.toFixed(3)}, file: ${file}`);
 
 				} else {
 
-					if ( ++ attemptId === maxAttemptId ) {
+					if (++attemptId === maxAttemptId) {
 
-						printImage( diff, console );
-						console.red( `ERROR! Diff wrong in ${ numFailedPixels.toFixed( 3 ) } of pixels in file: ${ file }` );
-						failedScreenshots.push( file );
+						printImage(diff, console);
+						console.red(`ERROR! Diff wrong in ${numFailedPixels.toFixed(3)} of pixels in file: ${file}`);
+						failedScreenshots.push(file);
 						continue;
 
 					} else {
 
-						console.log( 'Another attempt...' );
+						console.log('Another attempt...');
 
 					}
 
@@ -276,7 +277,7 @@ const pup = puppeteer.launch( {
 			} else {
 
 				attemptId = maxAttemptId;
-				console.null( `Warning! Screenshot not exists: ${ file }` );
+				console.null(`Warning! Screenshot not exists: ${file}`);
 				continue;
 
 			}
@@ -288,28 +289,28 @@ const pup = puppeteer.launch( {
 
 	/* Finish */
 
-	if ( failedScreenshots.length ) {
+	if (failedScreenshots.length) {
 
-		if ( failedScreenshots.length > 1 ) {
+		if (failedScreenshots.length > 1) {
 
-			console.red( 'List of failed screenshots: ' + failedScreenshots.join(' ') );
+			console.red('List of failed screenshots: ' + failedScreenshots.join(' '));
 
 		} else {
 
-			console.red( `If you sure that all is right, try to run \`npm run make-screenshot ${ failedScreenshots[ 0 ] }\`` );
+			console.red(`If you sure that all is right, try to run \`npm run make-screenshot ${failedScreenshots[0]}\``);
 
 		}
 
-		console.red( `TEST FAILED! ${ failedScreenshots.length } from ${ endId - beginId } screenshots not pass.` );
+		console.red(`TEST FAILED! ${failedScreenshots.length} from ${endId - beginId} screenshots not pass.`);
 
-	} else if ( ! process.env.MAKE ) {
+	} else if (!process.env.MAKE) {
 
-		console.green( `TEST PASSED! ${ endId - beginId } screenshots correctly rendered.` );
+		console.green(`TEST PASSED! ${endId - beginId} screenshots correctly rendered.`);
 
 	}
 
 	browser.close();
 	server.close();
-	process.exit( failedScreenshots.length );
+	process.exit(failedScreenshots.length);
 
-} );
+});

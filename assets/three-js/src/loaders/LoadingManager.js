@@ -2,7 +2,7 @@
  * @author mrdoob / http://mrdoob.com/
  */
 
-function LoadingManager( onLoad, onProgress, onError ) {
+function LoadingManager(onLoad, onProgress, onError) {
 
 	var scope = this;
 
@@ -20,15 +20,15 @@ function LoadingManager( onLoad, onProgress, onError ) {
 	this.onProgress = onProgress;
 	this.onError = onError;
 
-	this.itemStart = function ( url ) {
+	this.itemStart = function (url) {
 
-		itemsTotal ++;
+		itemsTotal++;
 
-		if ( isLoading === false ) {
+		if (isLoading === false) {
 
-			if ( scope.onStart !== undefined ) {
+			if (scope.onStart !== undefined) {
 
-				scope.onStart( url, itemsLoaded, itemsTotal );
+				scope.onStart(url, itemsLoaded, itemsTotal);
 
 			}
 
@@ -38,21 +38,21 @@ function LoadingManager( onLoad, onProgress, onError ) {
 
 	};
 
-	this.itemEnd = function ( url ) {
+	this.itemEnd = function (url) {
 
-		itemsLoaded ++;
+		itemsLoaded++;
 
-		if ( scope.onProgress !== undefined ) {
+		if (scope.onProgress !== undefined) {
 
-			scope.onProgress( url, itemsLoaded, itemsTotal );
+			scope.onProgress(url, itemsLoaded, itemsTotal);
 
 		}
 
-		if ( itemsLoaded === itemsTotal ) {
+		if (itemsLoaded === itemsTotal) {
 
 			isLoading = false;
 
-			if ( scope.onLoad !== undefined ) {
+			if (scope.onLoad !== undefined) {
 
 				scope.onLoad();
 
@@ -62,21 +62,21 @@ function LoadingManager( onLoad, onProgress, onError ) {
 
 	};
 
-	this.itemError = function ( url ) {
+	this.itemError = function (url) {
 
-		if ( scope.onError !== undefined ) {
+		if (scope.onError !== undefined) {
 
-			scope.onError( url );
+			scope.onError(url);
 
 		}
 
 	};
 
-	this.resolveURL = function ( url ) {
+	this.resolveURL = function (url) {
 
-		if ( urlModifier ) {
+		if (urlModifier) {
 
-			return urlModifier( url );
+			return urlModifier(url);
 
 		}
 
@@ -84,7 +84,7 @@ function LoadingManager( onLoad, onProgress, onError ) {
 
 	};
 
-	this.setURLModifier = function ( transform ) {
+	this.setURLModifier = function (transform) {
 
 		urlModifier = transform;
 
@@ -92,21 +92,21 @@ function LoadingManager( onLoad, onProgress, onError ) {
 
 	};
 
-	this.addHandler = function ( regex, loader ) {
+	this.addHandler = function (regex, loader) {
 
-		handlers.push( regex, loader );
+		handlers.push(regex, loader);
 
 		return this;
 
 	};
 
-	this.removeHandler = function ( regex ) {
+	this.removeHandler = function (regex) {
 
-		var index = handlers.indexOf( regex );
+		var index = handlers.indexOf(regex);
 
-		if ( index !== - 1 ) {
+		if (index !== -1) {
 
-			handlers.splice( index, 2 );
+			handlers.splice(index, 2);
 
 		}
 
@@ -114,16 +114,16 @@ function LoadingManager( onLoad, onProgress, onError ) {
 
 	};
 
-	this.getHandler = function ( file ) {
+	this.getHandler = function (file) {
 
-		for ( var i = 0, l = handlers.length; i < l; i += 2 ) {
+		for (var i = 0, l = handlers.length; i < l; i += 2) {
 
-			var regex = handlers[ i ];
-			var loader = handlers[ i + 1 ];
+			var regex = handlers[i];
+			var loader = handlers[i + 1];
 
-			if ( regex.global ) regex.lastIndex = 0; // see #17920
+			if (regex.global) regex.lastIndex = 0; // see #17920
 
-			if ( regex.test( file ) ) {
+			if (regex.test(file)) {
 
 				return loader;
 
@@ -140,4 +140,4 @@ function LoadingManager( onLoad, onProgress, onError ) {
 var DefaultLoadingManager = new LoadingManager();
 
 
-export { DefaultLoadingManager, LoadingManager };
+export {DefaultLoadingManager, LoadingManager};

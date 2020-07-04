@@ -1,8 +1,9 @@
-import { IFog } from './Fog';
-import { Material } from './../materials/Material';
-import { Object3D } from './../core/Object3D';
-import { Color } from '../math/Color';
-import { Texture } from '../textures/Texture';
+import {IFog} from './Fog';
+import {Material} from './../materials/Material';
+import {Object3D} from './../core/Object3D';
+import {Color} from '../math/Color';
+import {Texture} from '../textures/Texture';
+
 // Scenes /////////////////////////////////////////////////////////////////////
 
 /**
@@ -10,15 +11,11 @@ import { Texture } from '../textures/Texture';
  */
 export class Scene extends Object3D {
 
-	constructor();
-
 	type: 'Scene';
-
 	/**
 	 * A fog instance defining the type of fog that affects everything rendered in the scene. Default is null.
 	 */
 	fog: IFog | null;
-
 	/**
 	 * If not null, it will force everything in the scene to be rendered with that material. Default is null.
 	 */
@@ -26,10 +23,12 @@ export class Scene extends Object3D {
 	autoUpdate: boolean;
 	background: null | Color | Texture;
 	environment: null | Texture;
-
 	readonly isScene: true;
 
-	toJSON( meta?: any ): any;
+	constructor();
+
+	toJSON(meta?: any): any;
+
 	dispose(): void;
 
 }

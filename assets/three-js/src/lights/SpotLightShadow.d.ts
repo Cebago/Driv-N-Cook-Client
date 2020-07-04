@@ -1,5 +1,5 @@
-import { PerspectiveCamera } from './../cameras/PerspectiveCamera';
-import { LightShadow } from './LightShadow';
+import {PerspectiveCamera} from './../cameras/PerspectiveCamera';
+import {LightShadow} from './LightShadow';
 
 export class SpotLightShadow extends LightShadow {
 

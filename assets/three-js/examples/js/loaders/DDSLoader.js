@@ -2,19 +2,19 @@
  * @author mrdoob / http://mrdoob.com/
  */
 
-THREE.DDSLoader = function ( manager ) {
+THREE.DDSLoader = function (manager) {
 
-	THREE.CompressedTextureLoader.call( this, manager );
+	THREE.CompressedTextureLoader.call(this, manager);
 
 };
 
-THREE.DDSLoader.prototype = Object.assign( Object.create( THREE.CompressedTextureLoader.prototype ), {
+THREE.DDSLoader.prototype = Object.assign(Object.create(THREE.CompressedTextureLoader.prototype), {
 
 	constructor: THREE.DDSLoader,
 
-	parse: function ( buffer, loadMipmaps ) {
+	parse: function (buffer, loadMipmaps) {
 
-		var dds = { mipmaps: [], width: 0, height: 0, format: null, mipmapCount: 1 };
+		var dds = {mipmaps: [], width: 0, height: 0, format: null, mipmapCount: 1};
 
 		// Adapted from @toji's DDS utils
 		// https://github.com/toji/webgl-texture-utils/blob/master/texture-util/dds.js
@@ -53,45 +53,53 @@ THREE.DDSLoader.prototype = Object.assign( Object.create( THREE.CompressedTextur
 		// var DDPF_YUV = 0x200;
 		// var DDPF_LUMINANCE = 0x20000;
 
-		function fourCCToInt32( value ) {
+		function fourCCToInt32(value) {
 
-			return value.charCodeAt( 0 ) +
-				( value.charCodeAt( 1 ) << 8 ) +
-				( value.charCodeAt( 2 ) << 16 ) +
-				( value.charCodeAt( 3 ) << 24 );
+			return value.charCodeAt(0) +
+				(value.charCodeAt(1) << 8) +
+				(value.charCodeAt(2) << 16) +
+				(value.charCodeAt(3) << 24);
 
 		}
 
-		function int32ToFourCC( value ) {
+		function int32ToFourCC(value) {
 
 			return String.fromCharCode(
 				value & 0xff,
-				( value >> 8 ) & 0xff,
-				( value >> 16 ) & 0xff,
-				( value >> 24 ) & 0xff
+				(value >> 8) & 0xff,
+				(value >> 16) & 0xff,
+				(value >> 24) & 0xff
 			);
 
 		}
 
-		function loadARGBMip( buffer, dataOffset, width, height ) {
+		function loadARGBMip(buffer, dataOffset, width, height) {
 
 			var dataLength = width * height * 4;
-			var srcBuffer = new Uint8Array( buffer, dataOffset, dataLength );
-			var byteArray = new Uint8Array( dataLength );
+			var srcBuffer = new Uint8Array(buffer, dataOffset, dataLength);
+			var byteArray = new Uint8Array(dataLength);
 			var dst = 0;
 			var src = 0;
-			for ( var y = 0; y < height; y ++ ) {
+			for (var y = 0; y < height; y++) {
 
-				for ( var x = 0; x < width; x ++ ) {
+				for (var x = 0; x < width; x++) {
 
-					var b = srcBuffer[ src ]; src ++;
-					var g = srcBuffer[ src ]; src ++;
-					var r = srcBuffer[ src ]; src ++;
-					var a = srcBuffer[ src ]; src ++;
-					byteArray[ dst ] = r; dst ++;	//r
-					byteArray[ dst ] = g; dst ++;	//g
-					byteArray[ dst ] = b; dst ++;	//b
-					byteArray[ dst ] = a; dst ++;	//a
+					var b = srcBuffer[src];
+					src++;
+					var g = srcBuffer[src];
+					src++;
+					var r = srcBuffer[src];
+					src++;
+					var a = srcBuffer[src];
+					src++;
+					byteArray[dst] = r;
+					dst++;	//r
+					byteArray[dst] = g;
+					dst++;	//g
+					byteArray[dst] = b;
+					dst++;	//b
+					byteArray[dst] = a;
+					dst++;	//a
 
 				}
 
@@ -101,10 +109,10 @@ THREE.DDSLoader.prototype = Object.assign( Object.create( THREE.CompressedTextur
 
 		}
 
-		var FOURCC_DXT1 = fourCCToInt32( "DXT1" );
-		var FOURCC_DXT3 = fourCCToInt32( "DXT3" );
-		var FOURCC_DXT5 = fourCCToInt32( "DXT5" );
-		var FOURCC_ETC1 = fourCCToInt32( "ETC1" );
+		var FOURCC_DXT1 = fourCCToInt32("DXT1");
+		var FOURCC_DXT3 = fourCCToInt32("DXT3");
+		var FOURCC_DXT5 = fourCCToInt32("DXT5");
+		var FOURCC_ETC1 = fourCCToInt32("ETC1");
 
 		var headerLengthInt = 31; // The header length in 32 bit ints
 
@@ -134,29 +142,29 @@ THREE.DDSLoader.prototype = Object.assign( Object.create( THREE.CompressedTextur
 
 		// Parse header
 
-		var header = new Int32Array( buffer, 0, headerLengthInt );
+		var header = new Int32Array(buffer, 0, headerLengthInt);
 
-		if ( header[ off_magic ] !== DDS_MAGIC ) {
+		if (header[off_magic] !== DDS_MAGIC) {
 
-			console.error( 'THREE.DDSLoader.parse: Invalid magic number in DDS header.' );
+			console.error('THREE.DDSLoader.parse: Invalid magic number in DDS header.');
 			return dds;
 
 		}
 
-		if ( ! header[ off_pfFlags ] & DDPF_FOURCC ) {
+		if (!header[off_pfFlags] & DDPF_FOURCC) {
 
-			console.error( 'THREE.DDSLoader.parse: Unsupported format, must contain a FourCC code.' );
+			console.error('THREE.DDSLoader.parse: Unsupported format, must contain a FourCC code.');
 			return dds;
 
 		}
 
 		var blockBytes;
 
-		var fourCC = header[ off_pfFourCC ];
+		var fourCC = header[off_pfFourCC];
 
 		var isRGBAUncompressed = false;
 
-		switch ( fourCC ) {
+		switch (fourCC) {
 
 			case FOURCC_DXT1:
 
@@ -184,11 +192,11 @@ THREE.DDSLoader.prototype = Object.assign( Object.create( THREE.CompressedTextur
 
 			default:
 
-				if ( header[ off_RGBBitCount ] === 32
-					&& header[ off_RBitMask ] & 0xff0000
-					&& header[ off_GBitMask ] & 0xff00
-					&& header[ off_BBitMask ] & 0xff
-					&& header[ off_ABitMask ] & 0xff000000 ) {
+				if (header[off_RGBBitCount] === 32
+					&& header[off_RBitMask] & 0xff0000
+					&& header[off_GBitMask] & 0xff00
+					&& header[off_BBitMask] & 0xff
+					&& header[off_ABitMask] & 0xff000000) {
 
 					isRGBAUncompressed = true;
 					blockBytes = 64;
@@ -196,7 +204,7 @@ THREE.DDSLoader.prototype = Object.assign( Object.create( THREE.CompressedTextur
 
 				} else {
 
-					console.error( 'THREE.DDSLoader.parse: Unsupported FourCC code ', int32ToFourCC( fourCC ) );
+					console.error('THREE.DDSLoader.parse: Unsupported FourCC code ', int32ToFourCC(fourCC));
 					return dds;
 
 				}
@@ -205,63 +213,63 @@ THREE.DDSLoader.prototype = Object.assign( Object.create( THREE.CompressedTextur
 
 		dds.mipmapCount = 1;
 
-		if ( header[ off_flags ] & DDSD_MIPMAPCOUNT && loadMipmaps !== false ) {
+		if (header[off_flags] & DDSD_MIPMAPCOUNT && loadMipmaps !== false) {
 
-			dds.mipmapCount = Math.max( 1, header[ off_mipmapCount ] );
+			dds.mipmapCount = Math.max(1, header[off_mipmapCount]);
 
 		}
 
-		var caps2 = header[ off_caps2 ];
+		var caps2 = header[off_caps2];
 		dds.isCubemap = caps2 & DDSCAPS2_CUBEMAP ? true : false;
-		if ( dds.isCubemap && (
-			! ( caps2 & DDSCAPS2_CUBEMAP_POSITIVEX ) ||
-			! ( caps2 & DDSCAPS2_CUBEMAP_NEGATIVEX ) ||
-			! ( caps2 & DDSCAPS2_CUBEMAP_POSITIVEY ) ||
-			! ( caps2 & DDSCAPS2_CUBEMAP_NEGATIVEY ) ||
-			! ( caps2 & DDSCAPS2_CUBEMAP_POSITIVEZ ) ||
-			! ( caps2 & DDSCAPS2_CUBEMAP_NEGATIVEZ )
-		) ) {
+		if (dds.isCubemap && (
+			!(caps2 & DDSCAPS2_CUBEMAP_POSITIVEX) ||
+			!(caps2 & DDSCAPS2_CUBEMAP_NEGATIVEX) ||
+			!(caps2 & DDSCAPS2_CUBEMAP_POSITIVEY) ||
+			!(caps2 & DDSCAPS2_CUBEMAP_NEGATIVEY) ||
+			!(caps2 & DDSCAPS2_CUBEMAP_POSITIVEZ) ||
+			!(caps2 & DDSCAPS2_CUBEMAP_NEGATIVEZ)
+		)) {
 
-			console.error( 'THREE.DDSLoader.parse: Incomplete cubemap faces' );
+			console.error('THREE.DDSLoader.parse: Incomplete cubemap faces');
 			return dds;
 
 		}
 
-		dds.width = header[ off_width ];
-		dds.height = header[ off_height ];
+		dds.width = header[off_width];
+		dds.height = header[off_height];
 
-		var dataOffset = header[ off_size ] + 4;
+		var dataOffset = header[off_size] + 4;
 
 		// Extract mipmaps buffers
 
 		var faces = dds.isCubemap ? 6 : 1;
 
-		for ( var face = 0; face < faces; face ++ ) {
+		for (var face = 0; face < faces; face++) {
 
 			var width = dds.width;
 			var height = dds.height;
 
-			for ( var i = 0; i < dds.mipmapCount; i ++ ) {
+			for (var i = 0; i < dds.mipmapCount; i++) {
 
-				if ( isRGBAUncompressed ) {
+				if (isRGBAUncompressed) {
 
-					var byteArray = loadARGBMip( buffer, dataOffset, width, height );
+					var byteArray = loadARGBMip(buffer, dataOffset, width, height);
 					var dataLength = byteArray.length;
 
 				} else {
 
-					var dataLength = Math.max( 4, width ) / 4 * Math.max( 4, height ) / 4 * blockBytes;
-					var byteArray = new Uint8Array( buffer, dataOffset, dataLength );
+					var dataLength = Math.max(4, width) / 4 * Math.max(4, height) / 4 * blockBytes;
+					var byteArray = new Uint8Array(buffer, dataOffset, dataLength);
 
 				}
 
-				var mipmap = { "data": byteArray, "width": width, "height": height };
-				dds.mipmaps.push( mipmap );
+				var mipmap = {"data": byteArray, "width": width, "height": height};
+				dds.mipmaps.push(mipmap);
 
 				dataOffset += dataLength;
 
-				width = Math.max( width >> 1, 1 );
-				height = Math.max( height >> 1, 1 );
+				width = Math.max(width >> 1, 1);
+				height = Math.max(height >> 1, 1);
 
 			}
 
@@ -271,4 +279,4 @@ THREE.DDSLoader.prototype = Object.assign( Object.create( THREE.CompressedTextur
 
 	}
 
-} );
+});

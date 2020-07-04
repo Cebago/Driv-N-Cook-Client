@@ -2,24 +2,24 @@
  * @author sunag / http://www.sunag.com.br/
  */
 
-import { MeshStandardNode } from './nodes/MeshStandardNode.js';
-import { NodeMaterial } from './NodeMaterial.js';
-import { NodeUtils } from '../core/NodeUtils.js';
+import {MeshStandardNode} from './nodes/MeshStandardNode.js';
+import {NodeMaterial} from './NodeMaterial.js';
+import {NodeUtils} from '../core/NodeUtils.js';
 
 function MeshStandardNodeMaterial() {
 
 	var node = new MeshStandardNode();
 
-	NodeMaterial.call( this, node, node );
+	NodeMaterial.call(this, node, node);
 
 	this.type = "MeshStandardNodeMaterial";
 
 }
 
-MeshStandardNodeMaterial.prototype = Object.create( NodeMaterial.prototype );
+MeshStandardNodeMaterial.prototype = Object.create(NodeMaterial.prototype);
 MeshStandardNodeMaterial.prototype.constructor = MeshStandardNodeMaterial;
 
-NodeUtils.addShortcuts( MeshStandardNodeMaterial.prototype, 'properties', [
+NodeUtils.addShortcuts(MeshStandardNodeMaterial.prototype, 'properties', [
 	"color",
 	"roughness",
 	"metalness",
@@ -29,6 +29,6 @@ NodeUtils.addShortcuts( MeshStandardNodeMaterial.prototype, 'properties', [
 	"metalnessMap",
 	"roughnessMap",
 	"envMap"
-] );
+]);
 
-export { MeshStandardNodeMaterial };
+export {MeshStandardNodeMaterial};

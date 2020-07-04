@@ -3,51 +3,49 @@
  */
 /* global QUnit */
 
-import {
-	ShapeBufferGeometry
-} from '../../../../src/geometries/ShapeGeometry';
+import {ShapeBufferGeometry} from '../../../../src/geometries/ShapeGeometry';
 
-import { Shape } from '../../../../src/extras/core/Shape';
+import {Shape} from '../../../../src/extras/core/Shape';
 
-export default QUnit.module( 'Geometries', () => {
+export default QUnit.module('Geometries', () => {
 
-	QUnit.module( 'ShapeBufferGeometry', ( hooks ) => {
+	QUnit.module('ShapeBufferGeometry', (hooks) => {
 
 		var geometries = undefined;
-		hooks.beforeEach( function () {
+		hooks.beforeEach(function () {
 
 			var triangleShape = new Shape();
-			triangleShape.moveTo( 0, - 1 );
-			triangleShape.lineTo( 1, 1 );
-			triangleShape.lineTo( - 1, 1 );
+			triangleShape.moveTo(0, -1);
+			triangleShape.lineTo(1, 1);
+			triangleShape.lineTo(-1, 1);
 
 			geometries = [
-				new ShapeBufferGeometry( triangleShape )
+				new ShapeBufferGeometry(triangleShape)
 			];
 
-		} );
+		});
 
 		// INHERITANCE
-		QUnit.todo( "Extending", ( assert ) => {
+		QUnit.todo("Extending", (assert) => {
 
-			assert.ok( false, "everything's gonna be alright" );
+			assert.ok(false, "everything's gonna be alright");
 
-		} );
+		});
 
 		// INSTANCING
-		QUnit.todo( "Instancing", ( assert ) => {
+		QUnit.todo("Instancing", (assert) => {
 
-			assert.ok( false, "everything's gonna be alright" );
+			assert.ok(false, "everything's gonna be alright");
 
-		} );
+		});
 
 		// OTHERS
-		QUnit.todo( 'Standard geometry tests', ( assert ) => {
+		QUnit.todo('Standard geometry tests', (assert) => {
 
-			assert.ok( false, "everything's gonna be alright" );
+			assert.ok(false, "everything's gonna be alright");
 
-		} );
+		});
 
-	} );
+	});
 
-} );
+});

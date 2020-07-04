@@ -10,31 +10,31 @@ function CharsetEncoder() {
 /*
  * Converts from Shift_JIS Uint8Array data to Unicode strings.
  */
-CharsetEncoder.prototype.s2u = function ( uint8Array ) {
+CharsetEncoder.prototype.s2u = function (uint8Array) {
 
 	var t = this.s2uTable;
 	var str = '';
 	var p = 0;
 
-	while ( p < uint8Array.length ) {
+	while (p < uint8Array.length) {
 
-		var key = uint8Array[ p ++ ];
+		var key = uint8Array[p++];
 
-		if ( ! ( ( key >= 0x00 && key <= 0x7e ) ||
-          ( key >= 0xa1 && key <= 0xdf ) ) &&
-       p < uint8Array.length ) {
+		if (!((key >= 0x00 && key <= 0x7e) ||
+			(key >= 0xa1 && key <= 0xdf)) &&
+			p < uint8Array.length) {
 
-			key = ( key << 8 ) | uint8Array[ p ++ ];
+			key = (key << 8) | uint8Array[p++];
 
 		}
 
-		if ( t[ key ] === undefined ) {
+		if (t[key] === undefined) {
 
 			throw 'unknown char code ' + key + '.';
 
 		}
 
-		str += String.fromCharCode( t[ key ] );
+		str += String.fromCharCode(t[key]);
 
 	}
 
@@ -9655,11 +9655,11 @@ CharsetEncoder.prototype.s2uTable = {
  * @author takahiro / https://github.com/takahirox
  */
 
-function DataViewEx( buffer, littleEndian ) {
+function DataViewEx(buffer, littleEndian) {
 
-	this.dv = new DataView( buffer );
+	this.dv = new DataView(buffer);
 	this.offset = 0;
-	this.littleEndian = ( littleEndian !== undefined ) ? littleEndian : true;
+	this.littleEndian = (littleEndian !== undefined) ? littleEndian : true;
 	this.encoder = new CharsetEncoder();
 
 }
@@ -9670,19 +9670,19 @@ DataViewEx.prototype = {
 
 	getInt8: function () {
 
-		var value = this.dv.getInt8( this.offset );
+		var value = this.dv.getInt8(this.offset);
 		this.offset += 1;
 		return value;
 
 	},
 
-	getInt8Array: function ( size ) {
+	getInt8Array: function (size) {
 
 		var a = [];
 
-		for ( var i = 0; i < size; i ++ ) {
+		for (var i = 0; i < size; i++) {
 
-			a.push( this.getInt8() );
+			a.push(this.getInt8());
 
 		}
 
@@ -9692,19 +9692,19 @@ DataViewEx.prototype = {
 
 	getUint8: function () {
 
-		var value = this.dv.getUint8( this.offset );
+		var value = this.dv.getUint8(this.offset);
 		this.offset += 1;
 		return value;
 
 	},
 
-	getUint8Array: function ( size ) {
+	getUint8Array: function (size) {
 
 		var a = [];
 
-		for ( var i = 0; i < size; i ++ ) {
+		for (var i = 0; i < size; i++) {
 
-			a.push( this.getUint8() );
+			a.push(this.getUint8());
 
 		}
 
@@ -9715,19 +9715,19 @@ DataViewEx.prototype = {
 
 	getInt16: function () {
 
-		var value = this.dv.getInt16( this.offset, this.littleEndian );
+		var value = this.dv.getInt16(this.offset, this.littleEndian);
 		this.offset += 2;
 		return value;
 
 	},
 
-	getInt16Array: function ( size ) {
+	getInt16Array: function (size) {
 
 		var a = [];
 
-		for ( var i = 0; i < size; i ++ ) {
+		for (var i = 0; i < size; i++) {
 
-			a.push( this.getInt16() );
+			a.push(this.getInt16());
 
 		}
 
@@ -9737,19 +9737,19 @@ DataViewEx.prototype = {
 
 	getUint16: function () {
 
-		var value = this.dv.getUint16( this.offset, this.littleEndian );
+		var value = this.dv.getUint16(this.offset, this.littleEndian);
 		this.offset += 2;
 		return value;
 
 	},
 
-	getUint16Array: function ( size ) {
+	getUint16Array: function (size) {
 
 		var a = [];
 
-		for ( var i = 0; i < size; i ++ ) {
+		for (var i = 0; i < size; i++) {
 
-			a.push( this.getUint16() );
+			a.push(this.getUint16());
 
 		}
 
@@ -9759,19 +9759,19 @@ DataViewEx.prototype = {
 
 	getInt32: function () {
 
-		var value = this.dv.getInt32( this.offset, this.littleEndian );
+		var value = this.dv.getInt32(this.offset, this.littleEndian);
 		this.offset += 4;
 		return value;
 
 	},
 
-	getInt32Array: function ( size ) {
+	getInt32Array: function (size) {
 
 		var a = [];
 
-		for ( var i = 0; i < size; i ++ ) {
+		for (var i = 0; i < size; i++) {
 
-			a.push( this.getInt32() );
+			a.push(this.getInt32());
 
 		}
 
@@ -9781,19 +9781,19 @@ DataViewEx.prototype = {
 
 	getUint32: function () {
 
-		var value = this.dv.getUint32( this.offset, this.littleEndian );
+		var value = this.dv.getUint32(this.offset, this.littleEndian);
 		this.offset += 4;
 		return value;
 
 	},
 
-	getUint32Array: function ( size ) {
+	getUint32Array: function (size) {
 
 		var a = [];
 
-		for ( var i = 0; i < size; i ++ ) {
+		for (var i = 0; i < size; i++) {
 
-			a.push( this.getUint32() );
+			a.push(this.getUint32());
 
 		}
 
@@ -9803,19 +9803,19 @@ DataViewEx.prototype = {
 
 	getFloat32: function () {
 
-		var value = this.dv.getFloat32( this.offset, this.littleEndian );
+		var value = this.dv.getFloat32(this.offset, this.littleEndian);
 		this.offset += 4;
 		return value;
 
 	},
 
-	getFloat32Array: function ( size ) {
+	getFloat32Array: function (size) {
 
 		var a = [];
 
-		for ( var i = 0; i < size; i ++ ) {
+		for (var i = 0; i < size; i++) {
 
-			a.push( this.getFloat32() );
+			a.push(this.getFloat32());
 
 		}
 
@@ -9825,19 +9825,19 @@ DataViewEx.prototype = {
 
 	getFloat64: function () {
 
-		var value = this.dv.getFloat64( this.offset, this.littleEndian );
+		var value = this.dv.getFloat64(this.offset, this.littleEndian);
 		this.offset += 8;
 		return value;
 
 	},
 
-	getFloat64Array: function ( size ) {
+	getFloat64Array: function (size) {
 
 		var a = [];
 
-		for ( var i = 0; i < size; i ++ ) {
+		for (var i = 0; i < size; i++) {
 
-			a.push( this.getFloat64() );
+			a.push(this.getFloat64());
 
 		}
 
@@ -9845,15 +9845,15 @@ DataViewEx.prototype = {
 
 	},
 
-	getIndex: function ( type, isUnsigned ) {
+	getIndex: function (type, isUnsigned) {
 
-		switch ( type ) {
+		switch (type) {
 
 			case 1:
-				return ( isUnsigned === true ) ? this.getUint8() : this.getInt8();
+				return (isUnsigned === true) ? this.getUint8() : this.getInt8();
 
 			case 2:
-				return ( isUnsigned === true ) ? this.getUint16() : this.getInt16();
+				return (isUnsigned === true) ? this.getUint16() : this.getInt16();
 
 			case 4:
 				return this.getInt32(); // No Uint32
@@ -9865,13 +9865,13 @@ DataViewEx.prototype = {
 
 	},
 
-	getIndexArray: function ( type, size, isUnsigned ) {
+	getIndexArray: function (type, size, isUnsigned) {
 
 		var a = [];
 
-		for ( var i = 0; i < size; i ++ ) {
+		for (var i = 0; i < size; i++) {
 
-			a.push( this.getIndex( type, isUnsigned ) );
+			a.push(this.getIndex(type, isUnsigned));
 
 		}
 
@@ -9879,29 +9879,29 @@ DataViewEx.prototype = {
 
 	},
 
-	getChars: function ( size ) {
+	getChars: function (size) {
 
 		var str = '';
 
-		while ( size > 0 ) {
+		while (size > 0) {
 
 			var value = this.getUint8();
-			size --;
+			size--;
 
-			if ( value === 0 ) {
+			if (value === 0) {
 
 				break;
 
 			}
 
-			str += String.fromCharCode( value );
+			str += String.fromCharCode(value);
 
 		}
 
-		while ( size > 0 ) {
+		while (size > 0) {
 
 			this.getUint8();
-			size --;
+			size--;
 
 		}
 
@@ -9909,59 +9909,59 @@ DataViewEx.prototype = {
 
 	},
 
-	getSjisStringsAsUnicode: function ( size ) {
+	getSjisStringsAsUnicode: function (size) {
 
 		var a = [];
 
-		while ( size > 0 ) {
+		while (size > 0) {
 
 			var value = this.getUint8();
-			size --;
+			size--;
 
-			if ( value === 0 ) {
+			if (value === 0) {
 
 				break;
 
 			}
 
-			a.push( value );
+			a.push(value);
 
 		}
 
-		while ( size > 0 ) {
+		while (size > 0) {
 
 			this.getUint8();
-			size --;
+			size--;
 
 		}
 
-		return this.encoder.s2u( new Uint8Array( a ) );
+		return this.encoder.s2u(new Uint8Array(a));
 
 	},
 
-	getUnicodeStrings: function ( size ) {
+	getUnicodeStrings: function (size) {
 
 		var str = '';
 
-		while ( size > 0 ) {
+		while (size > 0) {
 
 			var value = this.getUint16();
 			size -= 2;
 
-			if ( value === 0 ) {
+			if (value === 0) {
 
 				break;
 
 			}
 
-			str += String.fromCharCode( value );
+			str += String.fromCharCode(value);
 
 		}
 
-		while ( size > 0 ) {
+		while (size > 0) {
 
 			this.getUint8();
-			size --;
+			size--;
 
 		}
 
@@ -9972,7 +9972,7 @@ DataViewEx.prototype = {
 	getTextBuffer: function () {
 
 		var size = this.getUint32();
-		return this.getUnicodeStrings( size );
+		return this.getUnicodeStrings(size);
 
 	}
 
@@ -9989,50 +9989,50 @@ DataCreationHelper.prototype = {
 
 	constructor: DataCreationHelper,
 
-	leftToRightVector3: function ( v ) {
+	leftToRightVector3: function (v) {
 
-		v[ 2 ] = - v[ 2 ];
-
-	},
-
-	leftToRightQuaternion: function ( q ) {
-
-		q[ 0 ] = - q[ 0 ];
-		q[ 1 ] = - q[ 1 ];
+		v[2] = -v[2];
 
 	},
 
-	leftToRightEuler: function ( r ) {
+	leftToRightQuaternion: function (q) {
 
-		r[ 0 ] = - r[ 0 ];
-		r[ 1 ] = - r[ 1 ];
-
-	},
-
-	leftToRightIndexOrder: function ( p ) {
-
-		var tmp = p[ 2 ];
-		p[ 2 ] = p[ 0 ];
-		p[ 0 ] = tmp;
+		q[0] = -q[0];
+		q[1] = -q[1];
 
 	},
 
-	leftToRightVector3Range: function ( v1, v2 ) {
+	leftToRightEuler: function (r) {
 
-		var tmp = - v2[ 2 ];
-		v2[ 2 ] = - v1[ 2 ];
-		v1[ 2 ] = tmp;
+		r[0] = -r[0];
+		r[1] = -r[1];
 
 	},
 
-	leftToRightEulerRange: function ( r1, r2 ) {
+	leftToRightIndexOrder: function (p) {
 
-		var tmp1 = - r2[ 0 ];
-		var tmp2 = - r2[ 1 ];
-		r2[ 0 ] = - r1[ 0 ];
-		r2[ 1 ] = - r1[ 1 ];
-		r1[ 0 ] = tmp1;
-		r1[ 1 ] = tmp2;
+		var tmp = p[2];
+		p[2] = p[0];
+		p[0] = tmp;
+
+	},
+
+	leftToRightVector3Range: function (v1, v2) {
+
+		var tmp = -v2[2];
+		v2[2] = -v1[2];
+		v1[2] = tmp;
+
+	},
+
+	leftToRightEulerRange: function (r1, r2) {
+
+		var tmp1 = -r2[0];
+		var tmp2 = -r2[1];
+		r2[0] = -r1[0];
+		r2[1] = -r1[1];
+		r1[0] = tmp1;
+		r1[1] = tmp2;
 
 	}
 
@@ -10045,10 +10045,10 @@ DataCreationHelper.prototype = {
 function Parser() {
 }
 
-Parser.prototype.parsePmd = function ( buffer, leftToRight ) {
+Parser.prototype.parsePmd = function (buffer, leftToRight) {
 
 	var pmd = {};
-	var dv = new DataViewEx( buffer );
+	var dv = new DataViewEx(buffer);
 
 	pmd.metadata = {};
 	pmd.metadata.format = 'pmd';
@@ -10057,17 +10057,17 @@ Parser.prototype.parsePmd = function ( buffer, leftToRight ) {
 	var parseHeader = function () {
 
 		var metadata = pmd.metadata;
-		metadata.magic = dv.getChars( 3 );
+		metadata.magic = dv.getChars(3);
 
-		if ( metadata.magic !== 'Pmd' ) {
+		if (metadata.magic !== 'Pmd') {
 
 			throw 'PMD file magic is not Pmd, but ' + metadata.magic;
 
 		}
 
 		metadata.version = dv.getFloat32();
-		metadata.modelName = dv.getSjisStringsAsUnicode( 20 );
-		metadata.comment = dv.getSjisStringsAsUnicode( 256 );
+		metadata.modelName = dv.getSjisStringsAsUnicode(20);
+		metadata.comment = dv.getSjisStringsAsUnicode(256);
 
 	};
 
@@ -10076,12 +10076,12 @@ Parser.prototype.parsePmd = function ( buffer, leftToRight ) {
 		var parseVertex = function () {
 
 			var p = {};
-			p.position = dv.getFloat32Array( 3 );
-			p.normal = dv.getFloat32Array( 3 );
-			p.uv = dv.getFloat32Array( 2 );
-			p.skinIndices = dv.getUint16Array( 2 );
-			p.skinWeights = [ dv.getUint8() / 100 ];
-			p.skinWeights.push( 1.0 - p.skinWeights[ 0 ] );
+			p.position = dv.getFloat32Array(3);
+			p.normal = dv.getFloat32Array(3);
+			p.uv = dv.getFloat32Array(2);
+			p.skinIndices = dv.getUint16Array(2);
+			p.skinWeights = [dv.getUint8() / 100];
+			p.skinWeights.push(1.0 - p.skinWeights[0]);
 			p.edgeFlag = dv.getUint8();
 			return p;
 
@@ -10092,9 +10092,9 @@ Parser.prototype.parsePmd = function ( buffer, leftToRight ) {
 
 		pmd.vertices = [];
 
-		for ( var i = 0; i < metadata.vertexCount; i ++ ) {
+		for (var i = 0; i < metadata.vertexCount; i++) {
 
-			pmd.vertices.push( parseVertex() );
+			pmd.vertices.push(parseVertex());
 
 		}
 
@@ -10105,7 +10105,7 @@ Parser.prototype.parsePmd = function ( buffer, leftToRight ) {
 		var parseFace = function () {
 
 			var p = {};
-			p.indices = dv.getUint16Array( 3 );
+			p.indices = dv.getUint16Array(3);
 			return p;
 
 		};
@@ -10115,9 +10115,9 @@ Parser.prototype.parsePmd = function ( buffer, leftToRight ) {
 
 		pmd.faces = [];
 
-		for ( var i = 0; i < metadata.faceCount; i ++ ) {
+		for (var i = 0; i < metadata.faceCount; i++) {
 
-			pmd.faces.push( parseFace() );
+			pmd.faces.push(parseFace());
 
 		}
 
@@ -10128,14 +10128,14 @@ Parser.prototype.parsePmd = function ( buffer, leftToRight ) {
 		var parseMaterial = function () {
 
 			var p = {};
-			p.diffuse = dv.getFloat32Array( 4 );
+			p.diffuse = dv.getFloat32Array(4);
 			p.shininess = dv.getFloat32();
-			p.specular = dv.getFloat32Array( 3 );
-			p.ambient = dv.getFloat32Array( 3 );
+			p.specular = dv.getFloat32Array(3);
+			p.ambient = dv.getFloat32Array(3);
 			p.toonIndex = dv.getInt8();
 			p.edgeFlag = dv.getUint8();
 			p.faceCount = dv.getUint32() / 3;
-			p.fileName = dv.getSjisStringsAsUnicode( 20 );
+			p.fileName = dv.getSjisStringsAsUnicode(20);
 			return p;
 
 		};
@@ -10145,9 +10145,9 @@ Parser.prototype.parsePmd = function ( buffer, leftToRight ) {
 
 		pmd.materials = [];
 
-		for ( var i = 0; i < metadata.materialCount; i ++ ) {
+		for (var i = 0; i < metadata.materialCount; i++) {
 
-			pmd.materials.push( parseMaterial() );
+			pmd.materials.push(parseMaterial());
 
 		}
 
@@ -10158,12 +10158,12 @@ Parser.prototype.parsePmd = function ( buffer, leftToRight ) {
 		var parseBone = function () {
 
 			var p = {};
-			p.name = dv.getSjisStringsAsUnicode( 20 );
+			p.name = dv.getSjisStringsAsUnicode(20);
 			p.parentIndex = dv.getInt16();
 			p.tailIndex = dv.getInt16();
 			p.type = dv.getUint8();
 			p.ikIndex = dv.getInt16();
-			p.position = dv.getFloat32Array( 3 );
+			p.position = dv.getFloat32Array(3);
 			return p;
 
 		};
@@ -10173,9 +10173,9 @@ Parser.prototype.parsePmd = function ( buffer, leftToRight ) {
 
 		pmd.bones = [];
 
-		for ( var i = 0; i < metadata.boneCount; i ++ ) {
+		for (var i = 0; i < metadata.boneCount; i++) {
 
-			pmd.bones.push( parseBone() );
+			pmd.bones.push(parseBone());
 
 		}
 
@@ -10193,11 +10193,11 @@ Parser.prototype.parsePmd = function ( buffer, leftToRight ) {
 			p.maxAngle = dv.getFloat32();
 
 			p.links = [];
-			for ( var i = 0; i < p.linkCount; i ++ ) {
+			for (var i = 0; i < p.linkCount; i++) {
 
 				var link = {};
 				link.index = dv.getUint16();
-				p.links.push( link );
+				p.links.push(link);
 
 			}
 
@@ -10210,9 +10210,9 @@ Parser.prototype.parsePmd = function ( buffer, leftToRight ) {
 
 		pmd.iks = [];
 
-		for ( var i = 0; i < metadata.ikCount; i ++ ) {
+		for (var i = 0; i < metadata.ikCount; i++) {
 
-			pmd.iks.push( parseIk() );
+			pmd.iks.push(parseIk());
 
 		}
 
@@ -10223,17 +10223,17 @@ Parser.prototype.parsePmd = function ( buffer, leftToRight ) {
 		var parseMorph = function () {
 
 			var p = {};
-			p.name = dv.getSjisStringsAsUnicode( 20 );
+			p.name = dv.getSjisStringsAsUnicode(20);
 			p.elementCount = dv.getUint32();
 			p.type = dv.getUint8();
 
 			p.elements = [];
-			for ( var i = 0; i < p.elementCount; i ++ ) {
+			for (var i = 0; i < p.elementCount; i++) {
 
-				p.elements.push( {
+				p.elements.push({
 					index: dv.getUint32(),
-					position: dv.getFloat32Array( 3 )
-				} );
+					position: dv.getFloat32Array(3)
+				});
 
 			}
 
@@ -10246,9 +10246,9 @@ Parser.prototype.parsePmd = function ( buffer, leftToRight ) {
 
 		pmd.morphs = [];
 
-		for ( var i = 0; i < metadata.morphCount; i ++ ) {
+		for (var i = 0; i < metadata.morphCount; i++) {
 
-			pmd.morphs.push( parseMorph() );
+			pmd.morphs.push(parseMorph());
 
 		}
 
@@ -10270,9 +10270,9 @@ Parser.prototype.parsePmd = function ( buffer, leftToRight ) {
 
 		pmd.morphFrames = [];
 
-		for ( var i = 0; i < metadata.morphFrameCount; i ++ ) {
+		for (var i = 0; i < metadata.morphFrameCount; i++) {
 
-			pmd.morphFrames.push( parseMorphFrame() );
+			pmd.morphFrames.push(parseMorphFrame());
 
 		}
 
@@ -10283,7 +10283,7 @@ Parser.prototype.parsePmd = function ( buffer, leftToRight ) {
 		var parseBoneFrameName = function () {
 
 			var p = {};
-			p.name = dv.getSjisStringsAsUnicode( 50 );
+			p.name = dv.getSjisStringsAsUnicode(50);
 			return p;
 
 		};
@@ -10293,9 +10293,9 @@ Parser.prototype.parsePmd = function ( buffer, leftToRight ) {
 
 		pmd.boneFrameNames = [];
 
-		for ( var i = 0; i < metadata.boneFrameNameCount; i ++ ) {
+		for (var i = 0; i < metadata.boneFrameNameCount; i++) {
 
-			pmd.boneFrameNames.push( parseBoneFrameName() );
+			pmd.boneFrameNames.push(parseBoneFrameName());
 
 		}
 
@@ -10317,9 +10317,9 @@ Parser.prototype.parsePmd = function ( buffer, leftToRight ) {
 
 		pmd.boneFrames = [];
 
-		for ( var i = 0; i < metadata.boneFrameCount; i ++ ) {
+		for (var i = 0; i < metadata.boneFrameCount; i++) {
 
-			pmd.boneFrames.push( parseBoneFrame() );
+			pmd.boneFrames.push(parseBoneFrame());
 
 		}
 
@@ -10330,10 +10330,10 @@ Parser.prototype.parsePmd = function ( buffer, leftToRight ) {
 		var metadata = pmd.metadata;
 		metadata.englishCompatibility = dv.getUint8();
 
-		if ( metadata.englishCompatibility > 0 ) {
+		if (metadata.englishCompatibility > 0) {
 
-			metadata.englishModelName = dv.getSjisStringsAsUnicode( 20 );
-			metadata.englishComment = dv.getSjisStringsAsUnicode( 256 );
+			metadata.englishModelName = dv.getSjisStringsAsUnicode(20);
+			metadata.englishComment = dv.getSjisStringsAsUnicode(256);
 
 		}
 
@@ -10344,14 +10344,14 @@ Parser.prototype.parsePmd = function ( buffer, leftToRight ) {
 		var parseEnglishBoneName = function () {
 
 			var p = {};
-			p.name = dv.getSjisStringsAsUnicode( 20 );
+			p.name = dv.getSjisStringsAsUnicode(20);
 			return p;
 
 		};
 
 		var metadata = pmd.metadata;
 
-		if ( metadata.englishCompatibility === 0 ) {
+		if (metadata.englishCompatibility === 0) {
 
 			return;
 
@@ -10359,9 +10359,9 @@ Parser.prototype.parsePmd = function ( buffer, leftToRight ) {
 
 		pmd.englishBoneNames = [];
 
-		for ( var i = 0; i < metadata.boneCount; i ++ ) {
+		for (var i = 0; i < metadata.boneCount; i++) {
 
-			pmd.englishBoneNames.push( parseEnglishBoneName() );
+			pmd.englishBoneNames.push(parseEnglishBoneName());
 
 		}
 
@@ -10372,14 +10372,14 @@ Parser.prototype.parsePmd = function ( buffer, leftToRight ) {
 		var parseEnglishMorphName = function () {
 
 			var p = {};
-			p.name = dv.getSjisStringsAsUnicode( 20 );
+			p.name = dv.getSjisStringsAsUnicode(20);
 			return p;
 
 		};
 
 		var metadata = pmd.metadata;
 
-		if ( metadata.englishCompatibility === 0 ) {
+		if (metadata.englishCompatibility === 0) {
 
 			return;
 
@@ -10387,9 +10387,9 @@ Parser.prototype.parsePmd = function ( buffer, leftToRight ) {
 
 		pmd.englishMorphNames = [];
 
-		for ( var i = 0; i < metadata.morphCount - 1; i ++ ) {
+		for (var i = 0; i < metadata.morphCount - 1; i++) {
 
-			pmd.englishMorphNames.push( parseEnglishMorphName() );
+			pmd.englishMorphNames.push(parseEnglishMorphName());
 
 		}
 
@@ -10400,14 +10400,14 @@ Parser.prototype.parsePmd = function ( buffer, leftToRight ) {
 		var parseEnglishBoneFrameName = function () {
 
 			var p = {};
-			p.name = dv.getSjisStringsAsUnicode( 50 );
+			p.name = dv.getSjisStringsAsUnicode(50);
 			return p;
 
 		};
 
 		var metadata = pmd.metadata;
 
-		if ( metadata.englishCompatibility === 0 ) {
+		if (metadata.englishCompatibility === 0) {
 
 			return;
 
@@ -10415,9 +10415,9 @@ Parser.prototype.parsePmd = function ( buffer, leftToRight ) {
 
 		pmd.englishBoneFrameNames = [];
 
-		for ( var i = 0; i < metadata.boneFrameNameCount; i ++ ) {
+		for (var i = 0; i < metadata.boneFrameNameCount; i++) {
 
-			pmd.englishBoneFrameNames.push( parseEnglishBoneFrameName() );
+			pmd.englishBoneFrameNames.push(parseEnglishBoneFrameName());
 
 		}
 
@@ -10428,16 +10428,16 @@ Parser.prototype.parsePmd = function ( buffer, leftToRight ) {
 		var parseToonTexture = function () {
 
 			var p = {};
-			p.fileName = dv.getSjisStringsAsUnicode( 100 );
+			p.fileName = dv.getSjisStringsAsUnicode(100);
 			return p;
 
 		};
 
 		pmd.toonTextures = [];
 
-		for ( var i = 0; i < 10; i ++ ) {
+		for (var i = 0; i < 10; i++) {
 
-			pmd.toonTextures.push( parseToonTexture() );
+			pmd.toonTextures.push(parseToonTexture());
 
 		}
 
@@ -10448,7 +10448,7 @@ Parser.prototype.parsePmd = function ( buffer, leftToRight ) {
 		var parseRigidBody = function () {
 
 			var p = {};
-			p.name = dv.getSjisStringsAsUnicode( 20 );
+			p.name = dv.getSjisStringsAsUnicode(20);
 			p.boneIndex = dv.getInt16();
 			p.groupIndex = dv.getUint8();
 			p.groupTarget = dv.getUint16();
@@ -10456,8 +10456,8 @@ Parser.prototype.parsePmd = function ( buffer, leftToRight ) {
 			p.width = dv.getFloat32();
 			p.height = dv.getFloat32();
 			p.depth = dv.getFloat32();
-			p.position = dv.getFloat32Array( 3 );
-			p.rotation = dv.getFloat32Array( 3 );
+			p.position = dv.getFloat32Array(3);
+			p.rotation = dv.getFloat32Array(3);
 			p.weight = dv.getFloat32();
 			p.positionDamping = dv.getFloat32();
 			p.rotationDamping = dv.getFloat32();
@@ -10473,9 +10473,9 @@ Parser.prototype.parsePmd = function ( buffer, leftToRight ) {
 
 		pmd.rigidBodies = [];
 
-		for ( var i = 0; i < metadata.rigidBodyCount; i ++ ) {
+		for (var i = 0; i < metadata.rigidBodyCount; i++) {
 
-			pmd.rigidBodies.push( parseRigidBody() );
+			pmd.rigidBodies.push(parseRigidBody());
 
 		}
 
@@ -10486,17 +10486,17 @@ Parser.prototype.parsePmd = function ( buffer, leftToRight ) {
 		var parseConstraint = function () {
 
 			var p = {};
-			p.name = dv.getSjisStringsAsUnicode( 20 );
+			p.name = dv.getSjisStringsAsUnicode(20);
 			p.rigidBodyIndex1 = dv.getUint32();
 			p.rigidBodyIndex2 = dv.getUint32();
-			p.position = dv.getFloat32Array( 3 );
-			p.rotation = dv.getFloat32Array( 3 );
-			p.translationLimitation1 = dv.getFloat32Array( 3 );
-			p.translationLimitation2 = dv.getFloat32Array( 3 );
-			p.rotationLimitation1 = dv.getFloat32Array( 3 );
-			p.rotationLimitation2 = dv.getFloat32Array( 3 );
-			p.springPosition = dv.getFloat32Array( 3 );
-			p.springRotation = dv.getFloat32Array( 3 );
+			p.position = dv.getFloat32Array(3);
+			p.rotation = dv.getFloat32Array(3);
+			p.translationLimitation1 = dv.getFloat32Array(3);
+			p.translationLimitation2 = dv.getFloat32Array(3);
+			p.rotationLimitation1 = dv.getFloat32Array(3);
+			p.rotationLimitation2 = dv.getFloat32Array(3);
+			p.springPosition = dv.getFloat32Array(3);
+			p.springRotation = dv.getFloat32Array(3);
 			return p;
 
 		};
@@ -10506,9 +10506,9 @@ Parser.prototype.parsePmd = function ( buffer, leftToRight ) {
 
 		pmd.constraints = [];
 
-		for ( var i = 0; i < metadata.constraintCount; i ++ ) {
+		for (var i = 0; i < metadata.constraintCount; i++) {
 
-			pmd.constraints.push( parseConstraint() );
+			pmd.constraints.push(parseConstraint());
 
 		}
 
@@ -10532,7 +10532,7 @@ Parser.prototype.parsePmd = function ( buffer, leftToRight ) {
 	parseRigidBodies();
 	parseConstraints();
 
-	if ( leftToRight === true ) this.leftToRightModel( pmd );
+	if (leftToRight === true) this.leftToRightModel(pmd);
 
 	// console.log( pmd ); // for console debug
 
@@ -10540,10 +10540,10 @@ Parser.prototype.parsePmd = function ( buffer, leftToRight ) {
 
 };
 
-Parser.prototype.parsePmx = function ( buffer, leftToRight ) {
+Parser.prototype.parsePmx = function (buffer, leftToRight) {
 
 	var pmx = {};
-	var dv = new DataViewEx( buffer );
+	var dv = new DataViewEx(buffer);
 
 	pmx.metadata = {};
 	pmx.metadata.format = 'pmx';
@@ -10552,10 +10552,10 @@ Parser.prototype.parsePmx = function ( buffer, leftToRight ) {
 	var parseHeader = function () {
 
 		var metadata = pmx.metadata;
-		metadata.magic = dv.getChars( 4 );
+		metadata.magic = dv.getChars(4);
 
 		// Note: don't remove the last blank space.
-		if ( metadata.magic !== 'PMX ' ) {
+		if (metadata.magic !== 'PMX ') {
 
 			throw 'PMX file magic is not PMX , but ' + metadata.magic;
 
@@ -10563,7 +10563,7 @@ Parser.prototype.parsePmx = function ( buffer, leftToRight ) {
 
 		metadata.version = dv.getFloat32();
 
-		if ( metadata.version !== 2.0 && metadata.version !== 2.1 ) {
+		if (metadata.version !== 2.0 && metadata.version !== 2.1) {
 
 			throw 'PMX version ' + metadata.version + ' is not supported.';
 
@@ -10590,15 +10590,15 @@ Parser.prototype.parsePmx = function ( buffer, leftToRight ) {
 		var parseVertex = function () {
 
 			var p = {};
-			p.position = dv.getFloat32Array( 3 );
-			p.normal = dv.getFloat32Array( 3 );
-			p.uv = dv.getFloat32Array( 2 );
+			p.position = dv.getFloat32Array(3);
+			p.normal = dv.getFloat32Array(3);
+			p.uv = dv.getFloat32Array(2);
 
 			p.auvs = [];
 
-			for ( var i = 0; i < pmx.metadata.additionalUvNum; i ++ ) {
+			for (var i = 0; i < pmx.metadata.additionalUvNum; i++) {
 
-				p.auvs.push( dv.getFloat32Array( 4 ) );
+				p.auvs.push(dv.getFloat32Array(4));
 
 			}
 
@@ -10606,31 +10606,31 @@ Parser.prototype.parsePmx = function ( buffer, leftToRight ) {
 
 			var indexSize = metadata.boneIndexSize;
 
-			if ( p.type === 0 ) { // BDEF1
+			if (p.type === 0) { // BDEF1
 
-				p.skinIndices = dv.getIndexArray( indexSize, 1 );
-				p.skinWeights = [ 1.0 ];
+				p.skinIndices = dv.getIndexArray(indexSize, 1);
+				p.skinWeights = [1.0];
 
-			} else if ( p.type === 1 ) { // BDEF2
+			} else if (p.type === 1) { // BDEF2
 
-				p.skinIndices = dv.getIndexArray( indexSize, 2 );
-				p.skinWeights = dv.getFloat32Array( 1 );
-				p.skinWeights.push( 1.0 - p.skinWeights[ 0 ] );
+				p.skinIndices = dv.getIndexArray(indexSize, 2);
+				p.skinWeights = dv.getFloat32Array(1);
+				p.skinWeights.push(1.0 - p.skinWeights[0]);
 
-			} else if ( p.type === 2 ) { // BDEF4
+			} else if (p.type === 2) { // BDEF4
 
-				p.skinIndices = dv.getIndexArray( indexSize, 4 );
-				p.skinWeights = dv.getFloat32Array( 4 );
+				p.skinIndices = dv.getIndexArray(indexSize, 4);
+				p.skinWeights = dv.getFloat32Array(4);
 
-			} else if ( p.type === 3 ) { // SDEF
+			} else if (p.type === 3) { // SDEF
 
-				p.skinIndices = dv.getIndexArray( indexSize, 2 );
-				p.skinWeights = dv.getFloat32Array( 1 );
-				p.skinWeights.push( 1.0 - p.skinWeights[ 0 ] );
+				p.skinIndices = dv.getIndexArray(indexSize, 2);
+				p.skinWeights = dv.getFloat32Array(1);
+				p.skinWeights.push(1.0 - p.skinWeights[0]);
 
-				p.skinC = dv.getFloat32Array( 3 );
-				p.skinR0 = dv.getFloat32Array( 3 );
-				p.skinR1 = dv.getFloat32Array( 3 );
+				p.skinC = dv.getFloat32Array(3);
+				p.skinR0 = dv.getFloat32Array(3);
+				p.skinR1 = dv.getFloat32Array(3);
 
 				// SDEF is not supported yet and is handled as BDEF2 so far.
 				// TODO: SDEF support
@@ -10652,9 +10652,9 @@ Parser.prototype.parsePmx = function ( buffer, leftToRight ) {
 
 		pmx.vertices = [];
 
-		for ( var i = 0; i < metadata.vertexCount; i ++ ) {
+		for (var i = 0; i < metadata.vertexCount; i++) {
 
-			pmx.vertices.push( parseVertex() );
+			pmx.vertices.push(parseVertex());
 
 		}
 
@@ -10665,7 +10665,7 @@ Parser.prototype.parsePmx = function ( buffer, leftToRight ) {
 		var parseFace = function () {
 
 			var p = {};
-			p.indices = dv.getIndexArray( metadata.vertexIndexSize, 3, true );
+			p.indices = dv.getIndexArray(metadata.vertexIndexSize, 3, true);
 			return p;
 
 		};
@@ -10675,9 +10675,9 @@ Parser.prototype.parsePmx = function ( buffer, leftToRight ) {
 
 		pmx.faces = [];
 
-		for ( var i = 0; i < metadata.faceCount; i ++ ) {
+		for (var i = 0; i < metadata.faceCount; i++) {
 
-			pmx.faces.push( parseFace() );
+			pmx.faces.push(parseFace());
 
 		}
 
@@ -10696,9 +10696,9 @@ Parser.prototype.parsePmx = function ( buffer, leftToRight ) {
 
 		pmx.textures = [];
 
-		for ( var i = 0; i < metadata.textureCount; i ++ ) {
+		for (var i = 0; i < metadata.textureCount; i++) {
 
-			pmx.textures.push( parseTexture() );
+			pmx.textures.push(parseTexture());
 
 		}
 
@@ -10711,23 +10711,23 @@ Parser.prototype.parsePmx = function ( buffer, leftToRight ) {
 			var p = {};
 			p.name = dv.getTextBuffer();
 			p.englishName = dv.getTextBuffer();
-			p.diffuse = dv.getFloat32Array( 4 );
-			p.specular = dv.getFloat32Array( 3 );
+			p.diffuse = dv.getFloat32Array(4);
+			p.specular = dv.getFloat32Array(3);
 			p.shininess = dv.getFloat32();
-			p.ambient = dv.getFloat32Array( 3 );
+			p.ambient = dv.getFloat32Array(3);
 			p.flag = dv.getUint8();
-			p.edgeColor = dv.getFloat32Array( 4 );
+			p.edgeColor = dv.getFloat32Array(4);
 			p.edgeSize = dv.getFloat32();
-			p.textureIndex = dv.getIndex( pmx.metadata.textureIndexSize );
-			p.envTextureIndex = dv.getIndex( pmx.metadata.textureIndexSize );
+			p.textureIndex = dv.getIndex(pmx.metadata.textureIndexSize);
+			p.envTextureIndex = dv.getIndex(pmx.metadata.textureIndexSize);
 			p.envFlag = dv.getUint8();
 			p.toonFlag = dv.getUint8();
 
-			if ( p.toonFlag === 0 ) {
+			if (p.toonFlag === 0) {
 
-				p.toonIndex = dv.getIndex( pmx.metadata.textureIndexSize );
+				p.toonIndex = dv.getIndex(pmx.metadata.textureIndexSize);
 
-			} else if ( p.toonFlag === 1 ) {
+			} else if (p.toonFlag === 1) {
 
 				p.toonIndex = dv.getInt8();
 
@@ -10748,9 +10748,9 @@ Parser.prototype.parsePmx = function ( buffer, leftToRight ) {
 
 		pmx.materials = [];
 
-		for ( var i = 0; i < metadata.materialCount; i ++ ) {
+		for (var i = 0; i < metadata.materialCount; i++) {
 
-			pmx.materials.push( parseMaterial() );
+			pmx.materials.push(parseMaterial());
 
 		}
 
@@ -10763,22 +10763,22 @@ Parser.prototype.parsePmx = function ( buffer, leftToRight ) {
 			var p = {};
 			p.name = dv.getTextBuffer();
 			p.englishName = dv.getTextBuffer();
-			p.position = dv.getFloat32Array( 3 );
-			p.parentIndex = dv.getIndex( pmx.metadata.boneIndexSize );
+			p.position = dv.getFloat32Array(3);
+			p.parentIndex = dv.getIndex(pmx.metadata.boneIndexSize);
 			p.transformationClass = dv.getUint32();
 			p.flag = dv.getUint16();
 
-			if ( p.flag & 0x1 ) {
+			if (p.flag & 0x1) {
 
-				p.connectIndex = dv.getIndex( pmx.metadata.boneIndexSize );
+				p.connectIndex = dv.getIndex(pmx.metadata.boneIndexSize);
 
 			} else {
 
-				p.offsetPosition = dv.getFloat32Array( 3 );
+				p.offsetPosition = dv.getFloat32Array(3);
 
 			}
 
-			if ( p.flag & 0x100 || p.flag & 0x200 ) {
+			if (p.flag & 0x100 || p.flag & 0x200) {
 
 				// Note: I don't think Grant is an appropriate name
 				//       but I found that some English translated MMD tools use this term
@@ -10786,60 +10786,60 @@ Parser.prototype.parsePmx = function ( buffer, leftToRight ) {
 				//       I'd rename to more appropriate name from Grant later.
 				var grant = {};
 
-				grant.isLocal = ( p.flag & 0x80 ) !== 0 ? true : false;
-				grant.affectRotation = ( p.flag & 0x100 ) !== 0 ? true : false;
-				grant.affectPosition = ( p.flag & 0x200 ) !== 0 ? true : false;
-				grant.parentIndex = dv.getIndex( pmx.metadata.boneIndexSize );
+				grant.isLocal = (p.flag & 0x80) !== 0 ? true : false;
+				grant.affectRotation = (p.flag & 0x100) !== 0 ? true : false;
+				grant.affectPosition = (p.flag & 0x200) !== 0 ? true : false;
+				grant.parentIndex = dv.getIndex(pmx.metadata.boneIndexSize);
 				grant.ratio = dv.getFloat32();
 
 				p.grant = grant;
 
 			}
 
-			if ( p.flag & 0x400 ) {
+			if (p.flag & 0x400) {
 
-				p.fixAxis = dv.getFloat32Array( 3 );
-
-			}
-
-			if ( p.flag & 0x800 ) {
-
-				p.localXVector = dv.getFloat32Array( 3 );
-				p.localZVector = dv.getFloat32Array( 3 );
+				p.fixAxis = dv.getFloat32Array(3);
 
 			}
 
-			if ( p.flag & 0x2000 ) {
+			if (p.flag & 0x800) {
+
+				p.localXVector = dv.getFloat32Array(3);
+				p.localZVector = dv.getFloat32Array(3);
+
+			}
+
+			if (p.flag & 0x2000) {
 
 				p.key = dv.getUint32();
 
 			}
 
-			if ( p.flag & 0x20 ) {
+			if (p.flag & 0x20) {
 
 				var ik = {};
 
-				ik.effector = dv.getIndex( pmx.metadata.boneIndexSize );
+				ik.effector = dv.getIndex(pmx.metadata.boneIndexSize);
 				ik.target = null;
 				ik.iteration = dv.getUint32();
 				ik.maxAngle = dv.getFloat32();
 				ik.linkCount = dv.getUint32();
 				ik.links = [];
 
-				for ( var i = 0; i < ik.linkCount; i ++ ) {
+				for (var i = 0; i < ik.linkCount; i++) {
 
 					var link = {};
-					link.index = dv.getIndex( pmx.metadata.boneIndexSize );
+					link.index = dv.getIndex(pmx.metadata.boneIndexSize);
 					link.angleLimitation = dv.getUint8();
 
-					if ( link.angleLimitation === 1 ) {
+					if (link.angleLimitation === 1) {
 
-						link.lowerLimitationAngle = dv.getFloat32Array( 3 );
-						link.upperLimitationAngle = dv.getFloat32Array( 3 );
+						link.lowerLimitationAngle = dv.getFloat32Array(3);
+						link.upperLimitationAngle = dv.getFloat32Array(3);
 
 					}
 
-					ik.links.push( link );
+					ik.links.push(link);
 
 				}
 
@@ -10856,9 +10856,9 @@ Parser.prototype.parsePmx = function ( buffer, leftToRight ) {
 
 		pmx.bones = [];
 
-		for ( var i = 0; i < metadata.boneCount; i ++ ) {
+		for (var i = 0; i < metadata.boneCount; i++) {
 
-			pmx.bones.push( parseBone() );
+			pmx.bones.push(parseBone());
 
 		}
 
@@ -10876,68 +10876,68 @@ Parser.prototype.parsePmx = function ( buffer, leftToRight ) {
 			p.elementCount = dv.getUint32();
 			p.elements = [];
 
-			for ( var i = 0; i < p.elementCount; i ++ ) {
+			for (var i = 0; i < p.elementCount; i++) {
 
-				if ( p.type === 0 ) { // group morph
+				if (p.type === 0) { // group morph
 
 					var m = {};
-					m.index = dv.getIndex( pmx.metadata.morphIndexSize );
+					m.index = dv.getIndex(pmx.metadata.morphIndexSize);
 					m.ratio = dv.getFloat32();
-					p.elements.push( m );
+					p.elements.push(m);
 
-				} else if ( p.type === 1 ) { // vertex morph
-
-					var m = {};
-					m.index = dv.getIndex( pmx.metadata.vertexIndexSize, true );
-					m.position = dv.getFloat32Array( 3 );
-					p.elements.push( m );
-
-				} else if ( p.type === 2 ) { // bone morph
+				} else if (p.type === 1) { // vertex morph
 
 					var m = {};
-					m.index = dv.getIndex( pmx.metadata.boneIndexSize );
-					m.position = dv.getFloat32Array( 3 );
-					m.rotation = dv.getFloat32Array( 4 );
-					p.elements.push( m );
+					m.index = dv.getIndex(pmx.metadata.vertexIndexSize, true);
+					m.position = dv.getFloat32Array(3);
+					p.elements.push(m);
 
-				} else if ( p.type === 3 ) { // uv morph
+				} else if (p.type === 2) { // bone morph
 
 					var m = {};
-					m.index = dv.getIndex( pmx.metadata.vertexIndexSize, true );
-					m.uv = dv.getFloat32Array( 4 );
-					p.elements.push( m );
+					m.index = dv.getIndex(pmx.metadata.boneIndexSize);
+					m.position = dv.getFloat32Array(3);
+					m.rotation = dv.getFloat32Array(4);
+					p.elements.push(m);
 
-				} else if ( p.type === 4 ) { // additional uv1
+				} else if (p.type === 3) { // uv morph
+
+					var m = {};
+					m.index = dv.getIndex(pmx.metadata.vertexIndexSize, true);
+					m.uv = dv.getFloat32Array(4);
+					p.elements.push(m);
+
+				} else if (p.type === 4) { // additional uv1
 
 					// TODO: implement
 
-				} else if ( p.type === 5 ) { // additional uv2
+				} else if (p.type === 5) { // additional uv2
 
 					// TODO: implement
 
-				} else if ( p.type === 6 ) { // additional uv3
+				} else if (p.type === 6) { // additional uv3
 
 					// TODO: implement
 
-				} else if ( p.type === 7 ) { // additional uv4
+				} else if (p.type === 7) { // additional uv4
 
 					// TODO: implement
 
-				} else if ( p.type === 8 ) { // material morph
+				} else if (p.type === 8) { // material morph
 
 					var m = {};
-					m.index = dv.getIndex( pmx.metadata.materialIndexSize );
+					m.index = dv.getIndex(pmx.metadata.materialIndexSize);
 					m.type = dv.getUint8();
-					m.diffuse = dv.getFloat32Array( 4 );
-					m.specular = dv.getFloat32Array( 3 );
+					m.diffuse = dv.getFloat32Array(4);
+					m.specular = dv.getFloat32Array(3);
 					m.shininess = dv.getFloat32();
-					m.ambient = dv.getFloat32Array( 3 );
-					m.edgeColor = dv.getFloat32Array( 4 );
+					m.ambient = dv.getFloat32Array(3);
+					m.edgeColor = dv.getFloat32Array(4);
 					m.edgeSize = dv.getFloat32();
-					m.textureColor = dv.getFloat32Array( 4 );
-					m.sphereTextureColor = dv.getFloat32Array( 4 );
-					m.toonColor = dv.getFloat32Array( 4 );
-					p.elements.push( m );
+					m.textureColor = dv.getFloat32Array(4);
+					m.sphereTextureColor = dv.getFloat32Array(4);
+					m.toonColor = dv.getFloat32Array(4);
+					p.elements.push(m);
 
 				}
 
@@ -10952,9 +10952,9 @@ Parser.prototype.parsePmx = function ( buffer, leftToRight ) {
 
 		pmx.morphs = [];
 
-		for ( var i = 0; i < metadata.morphCount; i ++ ) {
+		for (var i = 0; i < metadata.morphCount; i++) {
 
-			pmx.morphs.push( parseMorph() );
+			pmx.morphs.push(parseMorph());
 
 		}
 
@@ -10971,12 +10971,12 @@ Parser.prototype.parsePmx = function ( buffer, leftToRight ) {
 			p.elementCount = dv.getUint32();
 			p.elements = [];
 
-			for ( var i = 0; i < p.elementCount; i ++ ) {
+			for (var i = 0; i < p.elementCount; i++) {
 
 				var e = {};
 				e.target = dv.getUint8();
-				e.index = ( e.target === 0 ) ? dv.getIndex( pmx.metadata.boneIndexSize ) : dv.getIndex( pmx.metadata.morphIndexSize );
-				p.elements.push( e );
+				e.index = (e.target === 0) ? dv.getIndex(pmx.metadata.boneIndexSize) : dv.getIndex(pmx.metadata.morphIndexSize);
+				p.elements.push(e);
 
 			}
 
@@ -10989,9 +10989,9 @@ Parser.prototype.parsePmx = function ( buffer, leftToRight ) {
 
 		pmx.frames = [];
 
-		for ( var i = 0; i < metadata.frameCount; i ++ ) {
+		for (var i = 0; i < metadata.frameCount; i++) {
 
-			pmx.frames.push( parseFrame() );
+			pmx.frames.push(parseFrame());
 
 		}
 
@@ -11004,15 +11004,15 @@ Parser.prototype.parsePmx = function ( buffer, leftToRight ) {
 			var p = {};
 			p.name = dv.getTextBuffer();
 			p.englishName = dv.getTextBuffer();
-			p.boneIndex = dv.getIndex( pmx.metadata.boneIndexSize );
+			p.boneIndex = dv.getIndex(pmx.metadata.boneIndexSize);
 			p.groupIndex = dv.getUint8();
 			p.groupTarget = dv.getUint16();
 			p.shapeType = dv.getUint8();
 			p.width = dv.getFloat32();
 			p.height = dv.getFloat32();
 			p.depth = dv.getFloat32();
-			p.position = dv.getFloat32Array( 3 );
-			p.rotation = dv.getFloat32Array( 3 );
+			p.position = dv.getFloat32Array(3);
+			p.rotation = dv.getFloat32Array(3);
 			p.weight = dv.getFloat32();
 			p.positionDamping = dv.getFloat32();
 			p.rotationDamping = dv.getFloat32();
@@ -11028,9 +11028,9 @@ Parser.prototype.parsePmx = function ( buffer, leftToRight ) {
 
 		pmx.rigidBodies = [];
 
-		for ( var i = 0; i < metadata.rigidBodyCount; i ++ ) {
+		for (var i = 0; i < metadata.rigidBodyCount; i++) {
 
-			pmx.rigidBodies.push( parseRigidBody() );
+			pmx.rigidBodies.push(parseRigidBody());
 
 		}
 
@@ -11044,16 +11044,16 @@ Parser.prototype.parsePmx = function ( buffer, leftToRight ) {
 			p.name = dv.getTextBuffer();
 			p.englishName = dv.getTextBuffer();
 			p.type = dv.getUint8();
-			p.rigidBodyIndex1 = dv.getIndex( pmx.metadata.rigidBodyIndexSize );
-			p.rigidBodyIndex2 = dv.getIndex( pmx.metadata.rigidBodyIndexSize );
-			p.position = dv.getFloat32Array( 3 );
-			p.rotation = dv.getFloat32Array( 3 );
-			p.translationLimitation1 = dv.getFloat32Array( 3 );
-			p.translationLimitation2 = dv.getFloat32Array( 3 );
-			p.rotationLimitation1 = dv.getFloat32Array( 3 );
-			p.rotationLimitation2 = dv.getFloat32Array( 3 );
-			p.springPosition = dv.getFloat32Array( 3 );
-			p.springRotation = dv.getFloat32Array( 3 );
+			p.rigidBodyIndex1 = dv.getIndex(pmx.metadata.rigidBodyIndexSize);
+			p.rigidBodyIndex2 = dv.getIndex(pmx.metadata.rigidBodyIndexSize);
+			p.position = dv.getFloat32Array(3);
+			p.rotation = dv.getFloat32Array(3);
+			p.translationLimitation1 = dv.getFloat32Array(3);
+			p.translationLimitation2 = dv.getFloat32Array(3);
+			p.rotationLimitation1 = dv.getFloat32Array(3);
+			p.rotationLimitation2 = dv.getFloat32Array(3);
+			p.springPosition = dv.getFloat32Array(3);
+			p.springRotation = dv.getFloat32Array(3);
 			return p;
 
 		};
@@ -11063,9 +11063,9 @@ Parser.prototype.parsePmx = function ( buffer, leftToRight ) {
 
 		pmx.constraints = [];
 
-		for ( var i = 0; i < metadata.constraintCount; i ++ ) {
+		for (var i = 0; i < metadata.constraintCount; i++) {
 
-			pmx.constraints.push( parseConstraint() );
+			pmx.constraints.push(parseConstraint());
 
 		}
 
@@ -11082,7 +11082,7 @@ Parser.prototype.parsePmx = function ( buffer, leftToRight ) {
 	parseRigidBodies();
 	parseConstraints();
 
-	if ( leftToRight === true ) this.leftToRightModel( pmx );
+	if (leftToRight === true) this.leftToRightModel(pmx);
 
 	// console.log( pmx ); // for console debug
 
@@ -11090,10 +11090,10 @@ Parser.prototype.parsePmx = function ( buffer, leftToRight ) {
 
 };
 
-Parser.prototype.parseVmd = function ( buffer, leftToRight ) {
+Parser.prototype.parseVmd = function (buffer, leftToRight) {
 
 	var vmd = {};
-	var dv = new DataViewEx( buffer );
+	var dv = new DataViewEx(buffer);
 
 	vmd.metadata = {};
 	vmd.metadata.coordinateSystem = 'left';
@@ -11101,15 +11101,15 @@ Parser.prototype.parseVmd = function ( buffer, leftToRight ) {
 	var parseHeader = function () {
 
 		var metadata = vmd.metadata;
-		metadata.magic = dv.getChars( 30 );
+		metadata.magic = dv.getChars(30);
 
-		if ( metadata.magic !== 'Vocaloid Motion Data 0002' ) {
+		if (metadata.magic !== 'Vocaloid Motion Data 0002') {
 
 			throw 'VMD file magic is not Vocaloid Motion Data 0002, but ' + metadata.magic;
 
 		}
 
-		metadata.name = dv.getSjisStringsAsUnicode( 20 );
+		metadata.name = dv.getSjisStringsAsUnicode(20);
 
 	};
 
@@ -11118,11 +11118,11 @@ Parser.prototype.parseVmd = function ( buffer, leftToRight ) {
 		var parseMotion = function () {
 
 			var p = {};
-			p.boneName = dv.getSjisStringsAsUnicode( 15 );
+			p.boneName = dv.getSjisStringsAsUnicode(15);
 			p.frameNum = dv.getUint32();
-			p.position = dv.getFloat32Array( 3 );
-			p.rotation = dv.getFloat32Array( 4 );
-			p.interpolation = dv.getUint8Array( 64 );
+			p.position = dv.getFloat32Array(3);
+			p.rotation = dv.getFloat32Array(4);
+			p.interpolation = dv.getUint8Array(64);
 			return p;
 
 		};
@@ -11131,9 +11131,9 @@ Parser.prototype.parseVmd = function ( buffer, leftToRight ) {
 		metadata.motionCount = dv.getUint32();
 
 		vmd.motions = [];
-		for ( var i = 0; i < metadata.motionCount; i ++ ) {
+		for (var i = 0; i < metadata.motionCount; i++) {
 
-			vmd.motions.push( parseMotion() );
+			vmd.motions.push(parseMotion());
 
 		}
 
@@ -11144,7 +11144,7 @@ Parser.prototype.parseVmd = function ( buffer, leftToRight ) {
 		var parseMorph = function () {
 
 			var p = {};
-			p.morphName = dv.getSjisStringsAsUnicode( 15 );
+			p.morphName = dv.getSjisStringsAsUnicode(15);
 			p.frameNum = dv.getUint32();
 			p.weight = dv.getFloat32();
 			return p;
@@ -11155,9 +11155,9 @@ Parser.prototype.parseVmd = function ( buffer, leftToRight ) {
 		metadata.morphCount = dv.getUint32();
 
 		vmd.morphs = [];
-		for ( var i = 0; i < metadata.morphCount; i ++ ) {
+		for (var i = 0; i < metadata.morphCount; i++) {
 
-			vmd.morphs.push( parseMorph() );
+			vmd.morphs.push(parseMorph());
 
 		}
 
@@ -11170,9 +11170,9 @@ Parser.prototype.parseVmd = function ( buffer, leftToRight ) {
 			var p = {};
 			p.frameNum = dv.getUint32();
 			p.distance = dv.getFloat32();
-			p.position = dv.getFloat32Array( 3 );
-			p.rotation = dv.getFloat32Array( 3 );
-			p.interpolation = dv.getUint8Array( 24 );
+			p.position = dv.getFloat32Array(3);
+			p.rotation = dv.getFloat32Array(3);
+			p.interpolation = dv.getUint8Array(24);
 			p.fov = dv.getUint32();
 			p.perspective = dv.getUint8();
 			return p;
@@ -11183,9 +11183,9 @@ Parser.prototype.parseVmd = function ( buffer, leftToRight ) {
 		metadata.cameraCount = dv.getUint32();
 
 		vmd.cameras = [];
-		for ( var i = 0; i < metadata.cameraCount; i ++ ) {
+		for (var i = 0; i < metadata.cameraCount; i++) {
 
-			vmd.cameras.push( parseCamera() );
+			vmd.cameras.push(parseCamera());
 
 		}
 
@@ -11196,7 +11196,7 @@ Parser.prototype.parseVmd = function ( buffer, leftToRight ) {
 	parseMorphs();
 	parseCameras();
 
-	if ( leftToRight === true ) this.leftToRightVmd( vmd );
+	if (leftToRight === true) this.leftToRightVmd(vmd);
 
 	// console.log( vmd ); // for console debug
 
@@ -11204,7 +11204,7 @@ Parser.prototype.parseVmd = function ( buffer, leftToRight ) {
 
 };
 
-Parser.prototype.parseVpd = function ( text, leftToRight ) {
+Parser.prototype.parseVpd = function (text, leftToRight) {
 
 	var vpd = {};
 
@@ -11216,7 +11216,7 @@ Parser.prototype.parseVpd = function ( text, leftToRight ) {
 	var commentPatternG = /\/\/\w*(\r|\n|\r\n)/g;
 	var newlinePattern = /\r|\n|\r\n/;
 
-	var lines = text.replace( commentPatternG, '' ).split( newlinePattern );
+	var lines = text.replace(commentPatternG, '').split(newlinePattern);
 
 	function throwError() {
 
@@ -11226,7 +11226,7 @@ Parser.prototype.parseVpd = function ( text, leftToRight ) {
 
 	function checkMagic() {
 
-		if ( lines[ 0 ] !== 'Vocaloid Pose Data file' ) {
+		if (lines[0] !== 'Vocaloid Pose Data file') {
 
 			throwError();
 
@@ -11236,14 +11236,14 @@ Parser.prototype.parseVpd = function ( text, leftToRight ) {
 
 	function parseHeader() {
 
-		if ( lines.length < 4 ) {
+		if (lines.length < 4) {
 
 			throwError();
 
 		}
 
-		vpd.metadata.parentFile = lines[ 2 ];
-		vpd.metadata.boneCount = parseInt( lines[ 3 ] );
+		vpd.metadata.parentFile = lines[2];
+		vpd.metadata.boneCount = parseInt(lines[3]);
 
 	}
 
@@ -11259,31 +11259,31 @@ Parser.prototype.parseVpd = function ( text, leftToRight ) {
 		var v = null;
 		var q = null;
 
-		for ( var i = 4; i < lines.length; i ++ ) {
+		for (var i = 4; i < lines.length; i++) {
 
-			var line = lines[ i ];
+			var line = lines[i];
 
 			var result;
 
-			result = line.match( boneHeaderPattern );
+			result = line.match(boneHeaderPattern);
 
-			if ( result !== null ) {
+			if (result !== null) {
 
-				if ( n !== null ) {
+				if (n !== null) {
 
 					throwError();
 
 				}
 
-				n = result[ 2 ];
+				n = result[2];
 
 			}
 
-			result = line.match( boneVectorPattern );
+			result = line.match(boneVectorPattern);
 
-			if ( result !== null ) {
+			if (result !== null) {
 
-				if ( v !== null ) {
+				if (v !== null) {
 
 					throwError();
 
@@ -11291,19 +11291,19 @@ Parser.prototype.parseVpd = function ( text, leftToRight ) {
 
 				v = [
 
-					parseFloat( result[ 1 ] ),
-					parseFloat( result[ 2 ] ),
-					parseFloat( result[ 3 ] )
+					parseFloat(result[1]),
+					parseFloat(result[2]),
+					parseFloat(result[3])
 
 				];
 
 			}
 
-			result = line.match( boneQuaternionPattern );
+			result = line.match(boneQuaternionPattern);
 
-			if ( result !== null ) {
+			if (result !== null) {
 
-				if ( q !== null ) {
+				if (q !== null) {
 
 					throwError();
 
@@ -11311,33 +11311,33 @@ Parser.prototype.parseVpd = function ( text, leftToRight ) {
 
 				q = [
 
-					parseFloat( result[ 1 ] ),
-					parseFloat( result[ 2 ] ),
-					parseFloat( result[ 3 ] ),
-					parseFloat( result[ 4 ] )
+					parseFloat(result[1]),
+					parseFloat(result[2]),
+					parseFloat(result[3]),
+					parseFloat(result[4])
 
 				];
 
 
 			}
 
-			result = line.match( boneFooterPattern );
+			result = line.match(boneFooterPattern);
 
-			if ( result !== null ) {
+			if (result !== null) {
 
-				if ( n === null || v === null || q === null ) {
+				if (n === null || v === null || q === null) {
 
 					throwError();
 
 				}
 
-				bones.push( {
+				bones.push({
 
 					name: n,
 					translation: v,
 					quaternion: q
 
-				} );
+				});
 
 				n = null;
 				v = null;
@@ -11347,7 +11347,7 @@ Parser.prototype.parseVpd = function ( text, leftToRight ) {
 
 		}
 
-		if ( n !== null || v !== null || q !== null ) {
+		if (n !== null || v !== null || q !== null) {
 
 			throwError();
 
@@ -11359,7 +11359,7 @@ Parser.prototype.parseVpd = function ( text, leftToRight ) {
 	parseHeader();
 	parseBones();
 
-	if ( leftToRight === true ) this.leftToRightVpd( vpd );
+	if (leftToRight === true) this.leftToRightVpd(vpd);
 
 	// console.log( vpd );  // for console debug
 
@@ -11367,12 +11367,12 @@ Parser.prototype.parseVpd = function ( text, leftToRight ) {
 
 };
 
-Parser.prototype.mergeVmds = function ( vmds ) {
+Parser.prototype.mergeVmds = function (vmds) {
 
 	var v = {};
 	v.metadata = {};
-	v.metadata.name = vmds[ 0 ].metadata.name;
-	v.metadata.coordinateSystem = vmds[ 0 ].metadata.coordinateSystem;
+	v.metadata.name = vmds[0].metadata.name;
+	v.metadata.coordinateSystem = vmds[0].metadata.coordinateSystem;
 	v.metadata.motionCount = 0;
 	v.metadata.morphCount = 0;
 	v.metadata.cameraCount = 0;
@@ -11380,29 +11380,29 @@ Parser.prototype.mergeVmds = function ( vmds ) {
 	v.morphs = [];
 	v.cameras = [];
 
-	for ( var i = 0; i < vmds.length; i ++ ) {
+	for (var i = 0; i < vmds.length; i++) {
 
-		var v2 = vmds[ i ];
+		var v2 = vmds[i];
 
 		v.metadata.motionCount += v2.metadata.motionCount;
 		v.metadata.morphCount += v2.metadata.morphCount;
 		v.metadata.cameraCount += v2.metadata.cameraCount;
 
-		for ( var j = 0; j < v2.metadata.motionCount; j ++ ) {
+		for (var j = 0; j < v2.metadata.motionCount; j++) {
 
-			v.motions.push( v2.motions[ j ] );
-
-		}
-
-		for ( var j = 0; j < v2.metadata.morphCount; j ++ ) {
-
-			v.morphs.push( v2.morphs[ j ] );
+			v.motions.push(v2.motions[j]);
 
 		}
 
-		for ( var j = 0; j < v2.metadata.cameraCount; j ++ ) {
+		for (var j = 0; j < v2.metadata.morphCount; j++) {
 
-			v.cameras.push( v2.cameras[ j ] );
+			v.morphs.push(v2.morphs[j]);
+
+		}
+
+		for (var j = 0; j < v2.metadata.cameraCount; j++) {
+
+			v.cameras.push(v2.cameras[j]);
 
 		}
 
@@ -11412,9 +11412,9 @@ Parser.prototype.mergeVmds = function ( vmds ) {
 
 };
 
-Parser.prototype.leftToRightModel = function ( model ) {
+Parser.prototype.leftToRightModel = function (model) {
 
-	if ( model.metadata.coordinateSystem === 'right' ) {
+	if (model.metadata.coordinateSystem === 'right') {
 
 		return;
 
@@ -11424,66 +11424,66 @@ Parser.prototype.leftToRightModel = function ( model ) {
 
 	var helper = new DataCreationHelper();
 
-	for ( var i = 0; i < model.metadata.vertexCount; i ++ ) {
+	for (var i = 0; i < model.metadata.vertexCount; i++) {
 
-		helper.leftToRightVector3( model.vertices[ i ].position );
-		helper.leftToRightVector3( model.vertices[ i ].normal );
-
-	}
-
-	for ( var i = 0; i < model.metadata.faceCount; i ++ ) {
-
-		helper.leftToRightIndexOrder( model.faces[ i ].indices );
+		helper.leftToRightVector3(model.vertices[i].position);
+		helper.leftToRightVector3(model.vertices[i].normal);
 
 	}
 
-	for ( var i = 0; i < model.metadata.boneCount; i ++ ) {
+	for (var i = 0; i < model.metadata.faceCount; i++) {
 
-		helper.leftToRightVector3( model.bones[ i ].position );
+		helper.leftToRightIndexOrder(model.faces[i].indices);
+
+	}
+
+	for (var i = 0; i < model.metadata.boneCount; i++) {
+
+		helper.leftToRightVector3(model.bones[i].position);
 
 	}
 
 	// TODO: support other morph for PMX
-	for ( var i = 0; i < model.metadata.morphCount; i ++ ) {
+	for (var i = 0; i < model.metadata.morphCount; i++) {
 
-		var m = model.morphs[ i ];
+		var m = model.morphs[i];
 
-		if ( model.metadata.format === 'pmx' && m.type !== 1 ) {
+		if (model.metadata.format === 'pmx' && m.type !== 1) {
 
 			// TODO: implement
 			continue;
 
 		}
 
-		for ( var j = 0; j < m.elements.length; j ++ ) {
+		for (var j = 0; j < m.elements.length; j++) {
 
-			helper.leftToRightVector3( m.elements[ j ].position );
+			helper.leftToRightVector3(m.elements[j].position);
 
 		}
 
 	}
 
-	for ( var i = 0; i < model.metadata.rigidBodyCount; i ++ ) {
+	for (var i = 0; i < model.metadata.rigidBodyCount; i++) {
 
-		helper.leftToRightVector3( model.rigidBodies[ i ].position );
-		helper.leftToRightEuler( model.rigidBodies[ i ].rotation );
+		helper.leftToRightVector3(model.rigidBodies[i].position);
+		helper.leftToRightEuler(model.rigidBodies[i].rotation);
 
 	}
 
-	for ( var i = 0; i < model.metadata.constraintCount; i ++ ) {
+	for (var i = 0; i < model.metadata.constraintCount; i++) {
 
-		helper.leftToRightVector3( model.constraints[ i ].position );
-		helper.leftToRightEuler( model.constraints[ i ].rotation );
-		helper.leftToRightVector3Range( model.constraints[ i ].translationLimitation1, model.constraints[ i ].translationLimitation2 );
-		helper.leftToRightEulerRange( model.constraints[ i ].rotationLimitation1, model.constraints[ i ].rotationLimitation2 );
+		helper.leftToRightVector3(model.constraints[i].position);
+		helper.leftToRightEuler(model.constraints[i].rotation);
+		helper.leftToRightVector3Range(model.constraints[i].translationLimitation1, model.constraints[i].translationLimitation2);
+		helper.leftToRightEulerRange(model.constraints[i].rotationLimitation1, model.constraints[i].rotationLimitation2);
 
 	}
 
 };
 
-Parser.prototype.leftToRightVmd = function ( vmd ) {
+Parser.prototype.leftToRightVmd = function (vmd) {
 
-	if ( vmd.metadata.coordinateSystem === 'right' ) {
+	if (vmd.metadata.coordinateSystem === 'right') {
 
 		return;
 
@@ -11493,25 +11493,25 @@ Parser.prototype.leftToRightVmd = function ( vmd ) {
 
 	var helper = new DataCreationHelper();
 
-	for ( var i = 0; i < vmd.metadata.motionCount; i ++ ) {
+	for (var i = 0; i < vmd.metadata.motionCount; i++) {
 
-		helper.leftToRightVector3( vmd.motions[ i ].position );
-		helper.leftToRightQuaternion( vmd.motions[ i ].rotation );
+		helper.leftToRightVector3(vmd.motions[i].position);
+		helper.leftToRightQuaternion(vmd.motions[i].rotation);
 
 	}
 
-	for ( var i = 0; i < vmd.metadata.cameraCount; i ++ ) {
+	for (var i = 0; i < vmd.metadata.cameraCount; i++) {
 
-		helper.leftToRightVector3( vmd.cameras[ i ].position );
-		helper.leftToRightEuler( vmd.cameras[ i ].rotation );
+		helper.leftToRightVector3(vmd.cameras[i].position);
+		helper.leftToRightEuler(vmd.cameras[i].rotation);
 
 	}
 
 };
 
-Parser.prototype.leftToRightVpd = function ( vpd ) {
+Parser.prototype.leftToRightVpd = function (vpd) {
 
-	if ( vpd.metadata.coordinateSystem === 'right' ) {
+	if (vpd.metadata.coordinateSystem === 'right') {
 
 		return;
 
@@ -11521,15 +11521,15 @@ Parser.prototype.leftToRightVpd = function ( vpd ) {
 
 	var helper = new DataCreationHelper();
 
-	for ( var i = 0; i < vpd.bones.length; i ++ ) {
+	for (var i = 0; i < vpd.bones.length; i++) {
 
-		helper.leftToRightVector3( vpd.bones[ i ].translation );
-		helper.leftToRightQuaternion( vpd.bones[ i ].quaternion );
+		helper.leftToRightVector3(vpd.bones[i].translation);
+		helper.leftToRightQuaternion(vpd.bones[i].quaternion);
 
 	}
 
 };
 
-var MMDParser = { CharsetEncoder, Parser };
+var MMDParser = {CharsetEncoder, Parser};
 
-export { MMDParser };
+export {MMDParser};

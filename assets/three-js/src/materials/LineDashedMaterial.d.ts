@@ -1,4 +1,4 @@
-import { LineBasicMaterial, LineBasicMaterialParameters } from './LineBasicMaterial';
+import {LineBasicMaterial, LineBasicMaterialParameters} from './LineBasicMaterial';
 
 export interface LineDashedMaterialParameters extends LineBasicMaterialParameters {
 	scale?: number;
@@ -8,13 +8,13 @@ export interface LineDashedMaterialParameters extends LineBasicMaterialParameter
 
 export class LineDashedMaterial extends LineBasicMaterial {
 
-	constructor( parameters?: LineDashedMaterialParameters );
-
 	scale: number;
 	dashSize: number;
 	gapSize: number;
 	readonly isLineDashedMaterial: true;
 
-	setValues( parameters: LineDashedMaterialParameters ): void;
+	constructor(parameters?: LineDashedMaterialParameters);
+
+	setValues(parameters: LineDashedMaterialParameters): void;
 
 }

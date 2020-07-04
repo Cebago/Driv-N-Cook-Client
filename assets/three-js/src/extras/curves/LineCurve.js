@@ -1,10 +1,10 @@
-import { Vector2 } from '../../math/Vector2.js';
-import { Curve } from '../core/Curve.js';
+import {Vector2} from '../../math/Vector2.js';
+import {Curve} from '../core/Curve.js';
 
 
-function LineCurve( v1, v2 ) {
+function LineCurve(v1, v2) {
 
-	Curve.call( this );
+	Curve.call(this);
 
 	this.type = 'LineCurve';
 
@@ -13,23 +13,23 @@ function LineCurve( v1, v2 ) {
 
 }
 
-LineCurve.prototype = Object.create( Curve.prototype );
+LineCurve.prototype = Object.create(Curve.prototype);
 LineCurve.prototype.constructor = LineCurve;
 
 LineCurve.prototype.isLineCurve = true;
 
-LineCurve.prototype.getPoint = function ( t, optionalTarget ) {
+LineCurve.prototype.getPoint = function (t, optionalTarget) {
 
 	var point = optionalTarget || new Vector2();
 
-	if ( t === 1 ) {
+	if (t === 1) {
 
-		point.copy( this.v2 );
+		point.copy(this.v2);
 
 	} else {
 
-		point.copy( this.v2 ).sub( this.v1 );
-		point.multiplyScalar( t ).add( this.v1 );
+		point.copy(this.v2).sub(this.v1);
+		point.multiplyScalar(t).add(this.v1);
 
 	}
 
@@ -39,28 +39,28 @@ LineCurve.prototype.getPoint = function ( t, optionalTarget ) {
 
 // Line curve is linear, so we can overwrite default getPointAt
 
-LineCurve.prototype.getPointAt = function ( u, optionalTarget ) {
+LineCurve.prototype.getPointAt = function (u, optionalTarget) {
 
-	return this.getPoint( u, optionalTarget );
+	return this.getPoint(u, optionalTarget);
 
 };
 
-LineCurve.prototype.getTangent = function ( t, optionalTarget ) {
+LineCurve.prototype.getTangent = function (t, optionalTarget) {
 
 	var tangent = optionalTarget || new Vector2();
 
-	var tangent = tangent.copy( this.v2 ).sub( this.v1 ).normalize();
+	var tangent = tangent.copy(this.v2).sub(this.v1).normalize();
 
 	return tangent;
 
 };
 
-LineCurve.prototype.copy = function ( source ) {
+LineCurve.prototype.copy = function (source) {
 
-	Curve.prototype.copy.call( this, source );
+	Curve.prototype.copy.call(this, source);
 
-	this.v1.copy( source.v1 );
-	this.v2.copy( source.v2 );
+	this.v1.copy(source.v1);
+	this.v2.copy(source.v2);
 
 	return this;
 
@@ -68,7 +68,7 @@ LineCurve.prototype.copy = function ( source ) {
 
 LineCurve.prototype.toJSON = function () {
 
-	var data = Curve.prototype.toJSON.call( this );
+	var data = Curve.prototype.toJSON.call(this);
 
 	data.v1 = this.v1.toArray();
 	data.v2 = this.v2.toArray();
@@ -77,16 +77,16 @@ LineCurve.prototype.toJSON = function () {
 
 };
 
-LineCurve.prototype.fromJSON = function ( json ) {
+LineCurve.prototype.fromJSON = function (json) {
 
-	Curve.prototype.fromJSON.call( this, json );
+	Curve.prototype.fromJSON.call(this, json);
 
-	this.v1.fromArray( json.v1 );
-	this.v2.fromArray( json.v2 );
+	this.v1.fromArray(json.v1);
+	this.v2.fromArray(json.v2);
 
 	return this;
 
 };
 
 
-export { LineCurve };
+export {LineCurve};

@@ -10,7 +10,7 @@
  * @param {boolean} supportsJsmWorker
  * @constructor
  */
-const CodeBuilderInstructions = function ( supportsStandardWorker, supportsJsmWorker, preferJsmWorker ) {
+const CodeBuilderInstructions = function (supportsStandardWorker, supportsJsmWorker, preferJsmWorker) {
 
 	this.supportsStandardWorker = supportsStandardWorker;
 	this.supportsJsmWorker = supportsJsmWorker;
@@ -51,9 +51,9 @@ CodeBuilderInstructions.prototype = {
 	 *
 	 * @param {String} jsmWorkerUrl
 	 */
-	setJsmWorkerUrl: function ( jsmWorkerUrl ) {
+	setJsmWorkerUrl: function (jsmWorkerUrl) {
 
-		if ( jsmWorkerUrl !== undefined && jsmWorkerUrl !== null ) {
+		if (jsmWorkerUrl !== undefined && jsmWorkerUrl !== null) {
 
 			this.jsmWorkerUrl = jsmWorkerUrl;
 
@@ -65,7 +65,7 @@ CodeBuilderInstructions.prototype = {
 	 * Add code that is contained in addition to fragments and libraries
 	 * @param {String} startCode
 	 */
-	addStartCode: function ( startCode ) {
+	addStartCode: function (startCode) {
 
 		this.startCode = startCode;
 
@@ -75,9 +75,9 @@ CodeBuilderInstructions.prototype = {
 	 * Add code fragment that is included in the provided order
 	 * @param {String} code
 	 */
-	addCodeFragment: function ( code ) {
+	addCodeFragment: function (code) {
 
-		this.codeFragments.push( code );
+		this.codeFragments.push(code);
 
 	},
 
@@ -85,11 +85,11 @@ CodeBuilderInstructions.prototype = {
 	 * Add full path to a library that is contained at the start of the worker via "importScripts"
 	 * @param {String} libraryPath
 	 */
-	addLibraryImport: function ( libraryPath ) {
+	addLibraryImport: function (libraryPath) {
 
-		let libraryUrl = new URL( libraryPath, window.location.href ).href;
+		let libraryUrl = new URL(libraryPath, window.location.href).href;
 		let code = 'importScripts( "' + libraryUrl + '" );';
-		this.importStatements.push(	code );
+		this.importStatements.push(code);
 
 	},
 
@@ -120,16 +120,16 @@ CodeBuilderInstructions.prototype = {
 const WorkerExecutionSupport = function () {
 
 	// check worker support first
-	if ( window.Worker === undefined ) throw "This browser does not support web workers!";
-	if ( window.Blob === undefined ) throw "This browser does not support Blob!";
-	if ( typeof window.URL.createObjectURL !== 'function' ) throw "This browser does not support Object creation from URL!";
+	if (window.Worker === undefined) throw "This browser does not support web workers!";
+	if (window.Blob === undefined) throw "This browser does not support Blob!";
+	if (typeof window.URL.createObjectURL !== 'function') throw "This browser does not support Object creation from URL!";
 
 	this._reset();
 
 };
 
 WorkerExecutionSupport.WORKER_SUPPORT_VERSION = '3.2.0';
-console.info( 'Using WorkerSupport version: ' + WorkerExecutionSupport.WORKER_SUPPORT_VERSION );
+console.info('Using WorkerSupport version: ' + WorkerExecutionSupport.WORKER_SUPPORT_VERSION);
 
 
 WorkerExecutionSupport.prototype = {
@@ -144,7 +144,7 @@ WorkerExecutionSupport.prototype = {
 		};
 
 		let scope = this;
-		let scopeTerminate = function ( ) {
+		let scopeTerminate = function () {
 
 			scope._terminate();
 
@@ -178,7 +178,7 @@ WorkerExecutionSupport.prototype = {
 	 * @param {boolean} enabled True or false.
 	 * @param {boolean} debug True or false.
 	 */
-	setLogging: function ( enabled, debug ) {
+	setLogging: function (enabled, debug) {
 
 		this.logging.enabled = enabled === true;
 		this.logging.debug = debug === true;
@@ -192,7 +192,7 @@ WorkerExecutionSupport.prototype = {
 	 *
 	 * @param {boolean} forceWorkerDataCopy True or false.
 	 */
-	setForceWorkerDataCopy: function ( forceWorkerDataCopy ) {
+	setForceWorkerDataCopy: function (forceWorkerDataCopy) {
 
 		this.worker.forceWorkerDataCopy = forceWorkerDataCopy === true;
 		return this;
@@ -204,15 +204,15 @@ WorkerExecutionSupport.prototype = {
 	 *
 	 * @param {boolean} terminateWorkerOnLoad True or false.
 	 */
-	setTerminateWorkerOnLoad: function ( terminateWorkerOnLoad ) {
+	setTerminateWorkerOnLoad: function (terminateWorkerOnLoad) {
 
 		this.worker.terminateWorkerOnLoad = terminateWorkerOnLoad === true;
-		if ( this.worker.terminateWorkerOnLoad && this.isWorkerLoaded( this.worker.jsmWorker ) &&
-				this.worker.queuedMessage === null && this.worker.started ) {
+		if (this.worker.terminateWorkerOnLoad && this.isWorkerLoaded(this.worker.jsmWorker) &&
+			this.worker.queuedMessage === null && this.worker.started) {
 
-			if ( this.logging.enabled ) {
+			if (this.logging.enabled) {
 
-				console.info( 'Worker is terminated immediately as it is not running!' );
+				console.info('Worker is terminated immediately as it is not running!');
 
 			}
 
@@ -230,15 +230,15 @@ WorkerExecutionSupport.prototype = {
 	 * @param {Function} onAssetAvailable The function for processing the data, e.g. {@link MeshReceiver}.
 	 * @param {Function} [onLoad] The function that is called when parsing is complete.
 	 */
-	updateCallbacks: function ( onAssetAvailable, onLoad ) {
+	updateCallbacks: function (onAssetAvailable, onLoad) {
 
-		if ( onAssetAvailable !== undefined && onAssetAvailable !== null ) {
+		if (onAssetAvailable !== undefined && onAssetAvailable !== null) {
 
 			this.worker.callbacks.onAssetAvailable = onAssetAvailable;
 
 		}
 
-		if ( onLoad !== undefined && onLoad !== null ) {
+		if (onLoad !== undefined && onLoad !== null) {
 
 			this.worker.callbacks.onLoad = onLoad;
 
@@ -250,7 +250,7 @@ WorkerExecutionSupport.prototype = {
 
 	_verifyCallbacks: function () {
 
-		if ( this.worker.callbacks.onAssetAvailable === undefined || this.worker.callbacks.onAssetAvailable === null ) {
+		if (this.worker.callbacks.onAssetAvailable === undefined || this.worker.callbacks.onAssetAvailable === null) {
 
 			throw 'Unable to run as no "onAssetAvailable" callback is set.';
 
@@ -262,21 +262,21 @@ WorkerExecutionSupport.prototype = {
 	 * Builds the worker code according the provided Instructions.
 	 * If jsm worker code shall be built, then function may fall back to standard if lag is set
 	 *
- 	 * @param {CodeBuilderInstructions} codeBuilderInstructions
+	 * @param {CodeBuilderInstructions} codeBuilderInstructions
 	 */
-	buildWorker: function ( codeBuilderInstructions ) {
+	buildWorker: function (codeBuilderInstructions) {
 
 		let jsmSuccess = false;
 
-		if ( codeBuilderInstructions.isSupportsJsmWorker() && codeBuilderInstructions.isPreferJsmWorker() ) {
+		if (codeBuilderInstructions.isSupportsJsmWorker() && codeBuilderInstructions.isPreferJsmWorker()) {
 
-			jsmSuccess = this._buildWorkerJsm( codeBuilderInstructions );
+			jsmSuccess = this._buildWorkerJsm(codeBuilderInstructions);
 
 		}
 
-		if ( ! jsmSuccess && codeBuilderInstructions.isSupportsStandardWorker() ) {
+		if (!jsmSuccess && codeBuilderInstructions.isSupportsStandardWorker()) {
 
-			this._buildWorkerStandard( codeBuilderInstructions );
+			this._buildWorkerStandard(codeBuilderInstructions);
 
 		}
 
@@ -288,25 +288,25 @@ WorkerExecutionSupport.prototype = {
 	 * @return {boolean} Whether loading of jsm worker was successful
 	 * @private
 	 */
-	_buildWorkerJsm: function ( codeBuilderInstructions ) {
+	_buildWorkerJsm: function (codeBuilderInstructions) {
 
 		let jsmSuccess = true;
 		let timeLabel = 'buildWorkerJsm';
-		let workerAvailable = this._buildWorkerCheckPreconditions( true, timeLabel );
-		if ( ! workerAvailable ) {
+		let workerAvailable = this._buildWorkerCheckPreconditions(true, timeLabel);
+		if (!workerAvailable) {
 
 			try {
 
-				let worker = new Worker( codeBuilderInstructions.jsmWorkerUrl.href, { type: "module" } );
-				this._configureWorkerCommunication( worker, true, codeBuilderInstructions.defaultGeometryType, timeLabel );
+				let worker = new Worker(codeBuilderInstructions.jsmWorkerUrl.href, {type: "module"});
+				this._configureWorkerCommunication(worker, true, codeBuilderInstructions.defaultGeometryType, timeLabel);
 
-			} catch ( e ) {
+			} catch (e) {
 
 				jsmSuccess = false;
 				// Chrome throws this exception, but Firefox currently does not complain, but can't execute the worker afterwards
-				if ( e instanceof TypeError || e instanceof SyntaxError ) {
+				if (e instanceof TypeError || e instanceof SyntaxError) {
 
-					console.error( "Modules are not supported in workers." );
+					console.error("Modules are not supported in workers.");
 
 				}
 
@@ -329,49 +329,49 @@ WorkerExecutionSupport.prototype = {
 	 * @param {CodeBuilderInstructions} codeBuilderInstructions
 	 * @private
 	 */
-	_buildWorkerStandard: function ( codeBuilderInstructions ) {
+	_buildWorkerStandard: function (codeBuilderInstructions) {
 
 		let timeLabel = 'buildWorkerStandard';
-		let workerAvailable = this._buildWorkerCheckPreconditions( false, timeLabel );
-		if ( ! workerAvailable ) {
+		let workerAvailable = this._buildWorkerCheckPreconditions(false, timeLabel);
+		if (!workerAvailable) {
 
 			let concatenateCode = '';
-			codeBuilderInstructions.getImportStatements().forEach( function ( element ) {
+			codeBuilderInstructions.getImportStatements().forEach(function (element) {
 
 				concatenateCode += element + '\n';
 
-			} );
+			});
 			concatenateCode += '\n';
-			codeBuilderInstructions.getCodeFragments().forEach( function ( element ) {
+			codeBuilderInstructions.getCodeFragments().forEach(function (element) {
 
 				concatenateCode += element + '\n';
 
-			} );
+			});
 			concatenateCode += '\n';
 			concatenateCode += codeBuilderInstructions.getStartCode();
 
-			let blob = new Blob( [ concatenateCode ], { type: 'application/javascript' } );
-			let worker = new Worker( window.URL.createObjectURL( blob ) );
+			let blob = new Blob([concatenateCode], {type: 'application/javascript'});
+			let worker = new Worker(window.URL.createObjectURL(blob));
 
-			this._configureWorkerCommunication( worker, false, codeBuilderInstructions.defaultGeometryType, timeLabel );
+			this._configureWorkerCommunication(worker, false, codeBuilderInstructions.defaultGeometryType, timeLabel);
 
 		}
 
 	},
 
-	_buildWorkerCheckPreconditions: function ( requireJsmWorker, timeLabel ) {
+	_buildWorkerCheckPreconditions: function (requireJsmWorker, timeLabel) {
 
 		let workerAvailable = false;
-		if ( this.isWorkerLoaded( requireJsmWorker ) ) {
+		if (this.isWorkerLoaded(requireJsmWorker)) {
 
 			workerAvailable = true;
 
 		} else {
 
-			if ( this.logging.enabled ) {
+			if (this.logging.enabled) {
 
-				console.info( 'WorkerExecutionSupport: Building ' + ( requireJsmWorker ? 'jsm' : 'standard' ) + ' worker code...' );
-				console.time( timeLabel );
+				console.info('WorkerExecutionSupport: Building ' + (requireJsmWorker ? 'jsm' : 'standard') + ' worker code...');
+				console.time(timeLabel);
 
 			}
 
@@ -381,29 +381,29 @@ WorkerExecutionSupport.prototype = {
 
 	},
 
-	_configureWorkerCommunication: function ( worker, haveJsmWorker, defaultGeometryType, timeLabel ) {
+	_configureWorkerCommunication: function (worker, haveJsmWorker, defaultGeometryType, timeLabel) {
 
 		this.worker.native = worker;
 		this.worker.jsmWorker = haveJsmWorker;
 
 		let scope = this;
-		let scopedReceiveWorkerMessage = function ( event ) {
+		let scopedReceiveWorkerMessage = function (event) {
 
-			scope._receiveWorkerMessage( event );
+			scope._receiveWorkerMessage(event);
 
 		};
 
 		this.worker.native.onmessage = scopedReceiveWorkerMessage;
 		this.worker.native.onerror = scopedReceiveWorkerMessage;
-		if ( defaultGeometryType !== undefined && defaultGeometryType !== null ) {
+		if (defaultGeometryType !== undefined && defaultGeometryType !== null) {
 
 			this.worker.workerRunner.defaultGeometryType = defaultGeometryType;
 
 		}
 
-		if ( this.logging.enabled ) {
+		if (this.logging.enabled) {
 
-			console.timeEnd( timeLabel );
+			console.timeEnd(timeLabel);
 
 		}
 
@@ -414,48 +414,48 @@ WorkerExecutionSupport.prototype = {
 	 * @param {boolean} requireJsmWorker
 	 * @return {boolean|*}
 	 */
-	isWorkerLoaded: function ( requireJsmWorker ) {
+	isWorkerLoaded: function (requireJsmWorker) {
 
 		return this.worker.native !== null &&
-			( ( requireJsmWorker && this.worker.jsmWorker ) || ( ! requireJsmWorker && ! this.worker.jsmWorker ) );
+			((requireJsmWorker && this.worker.jsmWorker) || (!requireJsmWorker && !this.worker.jsmWorker));
 
 	},
 
 	/**
 	 * Executed in worker scope
 	 */
-	_receiveWorkerMessage: function ( event ) {
+	_receiveWorkerMessage: function (event) {
 
 		// fast-fail in case of error
-		if ( event.type === "error" ) {
+		if (event.type === "error") {
 
-			console.error( event );
+			console.error(event);
 			return;
 
 		}
 
 		let payload = event.data;
 		let workerRunnerName = this.worker.workerRunner.name;
-		switch ( payload.cmd ) {
+		switch (payload.cmd) {
 
 			case 'assetAvailable':
-				this.worker.callbacks.onAssetAvailable( payload );
+				this.worker.callbacks.onAssetAvailable(payload);
 				break;
 
 			case 'completeOverall':
 				this.worker.queuedMessage = null;
 				this.worker.started = false;
-				if ( this.worker.callbacks.onLoad !== null ) {
+				if (this.worker.callbacks.onLoad !== null) {
 
-					this.worker.callbacks.onLoad( payload.msg );
+					this.worker.callbacks.onLoad(payload.msg);
 
 				}
 
-				if ( this.worker.terminateWorkerOnLoad ) {
+				if (this.worker.terminateWorkerOnLoad) {
 
-					if ( this.worker.logging.enabled ) {
+					if (this.worker.logging.enabled) {
 
-						console.info( 'WorkerSupport [' + workerRunnerName + ']: Run is complete. Terminating application on request!' );
+						console.info('WorkerSupport [' + workerRunnerName + ']: Run is complete. Terminating application on request!');
 
 					}
 
@@ -466,20 +466,20 @@ WorkerExecutionSupport.prototype = {
 				break;
 
 			case 'error':
-				console.error( 'WorkerSupport [' + workerRunnerName + ']: Reported error: ' + payload.msg );
+				console.error('WorkerSupport [' + workerRunnerName + ']: Reported error: ' + payload.msg);
 				this.worker.queuedMessage = null;
 				this.worker.started = false;
-				if ( this.worker.callbacks.onLoad !== null ) {
+				if (this.worker.callbacks.onLoad !== null) {
 
-					this.worker.callbacks.onLoad( payload.msg );
+					this.worker.callbacks.onLoad(payload.msg);
 
 				}
 
-				if ( this.worker.terminateWorkerOnLoad ) {
+				if (this.worker.terminateWorkerOnLoad) {
 
-					if ( this.worker.logging.enabled ) {
+					if (this.worker.logging.enabled) {
 
-						console.info( 'WorkerSupport [' + workerRunnerName + ']: Run reported error. Terminating application on request!' );
+						console.info('WorkerSupport [' + workerRunnerName + ']: Run reported error. Terminating application on request!');
 
 					}
 
@@ -490,7 +490,7 @@ WorkerExecutionSupport.prototype = {
 				break;
 
 			default:
-				console.error( 'WorkerSupport [' + workerRunnerName + ']: Received unknown command: ' + payload.cmd );
+				console.error('WorkerSupport [' + workerRunnerName + ']: Received unknown command: ' + payload.cmd);
 				break;
 
 		}
@@ -502,31 +502,31 @@ WorkerExecutionSupport.prototype = {
 	 *
 	 * @param {Object} payload Raw mesh description (buffers, params, materials) used to build one to many meshes.
 	 */
-	executeParallel: function ( payload, transferables ) {
+	executeParallel: function (payload, transferables) {
 
 		payload.cmd = 'parse';
 		payload.usesMeshDisassembler = this.worker.workerRunner.usesMeshDisassembler;
 		payload.defaultGeometryType = this.worker.workerRunner.defaultGeometryType;
-		if ( ! this._verifyWorkerIsAvailable( payload, transferables ) ) return;
+		if (!this._verifyWorkerIsAvailable(payload, transferables)) return;
 
 		this._postMessage();
 
 	},
 
-	_verifyWorkerIsAvailable: function ( payload, transferables ) {
+	_verifyWorkerIsAvailable: function (payload, transferables) {
 
 		this._verifyCallbacks();
 		let ready = true;
-		if ( this.worker.queuedMessage !== null ) {
+		if (this.worker.queuedMessage !== null) {
 
-			console.warn( 'Already processing message. Rejecting new run instruction' );
+			console.warn('Already processing message. Rejecting new run instruction');
 			ready = false;
 
 		} else {
 
 			this.worker.queuedMessage = {
 				payload: payload,
-				transferables: ( transferables === undefined || transferables === null ) ? [] : transferables
+				transferables: (transferables === undefined || transferables === null) ? [] : transferables
 			};
 			this.worker.started = true;
 
@@ -538,32 +538,32 @@ WorkerExecutionSupport.prototype = {
 
 	_postMessage: function () {
 
-		if ( this.worker.queuedMessage !== null ) {
+		if (this.worker.queuedMessage !== null) {
 
-			if ( this.worker.queuedMessage.payload.data.input instanceof ArrayBuffer ) {
+			if (this.worker.queuedMessage.payload.data.input instanceof ArrayBuffer) {
 
 				let transferables = [];
-				if ( this.worker.forceWorkerDataCopy ) {
+				if (this.worker.forceWorkerDataCopy) {
 
-					transferables.push( this.worker.queuedMessage.payload.data.input.slice( 0 ) );
+					transferables.push(this.worker.queuedMessage.payload.data.input.slice(0));
 
 				} else {
 
-					transferables.push( this.worker.queuedMessage.payload.data.input );
+					transferables.push(this.worker.queuedMessage.payload.data.input);
 
 				}
 
-				if ( this.worker.queuedMessage.transferables.length > 0 ) {
+				if (this.worker.queuedMessage.transferables.length > 0) {
 
-					transferables = transferables.concat( this.worker.queuedMessage.transferables );
+					transferables = transferables.concat(this.worker.queuedMessage.transferables);
 
 				}
 
-				this.worker.native.postMessage( this.worker.queuedMessage.payload, transferables );
+				this.worker.native.postMessage(this.worker.queuedMessage.payload, transferables);
 
 			} else {
 
-				this.worker.native.postMessage( this.worker.queuedMessage.payload );
+				this.worker.native.postMessage(this.worker.queuedMessage.payload);
 
 			}
 

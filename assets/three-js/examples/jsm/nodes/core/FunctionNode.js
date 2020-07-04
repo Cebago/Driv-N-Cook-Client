@@ -3,50 +3,50 @@
  * @thanks bhouston / https://clara.io/
  */
 
-import { TempNode } from './TempNode.js';
-import { NodeLib } from './NodeLib.js';
+import {TempNode} from './TempNode.js';
+import {NodeLib} from './NodeLib.js';
 
 var declarationRegexp = /^\s*([a-z_0-9]+)\s([a-z_0-9]+)\s*\((.*?)\)/i,
 	propertiesRegexp = /[a-z_0-9]+/ig;
 
-function FunctionNode( src, includes, extensions, keywords, type ) {
+function FunctionNode(src, includes, extensions, keywords, type) {
 
 	this.isMethod = type === undefined;
 	this.isInterface = false;
 
-	TempNode.call( this, type );
+	TempNode.call(this, type);
 
-	this.parse( src, includes, extensions, keywords );
+	this.parse(src, includes, extensions, keywords);
 
 }
 
-FunctionNode.prototype = Object.create( TempNode.prototype );
+FunctionNode.prototype = Object.create(TempNode.prototype);
 FunctionNode.prototype.constructor = FunctionNode;
 FunctionNode.prototype.nodeType = "Function";
 
 FunctionNode.prototype.useKeywords = true;
 
-FunctionNode.prototype.getShared = function ( /* builder, output */ ) {
+FunctionNode.prototype.getShared = function ( /* builder, output */) {
 
-	return ! this.isMethod;
-
-};
-
-FunctionNode.prototype.getType = function ( builder ) {
-
-	return builder.getTypeByFormat( this.type );
+	return !this.isMethod;
 
 };
 
-FunctionNode.prototype.getInputByName = function ( name ) {
+FunctionNode.prototype.getType = function (builder) {
+
+	return builder.getTypeByFormat(this.type);
+
+};
+
+FunctionNode.prototype.getInputByName = function (name) {
 
 	var i = this.inputs.length;
 
-	while ( i -- ) {
+	while (i--) {
 
-		if ( this.inputs[ i ].name === name ) {
+		if (this.inputs[i].name === name) {
 
-			return this.inputs[ i ];
+			return this.inputs[i];
 
 		}
 
@@ -54,15 +54,15 @@ FunctionNode.prototype.getInputByName = function ( name ) {
 
 };
 
-FunctionNode.prototype.getIncludeByName = function ( name ) {
+FunctionNode.prototype.getIncludeByName = function (name) {
 
 	var i = this.includes.length;
 
-	while ( i -- ) {
+	while (i--) {
 
-		if ( this.includes[ i ].name === name ) {
+		if (this.includes[i].name === name) {
 
-			return this.includes[ i ];
+			return this.includes[i];
 
 		}
 
@@ -70,79 +70,79 @@ FunctionNode.prototype.getIncludeByName = function ( name ) {
 
 };
 
-FunctionNode.prototype.generate = function ( builder, output ) {
+FunctionNode.prototype.generate = function (builder, output) {
 
 	var match, offset = 0, src = this.src;
 
-	for ( var i = 0; i < this.includes.length; i ++ ) {
+	for (var i = 0; i < this.includes.length; i++) {
 
-		builder.include( this.includes[ i ], this );
+		builder.include(this.includes[i], this);
 
 	}
 
-	for ( var ext in this.extensions ) {
+	for (var ext in this.extensions) {
 
-		builder.extensions[ ext ] = true;
+		builder.extensions[ext] = true;
 
 	}
 
 	var matches = [];
 
-	while ( match = propertiesRegexp.exec( this.src ) ) matches.push( match );
+	while (match = propertiesRegexp.exec(this.src)) matches.push(match);
 
-	for ( var i = 0; i < matches.length; i ++ ) {
+	for (var i = 0; i < matches.length; i++) {
 
-		var match = matches[ i ];
+		var match = matches[i];
 
-		var prop = match[ 0 ],
-			isGlobal = this.isMethod ? ! this.getInputByName( prop ) : true,
+		var prop = match[0],
+			isGlobal = this.isMethod ? !this.getInputByName(prop) : true,
 			reference = prop;
 
-		if ( this.keywords[ prop ] || ( this.useKeywords && isGlobal && NodeLib.containsKeyword( prop ) ) ) {
+		if (this.keywords[prop] || (this.useKeywords && isGlobal && NodeLib.containsKeyword(prop))) {
 
-			var node = this.keywords[ prop ];
+			var node = this.keywords[prop];
 
-			if ( ! node ) {
+			if (!node) {
 
-				var keyword = NodeLib.getKeywordData( prop );
+				var keyword = NodeLib.getKeywordData(prop);
 
-				if ( keyword.cache ) node = builder.keywords[ prop ];
+				if (keyword.cache) node = builder.keywords[prop];
 
-				node = node || NodeLib.getKeyword( prop, builder );
+				node = node || NodeLib.getKeyword(prop, builder);
 
-				if ( keyword.cache ) builder.keywords[ prop ] = node;
+				if (keyword.cache) builder.keywords[prop] = node;
 
 			}
 
-			reference = node.build( builder );
+			reference = node.build(builder);
 
 		}
 
-		if ( prop !== reference ) {
+		if (prop !== reference) {
 
-			src = src.substring( 0, match.index + offset ) + reference + src.substring( match.index + prop.length + offset );
+			src = src.substring(0, match.index + offset) + reference + src.substring(match.index + prop.length + offset);
 
 			offset += reference.length - prop.length;
 
 		}
 
-		if ( this.getIncludeByName( reference ) === undefined && NodeLib.contains( reference ) ) {
+		if (this.getIncludeByName(reference) === undefined && NodeLib.contains(reference)) {
 
-			builder.include( NodeLib.get( reference ) );
+			builder.include(NodeLib.get(reference));
 
 		}
 
 	}
 
-	if ( output === 'source' ) {
+	if (output === 'source') {
 
 		return src;
 
-	} else if ( this.isMethod ) {
+	} else if (this.isMethod) {
 
-		if ( ! this.isInterface ) {
+		if (!this.isInterface) {
 
-			builder.include( this, false, src );
+			builder.include(this, false, src);
 
 		}
 
@@ -150,13 +150,13 @@ FunctionNode.prototype.generate = function ( builder, output ) {
 
 	} else {
 
-		return builder.format( '( ' + src + ' )', this.getType( builder ), output );
+		return builder.format('( ' + src + ' )', this.getType(builder), output);
 
 	}
 
 };
 
-FunctionNode.prototype.parse = function ( src, includes, extensions, keywords ) {
+FunctionNode.prototype.parse = function (src, includes, extensions, keywords) {
 
 	this.src = src || '';
 
@@ -164,31 +164,31 @@ FunctionNode.prototype.parse = function ( src, includes, extensions, keywords ) 
 	this.extensions = extensions || {};
 	this.keywords = keywords || {};
 
-	if ( this.isMethod ) {
+	if (this.isMethod) {
 
-		var match = this.src.match( declarationRegexp );
+		var match = this.src.match(declarationRegexp);
 
 		this.inputs = [];
 
-		if ( match && match.length == 4 ) {
+		if (match && match.length == 4) {
 
-			this.type = match[ 1 ];
-			this.name = match[ 2 ];
+			this.type = match[1];
+			this.name = match[2];
 
-			var inputs = match[ 3 ].match( propertiesRegexp );
+			var inputs = match[3].match(propertiesRegexp);
 
-			if ( inputs ) {
+			if (inputs) {
 
 				var i = 0;
 
-				while ( i < inputs.length ) {
+				while (i < inputs.length) {
 
-					var qualifier = inputs[ i ++ ];
+					var qualifier = inputs[i++];
 					var type, name;
 
-					if ( qualifier === 'in' || qualifier === 'out' || qualifier === 'inout' ) {
+					if (qualifier === 'in' || qualifier === 'out' || qualifier === 'inout') {
 
-						type = inputs[ i ++ ];
+						type = inputs[i++];
 
 					} else {
 
@@ -197,19 +197,19 @@ FunctionNode.prototype.parse = function ( src, includes, extensions, keywords ) 
 
 					}
 
-					name = inputs[ i ++ ];
+					name = inputs[i++];
 
-					this.inputs.push( {
+					this.inputs.push({
 						name: name,
 						type: type,
 						qualifier: qualifier
-					} );
+					});
 
 				}
 
 			}
 
-			this.isInterface = this.src.indexOf( '{' ) === - 1;
+			this.isInterface = this.src.indexOf('{') === -1;
 
 		} else {
 
@@ -222,51 +222,51 @@ FunctionNode.prototype.parse = function ( src, includes, extensions, keywords ) 
 
 };
 
-FunctionNode.prototype.copy = function ( source ) {
+FunctionNode.prototype.copy = function (source) {
 
-	TempNode.prototype.copy.call( this, source );
+	TempNode.prototype.copy.call(this, source);
 
 	this.isMethod = source.isMethod;
 	this.useKeywords = source.useKeywords;
 
-	this.parse( source.src, source.includes, source.extensions, source.keywords );
+	this.parse(source.src, source.includes, source.extensions, source.keywords);
 
-	if ( source.type !== undefined ) this.type = source.type;
+	if (source.type !== undefined) this.type = source.type;
 
 	return this;
 
 };
 
-FunctionNode.prototype.toJSON = function ( meta ) {
+FunctionNode.prototype.toJSON = function (meta) {
 
-	var data = this.getJSONNode( meta );
+	var data = this.getJSONNode(meta);
 
-	if ( ! data ) {
+	if (!data) {
 
-		data = this.createJSONNode( meta );
+		data = this.createJSONNode(meta);
 
 		data.src = this.src;
 		data.isMethod = this.isMethod;
 		data.useKeywords = this.useKeywords;
 
-		if ( ! this.isMethod ) data.type = this.type;
+		if (!this.isMethod) data.type = this.type;
 
-		data.extensions = JSON.parse( JSON.stringify( this.extensions ) );
+		data.extensions = JSON.parse(JSON.stringify(this.extensions));
 		data.keywords = {};
 
-		for ( var keyword in this.keywords ) {
+		for (var keyword in this.keywords) {
 
-			data.keywords[ keyword ] = this.keywords[ keyword ].toJSON( meta ).uuid;
+			data.keywords[keyword] = this.keywords[keyword].toJSON(meta).uuid;
 
 		}
 
-		if ( this.includes.length ) {
+		if (this.includes.length) {
 
 			data.includes = [];
 
-			for ( var i = 0; i < this.includes.length; i ++ ) {
+			for (var i = 0; i < this.includes.length; i++) {
 
-				data.includes.push( this.includes[ i ].toJSON( meta ).uuid );
+				data.includes.push(this.includes[i].toJSON(meta).uuid);
 
 			}
 
@@ -278,4 +278,4 @@ FunctionNode.prototype.toJSON = function ( meta ) {
 
 };
 
-export { FunctionNode };
+export {FunctionNode};

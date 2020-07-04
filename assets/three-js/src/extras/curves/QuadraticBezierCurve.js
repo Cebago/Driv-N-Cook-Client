@@ -1,11 +1,11 @@
-import { Curve } from '../core/Curve.js';
-import { QuadraticBezier } from '../core/Interpolations.js';
-import { Vector2 } from '../../math/Vector2.js';
+import {Curve} from '../core/Curve.js';
+import {QuadraticBezier} from '../core/Interpolations.js';
+import {Vector2} from '../../math/Vector2.js';
 
 
-function QuadraticBezierCurve( v0, v1, v2 ) {
+function QuadraticBezierCurve(v0, v1, v2) {
 
-	Curve.call( this );
+	Curve.call(this);
 
 	this.type = 'QuadraticBezierCurve';
 
@@ -15,33 +15,33 @@ function QuadraticBezierCurve( v0, v1, v2 ) {
 
 }
 
-QuadraticBezierCurve.prototype = Object.create( Curve.prototype );
+QuadraticBezierCurve.prototype = Object.create(Curve.prototype);
 QuadraticBezierCurve.prototype.constructor = QuadraticBezierCurve;
 
 QuadraticBezierCurve.prototype.isQuadraticBezierCurve = true;
 
-QuadraticBezierCurve.prototype.getPoint = function ( t, optionalTarget ) {
+QuadraticBezierCurve.prototype.getPoint = function (t, optionalTarget) {
 
 	var point = optionalTarget || new Vector2();
 
 	var v0 = this.v0, v1 = this.v1, v2 = this.v2;
 
 	point.set(
-		QuadraticBezier( t, v0.x, v1.x, v2.x ),
-		QuadraticBezier( t, v0.y, v1.y, v2.y )
+		QuadraticBezier(t, v0.x, v1.x, v2.x),
+		QuadraticBezier(t, v0.y, v1.y, v2.y)
 	);
 
 	return point;
 
 };
 
-QuadraticBezierCurve.prototype.copy = function ( source ) {
+QuadraticBezierCurve.prototype.copy = function (source) {
 
-	Curve.prototype.copy.call( this, source );
+	Curve.prototype.copy.call(this, source);
 
-	this.v0.copy( source.v0 );
-	this.v1.copy( source.v1 );
-	this.v2.copy( source.v2 );
+	this.v0.copy(source.v0);
+	this.v1.copy(source.v1);
+	this.v2.copy(source.v2);
 
 	return this;
 
@@ -49,7 +49,7 @@ QuadraticBezierCurve.prototype.copy = function ( source ) {
 
 QuadraticBezierCurve.prototype.toJSON = function () {
 
-	var data = Curve.prototype.toJSON.call( this );
+	var data = Curve.prototype.toJSON.call(this);
 
 	data.v0 = this.v0.toArray();
 	data.v1 = this.v1.toArray();
@@ -59,17 +59,17 @@ QuadraticBezierCurve.prototype.toJSON = function () {
 
 };
 
-QuadraticBezierCurve.prototype.fromJSON = function ( json ) {
+QuadraticBezierCurve.prototype.fromJSON = function (json) {
 
-	Curve.prototype.fromJSON.call( this, json );
+	Curve.prototype.fromJSON.call(this, json);
 
-	this.v0.fromArray( json.v0 );
-	this.v1.fromArray( json.v1 );
-	this.v2.fromArray( json.v2 );
+	this.v0.fromArray(json.v0);
+	this.v1.fromArray(json.v1);
+	this.v2.fromArray(json.v2);
 
 	return this;
 
 };
 
 
-export { QuadraticBezierCurve };
+export {QuadraticBezierCurve};

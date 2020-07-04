@@ -1,5 +1,5 @@
-import { Box3 } from './Box3.js';
-import { Vector3 } from './Vector3.js';
+import {Box3} from './Box3.js';
+import {Vector3} from './Vector3.js';
 
 var _box = new Box3();
 
@@ -8,47 +8,47 @@ var _box = new Box3();
  * @author mrdoob / http://mrdoob.com/
  */
 
-function Sphere( center, radius ) {
+function Sphere(center, radius) {
 
-	this.center = ( center !== undefined ) ? center : new Vector3();
-	this.radius = ( radius !== undefined ) ? radius : - 1;
+	this.center = (center !== undefined) ? center : new Vector3();
+	this.radius = (radius !== undefined) ? radius : -1;
 
 }
 
-Object.assign( Sphere.prototype, {
+Object.assign(Sphere.prototype, {
 
-	set: function ( center, radius ) {
+	set: function (center, radius) {
 
-		this.center.copy( center );
+		this.center.copy(center);
 		this.radius = radius;
 
 		return this;
 
 	},
 
-	setFromPoints: function ( points, optionalCenter ) {
+	setFromPoints: function (points, optionalCenter) {
 
 		var center = this.center;
 
-		if ( optionalCenter !== undefined ) {
+		if (optionalCenter !== undefined) {
 
-			center.copy( optionalCenter );
+			center.copy(optionalCenter);
 
 		} else {
 
-			_box.setFromPoints( points ).getCenter( center );
+			_box.setFromPoints(points).getCenter(center);
 
 		}
 
 		var maxRadiusSq = 0;
 
-		for ( var i = 0, il = points.length; i < il; i ++ ) {
+		for (var i = 0, il = points.length; i < il; i++) {
 
-			maxRadiusSq = Math.max( maxRadiusSq, center.distanceToSquared( points[ i ] ) );
+			maxRadiusSq = Math.max(maxRadiusSq, center.distanceToSquared(points[i]));
 
 		}
 
-		this.radius = Math.sqrt( maxRadiusSq );
+		this.radius = Math.sqrt(maxRadiusSq);
 
 		return this;
 
@@ -56,13 +56,13 @@ Object.assign( Sphere.prototype, {
 
 	clone: function () {
 
-		return new this.constructor().copy( this );
+		return new this.constructor().copy(this);
 
 	},
 
-	copy: function ( sphere ) {
+	copy: function (sphere) {
 
-		this.center.copy( sphere.center );
+		this.center.copy(sphere.center);
 		this.radius = sphere.radius;
 
 		return this;
@@ -71,68 +71,68 @@ Object.assign( Sphere.prototype, {
 
 	isEmpty: function () {
 
-		return ( this.radius < 0 );
+		return (this.radius < 0);
 
 	},
 
 	makeEmpty: function () {
 
-		this.center.set( 0, 0, 0 );
-		this.radius = - 1;
+		this.center.set(0, 0, 0);
+		this.radius = -1;
 
 		return this;
 
 	},
 
-	containsPoint: function ( point ) {
+	containsPoint: function (point) {
 
-		return ( point.distanceToSquared( this.center ) <= ( this.radius * this.radius ) );
-
-	},
-
-	distanceToPoint: function ( point ) {
-
-		return ( point.distanceTo( this.center ) - this.radius );
+		return (point.distanceToSquared(this.center) <= (this.radius * this.radius));
 
 	},
 
-	intersectsSphere: function ( sphere ) {
+	distanceToPoint: function (point) {
+
+		return (point.distanceTo(this.center) - this.radius);
+
+	},
+
+	intersectsSphere: function (sphere) {
 
 		var radiusSum = this.radius + sphere.radius;
 
-		return sphere.center.distanceToSquared( this.center ) <= ( radiusSum * radiusSum );
+		return sphere.center.distanceToSquared(this.center) <= (radiusSum * radiusSum);
 
 	},
 
-	intersectsBox: function ( box ) {
+	intersectsBox: function (box) {
 
-		return box.intersectsSphere( this );
-
-	},
-
-	intersectsPlane: function ( plane ) {
-
-		return Math.abs( plane.distanceToPoint( this.center ) ) <= this.radius;
+		return box.intersectsSphere(this);
 
 	},
 
-	clampPoint: function ( point, target ) {
+	intersectsPlane: function (plane) {
 
-		var deltaLengthSq = this.center.distanceToSquared( point );
+		return Math.abs(plane.distanceToPoint(this.center)) <= this.radius;
 
-		if ( target === undefined ) {
+	},
 
-			console.warn( 'THREE.Sphere: .clampPoint() target is now required' );
+	clampPoint: function (point, target) {
+
+		var deltaLengthSq = this.center.distanceToSquared(point);
+
+		if (target === undefined) {
+
+			console.warn('THREE.Sphere: .clampPoint() target is now required');
 			target = new Vector3();
 
 		}
 
-		target.copy( point );
+		target.copy(point);
 
-		if ( deltaLengthSq > ( this.radius * this.radius ) ) {
+		if (deltaLengthSq > (this.radius * this.radius)) {
 
-			target.sub( this.center ).normalize();
-			target.multiplyScalar( this.radius ).add( this.center );
+			target.sub(this.center).normalize();
+			target.multiplyScalar(this.radius).add(this.center);
 
 		}
 
@@ -140,16 +140,16 @@ Object.assign( Sphere.prototype, {
 
 	},
 
-	getBoundingBox: function ( target ) {
+	getBoundingBox: function (target) {
 
-		if ( target === undefined ) {
+		if (target === undefined) {
 
-			console.warn( 'THREE.Sphere: .getBoundingBox() target is now required' );
+			console.warn('THREE.Sphere: .getBoundingBox() target is now required');
 			target = new Box3();
 
 		}
 
-		if ( this.isEmpty() ) {
+		if (this.isEmpty()) {
 
 			// Empty sphere produces empty bounding box
 			target.makeEmpty();
@@ -157,37 +157,37 @@ Object.assign( Sphere.prototype, {
 
 		}
 
-		target.set( this.center, this.center );
-		target.expandByScalar( this.radius );
+		target.set(this.center, this.center);
+		target.expandByScalar(this.radius);
 
 		return target;
 
 	},
 
-	applyMatrix4: function ( matrix ) {
+	applyMatrix4: function (matrix) {
 
-		this.center.applyMatrix4( matrix );
+		this.center.applyMatrix4(matrix);
 		this.radius = this.radius * matrix.getMaxScaleOnAxis();
 
 		return this;
 
 	},
 
-	translate: function ( offset ) {
+	translate: function (offset) {
 
-		this.center.add( offset );
+		this.center.add(offset);
 
 		return this;
 
 	},
 
-	equals: function ( sphere ) {
+	equals: function (sphere) {
 
-		return sphere.center.equals( this.center ) && ( sphere.radius === this.radius );
+		return sphere.center.equals(this.center) && (sphere.radius === this.radius);
 
 	}
 
-} );
+});
 
 
-export { Sphere };
+export {Sphere};

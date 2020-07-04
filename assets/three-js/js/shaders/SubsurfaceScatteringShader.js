@@ -8,35 +8,35 @@
  *------------------------------------------------------------------------------------------
  */
 
-function replaceAll( string, find, replace ) {
+function replaceAll(string, find, replace) {
 
-	return string.split( find ).join( replace );
+	return string.split(find).join(replace);
 
 }
 
-var meshphong_frag_head = THREE.ShaderChunk[ "meshphong_frag" ].slice( 0, THREE.ShaderChunk[ "meshphong_frag" ].indexOf( 'void main() {' ) );
-var meshphong_frag_body = THREE.ShaderChunk[ "meshphong_frag" ].slice( THREE.ShaderChunk[ "meshphong_frag" ].indexOf( 'void main() {' ) );
+var meshphong_frag_head = THREE.ShaderChunk["meshphong_frag"].slice(0, THREE.ShaderChunk["meshphong_frag"].indexOf('void main() {'));
+var meshphong_frag_body = THREE.ShaderChunk["meshphong_frag"].slice(THREE.ShaderChunk["meshphong_frag"].indexOf('void main() {'));
 
 THREE.SubsurfaceScatteringShader = {
 
-	uniforms: THREE.UniformsUtils.merge( [
-		THREE.ShaderLib[ "phong" ].uniforms,
+	uniforms: THREE.UniformsUtils.merge([
+		THREE.ShaderLib["phong"].uniforms,
 		{
-			"thicknessMap": { value: null },
-			"thicknessColor": { value: new THREE.Color( 0xffffff ) },
-			"thicknessDistortion": { value: 0.1 },
-			"thicknessAmbient": { value: 0.0 },
-			"thicknessAttenuation": { value: 0.1 },
-			"thicknessPower": { value: 2.0 },
-			"thicknessScale": { value: 10.0 }
+			"thicknessMap": {value: null},
+			"thicknessColor": {value: new THREE.Color(0xffffff)},
+			"thicknessDistortion": {value: 0.1},
+			"thicknessAmbient": {value: 0.0},
+			"thicknessAttenuation": {value: 0.1},
+			"thicknessPower": {value: 2.0},
+			"thicknessScale": {value: 10.0}
 		}
 
-	] ),
+	]),
 
 	vertexShader: [
 		"#define USE_UV",
-		THREE.ShaderChunk[ "meshphong_vert" ],
-	].join( "\n" ),
+		THREE.ShaderChunk["meshphong_vert"],
+	].join("\n"),
 
 	fragmentShader: [
 		"#define USE_UV",
@@ -60,10 +60,10 @@ THREE.SubsurfaceScatteringShader = {
 		"	reflectedLight.directDiffuse += scatteringIllu * thicknessAttenuation * directLight.color;",
 		"}",
 
-		meshphong_frag_body.replace( "#include <lights_fragment_begin>",
+		meshphong_frag_body.replace("#include <lights_fragment_begin>",
 
 			replaceAll(
-				THREE.ShaderChunk[ 'lights_fragment_begin' ],
+				THREE.ShaderChunk['lights_fragment_begin'],
 				'RE_Direct( directLight, geometry, material, reflectedLight );',
 				[
 					"RE_Direct( directLight, geometry, material, reflectedLight );",
@@ -71,11 +71,10 @@ THREE.SubsurfaceScatteringShader = {
 					"#if defined( SUBSURFACE ) && defined( USE_UV )",
 					" RE_Direct_Scattering(directLight, vUv, geometry, reflectedLight);",
 					"#endif",
-				].join( "\n" )
+				].join("\n")
 			),
-
 		),
 
-	].join( "\n" ),
+	].join("\n"),
 
 };

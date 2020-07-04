@@ -1,13 +1,13 @@
-import { Vector2 } from './../math/Vector2';
-import { EventDispatcher } from './../core/EventDispatcher';
+import {Vector2} from './../math/Vector2';
+import {EventDispatcher} from './../core/EventDispatcher';
 import {
 	Mapping,
-	Wrapping,
-	TextureFilter,
 	PixelFormat,
 	PixelFormatGPU,
 	TextureDataType,
-	TextureEncoding
+	TextureEncoding,
+	TextureFilter,
+	Wrapping
 } from '../constants';
 
 // Textures /////////////////////////////////////////////////////////////////////
@@ -15,19 +15,8 @@ export let TextureIdCount: number;
 
 export class Texture extends EventDispatcher {
 
-	constructor(
-		image?: HTMLImageElement | HTMLCanvasElement | HTMLVideoElement,
-		mapping?: Mapping,
-		wrapS?: Wrapping,
-		wrapT?: Wrapping,
-		magFilter?: TextureFilter,
-		minFilter?: TextureFilter,
-		format?: PixelFormat,
-		type?: TextureDataType,
-		anisotropy?: number,
-		encoding?: TextureEncoding
-	);
-
+	static DEFAULT_IMAGE: any;
+	static DEFAULT_MAPPING: any;
 	id: number;
 	uuid: string;
 	name: string;
@@ -55,15 +44,29 @@ export class Texture extends EventDispatcher {
 	version: number;
 	needsUpdate: boolean;
 	readonly isTexture: true;
-
 	onUpdate: () => void;
-	static DEFAULT_IMAGE: any;
-	static DEFAULT_MAPPING: any;
+
+	constructor(
+		image?: HTMLImageElement | HTMLCanvasElement | HTMLVideoElement,
+		mapping?: Mapping,
+		wrapS?: Wrapping,
+		wrapT?: Wrapping,
+		magFilter?: TextureFilter,
+		minFilter?: TextureFilter,
+		format?: PixelFormat,
+		type?: TextureDataType,
+		anisotropy?: number,
+		encoding?: TextureEncoding
+	);
 
 	clone(): this;
-	copy( source: Texture ): this;
-	toJSON( meta: any ): any;
+
+	copy(source: Texture): this;
+
+	toJSON(meta: any): any;
+
 	dispose(): void;
-	transformUv( uv: Vector2 ): Vector2;
+
+	transformUv(uv: Vector2): Vector2;
 
 }

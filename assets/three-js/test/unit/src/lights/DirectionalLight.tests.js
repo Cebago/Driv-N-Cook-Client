@@ -4,15 +4,15 @@
  */
 /* global QUnit */
 
-import { runStdLightTests } from '../../qunit-utils';
-import { DirectionalLight } from '../../../../src/lights/DirectionalLight';
+import {runStdLightTests} from '../../qunit-utils';
+import {DirectionalLight} from '../../../../src/lights/DirectionalLight';
 
-export default QUnit.module( 'Lights', () => {
+export default QUnit.module('Lights', () => {
 
-	QUnit.module( 'DirectionalLight', ( hooks ) => {
+	QUnit.module('DirectionalLight', (hooks) => {
 
 		var lights = undefined;
-		hooks.beforeEach( function () {
+		hooks.beforeEach(function () {
 
 			const parameters = {
 				color: 0xaaaaaa,
@@ -21,46 +21,46 @@ export default QUnit.module( 'Lights', () => {
 
 			lights = [
 				new DirectionalLight(),
-				new DirectionalLight( parameters.color ),
-				new DirectionalLight( parameters.color, parameters.intensity )
+				new DirectionalLight(parameters.color),
+				new DirectionalLight(parameters.color, parameters.intensity)
 			];
 
-		} );
+		});
 
 		// INHERITANCE
-		QUnit.todo( "Extending", ( assert ) => {
+		QUnit.todo("Extending", (assert) => {
 
-			assert.ok( false, "everything's gonna be alright" );
+			assert.ok(false, "everything's gonna be alright");
 
-		} );
+		});
 
 		// INSTANCING
-		QUnit.todo( "Instancing", ( assert ) => {
+		QUnit.todo("Instancing", (assert) => {
 
-			assert.ok( false, "everything's gonna be alright" );
+			assert.ok(false, "everything's gonna be alright");
 
-		} );
+		});
 
 		// PUBLIC STUFF
-		QUnit.todo( "isDirectionalLight", ( assert ) => {
+		QUnit.todo("isDirectionalLight", (assert) => {
 
-			assert.ok( false, "everything's gonna be alright" );
+			assert.ok(false, "everything's gonna be alright");
 
-		} );
+		});
 
-		QUnit.todo( "copy", ( assert ) => {
+		QUnit.todo("copy", (assert) => {
 
-			assert.ok( false, "everything's gonna be alright" );
+			assert.ok(false, "everything's gonna be alright");
 
-		} );
+		});
 
 		// OTHERS
-		QUnit.test( 'Standard light tests', ( assert ) => {
+		QUnit.test('Standard light tests', (assert) => {
 
-			runStdLightTests( assert, lights );
+			runStdLightTests(assert, lights);
 
-		} );
+		});
 
-	} );
+	});
 
-} );
+});

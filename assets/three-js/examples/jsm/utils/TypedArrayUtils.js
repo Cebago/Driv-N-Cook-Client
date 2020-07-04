@@ -1,4 +1,3 @@
-
 var TypedArrayUtils = {};
 
 /**
@@ -18,130 +17,131 @@ var TypedArrayUtils = {};
  * orderElement: 0 //order according to x
  */
 
-TypedArrayUtils.quicksortIP = function ( arr, eleSize, orderElement ) {
+TypedArrayUtils.quicksortIP = function (arr, eleSize, orderElement) {
 
 	var stack = [];
-	var sp = - 1;
+	var sp = -1;
 	var left = 0;
 	var right = arr.length / eleSize - 1;
 	var tmp = 0.0, x = 0, y = 0;
 
-	var swapF = function ( a, b ) {
+	var swapF = function (a, b) {
 
-		a *= eleSize; b *= eleSize;
+		a *= eleSize;
+		b *= eleSize;
 
-		for ( y = 0; y < eleSize; y ++ ) {
+		for (y = 0; y < eleSize; y++) {
 
-			tmp = arr[ a + y ];
-			arr[ a + y ] = arr[ b + y ];
-			arr[ b + y ] = tmp;
+			tmp = arr[a + y];
+			arr[a + y] = arr[b + y];
+			arr[b + y] = tmp;
 
 		}
 
 	};
 
-	var i, j, swap = new Float32Array( eleSize ), temp = new Float32Array( eleSize );
+	var i, j, swap = new Float32Array(eleSize), temp = new Float32Array(eleSize);
 
-	while ( true ) {
+	while (true) {
 
-		if ( right - left <= 25 ) {
+		if (right - left <= 25) {
 
-			for ( j = left + 1; j <= right; j ++ ) {
+			for (j = left + 1; j <= right; j++) {
 
-				for ( x = 0; x < eleSize; x ++ ) {
+				for (x = 0; x < eleSize; x++) {
 
-					swap[ x ] = arr[ j * eleSize + x ];
+					swap[x] = arr[j * eleSize + x];
 
 				}
 
 				i = j - 1;
 
-				while ( i >= left && arr[ i * eleSize + orderElement ] > swap[ orderElement ] ) {
+				while (i >= left && arr[i * eleSize + orderElement] > swap[orderElement]) {
 
-					for ( x = 0; x < eleSize; x ++ ) {
+					for (x = 0; x < eleSize; x++) {
 
-						arr[ ( i + 1 ) * eleSize + x ] = arr[ i * eleSize + x ];
+						arr[(i + 1) * eleSize + x] = arr[i * eleSize + x];
 
 					}
 
-					i --;
+					i--;
 
 				}
 
-				for ( x = 0; x < eleSize; x ++ ) {
+				for (x = 0; x < eleSize; x++) {
 
-					arr[ ( i + 1 ) * eleSize + x ] = swap[ x ];
+					arr[(i + 1) * eleSize + x] = swap[x];
 
 				}
 
 			}
 
-			if ( sp == - 1 ) break;
+			if (sp == -1) break;
 
-			right = stack[ sp -- ]; //?
-			left = stack[ sp -- ];
+			right = stack[sp--]; //?
+			left = stack[sp--];
 
 		} else {
 
-			var median = ( left + right ) >> 1;
+			var median = (left + right) >> 1;
 
 			i = left + 1;
 			j = right;
 
-			swapF( median, i );
+			swapF(median, i);
 
-			if ( arr[ left * eleSize + orderElement ] > arr[ right * eleSize + orderElement ] ) {
+			if (arr[left * eleSize + orderElement] > arr[right * eleSize + orderElement]) {
 
-				swapF( left, right );
-
-			}
-
-			if ( arr[ i * eleSize + orderElement ] > arr[ right * eleSize + orderElement ] ) {
-
-				swapF( i, right );
+				swapF(left, right);
 
 			}
 
-			if ( arr[ left * eleSize + orderElement ] > arr[ i * eleSize + orderElement ] ) {
+			if (arr[i * eleSize + orderElement] > arr[right * eleSize + orderElement]) {
 
-				swapF( left, i );
-
-			}
-
-			for ( x = 0; x < eleSize; x ++ ) {
-
-				temp[ x ] = arr[ i * eleSize + x ];
+				swapF(i, right);
 
 			}
 
-			while ( true ) {
+			if (arr[left * eleSize + orderElement] > arr[i * eleSize + orderElement]) {
 
-				do i ++; while ( arr[ i * eleSize + orderElement ] < temp[ orderElement ] );
-				do j --; while ( arr[ j * eleSize + orderElement ] > temp[ orderElement ] );
-
-				if ( j < i ) break;
-
-				swapF( i, j );
+				swapF(left, i);
 
 			}
 
-			for ( x = 0; x < eleSize; x ++ ) {
+			for (x = 0; x < eleSize; x++) {
 
-				arr[ ( left + 1 ) * eleSize + x ] = arr[ j * eleSize + x ];
-				arr[ j * eleSize + x ] = temp[ x ];
+				temp[x] = arr[i * eleSize + x];
 
 			}
 
-			if ( right - i + 1 >= j - left ) {
+			while (true) {
 
-				stack[ ++ sp ] = i;
-				stack[ ++ sp ] = right;
+				do i++; while (arr[i * eleSize + orderElement] < temp[orderElement]);
+				do j--; while (arr[j * eleSize + orderElement] > temp[orderElement]);
+
+				if (j < i) break;
+
+				swapF(i, j);
+
+			}
+
+			for (x = 0; x < eleSize; x++) {
+
+				arr[(left + 1) * eleSize + x] = arr[j * eleSize + x];
+				arr[j * eleSize + x] = temp[x];
+
+			}
+
+			if (right - i + 1 >= j - left) {
+
+				stack[++sp] = i;
+				stack[++sp] = right;
 				right = j - 1;
 
 			} else {
 
-				stack[ ++ sp ] = left;
-				stack[ ++ sp ] = j - 1;
+				stack[++sp] = left;
+				stack[++sp] = j - 1;
 				left = i;
 
 			}
@@ -153,7 +153,6 @@ TypedArrayUtils.quicksortIP = function ( arr, eleSize, orderElement ) {
 	return arr;
 
 };
-
 
 
 /**
@@ -182,47 +181,47 @@ TypedArrayUtils.quicksortIP = function ( arr, eleSize, orderElement ) {
  * If you want to further minimize memory usage, remove Node.depth and replace in search algorithm with a traversal to root node (see comments at TypedArrayUtils.Kdtree.prototype.Node)
  */
 
-TypedArrayUtils.Kdtree = function ( points, metric, eleSize ) {
+TypedArrayUtils.Kdtree = function (points, metric, eleSize) {
 
 	var scope = this;
 
 	var maxDepth = 0;
 
-	var getPointSet = function ( points, pos ) {
+	var getPointSet = function (points, pos) {
 
-		return points.subarray( pos * eleSize, pos * eleSize + eleSize );
+		return points.subarray(pos * eleSize, pos * eleSize + eleSize);
 
 	};
 
-	function buildTree( points, depth, parent, pos ) {
+	function buildTree(points, depth, parent, pos) {
 
 		var dim = depth % eleSize,
 			median,
 			node,
 			plength = points.length / eleSize;
 
-		if ( depth > maxDepth ) maxDepth = depth;
+		if (depth > maxDepth) maxDepth = depth;
 
-		if ( plength === 0 ) return null;
-		if ( plength === 1 ) {
+		if (plength === 0) return null;
+		if (plength === 1) {
 
-			return new scope.Node( getPointSet( points, 0 ), depth, parent, pos );
+			return new scope.Node(getPointSet(points, 0), depth, parent, pos);
 
 		}
 
-		TypedArrayUtils.quicksortIP( points, eleSize, dim );
+		TypedArrayUtils.quicksortIP(points, eleSize, dim);
 
-		median = Math.floor( plength / 2 );
+		median = Math.floor(plength / 2);
 
-		node = new scope.Node( getPointSet( points, median ), depth, parent, median + pos );
-		node.left = buildTree( points.subarray( 0, median * eleSize ), depth + 1, node, pos );
-		node.right = buildTree( points.subarray( ( median + 1 ) * eleSize, points.length ), depth + 1, node, pos + median + 1 );
+		node = new scope.Node(getPointSet(points, median), depth, parent, median + pos);
+		node.left = buildTree(points.subarray(0, median * eleSize), depth + 1, node, pos);
+		node.right = buildTree(points.subarray((median + 1) * eleSize, points.length), depth + 1, node, pos + median + 1);
 
 		return node;
 
 	}
 
-	this.root = buildTree( points, 0, null, 0 );
+	this.root = buildTree(points, 0, null, 0);
 
 	this.getMaxDepth = function () {
 
@@ -230,43 +229,41 @@ TypedArrayUtils.Kdtree = function ( points, metric, eleSize ) {
 
 	};
 
-	this.nearest = function ( point, maxNodes, maxDistance ) {
+	this.nearest = function (point, maxNodes, maxDistance) {
 
-		 /* point: array of size eleSize
-			maxNodes: max amount of nodes to return
-			maxDistance: maximum distance to point result nodes should have
-			condition (not implemented): function to test node before it's added to the result list, e.g. test for view frustum
-		*/
+		/* point: array of size eleSize
+		   maxNodes: max amount of nodes to return
+		   maxDistance: maximum distance to point result nodes should have
+		   condition (not implemented): function to test node before it's added to the result list, e.g. test for view frustum
+	   */
 
 		var i,
 			result,
 			bestNodes;
 
 		bestNodes = new TypedArrayUtils.Kdtree.BinaryHeap(
+			function (e) {
 
-			function ( e ) {
-
-				return - e[ 1 ];
+				return -e[1];
 
 			}
-
 		);
 
-		function nearestSearch( node ) {
+		function nearestSearch(node) {
 
 			var bestChild,
 				dimension = node.depth % eleSize,
-				ownDistance = metric( point, node.obj ),
+				ownDistance = metric(point, node.obj),
 				linearDistance = 0,
 				otherChild,
 				i,
 				linearPoint = [];
 
-			function saveNode( node, distance ) {
+			function saveNode(node, distance) {
 
-				bestNodes.push( [ node, distance ] );
+				bestNodes.push([node, distance]);
 
-				if ( bestNodes.size() > maxNodes ) {
+				if (bestNodes.size() > maxNodes) {
 
 					bestNodes.pop();
 
@@ -274,29 +271,29 @@ TypedArrayUtils.Kdtree = function ( points, metric, eleSize ) {
 
 			}
 
-			for ( i = 0; i < eleSize; i += 1 ) {
+			for (i = 0; i < eleSize; i += 1) {
 
-				if ( i === node.depth % eleSize ) {
+				if (i === node.depth % eleSize) {
 
-					linearPoint[ i ] = point[ i ];
+					linearPoint[i] = point[i];
 
 				} else {
 
-					linearPoint[ i ] = node.obj[ i ];
+					linearPoint[i] = node.obj[i];
 
 				}
 
 			}
 
-			linearDistance = metric( linearPoint, node.obj );
+			linearDistance = metric(linearPoint, node.obj);
 
 			// if it's a leaf
 
-			if ( node.right === null && node.left === null ) {
+			if (node.right === null && node.left === null) {
 
-				if ( bestNodes.size() < maxNodes || ownDistance < bestNodes.peek()[ 1 ] ) {
+				if (bestNodes.size() < maxNodes || ownDistance < bestNodes.peek()[1]) {
 
-					saveNode( node, ownDistance );
+					saveNode(node, ownDistance);
 
 				}
 
@@ -304,17 +301,17 @@ TypedArrayUtils.Kdtree = function ( points, metric, eleSize ) {
 
 			}
 
-			if ( node.right === null ) {
+			if (node.right === null) {
 
 				bestChild = node.left;
 
-			} else if ( node.left === null ) {
+			} else if (node.left === null) {
 
 				bestChild = node.right;
 
 			} else {
 
-				if ( point[ dimension ] < node.obj[ dimension ] ) {
+				if (point[dimension] < node.obj[dimension]) {
 
 					bestChild = node.left;
 
@@ -328,19 +325,19 @@ TypedArrayUtils.Kdtree = function ( points, metric, eleSize ) {
 
 			// recursive search
 
-			nearestSearch( bestChild );
+			nearestSearch(bestChild);
 
-			if ( bestNodes.size() < maxNodes || ownDistance < bestNodes.peek()[ 1 ] ) {
+			if (bestNodes.size() < maxNodes || ownDistance < bestNodes.peek()[1]) {
 
-				saveNode( node, ownDistance );
+				saveNode(node, ownDistance);
 
 			}
 
 			// if there's still room or the current distance is nearer than the best distance
 
-			if ( bestNodes.size() < maxNodes || Math.abs( linearDistance ) < bestNodes.peek()[ 1 ] ) {
+			if (bestNodes.size() < maxNodes || Math.abs(linearDistance) < bestNodes.peek()[1]) {
 
-				if ( bestChild === node.left ) {
+				if (bestChild === node.left) {
 
 					otherChild = node.right;
 
@@ -350,9 +347,9 @@ TypedArrayUtils.Kdtree = function ( points, metric, eleSize ) {
 
 				}
 
-				if ( otherChild !== null ) {
+				if (otherChild !== null) {
 
-					nearestSearch( otherChild );
+					nearestSearch(otherChild);
 
 				}
 
@@ -360,25 +357,25 @@ TypedArrayUtils.Kdtree = function ( points, metric, eleSize ) {
 
 		}
 
-		if ( maxDistance ) {
+		if (maxDistance) {
 
-			for ( i = 0; i < maxNodes; i += 1 ) {
+			for (i = 0; i < maxNodes; i += 1) {
 
-				bestNodes.push( [ null, maxDistance ] );
+				bestNodes.push([null, maxDistance]);
 
 			}
 
 		}
 
-		nearestSearch( scope.root );
+		nearestSearch(scope.root);
 
 		result = [];
 
-		for ( i = 0; i < maxNodes; i += 1 ) {
+		for (i = 0; i < maxNodes; i += 1) {
 
-			if ( bestNodes.content[ i ][ 0 ] ) {
+			if (bestNodes.content[i][0]) {
 
-				result.push( [ bestNodes.content[ i ][ 0 ], bestNodes.content[ i ][ 1 ] ] );
+				result.push([bestNodes.content[i][0], bestNodes.content[i][1]]);
 
 			}
 
@@ -405,7 +402,7 @@ TypedArrayUtils.Kdtree = function ( points, metric, eleSize ) {
  *
  * I experienced that for 200'000 nodes you can get rid of 4 MB memory each, leading to 8 MB memory saved.
  */
-TypedArrayUtils.Kdtree.prototype.Node = function ( obj, depth, parent, pos ) {
+TypedArrayUtils.Kdtree.prototype.Node = function (obj, depth, parent, pos) {
 
 	this.obj = obj;
 	this.left = null;
@@ -421,7 +418,7 @@ TypedArrayUtils.Kdtree.prototype.Node = function ( obj, depth, parent, pos ) {
  * @author http://eloquentjavascript.net/appendix2.htm
  */
 
-TypedArrayUtils.Kdtree.BinaryHeap = function ( scoreFunction ) {
+TypedArrayUtils.Kdtree.BinaryHeap = function (scoreFunction) {
 
 	this.content = [];
 	this.scoreFunction = scoreFunction;
@@ -430,30 +427,30 @@ TypedArrayUtils.Kdtree.BinaryHeap = function ( scoreFunction ) {
 
 TypedArrayUtils.Kdtree.BinaryHeap.prototype = {
 
-	push: function ( element ) {
+	push: function (element) {
 
 		// Add the new element to the end of the array.
-		this.content.push( element );
+		this.content.push(element);
 
 		// Allow it to bubble up.
-		this.bubbleUp( this.content.length - 1 );
+		this.bubbleUp(this.content.length - 1);
 
 	},
 
 	pop: function () {
 
 		// Store the first element so we can return it later.
-		var result = this.content[ 0 ];
+		var result = this.content[0];
 
 		// Get the element at the end of the array.
 		var end = this.content.pop();
 
 		// If there are any elements left, put the end element at the
 		// start, and let it sink down.
-		if ( this.content.length > 0 ) {
+		if (this.content.length > 0) {
 
-			this.content[ 0 ] = end;
-			this.sinkDown( 0 );
+			this.content[0] = end;
+			this.sinkDown(0);
 
 		}
 
@@ -463,34 +460,34 @@ TypedArrayUtils.Kdtree.BinaryHeap.prototype = {
 
 	peek: function () {
 
-		return this.content[ 0 ];
+		return this.content[0];
 
 	},
 
-	remove: function ( node ) {
+	remove: function (node) {
 
 		var len = this.content.length;
 
 		// To remove a value, we must search through the array to find it.
-		for ( var i = 0; i < len; i ++ ) {
+		for (var i = 0; i < len; i++) {
 
-			if ( this.content[ i ] == node ) {
+			if (this.content[i] == node) {
 
 				// When it is found, the process seen in 'pop' is repeated
 				// to fill up the hole.
 				var end = this.content.pop();
 
-				if ( i != len - 1 ) {
+				if (i != len - 1) {
 
-					this.content[ i ] = end;
+					this.content[i] = end;
 
-					if ( this.scoreFunction( end ) < this.scoreFunction( node ) ) {
+					if (this.scoreFunction(end) < this.scoreFunction(node)) {
 
-						this.bubbleUp( i );
+						this.bubbleUp(i);
 
 					} else {
 
-						this.sinkDown( i );
+						this.sinkDown(i);
 
 					}
 
@@ -502,7 +499,7 @@ TypedArrayUtils.Kdtree.BinaryHeap.prototype = {
 
 		}
 
-		throw new Error( "Node not found." );
+		throw new Error("Node not found.");
 
 	},
 
@@ -512,23 +509,23 @@ TypedArrayUtils.Kdtree.BinaryHeap.prototype = {
 
 	},
 
-	bubbleUp: function ( n ) {
+	bubbleUp: function (n) {
 
 		// Fetch the element that has to be moved.
-		var element = this.content[ n ];
+		var element = this.content[n];
 
 		// When at 0, an element can not go up any further.
-		while ( n > 0 ) {
+		while (n > 0) {
 
 			// Compute the parent element's index, and fetch it.
-			var parentN = Math.floor( ( n + 1 ) / 2 ) - 1,
-				parent = this.content[ parentN ];
+			var parentN = Math.floor((n + 1) / 2) - 1,
+				parent = this.content[parentN];
 
 			// Swap the elements if the parent is greater.
-			if ( this.scoreFunction( element ) < this.scoreFunction( parent ) ) {
+			if (this.scoreFunction(element) < this.scoreFunction(parent)) {
 
-				this.content[ parentN ] = element;
-				this.content[ n ] = parent;
+				this.content[parentN] = element;
+				this.content[n] = parent;
 
 				// Update 'n' to continue at the new position.
 				n = parentN;
@@ -544,48 +541,48 @@ TypedArrayUtils.Kdtree.BinaryHeap.prototype = {
 
 	},
 
-	sinkDown: function ( n ) {
+	sinkDown: function (n) {
 
 		// Look up the target element and its score.
 		var length = this.content.length,
-			element = this.content[ n ],
-			elemScore = this.scoreFunction( element );
+			element = this.content[n],
+			elemScore = this.scoreFunction(element);
 
-		while ( true ) {
+		while (true) {
 
 			// Compute the indices of the child elements.
-			var child2N = ( n + 1 ) * 2, child1N = child2N - 1;
+			var child2N = (n + 1) * 2, child1N = child2N - 1;
 
 			// This is used to store the new position of the element, if any.
 			var swap = null;
 
 			// If the first child exists (is inside the array)...
-			if ( child1N < length ) {
+			if (child1N < length) {
 
 				// Look it up and compute its score.
-				var child1 = this.content[ child1N ],
-					child1Score = this.scoreFunction( child1 );
+				var child1 = this.content[child1N],
+					child1Score = this.scoreFunction(child1);
 
 				// If the score is less than our element's, we need to swap.
-				if ( child1Score < elemScore ) swap = child1N;
+				if (child1Score < elemScore) swap = child1N;
 
 			}
 
 			// Do the same checks for the other child.
-			if ( child2N < length ) {
+			if (child2N < length) {
 
-				var child2 = this.content[ child2N ],
-					child2Score = this.scoreFunction( child2 );
+				var child2 = this.content[child2N],
+					child2Score = this.scoreFunction(child2);
 
-				if ( child2Score < ( swap === null ? elemScore : child1Score ) ) swap = child2N;
+				if (child2Score < (swap === null ? elemScore : child1Score)) swap = child2N;
 
 			}
 
 			// If the element needs to be moved, swap it, and continue.
-			if ( swap !== null ) {
+			if (swap !== null) {
 
-				this.content[ n ] = this.content[ swap ];
-				this.content[ swap ] = element;
+				this.content[n] = this.content[swap];
+				this.content[swap] = element;
 				n = swap;
 
 			} else {
@@ -601,4 +598,4 @@ TypedArrayUtils.Kdtree.BinaryHeap.prototype = {
 
 };
 
-export { TypedArrayUtils };
+export {TypedArrayUtils};

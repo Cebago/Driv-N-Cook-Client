@@ -2,42 +2,39 @@
  * @author sunag / http://www.sunag.com.br/
  */
 
-import {
-	UniformsLib,
-	UniformsUtils
-} from '../../../../../build/three.module.js';
+import {UniformsLib, UniformsUtils} from '../../../../../build/three.module.js';
 
-import { Node } from '../../core/Node.js';
-import { ExpressionNode } from '../../core/ExpressionNode.js';
-import { ColorNode } from '../../inputs/ColorNode.js';
-import { FloatNode } from '../../inputs/FloatNode.js';
-import { SpecularMIPLevelNode } from '../../utils/SpecularMIPLevelNode.js';
+import {Node} from '../../core/Node.js';
+import {ExpressionNode} from '../../core/ExpressionNode.js';
+import {ColorNode} from '../../inputs/ColorNode.js';
+import {FloatNode} from '../../inputs/FloatNode.js';
+import {SpecularMIPLevelNode} from '../../utils/SpecularMIPLevelNode.js';
 
 function StandardNode() {
 
-	Node.call( this );
+	Node.call(this);
 
-	this.color = new ColorNode( 0xFFFFFF );
-	this.roughness = new FloatNode( 1 );
-	this.metalness = new FloatNode( 0 );
+	this.color = new ColorNode(0xFFFFFF);
+	this.roughness = new FloatNode(1);
+	this.metalness = new FloatNode(0);
 
 }
 
-StandardNode.prototype = Object.create( Node.prototype );
+StandardNode.prototype = Object.create(Node.prototype);
 StandardNode.prototype.constructor = StandardNode;
 StandardNode.prototype.nodeType = "Standard";
 
-StandardNode.prototype.build = function ( builder ) {
+StandardNode.prototype.build = function (builder) {
 
 	var code;
 
-	builder.define( 'STANDARD' );
+	builder.define('STANDARD');
 
 	var useClearcoat = this.clearcoat || this.clearcoatRoughness || this.clearCoatNormal;
 
-	if ( useClearcoat ) {
+	if (useClearcoat) {
 
-		builder.define( 'CLEARCOAT' );
+		builder.define('CLEARCOAT');
 
 	}
 
@@ -46,27 +43,27 @@ StandardNode.prototype.build = function ( builder ) {
 	builder.extensions.derivatives = true;
 	builder.extensions.shaderTextureLOD = true;
 
-	if ( builder.isShader( 'vertex' ) ) {
+	if (builder.isShader('vertex')) {
 
-		var position = this.position ? this.position.analyzeAndFlow( builder, 'v3', { cache: 'position' } ) : undefined;
+		var position = this.position ? this.position.analyzeAndFlow(builder, 'v3', {cache: 'position'}) : undefined;
 
-		builder.mergeUniform( UniformsUtils.merge( [
+		builder.mergeUniform(UniformsUtils.merge([
 
 			UniformsLib.fog,
 			UniformsLib.lights
 
-		] ) );
+		]));
 
-		if ( UniformsLib.LTC_1 ) {
+		if (UniformsLib.LTC_1) {
 
 			// add ltc data textures to material uniforms
 
-			builder.uniforms.ltc_1 = { value: undefined };
-			builder.uniforms.ltc_2 = { value: undefined };
+			builder.uniforms.ltc_1 = {value: undefined};
+			builder.uniforms.ltc_2 = {value: undefined};
 
 		}
 
-		builder.addParsCode( [
+		builder.addParsCode([
 			"varying vec3 vViewPosition;",
 
 			"#ifndef FLAT_SHADED",
@@ -83,7 +80,7 @@ StandardNode.prototype.build = function ( builder ) {
 			"#include <logdepthbuf_pars_vertex>",
 			"#include <clipping_planes_pars_vertex>"
 
-		].join( "\n" ) );
+		].join("\n"));
 
 		var output = [
 			"#include <beginnormal_vertex>",
@@ -101,7 +98,7 @@ StandardNode.prototype.build = function ( builder ) {
 			"#include <begin_vertex>"
 		];
 
-		if ( position ) {
+		if (position) {
 
 			output.push(
 				position.code,
@@ -124,18 +121,18 @@ StandardNode.prototype.build = function ( builder ) {
 			"#include <shadowmap_vertex>"
 		);
 
-		code = output.join( "\n" );
+		code = output.join("\n");
 
 	} else {
 
-		var specularRoughness = new ExpressionNode( 'material.specularRoughness', 'f' );
-		var clearcoatRoughness = new ExpressionNode( 'material.clearcoatRoughness', 'f' );
+		var specularRoughness = new ExpressionNode('material.specularRoughness', 'f');
+		var clearcoatRoughness = new ExpressionNode('material.clearcoatRoughness', 'f');
 
 		var contextEnvironment = {
 			roughness: specularRoughness,
-			bias: new SpecularMIPLevelNode( specularRoughness ),
-			viewNormal: new ExpressionNode( 'normal', 'v3' ),
-			worldNormal: new ExpressionNode( 'inverseTransformDirection( geometry.normal, viewMatrix )', 'v3' ),
+			bias: new SpecularMIPLevelNode(specularRoughness),
+			viewNormal: new ExpressionNode('normal', 'v3'),
+			worldNormal: new ExpressionNode('inverseTransformDirection( geometry.normal, viewMatrix )', 'v3'),
 			gamma: true
 		};
 
@@ -145,102 +142,118 @@ StandardNode.prototype.build = function ( builder ) {
 
 		var contextClearcoatEnvironment = {
 			roughness: clearcoatRoughness,
-			bias: new SpecularMIPLevelNode( clearcoatRoughness ),
-			viewNormal: new ExpressionNode( 'clearcoatNormal', 'v3' ),
-			worldNormal: new ExpressionNode( 'inverseTransformDirection( geometry.clearcoatNormal, viewMatrix )', 'v3' ),
+			bias: new SpecularMIPLevelNode(clearcoatRoughness),
+			viewNormal: new ExpressionNode('clearcoatNormal', 'v3'),
+			worldNormal: new ExpressionNode('inverseTransformDirection( geometry.clearcoatNormal, viewMatrix )', 'v3'),
 			gamma: true
 		};
 
 		// analyze all nodes to reuse generate codes
 
-		if ( this.mask ) this.mask.analyze( builder );
+		if (this.mask) this.mask.analyze(builder);
 
-		this.color.analyze( builder, { slot: 'color', context: contextGammaOnly } );
-		this.roughness.analyze( builder );
-		this.metalness.analyze( builder );
+		this.color.analyze(builder, {slot: 'color', context: contextGammaOnly});
+		this.roughness.analyze(builder);
+		this.metalness.analyze(builder);
 
-		if ( this.alpha ) this.alpha.analyze( builder );
+		if (this.alpha) this.alpha.analyze(builder);
 
-		if ( this.normal ) this.normal.analyze( builder );
+		if (this.normal) this.normal.analyze(builder);
 
-		if ( this.clearcoat ) this.clearcoat.analyze( builder );
-		if ( this.clearcoatRoughness ) this.clearcoatRoughness.analyze( builder );
-		if ( this.clearcoatNormal ) this.clearcoatNormal.analyze( builder );
+		if (this.clearcoat) this.clearcoat.analyze(builder);
+		if (this.clearcoatRoughness) this.clearcoatRoughness.analyze(builder);
+		if (this.clearcoatNormal) this.clearcoatNormal.analyze(builder);
 
-		if ( this.reflectivity ) this.reflectivity.analyze( builder );
+		if (this.reflectivity) this.reflectivity.analyze(builder);
 
-		if ( this.light ) this.light.analyze( builder, { cache: 'light' } );
+		if (this.light) this.light.analyze(builder, {cache: 'light'});
 
-		if ( this.ao ) this.ao.analyze( builder );
-		if ( this.ambient ) this.ambient.analyze( builder );
-		if ( this.shadow ) this.shadow.analyze( builder );
-		if ( this.emissive ) this.emissive.analyze( builder, { slot: 'emissive' } );
+		if (this.ao) this.ao.analyze(builder);
+		if (this.ambient) this.ambient.analyze(builder);
+		if (this.shadow) this.shadow.analyze(builder);
+		if (this.emissive) this.emissive.analyze(builder, {slot: 'emissive'});
 
-		if ( this.environment ) {
+		if (this.environment) {
 
 			// isolate environment from others inputs ( see TextureNode, CubeTextureNode )
 			// environment.analyze will detect if there is a need of calculate irradiance
 
-			this.environment.analyze( builder, { cache: 'radiance', context: contextEnvironment, slot: 'radiance' } );
+			this.environment.analyze(builder, {cache: 'radiance', context: contextEnvironment, slot: 'radiance'});
 
-			if ( builder.requires.irradiance ) {
+			if (builder.requires.irradiance) {
 
-				this.environment.analyze( builder, { cache: 'irradiance', context: contextEnvironment, slot: 'irradiance' } );
+				this.environment.analyze(builder, {
+					cache: 'irradiance',
+					context: contextEnvironment,
+					slot: 'irradiance'
+				});
 
 			}
 
 		}
 
-		if ( this.sheen ) this.sheen.analyze( builder );
+		if (this.sheen) this.sheen.analyze(builder);
 
 		// build code
 
-		var mask = this.mask ? this.mask.flow( builder, 'b' ) : undefined;
+		var mask = this.mask ? this.mask.flow(builder, 'b') : undefined;
 
-		var color = this.color.flow( builder, 'c', { slot: 'color', context: contextGammaOnly } );
-		var roughness = this.roughness.flow( builder, 'f' );
-		var metalness = this.metalness.flow( builder, 'f' );
+		var color = this.color.flow(builder, 'c', {slot: 'color', context: contextGammaOnly});
+		var roughness = this.roughness.flow(builder, 'f');
+		var metalness = this.metalness.flow(builder, 'f');
 
-		var alpha = this.alpha ? this.alpha.flow( builder, 'f' ) : undefined;
+		var alpha = this.alpha ? this.alpha.flow(builder, 'f') : undefined;
 
-		var normal = this.normal ? this.normal.flow( builder, 'v3' ) : undefined;
+		var normal = this.normal ? this.normal.flow(builder, 'v3') : undefined;
 
-		var clearcoat = this.clearcoat ? this.clearcoat.flow( builder, 'f' ) : undefined;
-		var clearcoatRoughness = this.clearcoatRoughness ? this.clearcoatRoughness.flow( builder, 'f' ) : undefined;
-		var clearcoatNormal = this.clearcoatNormal ? this.clearcoatNormal.flow( builder, 'v3' ) : undefined;
+		var clearcoat = this.clearcoat ? this.clearcoat.flow(builder, 'f') : undefined;
+		var clearcoatRoughness = this.clearcoatRoughness ? this.clearcoatRoughness.flow(builder, 'f') : undefined;
+		var clearcoatNormal = this.clearcoatNormal ? this.clearcoatNormal.flow(builder, 'v3') : undefined;
 
-		var reflectivity = this.reflectivity ? this.reflectivity.flow( builder, 'f' ) : undefined;
+		var reflectivity = this.reflectivity ? this.reflectivity.flow(builder, 'f') : undefined;
 
-		var light = this.light ? this.light.flow( builder, 'v3', { cache: 'light' } ) : undefined;
+		var light = this.light ? this.light.flow(builder, 'v3', {cache: 'light'}) : undefined;
 
-		var ao = this.ao ? this.ao.flow( builder, 'f' ) : undefined;
-		var ambient = this.ambient ? this.ambient.flow( builder, 'c' ) : undefined;
-		var shadow = this.shadow ? this.shadow.flow( builder, 'c' ) : undefined;
-		var emissive = this.emissive ? this.emissive.flow( builder, 'c', { slot: 'emissive' } ) : undefined;
+		var ao = this.ao ? this.ao.flow(builder, 'f') : undefined;
+		var ambient = this.ambient ? this.ambient.flow(builder, 'c') : undefined;
+		var shadow = this.shadow ? this.shadow.flow(builder, 'c') : undefined;
+		var emissive = this.emissive ? this.emissive.flow(builder, 'c', {slot: 'emissive'}) : undefined;
 
 		var environment;
 
-		if ( this.environment ) {
+		if (this.environment) {
 
 			environment = {
-				radiance: this.environment.flow( builder, 'c', { cache: 'radiance', context: contextEnvironment, slot: 'radiance' } )
+				radiance: this.environment.flow(builder, 'c', {
+					cache: 'radiance',
+					context: contextEnvironment,
+					slot: 'radiance'
+				})
 			};
 
-			if ( builder.requires.irradiance ) {
+			if (builder.requires.irradiance) {
 
-				environment.irradiance = this.environment.flow( builder, 'c', { cache: 'irradiance', context: contextEnvironment, slot: 'irradiance' } );
+				environment.irradiance = this.environment.flow(builder, 'c', {
+					cache: 'irradiance',
+					context: contextEnvironment,
+					slot: 'irradiance'
+				});
 
 			}
 
 		}
 
-		var clearcoatEnv = useClearcoat && environment ? this.environment.flow( builder, 'c', { cache: 'clearcoat', context: contextClearcoatEnvironment, slot: 'environment' } ) : undefined;
+		var clearcoatEnv = useClearcoat && environment ? this.environment.flow(builder, 'c', {
+			cache: 'clearcoat',
+			context: contextClearcoatEnvironment,
+			slot: 'environment'
+		}) : undefined;
 
-		var sheen = this.sheen ? this.sheen.flow( builder, 'c' ) : undefined;
+		var sheen = this.sheen ? this.sheen.flow(builder, 'c') : undefined;
 
 		builder.requires.transparent = alpha !== undefined;
 
-		builder.addParsCode( [
+		builder.addParsCode([
 			"varying vec3 vViewPosition;",
 
 			"#ifndef FLAT_SHADED",
@@ -256,7 +269,7 @@ StandardNode.prototype.build = function ( builder ) {
 			"#include <lights_physical_pars_fragment>",
 			"#include <shadowmap_pars_fragment>",
 			"#include <logdepthbuf_pars_fragment>"
-		].join( "\n" ) );
+		].join("\n"));
 
 		var output = [
 			"#include <clipping_planes_fragment>",
@@ -270,7 +283,7 @@ StandardNode.prototype.build = function ( builder ) {
 			"	material.diffuseColor = vec3( 1.0 );"
 		];
 
-		if ( mask ) {
+		if (mask) {
 
 			output.push(
 				mask.code,
@@ -293,7 +306,7 @@ StandardNode.prototype.build = function ( builder ) {
 			"	float metalnessFactor = " + metalness.result + ";"
 		);
 
-		if ( alpha ) {
+		if (alpha) {
 
 			output.push(
 				alpha.code,
@@ -306,7 +319,7 @@ StandardNode.prototype.build = function ( builder ) {
 
 		}
 
-		if ( normal ) {
+		if (normal) {
 
 			output.push(
 				normal.code,
@@ -315,7 +328,7 @@ StandardNode.prototype.build = function ( builder ) {
 
 		}
 
-		if ( clearcoatNormal ) {
+		if (clearcoatNormal) {
 
 			output.push(
 				clearcoatNormal.code,
@@ -334,7 +347,7 @@ StandardNode.prototype.build = function ( builder ) {
 		// optimization for now
 
 		output.push(
-			'material.diffuseColor = ' + ( light ? 'vec3( 1.0 )' : 'diffuseColor * ( 1.0 - metalnessFactor )' ) + ';',
+			'material.diffuseColor = ' + (light ? 'vec3( 1.0 )' : 'diffuseColor * ( 1.0 - metalnessFactor )') + ';',
 
 			'material.specularRoughness = max( roughnessFactor, 0.0525 );',
 			'material.specularRoughness += geometryRoughness;',
@@ -343,20 +356,20 @@ StandardNode.prototype.build = function ( builder ) {
 			'material.specularRoughness = clamp( roughnessFactor, 0.04, 1.0 );'
 		);
 
-		if ( clearcoat ) {
+		if (clearcoat) {
 
 			output.push(
 				clearcoat.code,
 				'material.clearcoat = saturate( ' + clearcoat.result + ' );' // Burley clearcoat model
 			);
 
-		} else if ( useClearcoat ) {
+		} else if (useClearcoat) {
 
-			output.push( 'material.clearcoat = 0.0;' );
+			output.push('material.clearcoat = 0.0;');
 
 		}
 
-		if ( clearcoatRoughness ) {
+		if (clearcoatRoughness) {
 
 			output.push(
 				clearcoatRoughness.code,
@@ -365,19 +378,19 @@ StandardNode.prototype.build = function ( builder ) {
 				'material.clearcoatRoughness = min( material.clearcoatRoughness, 1.0 );'
 			);
 
-		} else if ( useClearcoat ) {
+		} else if (useClearcoat) {
 
-			output.push( 'material.clearcoatRoughness = 0.0;' );
-
-		}
-
-		if ( sheen ) {
-
-			output.push( 'material.sheenColor = ' + sheen.result + ';' );
+			output.push('material.clearcoatRoughness = 0.0;');
 
 		}
 
-		if ( reflectivity ) {
+		if (sheen) {
+
+			output.push('material.sheenColor = ' + sheen.result + ';');
+
+		}
+
+		if (reflectivity) {
 
 			output.push(
 				reflectivity.code,
@@ -396,7 +409,7 @@ StandardNode.prototype.build = function ( builder ) {
 			"#include <lights_fragment_begin>"
 		);
 
-		if ( light ) {
+		if (light) {
 
 			output.push(
 				light.code,
@@ -414,7 +427,7 @@ StandardNode.prototype.build = function ( builder ) {
 
 		}
 
-		if ( ao ) {
+		if (ao) {
 
 			output.push(
 				ao.code,
@@ -425,7 +438,7 @@ StandardNode.prototype.build = function ( builder ) {
 
 		}
 
-		if ( ambient ) {
+		if (ambient) {
 
 			output.push(
 				ambient.code,
@@ -434,7 +447,7 @@ StandardNode.prototype.build = function ( builder ) {
 
 		}
 
-		if ( shadow ) {
+		if (shadow) {
 
 			output.push(
 				shadow.code,
@@ -444,7 +457,7 @@ StandardNode.prototype.build = function ( builder ) {
 
 		}
 
-		if ( emissive ) {
+		if (emissive) {
 
 			output.push(
 				emissive.code,
@@ -453,17 +466,17 @@ StandardNode.prototype.build = function ( builder ) {
 
 		}
 
-		if ( environment ) {
+		if (environment) {
 
-			output.push( environment.radiance.code );
+			output.push(environment.radiance.code);
 
-			if ( builder.requires.irradiance ) {
+			if (builder.requires.irradiance) {
 
-				output.push( environment.irradiance.code );
+				output.push(environment.irradiance.code);
 
 			}
 
-			if ( clearcoatEnv ) {
+			if (clearcoatEnv) {
 
 				output.push(
 					clearcoatEnv.code,
@@ -472,11 +485,11 @@ StandardNode.prototype.build = function ( builder ) {
 
 			}
 
-			output.push( "radiance += " + environment.radiance.result + ";" );
+			output.push("radiance += " + environment.radiance.result + ";");
 
-			if ( builder.requires.irradiance ) {
+			if (builder.requires.irradiance) {
 
-				output.push( "iblIrradiance += PI * " + environment.irradiance.result + ";" );
+				output.push("iblIrradiance += PI * " + environment.irradiance.result + ";");
 
 			}
 
@@ -486,15 +499,15 @@ StandardNode.prototype.build = function ( builder ) {
 			"#include <lights_fragment_end>"
 		);
 
-		output.push( "vec3 outgoingLight = reflectedLight.directDiffuse + reflectedLight.indirectDiffuse + reflectedLight.directSpecular + reflectedLight.indirectSpecular;" );
+		output.push("vec3 outgoingLight = reflectedLight.directDiffuse + reflectedLight.indirectDiffuse + reflectedLight.directSpecular + reflectedLight.indirectSpecular;");
 
-		if ( alpha ) {
+		if (alpha) {
 
-			output.push( "gl_FragColor = vec4( outgoingLight, " + alpha.result + " );" );
+			output.push("gl_FragColor = vec4( outgoingLight, " + alpha.result + " );");
 
 		} else {
 
-			output.push( "gl_FragColor = vec4( outgoingLight, 1.0 );" );
+			output.push("gl_FragColor = vec4( outgoingLight, 1.0 );");
 
 		}
 
@@ -506,7 +519,7 @@ StandardNode.prototype.build = function ( builder ) {
 			"#include <dithering_fragment>"
 		);
 
-		code = output.join( "\n" );
+		code = output.join("\n");
 
 	}
 
@@ -514,13 +527,13 @@ StandardNode.prototype.build = function ( builder ) {
 
 };
 
-StandardNode.prototype.copy = function ( source ) {
+StandardNode.prototype.copy = function (source) {
 
-	Node.prototype.copy.call( this, source );
+	Node.prototype.copy.call(this, source);
 
 	// vertex
 
-	if ( source.position ) this.position = source.position;
+	if (source.position) this.position = source.position;
 
 	// fragment
 
@@ -528,75 +541,75 @@ StandardNode.prototype.copy = function ( source ) {
 	this.roughness = source.roughness;
 	this.metalness = source.metalness;
 
-	if ( source.mask ) this.mask = source.mask;
+	if (source.mask) this.mask = source.mask;
 
-	if ( source.alpha ) this.alpha = source.alpha;
+	if (source.alpha) this.alpha = source.alpha;
 
-	if ( source.normal ) this.normal = source.normal;
+	if (source.normal) this.normal = source.normal;
 
-	if ( source.clearcoat ) this.clearcoat = source.clearcoat;
-	if ( source.clearcoatRoughness ) this.clearcoatRoughness = source.clearcoatRoughness;
-	if ( source.clearcoatNormal ) this.clearcoatNormal = source.clearcoatNormal;
+	if (source.clearcoat) this.clearcoat = source.clearcoat;
+	if (source.clearcoatRoughness) this.clearcoatRoughness = source.clearcoatRoughness;
+	if (source.clearcoatNormal) this.clearcoatNormal = source.clearcoatNormal;
 
-	if ( source.reflectivity ) this.reflectivity = source.reflectivity;
+	if (source.reflectivity) this.reflectivity = source.reflectivity;
 
-	if ( source.light ) this.light = source.light;
-	if ( source.shadow ) this.shadow = source.shadow;
+	if (source.light) this.light = source.light;
+	if (source.shadow) this.shadow = source.shadow;
 
-	if ( source.ao ) this.ao = source.ao;
+	if (source.ao) this.ao = source.ao;
 
-	if ( source.emissive ) this.emissive = source.emissive;
-	if ( source.ambient ) this.ambient = source.ambient;
+	if (source.emissive) this.emissive = source.emissive;
+	if (source.ambient) this.ambient = source.ambient;
 
-	if ( source.environment ) this.environment = source.environment;
+	if (source.environment) this.environment = source.environment;
 
-	if ( source.sheen ) this.sheen = source.sheen;
+	if (source.sheen) this.sheen = source.sheen;
 
 	return this;
 
 };
 
-StandardNode.prototype.toJSON = function ( meta ) {
+StandardNode.prototype.toJSON = function (meta) {
 
-	var data = this.getJSONNode( meta );
+	var data = this.getJSONNode(meta);
 
-	if ( ! data ) {
+	if (!data) {
 
-		data = this.createJSONNode( meta );
+		data = this.createJSONNode(meta);
 
 		// vertex
 
-		if ( this.position ) data.position = this.position.toJSON( meta ).uuid;
+		if (this.position) data.position = this.position.toJSON(meta).uuid;
 
 		// fragment
 
-		data.color = this.color.toJSON( meta ).uuid;
-		data.roughness = this.roughness.toJSON( meta ).uuid;
-		data.metalness = this.metalness.toJSON( meta ).uuid;
+		data.color = this.color.toJSON(meta).uuid;
+		data.roughness = this.roughness.toJSON(meta).uuid;
+		data.metalness = this.metalness.toJSON(meta).uuid;
 
-		if ( this.mask ) data.mask = this.mask.toJSON( meta ).uuid;
+		if (this.mask) data.mask = this.mask.toJSON(meta).uuid;
 
-		if ( this.alpha ) data.alpha = this.alpha.toJSON( meta ).uuid;
+		if (this.alpha) data.alpha = this.alpha.toJSON(meta).uuid;
 
-		if ( this.normal ) data.normal = this.normal.toJSON( meta ).uuid;
+		if (this.normal) data.normal = this.normal.toJSON(meta).uuid;
 
-		if ( this.clearcoat ) data.clearcoat = this.clearcoat.toJSON( meta ).uuid;
-		if ( this.clearcoatRoughness ) data.clearcoatRoughness = this.clearcoatRoughness.toJSON( meta ).uuid;
-		if ( this.clearcoatNormal ) data.clearcoatNormal = this.clearcoatNormal.toJSON( meta ).uuid;
+		if (this.clearcoat) data.clearcoat = this.clearcoat.toJSON(meta).uuid;
+		if (this.clearcoatRoughness) data.clearcoatRoughness = this.clearcoatRoughness.toJSON(meta).uuid;
+		if (this.clearcoatNormal) data.clearcoatNormal = this.clearcoatNormal.toJSON(meta).uuid;
 
-		if ( this.reflectivity ) data.reflectivity = this.reflectivity.toJSON( meta ).uuid;
+		if (this.reflectivity) data.reflectivity = this.reflectivity.toJSON(meta).uuid;
 
-		if ( this.light ) data.light = this.light.toJSON( meta ).uuid;
-		if ( this.shadow ) data.shadow = this.shadow.toJSON( meta ).uuid;
+		if (this.light) data.light = this.light.toJSON(meta).uuid;
+		if (this.shadow) data.shadow = this.shadow.toJSON(meta).uuid;
 
-		if ( this.ao ) data.ao = this.ao.toJSON( meta ).uuid;
+		if (this.ao) data.ao = this.ao.toJSON(meta).uuid;
 
-		if ( this.emissive ) data.emissive = this.emissive.toJSON( meta ).uuid;
-		if ( this.ambient ) data.ambient = this.ambient.toJSON( meta ).uuid;
+		if (this.emissive) data.emissive = this.emissive.toJSON(meta).uuid;
+		if (this.ambient) data.ambient = this.ambient.toJSON(meta).uuid;
 
-		if ( this.environment ) data.environment = this.environment.toJSON( meta ).uuid;
+		if (this.environment) data.environment = this.environment.toJSON(meta).uuid;
 
-		if ( this.sheen ) data.sheen = this.sheen.toJSON( meta ).uuid;
+		if (this.sheen) data.sheen = this.sheen.toJSON(meta).uuid;
 
 	}
 
@@ -604,4 +617,4 @@ StandardNode.prototype.toJSON = function ( meta ) {
 
 };
 
-export { StandardNode };
+export {StandardNode};

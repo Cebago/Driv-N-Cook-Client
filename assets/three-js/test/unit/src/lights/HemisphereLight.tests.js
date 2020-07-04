@@ -4,15 +4,15 @@
  */
 /* global QUnit */
 
-import { runStdLightTests } from '../../qunit-utils';
-import { HemisphereLight } from '../../../../src/lights/HemisphereLight';
+import {runStdLightTests} from '../../qunit-utils';
+import {HemisphereLight} from '../../../../src/lights/HemisphereLight';
 
-export default QUnit.module( 'Lights', () => {
+export default QUnit.module('Lights', () => {
 
-	QUnit.module( 'HemisphereLight', ( hooks ) => {
+	QUnit.module('HemisphereLight', (hooks) => {
 
 		var lights = undefined;
-		hooks.beforeEach( function () {
+		hooks.beforeEach(function () {
 
 			const parameters = {
 				skyColor: 0x123456,
@@ -22,47 +22,47 @@ export default QUnit.module( 'Lights', () => {
 
 			lights = [
 				new HemisphereLight(),
-				new HemisphereLight( parameters.skyColor ),
-				new HemisphereLight( parameters.skyColor, parameters.groundColor ),
-				new HemisphereLight( parameters.skyColor, parameters.groundColor, parameters.intensity ),
+				new HemisphereLight(parameters.skyColor),
+				new HemisphereLight(parameters.skyColor, parameters.groundColor),
+				new HemisphereLight(parameters.skyColor, parameters.groundColor, parameters.intensity),
 			];
 
-		} );
+		});
 
 		// INHERITANCE
-		QUnit.todo( "Extending", ( assert ) => {
+		QUnit.todo("Extending", (assert) => {
 
-			assert.ok( false, "everything's gonna be alright" );
+			assert.ok(false, "everything's gonna be alright");
 
-		} );
+		});
 
 		// INSTANCING
-		QUnit.todo( "Instancing", ( assert ) => {
+		QUnit.todo("Instancing", (assert) => {
 
-			assert.ok( false, "everything's gonna be alright" );
+			assert.ok(false, "everything's gonna be alright");
 
-		} );
+		});
 
 		// PUBLIC STUFF
-		QUnit.todo( "isHemisphereLight", ( assert ) => {
+		QUnit.todo("isHemisphereLight", (assert) => {
 
-			assert.ok( false, "everything's gonna be alright" );
+			assert.ok(false, "everything's gonna be alright");
 
-		} );
+		});
 
-		QUnit.todo( "copy", ( assert ) => {
+		QUnit.todo("copy", (assert) => {
 
-			assert.ok( false, "everything's gonna be alright" );
+			assert.ok(false, "everything's gonna be alright");
 
-		} );
+		});
 
 		// OTHERS
-		QUnit.test( 'Standard light tests', ( assert ) => {
+		QUnit.test('Standard light tests', (assert) => {
 
-			runStdLightTests( assert, lights );
+			runStdLightTests(assert, lights);
 
-		} );
+		});
 
-	} );
+	});
 
-} );
+});

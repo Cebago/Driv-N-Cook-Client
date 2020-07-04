@@ -1,4 +1,4 @@
-import { KeyframeTrack } from '../KeyframeTrack.js';
+import {KeyframeTrack} from '../KeyframeTrack.js';
 
 /**
  *
@@ -10,13 +10,13 @@ import { KeyframeTrack } from '../KeyframeTrack.js';
  * @author tschw
  */
 
-function ColorKeyframeTrack( name, times, values, interpolation ) {
+function ColorKeyframeTrack(name, times, values, interpolation) {
 
-	KeyframeTrack.call( this, name, times, values, interpolation );
+	KeyframeTrack.call(this, name, times, values, interpolation);
 
 }
 
-ColorKeyframeTrack.prototype = Object.assign( Object.create( KeyframeTrack.prototype ), {
+ColorKeyframeTrack.prototype = Object.assign(Object.create(KeyframeTrack.prototype), {
 
 	constructor: ColorKeyframeTrack,
 
@@ -29,6 +29,6 @@ ColorKeyframeTrack.prototype = Object.assign( Object.create( KeyframeTrack.proto
 	// Note: Very basic implementation and nothing special yet.
 	// However, this is the place for color space parameterization.
 
-} );
+});
 
-export { ColorKeyframeTrack };
+export {ColorKeyframeTrack};

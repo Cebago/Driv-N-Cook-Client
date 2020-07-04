@@ -3,54 +3,52 @@
  */
 /* global QUnit */
 
-import { WebGLBackground } from '../../../../../src/renderers/webgl/WebGLBackground';
+export default QUnit.module('Renderers', () => {
 
-export default QUnit.module( 'Renderers', () => {
+	QUnit.module('WebGL', () => {
 
-	QUnit.module( 'WebGL', () => {
-
-		QUnit.module( 'WebGLBackground', () => {
+		QUnit.module('WebGLBackground', () => {
 
 			// INSTANCING
-			QUnit.todo( "Instancing", ( assert ) => {
+			QUnit.todo("Instancing", (assert) => {
 
-				assert.ok( false, "everything's gonna be alright" );
+				assert.ok(false, "everything's gonna be alright");
 
-			} );
+			});
 
 			// PUBLIC STUFF
-			QUnit.todo( "getClearColor", ( assert ) => {
+			QUnit.todo("getClearColor", (assert) => {
 
-				assert.ok( false, "everything's gonna be alright" );
+				assert.ok(false, "everything's gonna be alright");
 
-			} );
+			});
 
-			QUnit.todo( "setClearColor", ( assert ) => {
+			QUnit.todo("setClearColor", (assert) => {
 
-				assert.ok( false, "everything's gonna be alright" );
+				assert.ok(false, "everything's gonna be alright");
 
-			} );
+			});
 
-			QUnit.todo( "getClearAlpha", ( assert ) => {
+			QUnit.todo("getClearAlpha", (assert) => {
 
-				assert.ok( false, "everything's gonna be alright" );
+				assert.ok(false, "everything's gonna be alright");
 
-			} );
+			});
 
-			QUnit.todo( "setClearAlpha", ( assert ) => {
+			QUnit.todo("setClearAlpha", (assert) => {
 
-				assert.ok( false, "everything's gonna be alright" );
+				assert.ok(false, "everything's gonna be alright");
 
-			} );
+			});
 
-			QUnit.todo( "render", ( assert ) => {
+			QUnit.todo("render", (assert) => {
 
-				assert.ok( false, "everything's gonna be alright" );
+				assert.ok(false, "everything's gonna be alright");
 
-			} );
+			});
 
-		} );
+		});
 
-	} );
+	});
 
-} );
+});

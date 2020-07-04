@@ -16,9 +16,9 @@ var RGBShiftShader = {
 
 	uniforms: {
 
-		"tDiffuse": { value: null },
-		"amount": { value: 0.005 },
-		"angle": { value: 0.0 }
+		"tDiffuse": {value: null},
+		"amount": {value: 0.005},
+		"angle": {value: 0.0}
 
 	},
 
@@ -33,7 +33,7 @@ var RGBShiftShader = {
 
 		"}"
 
-	].join( "\n" ),
+	].join("\n"),
 
 	fragmentShader: [
 
@@ -53,8 +53,8 @@ var RGBShiftShader = {
 
 		"}"
 
-	].join( "\n" )
+	].join("\n")
 
 };
 
-export { RGBShiftShader };
+export {RGBShiftShader};

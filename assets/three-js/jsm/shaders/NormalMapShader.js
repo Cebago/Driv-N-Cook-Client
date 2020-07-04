@@ -5,18 +5,16 @@
  * - compute normals from heightmap
  */
 
-import {
-	Vector2
-} from "../../../build/three.module.js";
+import {Vector2} from "../../../build/three.module.js";
 
 var NormalMapShader = {
 
 	uniforms: {
 
-		"heightMap": { value: null },
-		"resolution": { value: new Vector2( 512, 512 ) },
-		"scale": { value: new Vector2( 1, 1 ) },
-		"height": { value: 0.05 }
+		"heightMap": {value: null},
+		"resolution": {value: new Vector2(512, 512)},
+		"scale": {value: new Vector2(1, 1)},
+		"height": {value: 0.05}
 
 	},
 
@@ -31,7 +29,7 @@ var NormalMapShader = {
 
 		"}"
 
-	].join( "\n" ),
+	].join("\n"),
 
 	fragmentShader: [
 
@@ -52,8 +50,8 @@ var NormalMapShader = {
 
 		"}"
 
-	].join( "\n" )
+	].join("\n")
 
 };
 
-export { NormalMapShader };
+export {NormalMapShader};

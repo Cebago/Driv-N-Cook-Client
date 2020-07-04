@@ -3,18 +3,16 @@
  */
 /* global QUnit */
 
-import { NothingsIsExportedYet } from '../../../editor/js/Script';
+export default QUnit.module('Editor', () => {
 
-export default QUnit.module( 'Editor', () => {
+	QUnit.module.todo('Script', () => {
 
-	QUnit.module.todo( 'Script', () => {
+		QUnit.test('write me !', (assert) => {
 
-		QUnit.test( 'write me !', ( assert ) => {
+			assert.ok(false, "everything's gonna be alright");
 
-			assert.ok( false, "everything's gonna be alright" );
+		});
 
-		} );
+	});
 
-	} );
-
-} );
+});

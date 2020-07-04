@@ -6,19 +6,17 @@
  * https://github.com/evanw/glfx.js
  */
 
-import {
-	Vector2
-} from "../../../build/three.module.js";
+import {Vector2} from "../../../build/three.module.js";
 
 var DotScreenShader = {
 
 	uniforms: {
 
-		"tDiffuse": { value: null },
-		"tSize": { value: new Vector2( 256, 256 ) },
-		"center": { value: new Vector2( 0.5, 0.5 ) },
-		"angle": { value: 1.57 },
-		"scale": { value: 1.0 }
+		"tDiffuse": {value: null},
+		"tSize": {value: new Vector2(256, 256)},
+		"center": {value: new Vector2(0.5, 0.5)},
+		"angle": {value: 1.57},
+		"scale": {value: 1.0}
 
 	},
 
@@ -33,7 +31,7 @@ var DotScreenShader = {
 
 		"}"
 
-	].join( "\n" ),
+	].join("\n"),
 
 	fragmentShader: [
 
@@ -67,8 +65,8 @@ var DotScreenShader = {
 
 		"}"
 
-	].join( "\n" )
+	].join("\n")
 
 };
 
-export { DotScreenShader };
+export {DotScreenShader};

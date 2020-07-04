@@ -2,29 +2,29 @@
  * @author sunag / http://www.sunag.com.br/
  */
 
-import { InputNode } from '../core/InputNode.js';
+import {InputNode} from '../core/InputNode.js';
 
-function IntNode( value ) {
+function IntNode(value) {
 
-	InputNode.call( this, 'i' );
+	InputNode.call(this, 'i');
 
-	this.value = Math.floor( value || 0 );
+	this.value = Math.floor(value || 0);
 
 }
 
-IntNode.prototype = Object.create( InputNode.prototype );
+IntNode.prototype = Object.create(InputNode.prototype);
 IntNode.prototype.constructor = IntNode;
 IntNode.prototype.nodeType = "Int";
 
-IntNode.prototype.generateReadonly = function ( builder, output, uuid, type/*, ns, needsUpdate */ ) {
+IntNode.prototype.generateReadonly = function (builder, output, uuid, type/*, ns, needsUpdate */) {
 
-	return builder.format( this.value, type, output );
+	return builder.format(this.value, type, output);
 
 };
 
-IntNode.prototype.copy = function ( source ) {
+IntNode.prototype.copy = function (source) {
 
-	InputNode.prototype.copy.call( this, source );
+	InputNode.prototype.copy.call(this, source);
 
 	this.value = source.value;
 
@@ -32,17 +32,17 @@ IntNode.prototype.copy = function ( source ) {
 
 };
 
-IntNode.prototype.toJSON = function ( meta ) {
+IntNode.prototype.toJSON = function (meta) {
 
-	var data = this.getJSONNode( meta );
+	var data = this.getJSONNode(meta);
 
-	if ( ! data ) {
+	if (!data) {
 
-		data = this.createJSONNode( meta );
+		data = this.createJSONNode(meta);
 
 		data.value = this.value;
 
-		if ( this.readonly === true ) data.readonly = true;
+		if (this.readonly === true) data.readonly = true;
 
 	}
 
@@ -50,4 +50,4 @@ IntNode.prototype.toJSON = function ( meta ) {
 
 };
 
-export { IntNode };
+export {IntNode};

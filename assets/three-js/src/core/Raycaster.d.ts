@@ -1,10 +1,10 @@
-import { Vector3 } from './../math/Vector3';
-import { Face3 } from './Face3';
-import { Object3D } from './Object3D';
-import { Vector2 } from './../math/Vector2';
-import { Ray } from './../math/Ray';
-import { Camera } from './../cameras/Camera';
-import { Layers } from './Layers';
+import {Vector3} from './../math/Vector3';
+import {Face3} from './Face3';
+import {Object3D} from './Object3D';
+import {Vector2} from './../math/Vector2';
+import {Ray} from './../math/Ray';
+import {Camera} from './../cameras/Camera';
+import {Layers} from './Layers';
 
 export interface Intersection {
 	distance: number;
@@ -28,6 +28,29 @@ export interface RaycasterParameters {
 
 export class Raycaster {
 
+	/** The Ray used for the raycasting. */
+	ray: Ray;
+	/**
+	 * The near factor of the raycaster. This value indicates which objects can be discarded based on the
+	 * distance. This value shouldn't be negative and should be smaller than the far property.
+	 */
+	near: number;
+	/**
+	 * The far factor of the raycaster. This value indicates which objects can be discarded based on the
+	 * distance. This value shouldn't be negative and should be larger than the near property.
+	 */
+	far: number;
+	/**
+	 * The camera to use when raycasting against view-dependent objects such as billboarded objects like Sprites. This field
+	 * can be set manually or is set when calling "setFromCamera".
+	 */
+	camera: Camera;
+	/**
+	 * Used by Raycaster to selectively ignore 3D objects when performing intersection tests.
+	 */
+	layers: Layers;
+	params: RaycasterParameters;
+
 	/**
 	 * This creates a new raycaster object.
 	 * @param origin The origin vector where the ray casts from.
@@ -42,47 +65,19 @@ export class Raycaster {
 		far?: number
 	);
 
-	/** The Ray used for the raycasting. */
-	ray: Ray;
-
-	/**
-	 * The near factor of the raycaster. This value indicates which objects can be discarded based on the
-	 * distance. This value shouldn't be negative and should be smaller than the far property.
-	 */
-	near: number;
-
-	/**
-	 * The far factor of the raycaster. This value indicates which objects can be discarded based on the
-	 * distance. This value shouldn't be negative and should be larger than the near property.
-	 */
-	far: number;
-
-	/**
-	 * The camera to use when raycasting against view-dependent objects such as billboarded objects like Sprites. This field
-	 * can be set manually or is set when calling "setFromCamera".
-	 */
-	camera: Camera;
-
-	/**
-	 * Used by Raycaster to selectively ignore 3D objects when performing intersection tests.
-	 */
-	layers: Layers;
-
-	params: RaycasterParameters;
-
 	/**
 	 * Updates the ray with a new origin and direction.
 	 * @param origin The origin vector where the ray casts from.
 	 * @param direction The normalized direction vector that gives direction to the ray.
 	 */
-	set( origin: Vector3, direction: Vector3 ): void;
+	set(origin: Vector3, direction: Vector3): void;
 
 	/**
 	 * Updates the ray with a new origin and direction.
 	 * @param coords 2D coordinates of the mouse, in normalized device coordinates (NDC)---X and Y components should be between -1 and 1.
 	 * @param camera camera from which the ray should originate
 	 */
-	setFromCamera( coords: { x: number; y: number }, camera: Camera ): void;
+	setFromCamera(coords: { x: number; y: number }, camera: Camera): void;
 
 	/**
 	 * Checks all intersection between the ray and the object with or without the descendants. Intersections are returned sorted by distance, closest first.

@@ -3,30 +3,28 @@
  */
 /* global QUnit */
 
-import { WebGLExtensions } from '../../../../../src/renderers/webgl/WebGLExtensions';
+export default QUnit.module('Renderers', () => {
 
-export default QUnit.module( 'Renderers', () => {
+	QUnit.module('WebGL', () => {
 
-	QUnit.module( 'WebGL', () => {
-
-		QUnit.module( 'WebGLExtensions', () => {
+		QUnit.module('WebGLExtensions', () => {
 
 			// INSTANCING
-			QUnit.todo( "Instancing", ( assert ) => {
+			QUnit.todo("Instancing", (assert) => {
 
-				assert.ok( false, "everything's gonna be alright" );
+				assert.ok(false, "everything's gonna be alright");
 
-			} );
+			});
 
 			// PUBLIC STUFF
-			QUnit.todo( "get", ( assert ) => {
+			QUnit.todo("get", (assert) => {
 
-				assert.ok( false, "everything's gonna be alright" );
+				assert.ok(false, "everything's gonna be alright");
 
-			} );
+			});
 
-		} );
+		});
 
-	} );
+	});
 
-} );
+});

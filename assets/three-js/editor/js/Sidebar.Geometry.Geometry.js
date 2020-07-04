@@ -2,9 +2,9 @@
  * @author mrdoob / http://mrdoob.com/
  */
 
-import { UIRow, UIText } from './libs/ui.js';
+import {UIRow, UIText} from './libs/ui.js';
 
-var SidebarGeometryGeometry = function ( editor ) {
+var SidebarGeometryGeometry = function (editor) {
 
 	var strings = editor.strings;
 
@@ -17,50 +17,50 @@ var SidebarGeometryGeometry = function ( editor ) {
 	var verticesRow = new UIRow();
 	var vertices = new UIText();
 
-	verticesRow.add( new UIText( strings.getKey( 'sidebar/geometry/geometry/vertices' ) ).setWidth( '90px' ) );
-	verticesRow.add( vertices );
+	verticesRow.add(new UIText(strings.getKey('sidebar/geometry/geometry/vertices')).setWidth('90px'));
+	verticesRow.add(vertices);
 
-	container.add( verticesRow );
+	container.add(verticesRow);
 
 	// faces
 
 	var facesRow = new UIRow();
 	var faces = new UIText();
 
-	facesRow.add( new UIText( strings.getKey( 'sidebar/geometry/geometry/faces' ) ).setWidth( '90px' ) );
-	facesRow.add( faces );
+	facesRow.add(new UIText(strings.getKey('sidebar/geometry/geometry/faces')).setWidth('90px'));
+	facesRow.add(faces);
 
-	container.add( facesRow );
+	container.add(facesRow);
 
 	//
 
-	function update( object ) {
+	function update(object) {
 
-		if ( object === null ) return; // objectSelected.dispatch( null )
-		if ( object === undefined ) return;
+		if (object === null) return; // objectSelected.dispatch( null )
+		if (object === undefined) return;
 
 		var geometry = object.geometry;
 
-		if ( geometry && geometry.isGeometry ) {
+		if (geometry && geometry.isGeometry) {
 
-			container.setDisplay( 'block' );
+			container.setDisplay('block');
 
-			vertices.setValue( ( geometry.vertices.length ).format() );
-			faces.setValue( ( geometry.faces.length ).format() );
+			vertices.setValue((geometry.vertices.length).format());
+			faces.setValue((geometry.faces.length).format());
 
 		} else {
 
-			container.setDisplay( 'none' );
+			container.setDisplay('none');
 
 		}
 
 	}
 
-	signals.objectSelected.add( update );
-	signals.geometryChanged.add( update );
+	signals.objectSelected.add(update);
+	signals.geometryChanged.add(update);
 
 	return container;
 
 };
 
-export { SidebarGeometryGeometry };
+export {SidebarGeometryGeometry};

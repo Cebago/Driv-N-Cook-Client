@@ -2,13 +2,13 @@
  * @author alteredq / http://alteredqualia.com/
  */
 
-import { Texture } from './Texture.js';
+import {Texture} from './Texture.js';
 
-function CompressedTexture( mipmaps, width, height, format, type, mapping, wrapS, wrapT, magFilter, minFilter, anisotropy, encoding ) {
+function CompressedTexture(mipmaps, width, height, format, type, mapping, wrapS, wrapT, magFilter, minFilter, anisotropy, encoding) {
 
-	Texture.call( this, null, mapping, wrapS, wrapT, magFilter, minFilter, format, type, anisotropy, encoding );
+	Texture.call(this, null, mapping, wrapS, wrapT, magFilter, minFilter, format, type, anisotropy, encoding);
 
-	this.image = { width: width, height: height };
+	this.image = {width: width, height: height};
 	this.mipmaps = mipmaps;
 
 	// no flipping for cube textures
@@ -23,10 +23,10 @@ function CompressedTexture( mipmaps, width, height, format, type, mapping, wrapS
 
 }
 
-CompressedTexture.prototype = Object.create( Texture.prototype );
+CompressedTexture.prototype = Object.create(Texture.prototype);
 CompressedTexture.prototype.constructor = CompressedTexture;
 
 CompressedTexture.prototype.isCompressedTexture = true;
 
 
-export { CompressedTexture };
+export {CompressedTexture};

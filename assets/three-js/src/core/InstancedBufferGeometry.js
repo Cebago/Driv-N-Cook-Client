@@ -1,4 +1,4 @@
-import { BufferGeometry } from './BufferGeometry.js';
+import {BufferGeometry} from './BufferGeometry.js';
 
 /**
  * @author benaadams / https://twitter.com/ben_a_adams
@@ -6,22 +6,22 @@ import { BufferGeometry } from './BufferGeometry.js';
 
 function InstancedBufferGeometry() {
 
-	BufferGeometry.call( this );
+	BufferGeometry.call(this);
 
 	this.type = 'InstancedBufferGeometry';
 	this.maxInstancedCount = undefined;
 
 }
 
-InstancedBufferGeometry.prototype = Object.assign( Object.create( BufferGeometry.prototype ), {
+InstancedBufferGeometry.prototype = Object.assign(Object.create(BufferGeometry.prototype), {
 
 	constructor: InstancedBufferGeometry,
 
 	isInstancedBufferGeometry: true,
 
-	copy: function ( source ) {
+	copy: function (source) {
 
-		BufferGeometry.prototype.copy.call( this, source );
+		BufferGeometry.prototype.copy.call(this, source);
 
 		this.maxInstancedCount = source.maxInstancedCount;
 
@@ -31,13 +31,13 @@ InstancedBufferGeometry.prototype = Object.assign( Object.create( BufferGeometry
 
 	clone: function () {
 
-		return new this.constructor().copy( this );
+		return new this.constructor().copy(this);
 
 	},
 
 	toJSON: function () {
 
-		var data = BufferGeometry.prototype.toJSON.call( this );
+		var data = BufferGeometry.prototype.toJSON.call(this);
 
 		data.maxInstancedCount = this.maxInstancedCount;
 
@@ -47,6 +47,6 @@ InstancedBufferGeometry.prototype = Object.assign( Object.create( BufferGeometry
 
 	}
 
-} );
+});
 
-export { InstancedBufferGeometry };
+export {InstancedBufferGeometry};

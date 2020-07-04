@@ -3,23 +3,21 @@
  */
 /* global QUnit */
 
-import { WebGLShader } from '../../../../../src/renderers/webgl/WebGLShader';
+export default QUnit.module('Renderers', () => {
 
-export default QUnit.module( 'Renderers', () => {
+	QUnit.module('WebGL', () => {
 
-	QUnit.module( 'WebGL', () => {
-
-		QUnit.module( 'WebGLShader', () => {
+		QUnit.module('WebGLShader', () => {
 
 			// INSTANCING
-			QUnit.todo( "Instancing", ( assert ) => {
+			QUnit.todo("Instancing", (assert) => {
 
-				assert.ok( false, "everything's gonna be alright" );
+				assert.ok(false, "everything's gonna be alright");
 
-			} );
+			});
 
-		} );
+		});
 
-	} );
+	});
 
-} );
+});

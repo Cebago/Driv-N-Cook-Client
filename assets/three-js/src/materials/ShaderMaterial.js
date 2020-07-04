@@ -19,15 +19,15 @@
  * }
  */
 
-import { Material } from './Material.js';
-import { cloneUniforms } from '../renderers/shaders/UniformsUtils.js';
+import {Material} from './Material.js';
+import {cloneUniforms} from '../renderers/shaders/UniformsUtils.js';
 
 import default_vertex from '../renderers/shaders/ShaderChunk/default_vertex.glsl.js';
 import default_fragment from '../renderers/shaders/ShaderChunk/default_fragment.glsl.js';
 
-function ShaderMaterial( parameters ) {
+function ShaderMaterial(parameters) {
 
-	Material.call( this );
+	Material.call(this);
 
 	this.type = 'ShaderMaterial';
 
@@ -60,43 +60,43 @@ function ShaderMaterial( parameters ) {
 	// When rendered geometry doesn't include these attributes but the material does,
 	// use these default values in WebGL. This avoids errors when buffer data is missing.
 	this.defaultAttributeValues = {
-		'color': [ 1, 1, 1 ],
-		'uv': [ 0, 0 ],
-		'uv2': [ 0, 0 ]
+		'color': [1, 1, 1],
+		'uv': [0, 0],
+		'uv2': [0, 0]
 	};
 
 	this.index0AttributeName = undefined;
 	this.uniformsNeedUpdate = false;
 
-	if ( parameters !== undefined ) {
+	if (parameters !== undefined) {
 
-		if ( parameters.attributes !== undefined ) {
+		if (parameters.attributes !== undefined) {
 
-			console.error( 'THREE.ShaderMaterial: attributes should now be defined in THREE.BufferGeometry instead.' );
+			console.error('THREE.ShaderMaterial: attributes should now be defined in THREE.BufferGeometry instead.');
 
 		}
 
-		this.setValues( parameters );
+		this.setValues(parameters);
 
 	}
 
 }
 
-ShaderMaterial.prototype = Object.create( Material.prototype );
+ShaderMaterial.prototype = Object.create(Material.prototype);
 ShaderMaterial.prototype.constructor = ShaderMaterial;
 
 ShaderMaterial.prototype.isShaderMaterial = true;
 
-ShaderMaterial.prototype.copy = function ( source ) {
+ShaderMaterial.prototype.copy = function (source) {
 
-	Material.prototype.copy.call( this, source );
+	Material.prototype.copy.call(this, source);
 
 	this.fragmentShader = source.fragmentShader;
 	this.vertexShader = source.vertexShader;
 
-	this.uniforms = cloneUniforms( source.uniforms );
+	this.uniforms = cloneUniforms(source.uniforms);
 
-	this.defines = Object.assign( {}, source.defines );
+	this.defines = Object.assign({}, source.defines);
 
 	this.wireframe = source.wireframe;
 	this.wireframeLinewidth = source.wireframeLinewidth;
@@ -115,69 +115,69 @@ ShaderMaterial.prototype.copy = function ( source ) {
 
 };
 
-ShaderMaterial.prototype.toJSON = function ( meta ) {
+ShaderMaterial.prototype.toJSON = function (meta) {
 
-	var data = Material.prototype.toJSON.call( this, meta );
+	var data = Material.prototype.toJSON.call(this, meta);
 
 	data.uniforms = {};
 
-	for ( var name in this.uniforms ) {
+	for (var name in this.uniforms) {
 
-		var uniform = this.uniforms[ name ];
+		var uniform = this.uniforms[name];
 		var value = uniform.value;
 
-		if ( value && value.isTexture ) {
+		if (value && value.isTexture) {
 
-			data.uniforms[ name ] = {
+			data.uniforms[name] = {
 				type: 't',
-				value: value.toJSON( meta ).uuid
+				value: value.toJSON(meta).uuid
 			};
 
-		} else if ( value && value.isColor ) {
+		} else if (value && value.isColor) {
 
-			data.uniforms[ name ] = {
+			data.uniforms[name] = {
 				type: 'c',
 				value: value.getHex()
 			};
 
-		} else if ( value && value.isVector2 ) {
+		} else if (value && value.isVector2) {
 
-			data.uniforms[ name ] = {
+			data.uniforms[name] = {
 				type: 'v2',
 				value: value.toArray()
 			};
 
-		} else if ( value && value.isVector3 ) {
+		} else if (value && value.isVector3) {
 
-			data.uniforms[ name ] = {
+			data.uniforms[name] = {
 				type: 'v3',
 				value: value.toArray()
 			};
 
-		} else if ( value && value.isVector4 ) {
+		} else if (value && value.isVector4) {
 
-			data.uniforms[ name ] = {
+			data.uniforms[name] = {
 				type: 'v4',
 				value: value.toArray()
 			};
 
-		} else if ( value && value.isMatrix3 ) {
+		} else if (value && value.isMatrix3) {
 
-			data.uniforms[ name ] = {
+			data.uniforms[name] = {
 				type: 'm3',
 				value: value.toArray()
 			};
 
-		} else if ( value && value.isMatrix4 ) {
+		} else if (value && value.isMatrix4) {
 
-			data.uniforms[ name ] = {
+			data.uniforms[name] = {
 				type: 'm4',
 				value: value.toArray()
 			};
 
 		} else {
 
-			data.uniforms[ name ] = {
+			data.uniforms[name] = {
 				value: value
 			};
 
@@ -187,24 +187,24 @@ ShaderMaterial.prototype.toJSON = function ( meta ) {
 
 	}
 
-	if ( Object.keys( this.defines ).length > 0 ) data.defines = this.defines;
+	if (Object.keys(this.defines).length > 0) data.defines = this.defines;
 
 	data.vertexShader = this.vertexShader;
 	data.fragmentShader = this.fragmentShader;
 
 	var extensions = {};
 
-	for ( var key in this.extensions ) {
+	for (var key in this.extensions) {
 
-		if ( this.extensions[ key ] === true ) extensions[ key ] = true;
+		if (this.extensions[key] === true) extensions[key] = true;
 
 	}
 
-	if ( Object.keys( extensions ).length > 0 ) data.extensions = extensions;
+	if (Object.keys(extensions).length > 0) data.extensions = extensions;
 
 	return data;
 
 };
 
 
-export { ShaderMaterial };
+export {ShaderMaterial};

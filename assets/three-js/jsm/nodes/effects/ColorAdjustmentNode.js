@@ -2,13 +2,13 @@
  * @author sunag / http://www.sunag.com.br/
  */
 
-import { TempNode } from '../core/TempNode.js';
-import { FunctionNode } from '../core/FunctionNode.js';
-import { LuminanceNode } from './LuminanceNode.js';
+import {TempNode} from '../core/TempNode.js';
+import {FunctionNode} from '../core/FunctionNode.js';
+import {LuminanceNode} from './LuminanceNode.js';
 
-function ColorAdjustmentNode( rgb, adjustment, method ) {
+function ColorAdjustmentNode(rgb, adjustment, method) {
 
-	TempNode.call( this, 'v3' );
+	TempNode.call(this, 'v3');
 
 	this.rgb = rgb;
 	this.adjustment = adjustment;
@@ -17,9 +17,9 @@ function ColorAdjustmentNode( rgb, adjustment, method ) {
 
 }
 
-ColorAdjustmentNode.Nodes = ( function () {
+ColorAdjustmentNode.Nodes = (function () {
 
-	var hue = new FunctionNode( [
+	var hue = new FunctionNode([
 		"vec3 hue(vec3 rgb, float adjustment) {",
 
 		"	const mat3 RGBtoYIQ = mat3(0.299, 0.587, 0.114, 0.595716, -0.274453, -0.321263, 0.211456, -0.522591, 0.311135);",
@@ -33,9 +33,9 @@ ColorAdjustmentNode.Nodes = ( function () {
 		"	return YIQtoRGB * vec3(yiq.x, chroma * cos(hue), chroma * sin(hue));",
 
 		"}"
-	].join( "\n" ) );
+	].join("\n"));
 
-	var saturation = new FunctionNode( [
+	var saturation = new FunctionNode([
 		// Algorithm from Chapter 16 of OpenGL Shading Language
 		"vec3 saturation(vec3 rgb, float adjustment) {",
 
@@ -44,9 +44,9 @@ ColorAdjustmentNode.Nodes = ( function () {
 		"	return mix( intensity, rgb, adjustment );",
 
 		"}"
-	].join( "\n" ), [ LuminanceNode.Nodes.luminance ] ); // include LuminanceNode function
+	].join("\n"), [LuminanceNode.Nodes.luminance]); // include LuminanceNode function
 
-	var vibrance = new FunctionNode( [
+	var vibrance = new FunctionNode([
 		// Shader by Evan Wallace adapted by @lo-th
 		"vec3 vibrance(vec3 rgb, float adjustment) {",
 
@@ -58,7 +58,7 @@ ColorAdjustmentNode.Nodes = ( function () {
 		"	return mix(rgb.rgb, vec3(mx), amt);",
 
 		"}"
-	].join( "\n" ) );
+	].join("\n"));
 
 	return {
 		hue: hue,
@@ -66,7 +66,7 @@ ColorAdjustmentNode.Nodes = ( function () {
 		vibrance: vibrance
 	};
 
-} )();
+})();
 
 ColorAdjustmentNode.SATURATION = 'saturation';
 ColorAdjustmentNode.HUE = 'hue';
@@ -74,40 +74,40 @@ ColorAdjustmentNode.VIBRANCE = 'vibrance';
 ColorAdjustmentNode.BRIGHTNESS = 'brightness';
 ColorAdjustmentNode.CONTRAST = 'contrast';
 
-ColorAdjustmentNode.prototype = Object.create( TempNode.prototype );
+ColorAdjustmentNode.prototype = Object.create(TempNode.prototype);
 ColorAdjustmentNode.prototype.constructor = ColorAdjustmentNode;
 ColorAdjustmentNode.prototype.nodeType = "ColorAdjustment";
 
-ColorAdjustmentNode.prototype.generate = function ( builder, output ) {
+ColorAdjustmentNode.prototype.generate = function (builder, output) {
 
-	var rgb = this.rgb.build( builder, 'v3' ),
-		adjustment = this.adjustment.build( builder, 'f' );
+	var rgb = this.rgb.build(builder, 'v3'),
+		adjustment = this.adjustment.build(builder, 'f');
 
-	switch ( this.method ) {
+	switch (this.method) {
 
 		case ColorAdjustmentNode.BRIGHTNESS:
 
-			return builder.format( '( ' + rgb + ' + ' + adjustment + ' )', this.getType( builder ), output );
+			return builder.format('( ' + rgb + ' + ' + adjustment + ' )', this.getType(builder), output);
 
 			break;
 
 		case ColorAdjustmentNode.CONTRAST:
 
-			return builder.format( '( ' + rgb + ' * ' + adjustment + ' )', this.getType( builder ), output );
+			return builder.format('( ' + rgb + ' * ' + adjustment + ' )', this.getType(builder), output);
 
 			break;
 
 	}
 
-	var method = builder.include( ColorAdjustmentNode.Nodes[ this.method ] );
+	var method = builder.include(ColorAdjustmentNode.Nodes[this.method]);
 
-	return builder.format( method + '( ' + rgb + ', ' + adjustment + ' )', this.getType( builder ), output );
+	return builder.format(method + '( ' + rgb + ', ' + adjustment + ' )', this.getType(builder), output);
 
 };
 
-ColorAdjustmentNode.prototype.copy = function ( source ) {
+ColorAdjustmentNode.prototype.copy = function (source) {
 
-	TempNode.prototype.copy.call( this, source );
+	TempNode.prototype.copy.call(this, source);
 
 	this.rgb = source.rgb;
 	this.adjustment = source.adjustment;
@@ -117,16 +117,16 @@ ColorAdjustmentNode.prototype.copy = function ( source ) {
 
 };
 
-ColorAdjustmentNode.prototype.toJSON = function ( meta ) {
+ColorAdjustmentNode.prototype.toJSON = function (meta) {
 
-	var data = this.getJSONNode( meta );
+	var data = this.getJSONNode(meta);
 
-	if ( ! data ) {
+	if (!data) {
 
-		data = this.createJSONNode( meta );
+		data = this.createJSONNode(meta);
 
-		data.rgb = this.rgb.toJSON( meta ).uuid;
-		data.adjustment = this.adjustment.toJSON( meta ).uuid;
+		data.rgb = this.rgb.toJSON(meta).uuid;
+		data.adjustment = this.adjustment.toJSON(meta).uuid;
 		data.method = this.method;
 
 	}
@@ -135,4 +135,4 @@ ColorAdjustmentNode.prototype.toJSON = function ( meta ) {
 
 };
 
-export { ColorAdjustmentNode };
+export {ColorAdjustmentNode};

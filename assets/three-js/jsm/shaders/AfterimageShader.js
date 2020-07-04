@@ -12,9 +12,9 @@ var AfterimageShader = {
 
 	uniforms: {
 
-		"damp": { value: 0.96 },
-		"tOld": { value: null },
-		"tNew": { value: null }
+		"damp": {value: 0.96},
+		"tOld": {value: null},
+		"tNew": {value: null}
 
 	},
 
@@ -29,7 +29,7 @@ var AfterimageShader = {
 
 		"}"
 
-	].join( "\n" ),
+	].join("\n"),
 
 	fragmentShader: [
 
@@ -57,8 +57,8 @@ var AfterimageShader = {
 
 		"}"
 
-	].join( "\n" )
+	].join("\n")
 
 };
 
-export { AfterimageShader };
+export {AfterimageShader};

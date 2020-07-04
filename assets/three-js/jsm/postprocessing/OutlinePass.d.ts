@@ -1,22 +1,21 @@
 import {
-	Vector2,
-	Scene,
 	Camera,
-	Object3D,
 	Color,
 	Matrix4,
 	MeshBasicMaterial,
 	MeshDepthMaterial,
+	Object3D,
+	Scene,
 	ShaderMaterial,
-	WebGLRenderTarget,
-	Texture
+	Texture,
+	Vector2,
+	WebGLRenderTarget
 } from '../../../src/Three';
 
-import { Pass } from './Pass';
+import {Pass} from './Pass';
 
 export class OutlinePass extends Pass {
 
-	constructor( resolution: Vector2, scene: Scene, camera: Camera, selectedObjects?: Object3D[] );
 	renderScene: Scene;
 	renderCamera: Camera;
 	selectedObjects: Object3D[];
@@ -30,7 +29,6 @@ export class OutlinePass extends Pass {
 	pulsePeriod: number;
 	resolution: Vector2;
 	patternTexture: Texture;
-
 	maskBufferMaterial: MeshBasicMaterial;
 	renderTargetMaskBuffer: WebGLRenderTarget;
 	depthMaterial: MeshDepthMaterial;
@@ -54,13 +52,22 @@ export class OutlinePass extends Pass {
 	tempPulseColor2: Color;
 	textureMatrix: Matrix4;
 
+	constructor(resolution: Vector2, scene: Scene, camera: Camera, selectedObjects?: Object3D[]);
+
 	dispose(): void;
-	changeVisibilityOfSelectedObjects( bVisible: boolean ): void;
-	changeVisibilityOfNonSelectedObjects( bVisible: boolean ): void;
+
+	changeVisibilityOfSelectedObjects(bVisible: boolean): void;
+
+	changeVisibilityOfNonSelectedObjects(bVisible: boolean): void;
+
 	updateTextureMatrix(): void;
+
 	getPrepareMaskMaterial(): ShaderMaterial;
+
 	getEdgeDetectionMaterial(): ShaderMaterial;
+
 	getSeperableBlurMaterial(): ShaderMaterial;
+
 	getOverlayMaterial(): ShaderMaterial;
 
 }

@@ -1,18 +1,7 @@
-import { Geometry } from './../core/Geometry';
-import { BufferGeometry } from '../core/BufferGeometry';
+import {Geometry} from './../core/Geometry';
+import {BufferGeometry} from '../core/BufferGeometry';
 
 export class CylinderBufferGeometry extends BufferGeometry {
-
-	constructor(
-		radiusTop?: number,
-		radiusBottom?: number,
-		height?: number,
-		radialSegments?: number,
-		heightSegments?: number,
-		openEnded?: boolean,
-		thetaStart?: number,
-		thetaLength?: number
-	);
 
 	parameters: {
 		radiusTop: number;
@@ -25,9 +14,31 @@ export class CylinderBufferGeometry extends BufferGeometry {
 		thetaLength: number;
 	};
 
+	constructor(
+		radiusTop?: number,
+		radiusBottom?: number,
+		height?: number,
+		radialSegments?: number,
+		heightSegments?: number,
+		openEnded?: boolean,
+		thetaStart?: number,
+		thetaLength?: number
+	);
+
 }
 
 export class CylinderGeometry extends Geometry {
+
+	parameters: {
+		radiusTop: number;
+		radiusBottom: number;
+		height: number;
+		radialSegments: number;
+		heightSegments: number;
+		openEnded: boolean;
+		thetaStart: number;
+		thetaLength: number;
+	};
 
 	/**
 	 * @param radiusTop — Radius of the cylinder at the top.
@@ -47,16 +58,5 @@ export class CylinderGeometry extends Geometry {
 		thetaStart?: number,
 		thetaLength?: number
 	);
-
-	parameters: {
-		radiusTop: number;
-		radiusBottom: number;
-		height: number;
-		radialSegments: number;
-		heightSegments: number;
-		openEnded: boolean;
-		thetaStart: number;
-		thetaLength: number;
-	};
 
 }

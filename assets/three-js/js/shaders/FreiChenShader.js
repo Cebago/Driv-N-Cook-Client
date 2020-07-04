@@ -11,8 +11,8 @@ THREE.FreiChenShader = {
 
 	uniforms: {
 
-		"tDiffuse": { value: null },
-		"aspect": { value: new THREE.Vector2( 512, 512 ) }
+		"tDiffuse": {value: null},
+		"aspect": {value: new THREE.Vector2(512, 512)}
 	},
 
 	vertexShader: [
@@ -26,7 +26,7 @@ THREE.FreiChenShader = {
 
 		"}"
 
-	].join( "\n" ),
+	].join("\n"),
 
 	fragmentShader: [
 
@@ -89,5 +89,5 @@ THREE.FreiChenShader = {
 		"	gl_FragColor = vec4(vec3(sqrt(M/S)), 1.0);",
 		"}"
 
-	].join( "\n" )
+	].join("\n")
 };

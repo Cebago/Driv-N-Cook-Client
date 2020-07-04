@@ -8,43 +8,50 @@ export interface ParseTrackNameResults {
 
 export class PropertyBinding {
 
-	constructor( rootNode: any, path: string, parsedPath?: any );
-
 	path: string;
 	parsedPath: any;
 	node: any;
 	rootNode: any;
-
-	getValue( targetArray: any, offset: number ): any;
-	setValue( sourceArray: any, offset: number ): void;
-	bind(): void;
-	unbind(): void;
-
 	BindingType: { [bindingType: string]: number };
 	Versioning: { [versioning: string]: number };
-
 	GetterByBindingType: Function[];
 	SetterByBindingTypeAndVersioning: Array<Function[]>;
+
+	constructor(rootNode: any, path: string, parsedPath?: any);
 
 	static create(
 		root: any,
 		path: any,
 		parsedPath?: any
 	): PropertyBinding | PropertyBinding.Composite;
-	static sanitizeNodeName( name: string ): string;
-	static parseTrackName( trackName: string ): ParseTrackNameResults;
-	static findNode( root: any, nodeName: string ): any;
+
+	static sanitizeNodeName(name: string): string;
+
+	static parseTrackName(trackName: string): ParseTrackNameResults;
+
+	static findNode(root: any, nodeName: string): any;
+
+	getValue(targetArray: any, offset: number): any;
+
+	setValue(sourceArray: any, offset: number): void;
+
+	bind(): void;
+
+	unbind(): void;
 
 }
 
 export namespace PropertyBinding {
 	export class Composite {
 
-		constructor( targetGroup: any, path: any, parsedPath?: any );
+		constructor(targetGroup: any, path: any, parsedPath?: any);
 
-		getValue( array: any, offset: number ): any;
-		setValue( array: any, offset: number ): void;
+		getValue(array: any, offset: number): any;
+
+		setValue(array: any, offset: number): void;
+
 		bind(): void;
+
 		unbind(): void;
 
 	}

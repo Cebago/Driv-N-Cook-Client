@@ -3,37 +3,35 @@
  */
 /* global QUnit */
 
-import { Cache } from '../../../../src/loaders/Cache';
+export default QUnit.module('Loaders', () => {
 
-export default QUnit.module( 'Loaders', () => {
-
-	QUnit.module( 'Cache', () => {
+	QUnit.module('Cache', () => {
 
 		// PUBLIC STUFF
-		QUnit.todo( "add", ( assert ) => {
+		QUnit.todo("add", (assert) => {
 
-			assert.ok( false, "everything's gonna be alright" );
+			assert.ok(false, "everything's gonna be alright");
 
-		} );
+		});
 
-		QUnit.todo( "get", ( assert ) => {
+		QUnit.todo("get", (assert) => {
 
-			assert.ok( false, "everything's gonna be alright" );
+			assert.ok(false, "everything's gonna be alright");
 
-		} );
+		});
 
-		QUnit.todo( "remove", ( assert ) => {
+		QUnit.todo("remove", (assert) => {
 
-			assert.ok( false, "everything's gonna be alright" );
+			assert.ok(false, "everything's gonna be alright");
 
-		} );
+		});
 
-		QUnit.todo( "clear", ( assert ) => {
+		QUnit.todo("clear", (assert) => {
 
-			assert.ok( false, "everything's gonna be alright" );
+			assert.ok(false, "everything's gonna be alright");
 
-		} );
+		});
 
-	} );
+	});
 
-} );
+});

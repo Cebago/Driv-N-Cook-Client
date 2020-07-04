@@ -1,14 +1,9 @@
-import { Texture } from './Texture';
-import {
-	Mapping,
-	Wrapping,
-	TextureFilter,
-	PixelFormat,
-	TextureDataType,
-	TextureEncoding,
-} from '../constants';
+import {Texture} from './Texture';
+import {Mapping, PixelFormat, TextureDataType, TextureEncoding, TextureFilter, Wrapping,} from '../constants';
 
 export class CubeTexture extends Texture {
+
+	images: any; // returns and sets the value of Texture.image in the codde ?
 
 	constructor(
 		images?: any[], // HTMLImageElement or HTMLCanvasElement
@@ -22,7 +17,5 @@ export class CubeTexture extends Texture {
 		anisotropy?: number,
 		encoding?: TextureEncoding
 	);
-
-	images: any; // returns and sets the value of Texture.image in the codde ?
 
 }

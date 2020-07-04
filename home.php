@@ -14,7 +14,7 @@ require('navbar.php');
 
 <!-- Header Area Starts -->
 <div class="sticky-top ">
-<header class="header-area shadow-lg p-3 mb-5 bg-info rounded-pill">
+    <header class="header-area shadow-lg p-3 mb-5 bg-info rounded-pill">
         <div class="container">
             <div class="row">
                 <div class="col-lg-2">
@@ -30,18 +30,27 @@ require('navbar.php');
                     </div>
                     <div class="main-menu">
                         <ul>
-                            <li class="active"><a href="index.html"><?php getTranslate("accueil", $tabLang, $setLanguage);?></a></li>
-                            <li><a href="about.html"><?php getTranslate("nos camions", $tabLang, $setLanguage);?></a></li>
-                            <li><a href="menu.html"><?php getTranslate("evenements ", $tabLang, $setLanguage);?></a></li>
-                            <li><a href="animateTruck.html"><?php getTranslate("rejoignez-nous", $tabLang, $setLanguage);?></a></li>
+                            <li class="active"><a
+                                        href="index.html"><?php getTranslate("accueil", $tabLang, $setLanguage); ?></a>
+                            </li>
+                            <li><a href="about.html"><?php getTranslate("nos camions", $tabLang, $setLanguage); ?></a>
+                            </li>
+                            <li><a href="menu.html"><?php getTranslate("evenements ", $tabLang, $setLanguage); ?></a>
+                            </li>
+                            <li>
+                                <a href="animateTruck.html"><?php getTranslate("rejoignez-nous", $tabLang, $setLanguage); ?></a>
+                            </li>
                             <li class="nav-item dropdown">
-                                <a class="nav-link dropdown-toggle" id="dropdown09" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span class="flag-icon <?php echo $headerTabLang[$setLanguage]["icon"] ?>"> </span> <?php echo $headerTabLang[$_COOKIE['Lang']]["name"] ?></a>
+                                <a class="nav-link dropdown-toggle" id="dropdown09" data-toggle="dropdown"
+                                   aria-haspopup="true" aria-expanded="false"><span
+                                            class="flag-icon <?php echo $headerTabLang[$setLanguage]["icon"] ?>"> </span> <?php echo $headerTabLang[$_COOKIE['Lang']]["name"] ?>
+                                </a>
                                 <div class="dropdown-menu bg-info border-light" aria-labelledby="dropdown09">
                                     <?php
-                                        foreach($headerTabLang as $key => $value){
-                                            if($key != $setLanguage )
-                                                echo "<a class=\"dropdown-item\" href=\"./functions/changeLanguage.php?lang=".$key."\" ><span class=\"flag-icon ".$value['icon']."\"> </span> ".$value['name']."</a>";
-                                         } ?>
+                                    foreach ($headerTabLang as $key => $value) {
+                                        if ($key != $setLanguage)
+                                            echo "<a class=\"dropdown-item\" href=\"./functions/changeLanguage.php?lang=" . $key . "\" ><span class=\"flag-icon " . $value['icon'] . "\"> </span> " . $value['name'] . "</a>";
+                                    } ?>
 
 
                                 </div>
@@ -51,7 +60,7 @@ require('navbar.php');
                 </div>
             </div>
         </div>
-    </div>
+</div>
 </body>
 <!-- Header Area End -->
 
@@ -60,8 +69,8 @@ require('navbar.php');
     <div class="container">
         <div class="row">
             <div class="col-lg-12">
-                <h6><?php getTranslate("titre1", $tabLang, $setLanguage);?></h6>
-                <h1><?php getTranslate("titre2", $tabLang, $setLanguage);?></h1>
+                <h6><?php getTranslate("titre1", $tabLang, $setLanguage); ?></h6>
+                <h1><?php getTranslate("titre2", $tabLang, $setLanguage); ?></h1>
             </div>
         </div>
     </div>
@@ -80,8 +89,12 @@ require('navbar.php');
             <div class="col-md-6 align-self-center">
                 <div class="welcome-text mt-5 mt-md-0">
                     <h3><span class="style-change">welcome</span> <br>to food fun</h3>
-                    <p class="pt-3">Created god gathered don't you yielding herb you had. And isn't, god was saw. Dominion. Great sixth for in unto was. Open can't tree am waters brought. Divide after there. Was.</p>
-                    <p>Created god gathered don't you yielding herb you had. And isn't, god was saw. Dominion. Great sixth for in unto was. Open can't tree waters brought. Divide after there. Was. Created god gathered don't you yielding herb you had. And isn't god.</p>
+                    <p class="pt-3">Created god gathered don't you yielding herb you had. And isn't, god was saw.
+                        Dominion. Great sixth for in unto was. Open can't tree am waters brought. Divide after there.
+                        Was.</p>
+                    <p>Created god gathered don't you yielding herb you had. And isn't, god was saw. Dominion. Great
+                        sixth for in unto was. Open can't tree waters brought. Divide after there. Was. Created god
+                        gathered don't you yielding herb you had. And isn't god.</p>
                     <a href="#" class="template-btn mt-3">book a table</a>
                 </div>
             </div>
@@ -97,7 +110,8 @@ require('navbar.php');
             <div class="col-md-5">
                 <div class="section-top">
                     <h3><span class="style-change">we serve</span> <br>delicious food</h3>
-                    <p class="pt-3">They're fill divide i their yielding our after have him fish on there for greater man moveth, moved Won't together isn't for fly divide mids fish firmament on net.</p>
+                    <p class="pt-3">They're fill divide i their yielding our after have him fish on there for greater
+                        man moveth, moved Won't together isn't for fly divide mids fish firmament on net.</p>
                 </div>
             </div>
         </div>
@@ -221,9 +235,12 @@ require('navbar.php');
                 <h1>01.</h1>
                 <div class="deshes-text">
                     <h3><span>Garlic</span><br> green beans</h3>
-                    <p class="pt-3">Be. Seed saying our signs beginning face give spirit own beast darkness morning moveth green multiply she'd kind saying one shall, two which darkness have day image god their night. his subdue so you rule can.</p>
+                    <p class="pt-3">Be. Seed saying our signs beginning face give spirit own beast darkness morning
+                        moveth green multiply she'd kind saying one shall, two which darkness have day image god their
+                        night. his subdue so you rule can.</p>
                     <span class="style-change">$12.00</span>
-                    <a href="#" class="template-btn3 mt-3">book a table <span><i class="fa fa-long-arrow-right"></i></span></a>
+                    <a href="#" class="template-btn3 mt-3">book a table <span><i
+                                    class="fa fa-long-arrow-right"></i></span></a>
                 </div>
             </div>
             <div class="col-lg-5 offset-lg-2 col-md-6 align-self-center mt-4 mt-md-0">
@@ -238,9 +255,12 @@ require('navbar.php');
                 <h1>02.</h1>
                 <div class="deshes-text">
                     <h3><span>Lemon</span><br> rosemary chicken</h3>
-                    <p class="pt-3">Be. Seed saying our signs beginning face give spirit own beast darkness morning moveth green multiply she'd kind saying one shall, two which darkness have day image god their night. his subdue so you rule can.</p>
+                    <p class="pt-3">Be. Seed saying our signs beginning face give spirit own beast darkness morning
+                        moveth green multiply she'd kind saying one shall, two which darkness have day image god their
+                        night. his subdue so you rule can.</p>
                     <span class="style-change">$12.00</span>
-                    <a href="#" class="template-btn3 mt-3">book a table <span><i class="fa fa-long-arrow-right"></i></span></a>
+                    <a href="#" class="template-btn3 mt-3">book a table <span><i
+                                    class="fa fa-long-arrow-right"></i></span></a>
                 </div>
             </div>
         </div>
@@ -269,7 +289,8 @@ require('navbar.php');
                         <div class="customer-text">
                             <h5>adame nesane</h5>
                             <span><i>Chief Customer</i></span>
-                            <p class="pt-3">You're had. Subdue grass Meat us winged years you'll doesn't. fruit two also won one yielding creepeth third give may never lie alternet food.</p>
+                            <p class="pt-3">You're had. Subdue grass Meat us winged years you'll doesn't. fruit two also
+                                won one yielding creepeth third give may never lie alternet food.</p>
                         </div>
                     </div>
                     <div class="single-slide d-sm-flex">
@@ -279,7 +300,8 @@ require('navbar.php');
                         <div class="customer-text">
                             <h5>adam nahan</h5>
                             <span><i>Chief Customer</i></span>
-                            <p class="pt-3">You're had. Subdue grass Meat us winged years you'll doesn't. fruit two also won one yielding creepeth third give may never lie alternet food.</p>
+                            <p class="pt-3">You're had. Subdue grass Meat us winged years you'll doesn't. fruit two also
+                                won one yielding creepeth third give may never lie alternet food.</p>
                         </div>
                     </div>
                     <div class="single-slide d-sm-flex">
@@ -289,7 +311,8 @@ require('navbar.php');
                         <div class="customer-text">
                             <h5>adame nesane</h5>
                             <span><i>Chief Customer</i></span>
-                            <p class="pt-3">You're had. Subdue grass Meat us winged years you'll doesn't. fruit two also won one yielding creepeth third give may never lie alternet food.</p>
+                            <p class="pt-3">You're had. Subdue grass Meat us winged years you'll doesn't. fruit two also
+                                won one yielding creepeth third give may never lie alternet food.</p>
                         </div>
                     </div>
                 </div>
@@ -323,7 +346,8 @@ require('navbar.php');
                         </div>
                         <h5>no finer food can be found</h5>
                         <p>nancy boy off his nut so I said chimney pot be James Bond aking cakes he.</p>
-                        <a href="#" class="template-btn3 mt-2">read more <span><i class="fa fa-long-arrow-right"></i></span></a>
+                        <a href="#" class="template-btn3 mt-2">read more <span><i
+                                        class="fa fa-long-arrow-right"></i></span></a>
                     </div>
                 </div>
             </div>
@@ -339,7 +363,8 @@ require('navbar.php');
                         </div>
                         <h5>things go better with food</h5>
                         <p>nancy boy off his nut so I said chimney pot be James Bond aking cakes he.</p>
-                        <a href="#" class="template-btn3 mt-2">read more <span><i class="fa fa-long-arrow-right"></i></span></a>
+                        <a href="#" class="template-btn3 mt-2">read more <span><i
+                                        class="fa fa-long-arrow-right"></i></span></a>
                     </div>
                 </div>
             </div>
@@ -355,7 +380,8 @@ require('navbar.php');
                         </div>
                         <h5>food head above the rest</h5>
                         <p>nancy boy off his nut so I said chimney pot be James Bond aking cakes he.</p>
-                        <a href="#" class="template-btn3 mt-2">read more <span><i class="fa fa-long-arrow-right"></i></span></a>
+                        <a href="#" class="template-btn3 mt-2">read more <span><i
+                                        class="fa fa-long-arrow-right"></i></span></a>
                     </div>
                 </div>
             </div>
@@ -415,7 +441,9 @@ require('navbar.php');
                 <div class="col-md-4">
                     <div class="single-widget single-widget1">
                         <a href="index.html"><img src="assets/images/logo/logo2.png" alt=""></a>
-                        <p class="mt-3">Which morning fourth great won't is to fly bearing man. Called unto shall seed, deep, herb set seed land divide after over first creeping. First creature set upon stars deep male gathered said she'd an image spirit our</p>
+                        <p class="mt-3">Which morning fourth great won't is to fly bearing man. Called unto shall seed,
+                            deep, herb set seed land divide after over first creeping. First creature set upon stars
+                            deep male gathered said she'd an image spirit our</p>
                     </div>
                 </div>
                 <div class="col-md-4">
@@ -464,7 +492,9 @@ require('navbar.php');
             <div class="row">
                 <div class="col-lg-7 col-md-6">
                         <span><!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
-Copyright &copy;<script>document.write(new Date().getFullYear());</script> All rights reserved | This template is made with <i class="fa fa-heart-o" aria-hidden="true"></i> by <a href="https://colorlib.com" target="_blank">Colorlib</a>
+Copyright &copy;<script>document.write(new Date().getFullYear());</script> All rights reserved | This template is made with <i
+                                    class="fa fa-heart-o" aria-hidden="true"></i> by <a href="https://colorlib.com"
+                                                                                        target="_blank">Colorlib</a>
                             <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. --></span>
                 </div>
                 <div class="col-lg-5 col-md-6">

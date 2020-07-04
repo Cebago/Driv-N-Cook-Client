@@ -4,28 +4,28 @@
  * @author szimek / https://github.com/szimek/
  */
 
-import { EventDispatcher } from '../core/EventDispatcher.js';
+import {EventDispatcher} from '../core/EventDispatcher.js';
 import {
-	MirroredRepeatWrapping,
 	ClampToEdgeWrapping,
-	RepeatWrapping,
 	LinearEncoding,
-	UnsignedByteType,
-	RGBAFormat,
-	LinearMipmapLinearFilter,
 	LinearFilter,
+	LinearMipmapLinearFilter,
+	MirroredRepeatWrapping,
+	RepeatWrapping,
+	RGBAFormat,
+	UnsignedByteType,
 	UVMapping
 } from '../constants.js';
-import { MathUtils } from '../math/MathUtils.js';
-import { Vector2 } from '../math/Vector2.js';
-import { Matrix3 } from '../math/Matrix3.js';
-import { ImageUtils } from '../extras/ImageUtils.js';
+import {MathUtils} from '../math/MathUtils.js';
+import {Vector2} from '../math/Vector2.js';
+import {Matrix3} from '../math/Matrix3.js';
+import {ImageUtils} from '../extras/ImageUtils.js';
 
 var textureId = 0;
 
-function Texture( image, mapping, wrapS, wrapT, magFilter, minFilter, format, type, anisotropy, encoding ) {
+function Texture(image, mapping, wrapS, wrapT, magFilter, minFilter, format, type, anisotropy, encoding) {
 
-	Object.defineProperty( this, 'id', { value: textureId ++ } );
+	Object.defineProperty(this, 'id', {value: textureId++});
 
 	this.uuid = MathUtils.generateUUID();
 
@@ -48,9 +48,9 @@ function Texture( image, mapping, wrapS, wrapT, magFilter, minFilter, format, ty
 	this.internalFormat = null;
 	this.type = type !== undefined ? type : UnsignedByteType;
 
-	this.offset = new Vector2( 0, 0 );
-	this.repeat = new Vector2( 1, 1 );
-	this.center = new Vector2( 0, 0 );
+	this.offset = new Vector2(0, 0);
+	this.repeat = new Vector2(1, 1);
+	this.center = new Vector2(0, 0);
 	this.rotation = 0;
 
 	this.matrixAutoUpdate = true;
@@ -75,7 +75,7 @@ function Texture( image, mapping, wrapS, wrapT, magFilter, minFilter, format, ty
 Texture.DEFAULT_IMAGE = undefined;
 Texture.DEFAULT_MAPPING = UVMapping;
 
-Texture.prototype = Object.assign( Object.create( EventDispatcher.prototype ), {
+Texture.prototype = Object.assign(Object.create(EventDispatcher.prototype), {
 
 	constructor: Texture,
 
@@ -83,22 +83,22 @@ Texture.prototype = Object.assign( Object.create( EventDispatcher.prototype ), {
 
 	updateMatrix: function () {
 
-		this.matrix.setUvTransform( this.offset.x, this.offset.y, this.repeat.x, this.repeat.y, this.rotation, this.center.x, this.center.y );
+		this.matrix.setUvTransform(this.offset.x, this.offset.y, this.repeat.x, this.repeat.y, this.rotation, this.center.x, this.center.y);
 
 	},
 
 	clone: function () {
 
-		return new this.constructor().copy( this );
+		return new this.constructor().copy(this);
 
 	},
 
-	copy: function ( source ) {
+	copy: function (source) {
 
 		this.name = source.name;
 
 		this.image = source.image;
-		this.mipmaps = source.mipmaps.slice( 0 );
+		this.mipmaps = source.mipmaps.slice(0);
 
 		this.mapping = source.mapping;
 
@@ -114,13 +114,13 @@ Texture.prototype = Object.assign( Object.create( EventDispatcher.prototype ), {
 		this.internalFormat = source.internalFormat;
 		this.type = source.type;
 
-		this.offset.copy( source.offset );
-		this.repeat.copy( source.repeat );
-		this.center.copy( source.center );
+		this.offset.copy(source.offset);
+		this.repeat.copy(source.repeat);
+		this.center.copy(source.center);
 		this.rotation = source.rotation;
 
 		this.matrixAutoUpdate = source.matrixAutoUpdate;
-		this.matrix.copy( source.matrix );
+		this.matrix.copy(source.matrix);
 
 		this.generateMipmaps = source.generateMipmaps;
 		this.premultiplyAlpha = source.premultiplyAlpha;
@@ -132,13 +132,13 @@ Texture.prototype = Object.assign( Object.create( EventDispatcher.prototype ), {
 
 	},
 
-	toJSON: function ( meta ) {
+	toJSON: function (meta) {
 
-		var isRootObject = ( meta === undefined || typeof meta === 'string' );
+		var isRootObject = (meta === undefined || typeof meta === 'string');
 
-		if ( ! isRootObject && meta.textures[ this.uuid ] !== undefined ) {
+		if (!isRootObject && meta.textures[this.uuid] !== undefined) {
 
-			return meta.textures[ this.uuid ];
+			return meta.textures[this.uuid];
 
 		}
 
@@ -155,12 +155,12 @@ Texture.prototype = Object.assign( Object.create( EventDispatcher.prototype ), {
 
 			mapping: this.mapping,
 
-			repeat: [ this.repeat.x, this.repeat.y ],
-			offset: [ this.offset.x, this.offset.y ],
-			center: [ this.center.x, this.center.y ],
+			repeat: [this.repeat.x, this.repeat.y],
+			offset: [this.offset.x, this.offset.y],
+			center: [this.center.x, this.center.y],
 			rotation: this.rotation,
 
-			wrap: [ this.wrapS, this.wrapT ],
+			wrap: [this.wrapS, this.wrapT],
 
 			format: this.format,
 			type: this.type,
@@ -177,31 +177,31 @@ Texture.prototype = Object.assign( Object.create( EventDispatcher.prototype ), {
 
 		};
 
-		if ( this.image !== undefined ) {
+		if (this.image !== undefined) {
 
 			// TODO: Move to THREE.Image
 
 			var image = this.image;
 
-			if ( image.uuid === undefined ) {
+			if (image.uuid === undefined) {
 
 				image.uuid = MathUtils.generateUUID(); // UGH
 
 			}
 
-			if ( ! isRootObject && meta.images[ image.uuid ] === undefined ) {
+			if (!isRootObject && meta.images[image.uuid] === undefined) {
 
 				var url;
 
-				if ( Array.isArray( image ) ) {
+				if (Array.isArray(image)) {
 
 					// process array of images e.g. CubeTexture
 
 					url = [];
 
-					for ( var i = 0, l = image.length; i < l; i ++ ) {
+					for (var i = 0, l = image.length; i < l; i++) {
 
-						url.push( ImageUtils.getDataURL( image[ i ] ) );
+						url.push(ImageUtils.getDataURL(image[i]));
 
 					}
 
@@ -209,11 +209,11 @@ Texture.prototype = Object.assign( Object.create( EventDispatcher.prototype ), {
 
 					// process single image
 
-					url = ImageUtils.getDataURL( image );
+					url = ImageUtils.getDataURL(image);
 
 				}
 
-				meta.images[ image.uuid ] = {
+				meta.images[image.uuid] = {
 					uuid: image.uuid,
 					url: url
 				};
@@ -224,9 +224,9 @@ Texture.prototype = Object.assign( Object.create( EventDispatcher.prototype ), {
 
 		}
 
-		if ( ! isRootObject ) {
+		if (!isRootObject) {
 
-			meta.textures[ this.uuid ] = output;
+			meta.textures[this.uuid] = output;
 
 		}
 
@@ -236,23 +236,23 @@ Texture.prototype = Object.assign( Object.create( EventDispatcher.prototype ), {
 
 	dispose: function () {
 
-		this.dispatchEvent( { type: 'dispose' } );
+		this.dispatchEvent({type: 'dispose'});
 
 	},
 
-	transformUv: function ( uv ) {
+	transformUv: function (uv) {
 
-		if ( this.mapping !== UVMapping ) return uv;
+		if (this.mapping !== UVMapping) return uv;
 
-		uv.applyMatrix3( this.matrix );
+		uv.applyMatrix3(this.matrix);
 
-		if ( uv.x < 0 || uv.x > 1 ) {
+		if (uv.x < 0 || uv.x > 1) {
 
-			switch ( this.wrapS ) {
+			switch (this.wrapS) {
 
 				case RepeatWrapping:
 
-					uv.x = uv.x - Math.floor( uv.x );
+					uv.x = uv.x - Math.floor(uv.x);
 					break;
 
 				case ClampToEdgeWrapping:
@@ -262,13 +262,13 @@ Texture.prototype = Object.assign( Object.create( EventDispatcher.prototype ), {
 
 				case MirroredRepeatWrapping:
 
-					if ( Math.abs( Math.floor( uv.x ) % 2 ) === 1 ) {
+					if (Math.abs(Math.floor(uv.x) % 2) === 1) {
 
-						uv.x = Math.ceil( uv.x ) - uv.x;
+						uv.x = Math.ceil(uv.x) - uv.x;
 
 					} else {
 
-						uv.x = uv.x - Math.floor( uv.x );
+						uv.x = uv.x - Math.floor(uv.x);
 
 					}
 
@@ -278,13 +278,13 @@ Texture.prototype = Object.assign( Object.create( EventDispatcher.prototype ), {
 
 		}
 
-		if ( uv.y < 0 || uv.y > 1 ) {
+		if (uv.y < 0 || uv.y > 1) {
 
-			switch ( this.wrapT ) {
+			switch (this.wrapT) {
 
 				case RepeatWrapping:
 
-					uv.y = uv.y - Math.floor( uv.y );
+					uv.y = uv.y - Math.floor(uv.y);
 					break;
 
 				case ClampToEdgeWrapping:
@@ -294,13 +294,13 @@ Texture.prototype = Object.assign( Object.create( EventDispatcher.prototype ), {
 
 				case MirroredRepeatWrapping:
 
-					if ( Math.abs( Math.floor( uv.y ) % 2 ) === 1 ) {
+					if (Math.abs(Math.floor(uv.y) % 2) === 1) {
 
-						uv.y = Math.ceil( uv.y ) - uv.y;
+						uv.y = Math.ceil(uv.y) - uv.y;
 
 					} else {
 
-						uv.y = uv.y - Math.floor( uv.y );
+						uv.y = uv.y - Math.floor(uv.y);
 
 					}
 
@@ -310,7 +310,7 @@ Texture.prototype = Object.assign( Object.create( EventDispatcher.prototype ), {
 
 		}
 
-		if ( this.flipY ) {
+		if (this.flipY) {
 
 			uv.y = 1 - uv.y;
 
@@ -320,17 +320,17 @@ Texture.prototype = Object.assign( Object.create( EventDispatcher.prototype ), {
 
 	}
 
-} );
+});
 
-Object.defineProperty( Texture.prototype, "needsUpdate", {
+Object.defineProperty(Texture.prototype, "needsUpdate", {
 
-	set: function ( value ) {
+	set: function (value) {
 
-		if ( value === true ) this.version ++;
+		if (value === true) this.version++;
 
 	}
 
-} );
+});
 
 
-export { Texture };
+export {Texture};

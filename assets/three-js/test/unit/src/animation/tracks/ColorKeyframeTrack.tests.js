@@ -3,22 +3,20 @@
  */
 /* global QUnit */
 
-import { ColorKeyframeTrack } from '../../../../../src/animation/tracks/ColorKeyframeTrack';
+export default QUnit.module('Animation', () => {
 
-export default QUnit.module( 'Animation', () => {
+	QUnit.module('Tracks', () => {
 
-	QUnit.module( 'Tracks', () => {
+		QUnit.module('ColorKeyframeTrack', () => {
 
-		QUnit.module( 'ColorKeyframeTrack', () => {
+			QUnit.todo('write me !', (assert) => {
 
-			QUnit.todo( 'write me !', ( assert ) => {
+				assert.ok(false, "everything's gonna be alright");
 
-				assert.ok( false, "everything's gonna be alright" );
+			});
 
-			} );
+		});
 
-		} );
+	});
 
-	} );
-
-} );
+});

@@ -2,9 +2,9 @@
  * @author sunag / http://www.sunag.com.br/
  */
 
-import { MathUtils } from '../../../../build/three.module.js';
+import {MathUtils} from '../../../../build/three.module.js';
 
-function Node( type ) {
+function Node(type) {
 
 	this.uuid = MathUtils.generateUUID();
 
@@ -22,13 +22,13 @@ Node.prototype = {
 
 	isNode: true,
 
-	analyze: function ( builder, settings ) {
+	analyze: function (builder, settings) {
 
 		settings = settings || {};
 
 		builder.analyzing = true;
 
-		this.build( builder.addFlow( settings.slot, settings.cache, settings.context ), 'v4' );
+		this.build(builder.addFlow(settings.slot, settings.cache, settings.context), 'v4');
 
 		builder.clearVertexNodeCode();
 		builder.clearFragmentNodeCode();
@@ -39,24 +39,24 @@ Node.prototype = {
 
 	},
 
-	analyzeAndFlow: function ( builder, output, settings ) {
+	analyzeAndFlow: function (builder, output, settings) {
 
 		settings = settings || {};
 
-		this.analyze( builder, settings );
+		this.analyze(builder, settings);
 
-		return this.flow( builder, output, settings );
+		return this.flow(builder, output, settings);
 
 	},
 
-	flow: function ( builder, output, settings ) {
+	flow: function (builder, output, settings) {
 
 		settings = settings || {};
 
-		builder.addFlow( settings.slot, settings.cache, settings.context );
+		builder.addFlow(settings.slot, settings.cache, settings.context);
 
 		var flow = {};
-		flow.result = this.build( builder, output );
+		flow.result = this.build(builder, output);
 		flow.code = builder.clearNodeCode();
 		flow.extra = builder.context.extra;
 
@@ -66,47 +66,47 @@ Node.prototype = {
 
 	},
 
-	build: function ( builder, output, uuid ) {
+	build: function (builder, output, uuid) {
 
-		output = output || this.getType( builder, output );
+		output = output || this.getType(builder, output);
 
-		var data = builder.getNodeData( uuid || this );
+		var data = builder.getNodeData(uuid || this);
 
-		if ( builder.analyzing ) {
+		if (builder.analyzing) {
 
-			this.appendDepsNode( builder, data, output );
-
-		}
-
-		if ( builder.nodes.indexOf( this ) === - 1 ) {
-
-			builder.nodes.push( this );
+			this.appendDepsNode(builder, data, output);
 
 		}
 
-		if ( this.updateFrame !== undefined && builder.updaters.indexOf( this ) === - 1 ) {
+		if (builder.nodes.indexOf(this) === -1) {
 
-			builder.updaters.push( this );
+			builder.nodes.push(this);
 
 		}
 
-		return this.generate( builder, output, uuid );
+		if (this.updateFrame !== undefined && builder.updaters.indexOf(this) === -1) {
+
+			builder.updaters.push(this);
+
+		}
+
+		return this.generate(builder, output, uuid);
 
 	},
 
-	generate: function ( /* builder, output, uuid, type, ns */ ) {
+	generate: function ( /* builder, output, uuid, type, ns */) {
 
 		// This method needs to be implemented in subclasses
 
 	},
 
-	appendDepsNode: function ( builder, data, output ) {
+	appendDepsNode: function (builder, data, output) {
 
-		data.deps = ( data.deps || 0 ) + 1;
+		data.deps = (data.deps || 0) + 1;
 
-		var outputLen = builder.getTypeLength( output );
+		var outputLen = builder.getTypeLength(output);
 
-		if ( outputLen > ( data.outputMax || 0 ) || this.getType( builder, output ) ) {
+		if (outputLen > (data.outputMax || 0) || this.getType(builder, output)) {
 
 			data.outputMax = outputLen;
 			data.output = output;
@@ -115,7 +115,7 @@ Node.prototype = {
 
 	},
 
-	setName: function ( name ) {
+	setName: function (name) {
 
 		this.name = name;
 
@@ -123,58 +123,58 @@ Node.prototype = {
 
 	},
 
-	getName: function ( /* builder */ ) {
+	getName: function ( /* builder */) {
 
 		return this.name;
 
 	},
 
-	getType: function ( builder, output ) {
+	getType: function (builder, output) {
 
 		return output === 'sampler2D' || output === 'samplerCube' ? output : this.type;
 
 	},
 
-	getJSONNode: function ( meta ) {
+	getJSONNode: function (meta) {
 
-		var isRootObject = ( meta === undefined || typeof meta === 'string' );
+		var isRootObject = (meta === undefined || typeof meta === 'string');
 
-		if ( ! isRootObject && meta.nodes[ this.uuid ] !== undefined ) {
+		if (!isRootObject && meta.nodes[this.uuid] !== undefined) {
 
-			return meta.nodes[ this.uuid ];
+			return meta.nodes[this.uuid];
 
 		}
 
 	},
 
-	copy: function ( source ) {
+	copy: function (source) {
 
-		if ( source.name !== undefined ) this.name = source.name;
+		if (source.name !== undefined) this.name = source.name;
 
-		if ( source.userData !== undefined ) this.userData = JSON.parse( JSON.stringify( source.userData ) );
+		if (source.userData !== undefined) this.userData = JSON.parse(JSON.stringify(source.userData));
 
 		return this;
 
 	},
 
-	createJSONNode: function ( meta ) {
+	createJSONNode: function (meta) {
 
-		var isRootObject = ( meta === undefined || typeof meta === 'string' );
+		var isRootObject = (meta === undefined || typeof meta === 'string');
 
 		var data = {};
 
-		if ( typeof this.nodeType !== "string" ) throw new Error( "Node does not allow serialization." );
+		if (typeof this.nodeType !== "string") throw new Error("Node does not allow serialization.");
 
 		data.uuid = this.uuid;
 		data.nodeType = this.nodeType;
 
-		if ( this.name !== "" ) data.name = this.name;
+		if (this.name !== "") data.name = this.name;
 
-		if ( JSON.stringify( this.userData ) !== '{}' ) data.userData = this.userData;
+		if (JSON.stringify(this.userData) !== '{}') data.userData = this.userData;
 
-		if ( ! isRootObject ) {
+		if (!isRootObject) {
 
-			meta.nodes[ this.uuid ] = data;
+			meta.nodes[this.uuid] = data;
 
 		}
 
@@ -182,12 +182,12 @@ Node.prototype = {
 
 	},
 
-	toJSON: function ( meta ) {
+	toJSON: function (meta) {
 
-		return this.getJSONNode( meta ) || this.createJSONNode( meta );
+		return this.getJSONNode(meta) || this.createJSONNode(meta);
 
 	}
 
 };
 
-export { Node };
+export {Node};

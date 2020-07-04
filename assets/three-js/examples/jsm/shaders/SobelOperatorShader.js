@@ -7,16 +7,14 @@
  *
  */
 
-import {
-	Vector2
-} from "../../../build/three.module.js";
+import {Vector2} from "../../../build/three.module.js";
 
 var SobelOperatorShader = {
 
 	uniforms: {
 
-		"tDiffuse": { value: null },
-		"resolution": { value: new Vector2() }
+		"tDiffuse": {value: null},
+		"resolution": {value: new Vector2()}
 
 	},
 
@@ -32,7 +30,7 @@ var SobelOperatorShader = {
 
 		"}"
 
-	].join( "\n" ),
+	].join("\n"),
 
 	fragmentShader: [
 
@@ -89,8 +87,8 @@ var SobelOperatorShader = {
 
 		"}"
 
-	].join( "\n" )
+	].join("\n")
 
 };
 
-export { SobelOperatorShader };
+export {SobelOperatorShader};

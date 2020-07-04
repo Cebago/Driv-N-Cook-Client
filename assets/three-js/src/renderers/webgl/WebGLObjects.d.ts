@@ -7,7 +7,8 @@ export class WebGLObjects {
 		info: any
 	);
 
-	update( object: any ): any;
+	update(object: any): any;
+
 	dispose(): void;
 
 }

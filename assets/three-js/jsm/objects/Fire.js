@@ -24,9 +24,9 @@ import {
 	WebGLRenderTarget
 } from "../../../build/three.module.js";
 
-var Fire = function ( geometry, options ) {
+var Fire = function (geometry, options) {
 
-	Mesh.call( this, geometry );
+	Mesh.call(this, geometry);
 
 	this.type = 'Fire';
 
@@ -39,88 +39,88 @@ var Fire = function ( geometry, options ) {
 	var oneOverWidth = 1.0 / textureWidth;
 	var oneOverHeight = 1.0 / textureHeight;
 
-	var debug = ( options.debug === undefined ) ? false : options.debug;
-	this.color1 = options.color1 || new Color( 0xffffff );
-	this.color2 = options.color2 || new Color( 0xffa000 );
-	this.color3 = options.color3 || new Color( 0x000000 );
-	this.colorBias = ( options.colorBias === undefined ) ? 0.8 : options.colorBias;
-	this.diffuse = ( options.diffuse === undefined ) ? 1.33 : options.diffuse;
-	this.viscosity = ( options.viscosity === undefined ) ? 0.25 : options.viscosity;
-	this.expansion = ( options.expansion === undefined ) ? - 0.25 : options.expansion;
-	this.swirl = ( options.swirl === undefined ) ? 50.0 : options.swirl;
-	this.burnRate = ( options.burnRate === undefined ) ? 0.3 : options.burnRate;
-	this.drag = ( options.drag === undefined ) ? 0.35 : options.drag;
-	this.airSpeed = ( options.airSpeed === undefined ) ? 6.0 : options.airSpeed;
-	this.windVector = options.windVector || new Vector2( 0.0, 0.75 );
-	this.speed = ( options.speed === undefined ) ? 500.0 : options.speed;
-	this.massConservation = ( options.massConservation === undefined ) ? false : options.massConservation;
+	var debug = (options.debug === undefined) ? false : options.debug;
+	this.color1 = options.color1 || new Color(0xffffff);
+	this.color2 = options.color2 || new Color(0xffa000);
+	this.color3 = options.color3 || new Color(0x000000);
+	this.colorBias = (options.colorBias === undefined) ? 0.8 : options.colorBias;
+	this.diffuse = (options.diffuse === undefined) ? 1.33 : options.diffuse;
+	this.viscosity = (options.viscosity === undefined) ? 0.25 : options.viscosity;
+	this.expansion = (options.expansion === undefined) ? -0.25 : options.expansion;
+	this.swirl = (options.swirl === undefined) ? 50.0 : options.swirl;
+	this.burnRate = (options.burnRate === undefined) ? 0.3 : options.burnRate;
+	this.drag = (options.drag === undefined) ? 0.35 : options.drag;
+	this.airSpeed = (options.airSpeed === undefined) ? 6.0 : options.airSpeed;
+	this.windVector = options.windVector || new Vector2(0.0, 0.75);
+	this.speed = (options.speed === undefined) ? 500.0 : options.speed;
+	this.massConservation = (options.massConservation === undefined) ? false : options.massConservation;
 
 	var size = textureWidth * textureHeight;
-	this.sourceData = new Uint8Array( 4 * size );
+	this.sourceData = new Uint8Array(4 * size);
 
 	this.clearSources = function () {
 
-		for ( var y = 0; y < textureHeight; y ++ ) {
+		for (var y = 0; y < textureHeight; y++) {
 
-			for ( var x = 0; x < textureWidth; x ++ ) {
+			for (var x = 0; x < textureWidth; x++) {
 
 				var i = y * textureWidth + x;
 				var stride = i * 4;
 
-				this.sourceData[ stride ] = 0;
-				this.sourceData[ stride + 1 ] = 0;
-				this.sourceData[ stride + 2 ] = 0;
-				this.sourceData[ stride + 3 ] = 0;
+				this.sourceData[stride] = 0;
+				this.sourceData[stride + 1] = 0;
+				this.sourceData[stride + 2] = 0;
+				this.sourceData[stride + 3] = 0;
 
 			}
 
 		}
 
-		this.sourceMaterial.uniforms[ "sourceMap" ].value = this.internalSource;
+		this.sourceMaterial.uniforms["sourceMap"].value = this.internalSource;
 		this.sourceMaterial.needsUpdate = true;
 
 		return this.sourceData;
 
 	};
 
-	this.addSource = function ( u, v, radius, density = null, windX = null, windY = null ) {
+	this.addSource = function (u, v, radius, density = null, windX = null, windY = null) {
 
-		var startX = Math.max( Math.floor( ( u - radius ) * textureWidth ), 0 );
-		var startY = Math.max( Math.floor( ( v - radius ) * textureHeight ), 0 );
-		var endX = Math.min( Math.floor( ( u + radius ) * textureWidth ), textureWidth );
-		var endY = Math.min( Math.floor( ( v + radius ) * textureHeight ), textureHeight );
+		var startX = Math.max(Math.floor((u - radius) * textureWidth), 0);
+		var startY = Math.max(Math.floor((v - radius) * textureHeight), 0);
+		var endX = Math.min(Math.floor((u + radius) * textureWidth), textureWidth);
+		var endY = Math.min(Math.floor((v + radius) * textureHeight), textureHeight);
 
-		for ( var y = startY; y < endY; y ++ ) {
+		for (var y = startY; y < endY; y++) {
 
-			for ( var x = startX; x < endX; x ++ ) {
+			for (var x = startX; x < endX; x++) {
 
 				var diffX = x * oneOverWidth - u;
 				var diffY = y * oneOverHeight - v;
 
-				if ( diffX * diffX + diffY * diffY < radius * radius ) {
+				if (diffX * diffX + diffY * diffY < radius * radius) {
 
 					var i = y * textureWidth + x;
 					var stride = i * 4;
 
-					if ( density != null ) {
+					if (density != null) {
 
-						this.sourceData[ stride ] = Math.min( Math.max( density, 0.0 ), 1.0 ) * 255;
-
-					}
-
-					if ( windX != null ) {
-
-						var wind = Math.min( Math.max( windX, - 1.0 ), 1.0 );
-						wind = ( wind < 0.0 ) ? Math.floor( wind * 127 ) + 255 : Math.floor( wind * 127 );
-						this.sourceData[ stride + 1 ] = wind;
+						this.sourceData[stride] = Math.min(Math.max(density, 0.0), 1.0) * 255;
 
 					}
 
-					if ( windY != null ) {
+					if (windX != null) {
 
-						var wind = Math.min( Math.max( windY, - 1.0 ), 1.0 );
-						wind = ( wind < 0.0 ) ? Math.floor( wind * 127 ) + 255 : Math.floor( wind * 127 );
-						this.sourceData[ stride + 2 ] = wind;
+						var wind = Math.min(Math.max(windX, -1.0), 1.0);
+						wind = (wind < 0.0) ? Math.floor(wind * 127) + 255 : Math.floor(wind * 127);
+						this.sourceData[stride + 1] = wind;
+
+					}
+
+					if (windY != null) {
+
+						var wind = Math.min(Math.max(windY, -1.0), 1.0);
+						wind = (wind < 0.0) ? Math.floor(wind * 127) + 255 : Math.floor(wind * 127);
+						this.sourceData[stride + 2] = wind;
 
 					}
 
@@ -139,9 +139,9 @@ var Fire = function ( geometry, options ) {
 	// When setting source map, red channel is density. Green and blue channels
 	// encode x and y velocity respectively as signed chars:
 	// (0 -> 127 = 0.0 -> 1.0, 128 -> 255 = -1.0 -> 0.0 )
-	this.setSourceMap = function ( texture ) {
+	this.setSourceMap = function (texture) {
 
-		this.sourceMaterial.uniforms[ "sourceMap" ].value = texture;
+		this.sourceMaterial.uniforms["sourceMap"].value = texture;
 
 	};
 
@@ -153,20 +153,20 @@ var Fire = function ( geometry, options ) {
 	};
 
 
-	this.field0 = new WebGLRenderTarget( textureWidth, textureHeight, parameters );
+	this.field0 = new WebGLRenderTarget(textureWidth, textureHeight, parameters);
 
-	this.field0.background = new Color( 0x000000 );
+	this.field0.background = new Color(0x000000);
 
-	this.field1 = new WebGLRenderTarget( textureWidth, textureHeight, parameters );
+	this.field1 = new WebGLRenderTarget(textureWidth, textureHeight, parameters);
 
-	this.field0.background = new Color( 0x000000 );
+	this.field0.background = new Color(0x000000);
 
-	this.fieldProj = new WebGLRenderTarget( textureWidth, textureHeight, parameters );
+	this.fieldProj = new WebGLRenderTarget(textureWidth, textureHeight, parameters);
 
-	this.field0.background = new Color( 0x000000 );
+	this.field0.background = new Color(0x000000);
 
-	if ( ! MathUtils.isPowerOfTwo( textureWidth ) ||
-		 ! MathUtils.isPowerOfTwo( textureHeight ) ) {
+	if (!MathUtils.isPowerOfTwo(textureWidth) ||
+		!MathUtils.isPowerOfTwo(textureHeight)) {
 
 		this.field0.texture.generateMipmaps = false;
 		this.field1.texture.generateMipmaps = false;
@@ -176,115 +176,115 @@ var Fire = function ( geometry, options ) {
 
 
 	this.fieldScene = new Scene();
-	this.fieldScene.background = new Color( 0x000000 );
+	this.fieldScene.background = new Color(0x000000);
 
-	this.orthoCamera = new OrthographicCamera( textureWidth / - 2, textureWidth / 2, textureHeight / 2, textureHeight / - 2, 1, 2 );
+	this.orthoCamera = new OrthographicCamera(textureWidth / -2, textureWidth / 2, textureHeight / 2, textureHeight / -2, 1, 2);
 	this.orthoCamera.position.z = 1;
 
-	this.fieldGeometry = new PlaneBufferGeometry( textureWidth, textureHeight );
+	this.fieldGeometry = new PlaneBufferGeometry(textureWidth, textureHeight);
 
-	this.internalSource = new DataTexture( this.sourceData, textureWidth, textureHeight, RGBAFormat );
+	this.internalSource = new DataTexture(this.sourceData, textureWidth, textureHeight, RGBAFormat);
 
 	// Source Shader
 
 	var shader = Fire.SourceShader;
-	this.sourceMaterial = new ShaderMaterial( {
+	this.sourceMaterial = new ShaderMaterial({
 		uniforms: shader.uniforms,
 		vertexShader: shader.vertexShader,
 		fragmentShader: shader.fragmentShader,
 		transparent: false
-	} );
+	});
 
 	this.clearSources();
 
-	this.sourceMesh = new Mesh( this.fieldGeometry, this.sourceMaterial );
-	this.fieldScene.add( this.sourceMesh );
+	this.sourceMesh = new Mesh(this.fieldGeometry, this.sourceMaterial);
+	this.fieldScene.add(this.sourceMesh);
 
 	// Diffuse Shader
 
 	var shader = Fire.DiffuseShader;
-	this.diffuseMaterial = new ShaderMaterial( {
+	this.diffuseMaterial = new ShaderMaterial({
 		uniforms: shader.uniforms,
 		vertexShader: shader.vertexShader,
 		fragmentShader: shader.fragmentShader,
 		transparent: false
-	} );
+	});
 
-	this.diffuseMaterial.uniforms[ "oneOverWidth" ].value = oneOverWidth;
-	this.diffuseMaterial.uniforms[ "oneOverHeight" ].value = oneOverHeight;
+	this.diffuseMaterial.uniforms["oneOverWidth"].value = oneOverWidth;
+	this.diffuseMaterial.uniforms["oneOverHeight"].value = oneOverHeight;
 
-	this.diffuseMesh = new Mesh( this.fieldGeometry, this.diffuseMaterial );
-	this.fieldScene.add( this.diffuseMesh );
+	this.diffuseMesh = new Mesh(this.fieldGeometry, this.diffuseMaterial);
+	this.fieldScene.add(this.diffuseMesh);
 
 	// Drift Shader
 
 	shader = Fire.DriftShader;
-	this.driftMaterial = new ShaderMaterial( {
+	this.driftMaterial = new ShaderMaterial({
 		uniforms: shader.uniforms,
 		vertexShader: shader.vertexShader,
 		fragmentShader: shader.fragmentShader,
 		transparent: false
-	} );
+	});
 
-	this.driftMaterial.uniforms[ "oneOverWidth" ].value = oneOverWidth;
-	this.driftMaterial.uniforms[ "oneOverHeight" ].value = oneOverHeight;
+	this.driftMaterial.uniforms["oneOverWidth"].value = oneOverWidth;
+	this.driftMaterial.uniforms["oneOverHeight"].value = oneOverHeight;
 
-	this.driftMesh = new Mesh( this.fieldGeometry, this.driftMaterial );
-	this.fieldScene.add( this.driftMesh );
+	this.driftMesh = new Mesh(this.fieldGeometry, this.driftMaterial);
+	this.fieldScene.add(this.driftMesh);
 
 	// Projection Shader 1
 
 	shader = Fire.ProjectionShader1;
-	this.projMaterial1 = new ShaderMaterial( {
+	this.projMaterial1 = new ShaderMaterial({
 		uniforms: shader.uniforms,
 		vertexShader: shader.vertexShader,
 		fragmentShader: shader.fragmentShader,
 		transparent: false
-	} );
+	});
 
-	this.projMaterial1.uniforms[ "oneOverWidth" ].value = oneOverWidth;
-	this.projMaterial1.uniforms[ "oneOverHeight" ].value = oneOverHeight;
+	this.projMaterial1.uniforms["oneOverWidth"].value = oneOverWidth;
+	this.projMaterial1.uniforms["oneOverHeight"].value = oneOverHeight;
 
-	this.projMesh1 = new Mesh( this.fieldGeometry, this.projMaterial1 );
-	this.fieldScene.add( this.projMesh1 );
+	this.projMesh1 = new Mesh(this.fieldGeometry, this.projMaterial1);
+	this.fieldScene.add(this.projMesh1);
 
 	// Projection Shader 2
 
 	shader = Fire.ProjectionShader2;
-	this.projMaterial2 = new ShaderMaterial( {
+	this.projMaterial2 = new ShaderMaterial({
 		uniforms: shader.uniforms,
 		vertexShader: shader.vertexShader,
 		fragmentShader: shader.fragmentShader,
 		transparent: false
-	} );
+	});
 
 
-	this.projMaterial2.uniforms[ "oneOverWidth" ].value = oneOverWidth;
-	this.projMaterial2.uniforms[ "oneOverHeight" ].value = oneOverHeight;
+	this.projMaterial2.uniforms["oneOverWidth"].value = oneOverWidth;
+	this.projMaterial2.uniforms["oneOverHeight"].value = oneOverHeight;
 
-	this.projMesh2 = new Mesh( this.fieldGeometry, this.projMaterial2 );
-	this.fieldScene.add( this.projMesh2 );
+	this.projMesh2 = new Mesh(this.fieldGeometry, this.projMaterial2);
+	this.fieldScene.add(this.projMesh2);
 
 	// Projection Shader 3
 
 	shader = Fire.ProjectionShader3;
-	this.projMaterial3 = new ShaderMaterial( {
+	this.projMaterial3 = new ShaderMaterial({
 		uniforms: shader.uniforms,
 		vertexShader: shader.vertexShader,
 		fragmentShader: shader.fragmentShader,
 		transparent: false
-	} );
+	});
 
 
-	this.projMaterial3.uniforms[ "oneOverWidth" ].value = oneOverWidth;
-	this.projMaterial3.uniforms[ "oneOverHeight" ].value = oneOverHeight;
+	this.projMaterial3.uniforms["oneOverWidth"].value = oneOverWidth;
+	this.projMaterial3.uniforms["oneOverHeight"].value = oneOverHeight;
 
-	this.projMesh3 = new Mesh( this.fieldGeometry, this.projMaterial3 );
-	this.fieldScene.add( this.projMesh3 );
+	this.projMesh3 = new Mesh(this.fieldGeometry, this.projMaterial3);
+	this.fieldScene.add(this.projMesh3);
 
 	// Color Shader
 
-	if ( debug ) {
+	if (debug) {
 
 		shader = Fire.DebugShader;
 
@@ -294,38 +294,38 @@ var Fire = function ( geometry, options ) {
 
 	}
 
-	this.material = new ShaderMaterial( {
+	this.material = new ShaderMaterial({
 		uniforms: shader.uniforms,
 		vertexShader: shader.vertexShader,
 		fragmentShader: shader.fragmentShader,
 		transparent: true
-	} );
+	});
 
-	this.material.uniforms[ "densityMap" ].value = this.field1.texture;
+	this.material.uniforms["densityMap"].value = this.field1.texture;
 
-	this.configShaders = function ( dt ) {
+	this.configShaders = function (dt) {
 
-		this.diffuseMaterial.uniforms[ "diffuse" ].value = dt * 0.05 * this.diffuse;
-		this.diffuseMaterial.uniforms[ "viscosity" ].value = dt * 0.05 * this.viscosity;
-		this.diffuseMaterial.uniforms[ "expansion" ].value = Math.exp( this.expansion * - 1.0 );
-		this.diffuseMaterial.uniforms[ "swirl" ].value = Math.exp( this.swirl * - 0.1 );
-		this.diffuseMaterial.uniforms[ "drag" ].value = Math.exp( this.drag * - 0.1 );
-		this.diffuseMaterial.uniforms[ "burnRate" ].value = this.burnRate * dt * 0.01;
-		this.driftMaterial.uniforms[ "windVector" ].value = this.windVector;
-		this.driftMaterial.uniforms[ "airSpeed" ].value = dt * this.airSpeed * 0.001 * textureHeight;
-		this.material.uniforms[ "color1" ].value = this.color1;
-		this.material.uniforms[ "color2" ].value = this.color2;
-		this.material.uniforms[ "color3" ].value = this.color3;
-		this.material.uniforms[ "colorBias" ].value = this.colorBias;
+		this.diffuseMaterial.uniforms["diffuse"].value = dt * 0.05 * this.diffuse;
+		this.diffuseMaterial.uniforms["viscosity"].value = dt * 0.05 * this.viscosity;
+		this.diffuseMaterial.uniforms["expansion"].value = Math.exp(this.expansion * -1.0);
+		this.diffuseMaterial.uniforms["swirl"].value = Math.exp(this.swirl * -0.1);
+		this.diffuseMaterial.uniforms["drag"].value = Math.exp(this.drag * -0.1);
+		this.diffuseMaterial.uniforms["burnRate"].value = this.burnRate * dt * 0.01;
+		this.driftMaterial.uniforms["windVector"].value = this.windVector;
+		this.driftMaterial.uniforms["airSpeed"].value = dt * this.airSpeed * 0.001 * textureHeight;
+		this.material.uniforms["color1"].value = this.color1;
+		this.material.uniforms["color2"].value = this.color2;
+		this.material.uniforms["color3"].value = this.color3;
+		this.material.uniforms["colorBias"].value = this.colorBias;
 
 	};
 
 	this.clearDiffuse = function () {
 
-		this.diffuseMaterial.uniforms[ "expansion" ].value = 1.0;
-		this.diffuseMaterial.uniforms[ "swirl" ].value = 1.0;
-		this.diffuseMaterial.uniforms[ "drag" ].value = 1.0;
-		this.diffuseMaterial.uniforms[ "burnRate" ].value = 0.0;
+		this.diffuseMaterial.uniforms["expansion"].value = 1.0;
+		this.diffuseMaterial.uniforms["swirl"].value = 1.0;
+		this.diffuseMaterial.uniforms["drag"].value = 1.0;
+		this.diffuseMaterial.uniforms["burnRate"].value = 0.0;
 
 	};
 
@@ -337,7 +337,7 @@ var Fire = function ( geometry, options ) {
 
 	};
 
-	this.saveRenderState = function ( renderer ) {
+	this.saveRenderState = function (renderer) {
 
 		this.savedRenderTarget = renderer.getRenderTarget();
 		this.savedXrEnabled = renderer.xr.enabled;
@@ -347,24 +347,24 @@ var Fire = function ( geometry, options ) {
 
 	};
 
-	this.restoreRenderState = function ( renderer ) {
+	this.restoreRenderState = function (renderer) {
 
 		renderer.xr.enabled = this.savedXrEnabled;
 		renderer.shadowMap.autoUpdate = this.savedShadowAutoUpdate;
-		renderer.setRenderTarget( this.savedRenderTarget );
+		renderer.setRenderTarget(this.savedRenderTarget);
 		renderer.antialias = this.savedAntialias;
 		renderer.toneMapping = this.savedToneMapping;
 
 	};
 
-	this.renderSource = function ( renderer ) {
+	this.renderSource = function (renderer) {
 
 		this.sourceMesh.visible = true;
 
-		this.sourceMaterial.uniforms[ "densityMap" ].value = this.field0.texture;
+		this.sourceMaterial.uniforms["densityMap"].value = this.field0.texture;
 
-		renderer.setRenderTarget( this.field1 );
-		renderer.render( this.fieldScene, this.orthoCamera );
+		renderer.setRenderTarget(this.field1);
+		renderer.render(this.fieldScene, this.orthoCamera);
 
 		this.sourceMesh.visible = false;
 
@@ -372,14 +372,14 @@ var Fire = function ( geometry, options ) {
 
 	};
 
-	this.renderDiffuse = function ( renderer ) {
+	this.renderDiffuse = function (renderer) {
 
 		this.diffuseMesh.visible = true;
 
-		this.diffuseMaterial.uniforms[ "densityMap" ].value = this.field0.texture;
+		this.diffuseMaterial.uniforms["densityMap"].value = this.field0.texture;
 
-		renderer.setRenderTarget( this.field1 );
-		renderer.render( this.fieldScene, this.orthoCamera );
+		renderer.setRenderTarget(this.field1);
+		renderer.render(this.fieldScene, this.orthoCamera);
 
 		this.diffuseMesh.visible = false;
 
@@ -387,14 +387,14 @@ var Fire = function ( geometry, options ) {
 
 	};
 
-	this.renderDrift = function ( renderer ) {
+	this.renderDrift = function (renderer) {
 
 		this.driftMesh.visible = true;
 
-		this.driftMaterial.uniforms[ "densityMap" ].value = this.field0.texture;
+		this.driftMaterial.uniforms["densityMap"].value = this.field0.texture;
 
-		renderer.setRenderTarget( this.field1 );
-		renderer.render( this.fieldScene, this.orthoCamera );
+		renderer.setRenderTarget(this.field1);
+		renderer.render(this.fieldScene, this.orthoCamera);
 
 		this.driftMesh.visible = false;
 
@@ -402,49 +402,49 @@ var Fire = function ( geometry, options ) {
 
 	};
 
-	this.renderProject = function ( renderer ) {
+	this.renderProject = function (renderer) {
 
 		// Projection pass 1
 
 		this.projMesh1.visible = true;
 
-		this.projMaterial1.uniforms[ "densityMap" ].value = this.field0.texture;
+		this.projMaterial1.uniforms["densityMap"].value = this.field0.texture;
 
-		renderer.setRenderTarget( this.fieldProj );
-		renderer.render( this.fieldScene, this.orthoCamera );
+		renderer.setRenderTarget(this.fieldProj);
+		renderer.render(this.fieldScene, this.orthoCamera);
 
 		this.projMesh1.visible = false;
 
-		this.projMaterial2.uniforms[ "densityMap" ].value = this.fieldProj.texture;
+		this.projMaterial2.uniforms["densityMap"].value = this.fieldProj.texture;
 
 		// Projection pass 2
 
 		this.projMesh2.visible = true;
 
-		for ( var i = 0; i < 20; i ++ ) {
+		for (var i = 0; i < 20; i++) {
 
-			renderer.setRenderTarget( this.field1 );
-			renderer.render( this.fieldScene, this.orthoCamera );
+			renderer.setRenderTarget(this.field1);
+			renderer.render(this.fieldScene, this.orthoCamera);
 
 			var temp = this.field1;
 			this.field1 = this.fieldProj;
 			this.fieldProj = temp;
 
-			this.projMaterial2.uniforms[ "densityMap" ].value = this.fieldProj.texture;
+			this.projMaterial2.uniforms["densityMap"].value = this.fieldProj.texture;
 
 		}
 
 		this.projMesh2.visible = false;
 
-		this.projMaterial3.uniforms[ "densityMap" ].value = this.field0.texture;
-		this.projMaterial3.uniforms[ "projMap" ].value = this.fieldProj.texture;
+		this.projMaterial3.uniforms["densityMap"].value = this.field0.texture;
+		this.projMaterial3.uniforms["projMap"].value = this.fieldProj.texture;
 
 		// Projection pass 3
 
 		this.projMesh3.visible = true;
 
-		renderer.setRenderTarget( this.field1 );
-		renderer.render( this.fieldScene, this.orthoCamera );
+		renderer.setRenderTarget(this.field1);
+		renderer.render(this.fieldScene, this.orthoCamera);
 
 		this.projMesh3.visible = false;
 
@@ -452,21 +452,21 @@ var Fire = function ( geometry, options ) {
 
 	};
 
-	this.onBeforeRender = function ( renderer ) {
+	this.onBeforeRender = function (renderer) {
 
 		var delta = this.clock.getDelta();
 
-		if ( delta > 0.1 ) {
+		if (delta > 0.1) {
 
 			delta = 0.1;
 
 		}
 
-		var dt = delta * ( this.speed * 0.1 );
+		var dt = delta * (this.speed * 0.1);
 
-		this.configShaders( dt );
+		this.configShaders(dt);
 
-		this.saveRenderState( renderer );
+		this.saveRenderState(renderer);
 
 		renderer.xr.enabled = false; // Avoid camera modification and recursion
 		renderer.shadowMap.autoUpdate = false; // Avoid re-computing shadows
@@ -480,25 +480,25 @@ var Fire = function ( geometry, options ) {
 		this.projMesh2.visible = false;
 		this.projMesh3.visible = false;
 
-		this.renderSource( renderer );
+		this.renderSource(renderer);
 
 		this.clearDiffuse();
 
-		for ( var i = 0; i < 21; i ++ ) {
+		for (var i = 0; i < 21; i++) {
 
-			this.renderDiffuse( renderer );
+			this.renderDiffuse(renderer);
 
 		}
 
-		this.configShaders( dt );
-		this.renderDiffuse( renderer );
+		this.configShaders(dt);
+		this.renderDiffuse(renderer);
 
-		this.renderDrift( renderer );
+		this.renderDrift(renderer);
 
-		if ( this.massConservation ) {
+		if (this.massConservation) {
 
-			this.renderProject( renderer );
-			this.renderProject( renderer );
+			this.renderProject(renderer);
+			this.renderProject(renderer);
 
 		}
 
@@ -507,16 +507,16 @@ var Fire = function ( geometry, options ) {
 		this.material.map = this.field1.texture;
 		this.material.transparent = true;
 		this.material.minFilter = LinearFilter,
-		this.material.magFilter = LinearFilter,
+			this.material.magFilter = LinearFilter,
 
-		this.restoreRenderState( renderer );
+			this.restoreRenderState(renderer);
 
 	};
 
 };
 
 
-Fire.prototype = Object.create( Mesh.prototype );
+Fire.prototype = Object.create(Mesh.prototype);
 Fire.prototype.constructor = Fire;
 
 Fire.SourceShader = {
@@ -542,7 +542,7 @@ Fire.SourceShader = {
 
 		'}'
 
-	].join( "\n" ),
+	].join("\n"),
 
 	fragmentShader: [
 		'uniform sampler2D sourceMap;',
@@ -572,7 +572,7 @@ Fire.SourceShader = {
 
 		'}'
 
-	].join( "\n" )
+	].join("\n")
 };
 
 
@@ -620,7 +620,7 @@ Fire.DiffuseShader = {
 
 		'}'
 
-	].join( "\n" ),
+	].join("\n"),
 
 	fragmentShader: [
 		'uniform float oneOverWidth;',
@@ -681,7 +681,7 @@ Fire.DiffuseShader = {
 
 		'}'
 
-	].join( "\n" )
+	].join("\n")
 };
 
 Fire.DriftShader = {
@@ -694,7 +694,7 @@ Fire.DriftShader = {
 			value: null
 		},
 		'windVector': {
-			value: new Vector2( 0.0, 0.0 )
+			value: new Vector2(0.0, 0.0)
 		},
 		'airSpeed': {
 			value: null
@@ -716,7 +716,7 @@ Fire.DriftShader = {
 
 		'}'
 
-	].join( "\n" ),
+	].join("\n"),
 
 	fragmentShader: [
 		'uniform float oneOverWidth;',
@@ -760,7 +760,7 @@ Fire.DriftShader = {
 
 		'}'
 
-	].join( "\n" )
+	].join("\n")
 };
 
 
@@ -790,7 +790,7 @@ Fire.ProjectionShader1 = {
 
 		'}'
 
-	].join( "\n" ),
+	].join("\n"),
 
 	fragmentShader: [
 		'uniform float oneOverWidth;',
@@ -817,7 +817,7 @@ Fire.ProjectionShader1 = {
 
 		'}'
 
-	].join( "\n" )
+	].join("\n")
 };
 
 
@@ -847,7 +847,7 @@ Fire.ProjectionShader2 = {
 
 		'}'
 
-	].join( "\n" ),
+	].join("\n"),
 
 	fragmentShader: [
 		'uniform float oneOverWidth;',
@@ -875,7 +875,7 @@ Fire.ProjectionShader2 = {
 
 		'}'
 
-	].join( "\n" )
+	].join("\n")
 };
 
 
@@ -908,7 +908,7 @@ Fire.ProjectionShader3 = {
 
 		'}'
 
-	].join( "\n" ),
+	].join("\n"),
 
 	fragmentShader: [
 		'uniform float oneOverWidth;',
@@ -942,7 +942,7 @@ Fire.ProjectionShader3 = {
 
 		'}'
 
-	].join( "\n" )
+	].join("\n")
 };
 
 Fire.ColorShader = {
@@ -977,7 +977,7 @@ Fire.ColorShader = {
 
 		'}'
 
-	].join( "\n" ),
+	].join("\n"),
 
 	fragmentShader: [
 		'uniform vec3 color1;',
@@ -1000,7 +1000,7 @@ Fire.ColorShader = {
 		'    gl_FragColor = vec4(blend1 + blend2, density);',
 		'}'
 
-	].join( "\n" )
+	].join("\n")
 };
 
 
@@ -1036,7 +1036,7 @@ Fire.DebugShader = {
 
 		'}'
 
-	].join( "\n" ),
+	].join("\n"),
 
 	fragmentShader: [
 		'uniform sampler2D densityMap;',
@@ -1060,7 +1060,7 @@ Fire.DebugShader = {
 
 		'}'
 
-	].join( "\n" )
+	].join("\n")
 };
 
-export { Fire };
+export {Fire};

@@ -1,4 +1,4 @@
-import { Camera } from './Camera';
+import {Camera} from './Camera';
 
 /**
  * Camera with orthographic projection
@@ -10,6 +10,43 @@ import { Camera } from './Camera';
  * @see <a href="https://github.com/mrdoob/three.js/blob/master/src/cameras/OrthographicCamera.js">src/cameras/OrthographicCamera.js</a>
  */
 export class OrthographicCamera extends Camera {
+
+	type: 'OrthographicCamera';
+	readonly isOrthographicCamera: true;
+	zoom: number;
+	view: null | {
+		enabled: boolean;
+		fullWidth: number;
+		fullHeight: number;
+		offsetX: number;
+		offsetY: number;
+		width: number;
+		height: number;
+	};
+	/**
+	 * Camera frustum left plane.
+	 */
+	left: number;
+	/**
+	 * Camera frustum right plane.
+	 */
+	right: number;
+	/**
+	 * Camera frustum top plane.
+	 */
+	top: number;
+	/**
+	 * Camera frustum bottom plane.
+	 */
+	bottom: number;
+	/**
+	 * Camera frustum near plane.
+	 */
+	near: number;
+	/**
+	 * Camera frustum far plane.
+	 */
+	far: number;
 
 	/**
 	 * @param left Camera frustum left plane.
@@ -28,55 +65,11 @@ export class OrthographicCamera extends Camera {
 		far?: number
 	);
 
-	type: 'OrthographicCamera';
-
-	readonly isOrthographicCamera: true;
-
-	zoom: number;
-	view: null | {
-		enabled: boolean;
-		fullWidth: number;
-		fullHeight: number;
-		offsetX: number;
-		offsetY: number;
-		width: number;
-		height: number;
-	};
-
-	/**
-	 * Camera frustum left plane.
-	 */
-	left: number;
-
-	/**
-	 * Camera frustum right plane.
-	 */
-	right: number;
-
-	/**
-	 * Camera frustum top plane.
-	 */
-	top: number;
-
-	/**
-	 * Camera frustum bottom plane.
-	 */
-	bottom: number;
-
-	/**
-	 * Camera frustum near plane.
-	 */
-	near: number;
-
-	/**
-	 * Camera frustum far plane.
-	 */
-	far: number;
-
 	/**
 	 * Updates the camera projection matrix. Must be called after change of parameters.
 	 */
 	updateProjectionMatrix(): void;
+
 	setViewOffset(
 		fullWidth: number,
 		fullHeight: number,
@@ -85,7 +78,9 @@ export class OrthographicCamera extends Camera {
 		width: number,
 		height: number
 	): void;
+
 	clearViewOffset(): void;
-	toJSON( meta?: any ): any;
+
+	toJSON(meta?: any): any;
 
 }

@@ -15,9 +15,9 @@ var HorizontalTiltShiftShader = {
 
 	uniforms: {
 
-		"tDiffuse": { value: null },
-		"h": { value: 1.0 / 512.0 },
-		"r": { value: 0.35 }
+		"tDiffuse": {value: null},
+		"h": {value: 1.0 / 512.0},
+		"r": {value: 0.35}
 
 	},
 
@@ -32,7 +32,7 @@ var HorizontalTiltShiftShader = {
 
 		"}"
 
-	].join( "\n" ),
+	].join("\n"),
 
 	fragmentShader: [
 
@@ -62,8 +62,8 @@ var HorizontalTiltShiftShader = {
 
 		"}"
 
-	].join( "\n" )
+	].join("\n")
 
 };
 
-export { HorizontalTiltShiftShader };
+export {HorizontalTiltShiftShader};

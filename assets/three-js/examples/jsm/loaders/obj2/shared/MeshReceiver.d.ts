@@ -1,12 +1,9 @@
-import {
-	Mesh
-} from '../../../../../src/Three';
+import {Mesh} from '../../../../../src/Three';
 
-import { MaterialHandler } from './MaterialHandler';
+import {MaterialHandler} from './MaterialHandler';
 
 export class MeshReceiver {
 
-	constructor( materialHandler: MaterialHandler );
 	logging: {
 		enabled: boolean;
 		debug: boolean;
@@ -17,7 +14,10 @@ export class MeshReceiver {
 	};
 	materialHandler: MaterialHandler;
 
-	buildMeshes( meshPayload: object ): Mesh[];
-	setLogging( enabled: boolean, debug: boolean ): void;
+	constructor(materialHandler: MaterialHandler);
+
+	buildMeshes(meshPayload: object): Mesh[];
+
+	setLogging(enabled: boolean, debug: boolean): void;
 
 }

@@ -1,7 +1,7 @@
 import {
 	BufferGeometry,
-	Color,
 	Clock,
+	Color,
 	DataTexture,
 	Mesh,
 	OrthographicCamera,
@@ -36,7 +36,14 @@ export interface FireOptions {
 
 export class Fire extends Mesh {
 
-	constructor( geometry: BufferGeometry, options: FireOptions );
+	static SourceShader: SourceShader;
+	static DiffuseShader: DiffuseShader;
+	static DriftShader: DriftShader;
+	static ProjectionShader1: ProjectionShader1;
+	static ProjectionShader2: ProjectionShader2;
+	static ProjectionShader3: ProjectionShader3;
+	static ColorShader: ColorShader;
+	static DebugShader: DebugShader;
 	clock: Clock;
 	color1: Color;
 	color2: Color;
@@ -52,9 +59,7 @@ export class Fire extends Mesh {
 	windVector: number;
 	speed: number;
 	massConservation: boolean;
-
 	sourceData: Uint8Array;
-
 	field0: WebGLRenderTarget;
 	field1: WebGLRenderTarget;
 	fieldProj: WebGLRenderTarget;
@@ -71,27 +76,31 @@ export class Fire extends Mesh {
 	projMaterial3: ShaderMaterial;
 	material: ShaderMaterial;
 
-	addSource( u: number, v: number, radius: number, density?: number, windX?: number, windY?: number ): Uint8Array;
-	clearDiffuse(): void;
-	clearSources(): Uint8Array;
-	configShaders( dt: number ): void;
-	renderDiffuse( renderer: WebGLRenderer ): void;
-	renderDrift( renderer: WebGLRenderer ): void;
-	renderProject( renderer: WebGLRenderer ): void;
-	renderSource( renderer: WebGLRenderer ): void;
-	restoreRenderState( renderer: WebGLRenderer ): void;
-	saveRenderState( renderer: WebGLRenderer ): void;
-	setSourceMap( texture: Texture ): void;
-	swapTextures(): void;
+	constructor(geometry: BufferGeometry, options: FireOptions);
 
-	static SourceShader: SourceShader;
-	static DiffuseShader: DiffuseShader;
-	static DriftShader: DriftShader;
-	static ProjectionShader1: ProjectionShader1;
-	static ProjectionShader2: ProjectionShader2;
-	static ProjectionShader3: ProjectionShader3;
-	static ColorShader: ColorShader;
-	static DebugShader: DebugShader;
+	addSource(u: number, v: number, radius: number, density?: number, windX?: number, windY?: number): Uint8Array;
+
+	clearDiffuse(): void;
+
+	clearSources(): Uint8Array;
+
+	configShaders(dt: number): void;
+
+	renderDiffuse(renderer: WebGLRenderer): void;
+
+	renderDrift(renderer: WebGLRenderer): void;
+
+	renderProject(renderer: WebGLRenderer): void;
+
+	renderSource(renderer: WebGLRenderer): void;
+
+	restoreRenderState(renderer: WebGLRenderer): void;
+
+	saveRenderState(renderer: WebGLRenderer): void;
+
+	setSourceMap(texture: Texture): void;
+
+	swapTextures(): void;
 
 }
 

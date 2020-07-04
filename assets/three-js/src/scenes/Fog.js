@@ -3,30 +3,30 @@
  * @author alteredq / http://alteredqualia.com/
  */
 
-import { Color } from '../math/Color.js';
+import {Color} from '../math/Color.js';
 
-function Fog( color, near, far ) {
+function Fog(color, near, far) {
 
 	this.name = '';
 
-	this.color = new Color( color );
+	this.color = new Color(color);
 
-	this.near = ( near !== undefined ) ? near : 1;
-	this.far = ( far !== undefined ) ? far : 1000;
+	this.near = (near !== undefined) ? near : 1;
+	this.far = (far !== undefined) ? far : 1000;
 
 }
 
-Object.assign( Fog.prototype, {
+Object.assign(Fog.prototype, {
 
 	isFog: true,
 
 	clone: function () {
 
-		return new Fog( this.color, this.near, this.far );
+		return new Fog(this.color, this.near, this.far);
 
 	},
 
-	toJSON: function ( /* meta */ ) {
+	toJSON: function ( /* meta */) {
 
 		return {
 			type: 'Fog',
@@ -37,6 +37,6 @@ Object.assign( Fog.prototype, {
 
 	}
 
-} );
+});
 
-export { Fog };
+export {Fog};

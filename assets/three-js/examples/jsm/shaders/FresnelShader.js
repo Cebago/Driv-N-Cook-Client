@@ -10,11 +10,11 @@ var FresnelShader = {
 
 	uniforms: {
 
-		"mRefractionRatio": { value: 1.02 },
-		"mFresnelBias": { value: 0.1 },
-		"mFresnelPower": { value: 2.0 },
-		"mFresnelScale": { value: 1.0 },
-		"tCube": { value: null }
+		"mRefractionRatio": {value: 1.02},
+		"mFresnelBias": {value: 0.1},
+		"mFresnelPower": {value: 2.0},
+		"mFresnelScale": {value: 1.0},
+		"tCube": {value: null}
 
 	},
 
@@ -48,7 +48,7 @@ var FresnelShader = {
 
 		"}"
 
-	].join( "\n" ),
+	].join("\n"),
 
 	fragmentShader: [
 
@@ -71,8 +71,8 @@ var FresnelShader = {
 
 		"}"
 
-	].join( "\n" )
+	].join("\n")
 
 };
 
-export { FresnelShader };
+export {FresnelShader};

@@ -2,44 +2,44 @@
  * @author mrdoob / http://mrdoob.com/
  */
 
-import { UIPanel, UIBreak, UIRow, UIColor, UISelect, UIText, UINumber } from './libs/ui.js';
-import { UIOutliner, UITexture, UICubeTexture } from './libs/ui.three.js';
+import {UIBreak, UIColor, UINumber, UIPanel, UIRow, UISelect, UIText} from './libs/ui.js';
+import {UICubeTexture, UIOutliner, UITexture} from './libs/ui.three.js';
 
-var SidebarScene = function ( editor ) {
+var SidebarScene = function (editor) {
 
 	var signals = editor.signals;
 	var strings = editor.strings;
 
 	var container = new UIPanel();
-	container.setBorderTop( '0' );
-	container.setPaddingTop( '20px' );
+	container.setBorderTop('0');
+	container.setPaddingTop('20px');
 
 	// outliner
 
-	function buildOption( object, draggable ) {
+	function buildOption(object, draggable) {
 
-		var option = document.createElement( 'div' );
+		var option = document.createElement('div');
 		option.draggable = draggable;
-		option.innerHTML = buildHTML( object );
+		option.innerHTML = buildHTML(object);
 		option.value = object.id;
 
 		return option;
 
 	}
 
-	function getMaterialName( material ) {
+	function getMaterialName(material) {
 
-		if ( Array.isArray( material ) ) {
+		if (Array.isArray(material)) {
 
 			var array = [];
 
-			for ( var i = 0; i < material.length; i ++ ) {
+			for (var i = 0; i < material.length; i++) {
 
-				array.push( material[ i ].name );
+				array.push(material[i].name);
 
 			}
 
-			return array.join( ',' );
+			return array.join(',');
 
 		}
 
@@ -47,40 +47,40 @@ var SidebarScene = function ( editor ) {
 
 	}
 
-	function escapeHTML( html ) {
+	function escapeHTML(html) {
 
 		return html
-			.replace( /&/g, '&amp;' )
-			.replace( /"/g, '&quot;' )
-			.replace( /'/g, '&#39;' )
-			.replace( /</g, '&lt;' )
-			.replace( />/g, '&gt;' );
+			.replace(/&/g, '&amp;')
+			.replace(/"/g, '&quot;')
+			.replace(/'/g, '&#39;')
+			.replace(/</g, '&lt;')
+			.replace(/>/g, '&gt;');
 
 	}
 
-	function buildHTML( object ) {
+	function buildHTML(object) {
 
-		var html = '<span class="type ' + object.type + '"></span> ' + escapeHTML( object.name );
+		var html = '<span class="type ' + object.type + '"></span> ' + escapeHTML(object.name);
 
-		if ( object.isMesh ) {
+		if (object.isMesh) {
 
 			var geometry = object.geometry;
 			var material = object.material;
 
-			html += ' <span class="type ' + geometry.type + '"></span> ' + escapeHTML( geometry.name );
-			html += ' <span class="type ' + material.type + '"></span> ' + escapeHTML( getMaterialName( material ) );
+			html += ' <span class="type ' + geometry.type + '"></span> ' + escapeHTML(geometry.name);
+			html += ' <span class="type ' + material.type + '"></span> ' + escapeHTML(getMaterialName(material));
 
 		}
 
-		html += getScript( object.uuid );
+		html += getScript(object.uuid);
 
 		return html;
 
 	}
 
-	function getScript( uuid ) {
+	function getScript(uuid) {
 
-		if ( editor.scripts[ uuid ] !== undefined ) {
+		if (editor.scripts[uuid] !== undefined) {
 
 			return ' <span class="type Script"></span>';
 
@@ -92,24 +92,24 @@ var SidebarScene = function ( editor ) {
 
 	var ignoreObjectSelectedSignal = false;
 
-	var outliner = new UIOutliner( editor );
-	outliner.setId( 'outliner' );
-	outliner.onChange( function () {
+	var outliner = new UIOutliner(editor);
+	outliner.setId('outliner');
+	outliner.onChange(function () {
 
 		ignoreObjectSelectedSignal = true;
 
-		editor.selectById( parseInt( outliner.getValue() ) );
+		editor.selectById(parseInt(outliner.getValue()));
 
 		ignoreObjectSelectedSignal = false;
 
-	} );
-	outliner.onDblClick( function () {
+	});
+	outliner.onDblClick(function () {
 
-		editor.focusById( parseInt( outliner.getValue() ) );
+		editor.focusById(parseInt(outliner.getValue()));
 
-	} );
-	container.add( outliner );
-	container.add( new UIBreak() );
+	});
+	container.add(outliner);
+	container.add(new UIBreak());
 
 	// background
 
@@ -125,11 +125,11 @@ var SidebarScene = function ( editor ) {
 
 	}
 
-	function onTextureChanged( texture ) {
+	function onTextureChanged(texture) {
 
 		texture.encoding = texture.isHDRTexture ? THREE.RGBEEncoding : THREE.sRGBEncoding;
 
-		if ( texture.isCubeTexture && texture.isHDRTexture ) {
+		if (texture.isCubeTexture && texture.isHDRTexture) {
 
 			texture.format = THREE.RGBAFormat;
 			texture.minFilter = THREE.NearestFilter;
@@ -144,7 +144,7 @@ var SidebarScene = function ( editor ) {
 
 	var backgroundRow = new UIRow();
 
-	var backgroundType = new UISelect().setOptions( {
+	var backgroundType = new UISelect().setOptions({
 
 		'None': 'None',
 		'Color': 'Color',
@@ -152,62 +152,62 @@ var SidebarScene = function ( editor ) {
 		'CubeTexture': 'CubeTexture',
 		'Equirect': 'Equirect (HDR)'
 
-	} ).setWidth( '150px' );
-	backgroundType.onChange( function () {
+	}).setWidth('150px');
+	backgroundType.onChange(function () {
 
 		onBackgroundChanged();
 		refreshBackgroundUI();
 
-	} );
-	backgroundType.setValue( 'Color' );
+	});
+	backgroundType.setValue('Color');
 
-	backgroundRow.add( new UIText( strings.getKey( 'sidebar/scene/background' ) ).setWidth( '90px' ) );
-	backgroundRow.add( backgroundType );
+	backgroundRow.add(new UIText(strings.getKey('sidebar/scene/background')).setWidth('90px'));
+	backgroundRow.add(backgroundType);
 
-	container.add( backgroundRow );
+	container.add(backgroundRow);
 
 	//
 
 	var colorRow = new UIRow();
-	colorRow.setMarginLeft( '90px' );
+	colorRow.setMarginLeft('90px');
 
-	var backgroundColor = new UIColor().setValue( '#aaaaaa' ).onChange( onBackgroundChanged );
-	colorRow.add( backgroundColor );
+	var backgroundColor = new UIColor().setValue('#aaaaaa').onChange(onBackgroundChanged);
+	colorRow.add(backgroundColor);
 
-	container.add( colorRow );
+	container.add(colorRow);
 
 	//
 
 	var textureRow = new UIRow();
-	textureRow.setDisplay( 'none' );
-	textureRow.setMarginLeft( '90px' );
+	textureRow.setDisplay('none');
+	textureRow.setMarginLeft('90px');
 
-	var backgroundTexture = new UITexture().onChange( onTextureChanged );
-	textureRow.add( backgroundTexture );
+	var backgroundTexture = new UITexture().onChange(onTextureChanged);
+	textureRow.add(backgroundTexture);
 
-	container.add( textureRow );
+	container.add(textureRow);
 
 	//
 
 	var cubeTextureRow = new UIRow();
-	cubeTextureRow.setDisplay( 'none' );
-	cubeTextureRow.setMarginLeft( '90px' );
+	cubeTextureRow.setDisplay('none');
+	cubeTextureRow.setMarginLeft('90px');
 
-	var backgroundCubeTexture = new UICubeTexture().onChange( onTextureChanged );
-	cubeTextureRow.add( backgroundCubeTexture );
+	var backgroundCubeTexture = new UICubeTexture().onChange(onTextureChanged);
+	cubeTextureRow.add(backgroundCubeTexture);
 
-	container.add( cubeTextureRow );
+	container.add(cubeTextureRow);
 
 	//
 
 	var equirectRow = new UIRow();
-	equirectRow.setDisplay( 'none' );
-	equirectRow.setMarginLeft( '90px' );
+	equirectRow.setDisplay('none');
+	equirectRow.setMarginLeft('90px');
 
-	var backgroundEquirectTexture = new UITexture().onChange( onTextureChanged );
-	equirectRow.add( backgroundEquirectTexture );
+	var backgroundEquirectTexture = new UITexture().onChange(onTextureChanged);
+	equirectRow.add(backgroundEquirectTexture);
 
-	container.add( equirectRow );
+	container.add(equirectRow);
 
 	//
 
@@ -215,10 +215,10 @@ var SidebarScene = function ( editor ) {
 
 		var type = backgroundType.getValue();
 
-		colorRow.setDisplay( type === 'Color' ? '' : 'none' );
-		textureRow.setDisplay( type === 'Texture' ? '' : 'none' );
-		cubeTextureRow.setDisplay( type === 'CubeTexture' ? '' : 'none' );
-		equirectRow.setDisplay( type === 'Equirect' ? '' : 'none' );
+		colorRow.setDisplay(type === 'Color' ? '' : 'none');
+		textureRow.setDisplay(type === 'Texture' ? '' : 'none');
+		cubeTextureRow.setDisplay(type === 'CubeTexture' ? '' : 'none');
+		equirectRow.setDisplay(type === 'Equirect' ? '' : 'none');
 
 	}
 
@@ -237,50 +237,50 @@ var SidebarScene = function ( editor ) {
 	}
 
 	var fogTypeRow = new UIRow();
-	var fogType = new UISelect().setOptions( {
+	var fogType = new UISelect().setOptions({
 
 		'None': 'None',
 		'Fog': 'Linear',
 		'FogExp2': 'Exponential'
 
-	} ).setWidth( '150px' );
-	fogType.onChange( function () {
+	}).setWidth('150px');
+	fogType.onChange(function () {
 
 		onFogChanged();
 		refreshFogUI();
 
-	} );
+	});
 
-	fogTypeRow.add( new UIText( strings.getKey( 'sidebar/scene/fog' ) ).setWidth( '90px' ) );
-	fogTypeRow.add( fogType );
+	fogTypeRow.add(new UIText(strings.getKey('sidebar/scene/fog')).setWidth('90px'));
+	fogTypeRow.add(fogType);
 
-	container.add( fogTypeRow );
+	container.add(fogTypeRow);
 
 	// fog color
 
 	var fogPropertiesRow = new UIRow();
-	fogPropertiesRow.setDisplay( 'none' );
-	fogPropertiesRow.setMarginLeft( '90px' );
-	container.add( fogPropertiesRow );
+	fogPropertiesRow.setDisplay('none');
+	fogPropertiesRow.setMarginLeft('90px');
+	container.add(fogPropertiesRow);
 
-	var fogColor = new UIColor().setValue( '#aaaaaa' );
-	fogColor.onChange( onFogChanged );
-	fogPropertiesRow.add( fogColor );
+	var fogColor = new UIColor().setValue('#aaaaaa');
+	fogColor.onChange(onFogChanged);
+	fogPropertiesRow.add(fogColor);
 
 	// fog near
 
-	var fogNear = new UINumber( 0.1 ).setWidth( '40px' ).setRange( 0, Infinity ).onChange( onFogChanged );
-	fogPropertiesRow.add( fogNear );
+	var fogNear = new UINumber(0.1).setWidth('40px').setRange(0, Infinity).onChange(onFogChanged);
+	fogPropertiesRow.add(fogNear);
 
 	// fog far
 
-	var fogFar = new UINumber( 50 ).setWidth( '40px' ).setRange( 0, Infinity ).onChange( onFogChanged );
-	fogPropertiesRow.add( fogFar );
+	var fogFar = new UINumber(50).setWidth('40px').setRange(0, Infinity).onChange(onFogChanged);
+	fogPropertiesRow.add(fogFar);
 
 	// fog density
 
-	var fogDensity = new UINumber( 0.05 ).setWidth( '40px' ).setRange( 0, 0.1 ).setStep( 0.001 ).setPrecision( 3 ).onChange( onFogChanged );
-	fogPropertiesRow.add( fogDensity );
+	var fogDensity = new UINumber(0.05).setWidth('40px').setRange(0, 0.1).setStep(0.001).setPrecision(3).onChange(onFogChanged);
+	fogPropertiesRow.add(fogDensity);
 
 	//
 
@@ -291,86 +291,86 @@ var SidebarScene = function ( editor ) {
 
 		var options = [];
 
-		options.push( buildOption( camera, false ) );
-		options.push( buildOption( scene, false ) );
+		options.push(buildOption(camera, false));
+		options.push(buildOption(scene, false));
 
-		( function addObjects( objects, pad ) {
+		(function addObjects(objects, pad) {
 
-			for ( var i = 0, l = objects.length; i < l; i ++ ) {
+			for (var i = 0, l = objects.length; i < l; i++) {
 
-				var object = objects[ i ];
+				var object = objects[i];
 
-				var option = buildOption( object, true );
-				option.style.paddingLeft = ( pad * 10 ) + 'px';
-				options.push( option );
+				var option = buildOption(object, true);
+				option.style.paddingLeft = (pad * 10) + 'px';
+				options.push(option);
 
-				addObjects( object.children, pad + 1 );
+				addObjects(object.children, pad + 1);
 
 			}
 
-		} )( scene.children, 1 );
+		})(scene.children, 1);
 
-		outliner.setOptions( options );
+		outliner.setOptions(options);
 
-		if ( editor.selected !== null ) {
+		if (editor.selected !== null) {
 
-			outliner.setValue( editor.selected.id );
+			outliner.setValue(editor.selected.id);
 
 		}
 
-		if ( scene.background ) {
+		if (scene.background) {
 
-			if ( scene.background.isColor ) {
+			if (scene.background.isColor) {
 
-				backgroundType.setValue( "Color" );
-				backgroundColor.setHexValue( scene.background.getHex() );
-				backgroundTexture.setValue( null );
-				backgroundCubeTexture.setValue( null );
-				backgroundEquirectTexture.setValue( null );
+				backgroundType.setValue("Color");
+				backgroundColor.setHexValue(scene.background.getHex());
+				backgroundTexture.setValue(null);
+				backgroundCubeTexture.setValue(null);
+				backgroundEquirectTexture.setValue(null);
 
-			} else if ( scene.background.isTexture && ! scene.background.isPmremTexture ) {
+			} else if (scene.background.isTexture && !scene.background.isPmremTexture) {
 
-				backgroundType.setValue( "Texture" );
-				backgroundTexture.setValue( scene.background );
-				backgroundCubeTexture.setValue( null );
-				backgroundEquirectTexture.setValue( null );
+				backgroundType.setValue("Texture");
+				backgroundTexture.setValue(scene.background);
+				backgroundCubeTexture.setValue(null);
+				backgroundEquirectTexture.setValue(null);
 
-			} else if ( scene.background.isCubeTexture ) {
+			} else if (scene.background.isCubeTexture) {
 
-				backgroundType.setValue( "CubeTexture" );
-				backgroundCubeTexture.setValue( scene.background );
-				backgroundTexture.setValue( null );
-				backgroundEquirectTexture.setValue( null );
+				backgroundType.setValue("CubeTexture");
+				backgroundCubeTexture.setValue(scene.background);
+				backgroundTexture.setValue(null);
+				backgroundEquirectTexture.setValue(null);
 
 			}
 
 		} else {
 
-			backgroundType.setValue( "None" );
-			backgroundTexture.setValue( null );
+			backgroundType.setValue("None");
+			backgroundTexture.setValue(null);
 
 		}
 
-		if ( scene.fog ) {
+		if (scene.fog) {
 
-			fogColor.setHexValue( scene.fog.color.getHex() );
+			fogColor.setHexValue(scene.fog.color.getHex());
 
-			if ( scene.fog.isFog ) {
+			if (scene.fog.isFog) {
 
-				fogType.setValue( "Fog" );
-				fogNear.setValue( scene.fog.near );
-				fogFar.setValue( scene.fog.far );
+				fogType.setValue("Fog");
+				fogNear.setValue(scene.fog.near);
+				fogFar.setValue(scene.fog.far);
 
-			} else if ( scene.fog.isFogExp2 ) {
+			} else if (scene.fog.isFogExp2) {
 
-				fogType.setValue( "FogExp2" );
-				fogDensity.setValue( scene.fog.density );
+				fogType.setValue("FogExp2");
+				fogDensity.setValue(scene.fog.density);
 
 			}
 
 		} else {
 
-			fogType.setValue( "None" );
+			fogType.setValue("None");
 
 		}
 
@@ -383,10 +383,10 @@ var SidebarScene = function ( editor ) {
 
 		var type = fogType.getValue();
 
-		fogPropertiesRow.setDisplay( type === 'None' ? 'none' : '' );
-		fogNear.setDisplay( type === 'Fog' ? '' : 'none' );
-		fogFar.setDisplay( type === 'Fog' ? '' : 'none' );
-		fogDensity.setDisplay( type === 'FogExp2' ? '' : 'none' );
+		fogPropertiesRow.setDisplay(type === 'None' ? 'none' : '');
+		fogNear.setDisplay(type === 'Fog' ? '' : 'none');
+		fogFar.setDisplay(type === 'Fog' ? '' : 'none');
+		fogDensity.setDisplay(type === 'FogExp2' ? '' : 'none');
 
 	}
 
@@ -394,39 +394,39 @@ var SidebarScene = function ( editor ) {
 
 	// events
 
-	signals.editorCleared.add( refreshUI );
+	signals.editorCleared.add(refreshUI);
 
-	signals.sceneGraphChanged.add( refreshUI );
+	signals.sceneGraphChanged.add(refreshUI);
 
-	signals.objectChanged.add( function ( object ) {
+	signals.objectChanged.add(function (object) {
 
 		var options = outliner.options;
 
-		for ( var i = 0; i < options.length; i ++ ) {
+		for (var i = 0; i < options.length; i++) {
 
-			var option = options[ i ];
+			var option = options[i];
 
-			if ( option.value === object.id ) {
+			if (option.value === object.id) {
 
-				option.innerHTML = buildHTML( object );
+				option.innerHTML = buildHTML(object);
 				return;
 
 			}
 
 		}
 
-	} );
+	});
 
-	signals.objectSelected.add( function ( object ) {
+	signals.objectSelected.add(function (object) {
 
-		if ( ignoreObjectSelectedSignal === true ) return;
+		if (ignoreObjectSelectedSignal === true) return;
 
-		outliner.setValue( object !== null ? object.id : null );
+		outliner.setValue(object !== null ? object.id : null);
 
-	} );
+	});
 
 	return container;
 
 };
 
-export { SidebarScene };
+export {SidebarScene};

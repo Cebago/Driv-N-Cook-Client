@@ -1,8 +1,8 @@
-import { Color } from './../math/Color';
-import { Texture } from './../textures/Texture';
-import { Vector2 } from './../math/Vector2';
-import { MaterialParameters, Material } from './Material';
-import { NormalMapTypes } from '../constants';
+import {Color} from './../math/Color';
+import {Texture} from './../textures/Texture';
+import {Vector2} from './../math/Vector2';
+import {Material, MaterialParameters} from './Material';
+import {NormalMapTypes} from '../constants';
 
 export interface MeshMatcapMaterialParameters extends MaterialParameters {
 
@@ -25,8 +25,6 @@ export interface MeshMatcapMaterialParameters extends MaterialParameters {
 
 export class MeshMatcapMaterial extends Material {
 
-	constructor( parameters?: MeshMatcapMaterialParameters );
-
 	color: Color;
 	matcap: Texture | null;
 	map: Texture | null;
@@ -43,6 +41,8 @@ export class MeshMatcapMaterial extends Material {
 	morphTargets: boolean;
 	morphNormals: boolean;
 
-	setValues( parameters: MeshMatcapMaterialParameters ): void;
+	constructor(parameters?: MeshMatcapMaterialParameters);
+
+	setValues(parameters: MeshMatcapMaterialParameters): void;
 
 }

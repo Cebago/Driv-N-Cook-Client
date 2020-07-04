@@ -3,13 +3,10 @@
  */
 
 import './unit/qunit-utils.js';
-
 //src
 import './unit/src/constants.tests';
 import './unit/src/polyfills.tests';
 import './unit/src/utils.tests';
-
-
 //src/animation
 import './unit/src/animation/AnimationAction.tests';
 import './unit/src/animation/AnimationClip.tests';
@@ -19,7 +16,6 @@ import './unit/src/animation/AnimationUtils.tests';
 import './unit/src/animation/KeyframeTrack.tests';
 import './unit/src/animation/PropertyBinding.tests';
 import './unit/src/animation/PropertyMixer.tests';
-
 //src/animation/tracks
 import './unit/src/animation/tracks/BooleanKeyframeTrack.tests';
 import './unit/src/animation/tracks/ColorKeyframeTrack.tests';
@@ -27,16 +23,12 @@ import './unit/src/animation/tracks/NumberKeyframeTrack.tests';
 import './unit/src/animation/tracks/QuaternionKeyframeTrack.tests';
 import './unit/src/animation/tracks/StringKeyframeTrack.tests';
 import './unit/src/animation/tracks/VectorKeyframeTrack.tests';
-
-
 //src/audio
 import './unit/src/audio/Audio.tests';
 import './unit/src/audio/AudioAnalyser.tests';
 import './unit/src/audio/AudioContext.tests';
 import './unit/src/audio/AudioListener.tests';
 import './unit/src/audio/PositionalAudio.tests';
-
-
 //src/cameras
 import './unit/src/cameras/ArrayCamera.tests';
 import './unit/src/cameras/Camera.tests';
@@ -44,8 +36,6 @@ import './unit/src/cameras/CubeCamera.tests';
 import './unit/src/cameras/OrthographicCamera.tests';
 import './unit/src/cameras/PerspectiveCamera.tests';
 import './unit/src/cameras/StereoCamera.tests';
-
-
 //src/core
 import './unit/src/core/BufferAttribute.tests';
 import './unit/src/core/BufferGeometry.tests';
@@ -63,11 +53,8 @@ import './unit/src/core/Layers.tests';
 import './unit/src/core/Object3D.tests';
 import './unit/src/core/Raycaster.tests';
 import './unit/src/core/Uniform.tests';
-
-
 //src/extras
 import './unit/src/extras/ShapeUtils.tests';
-
 //src/extras/core
 import './unit/src/extras/core/Curve.tests';
 import './unit/src/extras/core/CurvePath.tests';
@@ -76,7 +63,6 @@ import './unit/src/extras/core/Interpolations.tests';
 import './unit/src/extras/core/Path.tests';
 import './unit/src/extras/core/Shape.tests';
 import './unit/src/extras/core/ShapePath.tests';
-
 //src/extras/curves
 import './unit/src/extras/curves/ArcCurve.tests';
 import './unit/src/extras/curves/CatmullRomCurve3.tests';
@@ -88,11 +74,8 @@ import './unit/src/extras/curves/LineCurve3.tests';
 import './unit/src/extras/curves/QuadraticBezierCurve.tests';
 import './unit/src/extras/curves/QuadraticBezierCurve3.tests';
 import './unit/src/extras/curves/SplineCurve.tests';
-
 //src/extras/objects
 import './unit/src/extras/objects/ImmediateRenderObject.tests';
-
-
 //src/geometries
 import './unit/src/geometries/BoxGeometry.tests';
 import './unit/src/geometries/CircleGeometry.tests';
@@ -116,8 +99,6 @@ import './unit/src/geometries/TorusGeometry.tests';
 import './unit/src/geometries/TorusKnotGeometry.tests';
 import './unit/src/geometries/TubeGeometry.tests';
 import './unit/src/geometries/WireframeGeometry.tests';
-
-
 //src/helpers
 import './unit/src/helpers/ArrowHelper.tests';
 import './unit/src/helpers/AxesHelper.tests';
@@ -132,8 +113,6 @@ import './unit/src/helpers/PointLightHelper.tests';
 import './unit/src/helpers/PolarGridHelper.tests';
 import './unit/src/helpers/SkeletonHelper.tests';
 import './unit/src/helpers/SpotLightHelper.tests';
-
-
 //src/lights
 import './unit/src/lights/AmbientLight.tests';
 import './unit/src/lights/DirectionalLight.tests';
@@ -145,8 +124,6 @@ import './unit/src/lights/PointLight.tests';
 import './unit/src/lights/RectAreaLight.tests';
 import './unit/src/lights/SpotLight.tests';
 import './unit/src/lights/SpotLightShadow.tests';
-
-
 //src/loaders
 import './unit/src/loaders/AnimationLoader.tests';
 import './unit/src/loaders/AudioLoader.tests';
@@ -164,8 +141,6 @@ import './unit/src/loaders/LoadingManager.tests';
 import './unit/src/loaders/MaterialLoader.tests';
 import './unit/src/loaders/ObjectLoader.tests';
 import './unit/src/loaders/TextureLoader.tests';
-
-
 //src/materials
 import './unit/src/materials/LineBasicMaterial.tests';
 import './unit/src/materials/LineDashedMaterial.tests';
@@ -184,8 +159,6 @@ import './unit/src/materials/RawShaderMaterial.tests';
 import './unit/src/materials/ShaderMaterial.tests';
 import './unit/src/materials/ShadowMaterial.tests';
 import './unit/src/materials/SpriteMaterial.tests';
-
-
 //src/math
 import './unit/src/math/Box2.tests';
 import './unit/src/math/Box3.tests';
@@ -207,14 +180,11 @@ import './unit/src/math/Triangle.tests';
 import './unit/src/math/Vector2.tests';
 import './unit/src/math/Vector3.tests';
 import './unit/src/math/Vector4.tests';
-
 //src/math/interpolants
 import './unit/src/math/interpolants/CubicInterpolant.tests';
 import './unit/src/math/interpolants/DiscreteInterpolant.tests';
 import './unit/src/math/interpolants/LinearInterpolant.tests';
 import './unit/src/math/interpolants/QuaternionLinearInterpolant.tests';
-
-
 //src/objects
 import './unit/src/objects/Bone.tests';
 import './unit/src/objects/Group.tests';
@@ -227,19 +197,15 @@ import './unit/src/objects/Points.tests';
 import './unit/src/objects/Skeleton.tests';
 import './unit/src/objects/SkinnedMesh.tests';
 import './unit/src/objects/Sprite.tests';
-
-
 //src/renderers
 import './unit/src/renderers/WebGLRenderer.tests';
 import './unit/src/renderers/WebGLRenderTarget.tests';
 import './unit/src/renderers/WebGLCubeRenderTarget.tests';
-
 //src/renderers/shaders
 import './unit/src/renderers/shaders/ShaderChunk.tests';
 import './unit/src/renderers/shaders/ShaderLib.tests';
 import './unit/src/renderers/shaders/UniformsLib.tests';
 import './unit/src/renderers/shaders/UniformsUtils.tests';
-
 //src/renderers/webgl
 import './unit/src/renderers/webgl/WebGLAttributes.tests';
 import './unit/src/renderers/webgl/WebGLBackground.tests';
@@ -262,14 +228,10 @@ import './unit/src/renderers/webgl/WebGLState.tests';
 import './unit/src/renderers/webgl/WebGLTextures.tests';
 import './unit/src/renderers/webgl/WebGLUniforms.tests';
 import './unit/src/renderers/webgl/WebGLUtils.tests';
-
-
 //src/scenes
 import './unit/src/scenes/Fog.tests';
 import './unit/src/scenes/FogExp2.tests';
 import './unit/src/scenes/Scene.tests';
-
-
 //src/textures
 import './unit/src/textures/CanvasTexture.tests';
 import './unit/src/textures/CompressedTexture.tests';

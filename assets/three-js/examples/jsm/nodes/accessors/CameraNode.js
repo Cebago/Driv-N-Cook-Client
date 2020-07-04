@@ -2,23 +2,23 @@
  * @author sunag / http://www.sunag.com.br/
  */
 
-import { TempNode } from '../core/TempNode.js';
-import { FunctionNode } from '../core/FunctionNode.js';
-import { FloatNode } from '../inputs/FloatNode.js';
-import { PositionNode } from '../accessors/PositionNode.js';
+import {TempNode} from '../core/TempNode.js';
+import {FunctionNode} from '../core/FunctionNode.js';
+import {FloatNode} from '../inputs/FloatNode.js';
+import {PositionNode} from '../accessors/PositionNode.js';
 
-function CameraNode( scope, camera ) {
+function CameraNode(scope, camera) {
 
-	TempNode.call( this, 'v3' );
+	TempNode.call(this, 'v3');
 
-	this.setScope( scope || CameraNode.POSITION );
-	this.setCamera( camera );
+	this.setScope(scope || CameraNode.POSITION);
+	this.setCamera(camera);
 
 }
 
-CameraNode.Nodes = ( function () {
+CameraNode.Nodes = (function () {
 
-	var depthColor = new FunctionNode( [
+	var depthColor = new FunctionNode([
 		"float depthColor( float mNear, float mFar ) {",
 
 		"	#ifdef USE_LOGDEPTHBUF_EXT",
@@ -34,32 +34,32 @@ CameraNode.Nodes = ( function () {
 		"	return 1.0 - smoothstep( mNear, mFar, depth );",
 
 		"}"
-	].join( "\n" ) );
+	].join("\n"));
 
 	return {
 		depthColor: depthColor
 	};
 
-} )();
+})();
 
 CameraNode.POSITION = 'position';
 CameraNode.DEPTH = 'depth';
 CameraNode.TO_VERTEX = 'toVertex';
 
-CameraNode.prototype = Object.create( TempNode.prototype );
+CameraNode.prototype = Object.create(TempNode.prototype);
 CameraNode.prototype.constructor = CameraNode;
 CameraNode.prototype.nodeType = "Camera";
 
-CameraNode.prototype.setCamera = function ( camera ) {
+CameraNode.prototype.setCamera = function (camera) {
 
 	this.camera = camera;
 	this.updateFrame = camera !== undefined ? this.onUpdateFrame : undefined;
 
 };
 
-CameraNode.prototype.setScope = function ( scope ) {
+CameraNode.prototype.setScope = function (scope) {
 
-	switch ( this.scope ) {
+	switch (this.scope) {
 
 		case CameraNode.DEPTH:
 
@@ -72,14 +72,14 @@ CameraNode.prototype.setScope = function ( scope ) {
 
 	this.scope = scope;
 
-	switch ( scope ) {
+	switch (scope) {
 
 		case CameraNode.DEPTH:
 
 			var camera = this.camera;
 
-			this.near = new FloatNode( camera ? camera.near : 1 );
-			this.far = new FloatNode( camera ? camera.far : 1200 );
+			this.near = new FloatNode(camera ? camera.near : 1);
+			this.far = new FloatNode(camera ? camera.far : 1200);
 
 			break;
 
@@ -87,9 +87,9 @@ CameraNode.prototype.setScope = function ( scope ) {
 
 };
 
-CameraNode.prototype.getType = function ( /* builder */ ) {
+CameraNode.prototype.getType = function ( /* builder */) {
 
-	switch ( this.scope ) {
+	switch (this.scope) {
 
 		case CameraNode.DEPTH:
 
@@ -101,9 +101,9 @@ CameraNode.prototype.getType = function ( /* builder */ ) {
 
 };
 
-CameraNode.prototype.getUnique = function ( /* builder */ ) {
+CameraNode.prototype.getUnique = function ( /* builder */) {
 
-	switch ( this.scope ) {
+	switch (this.scope) {
 
 		case CameraNode.DEPTH:
 		case CameraNode.TO_VERTEX:
@@ -116,9 +116,9 @@ CameraNode.prototype.getUnique = function ( /* builder */ ) {
 
 };
 
-CameraNode.prototype.getShared = function ( /* builder */ ) {
+CameraNode.prototype.getShared = function ( /* builder */) {
 
-	switch ( this.scope ) {
+	switch (this.scope) {
 
 		case CameraNode.POSITION:
 
@@ -130,11 +130,11 @@ CameraNode.prototype.getShared = function ( /* builder */ ) {
 
 };
 
-CameraNode.prototype.generate = function ( builder, output ) {
+CameraNode.prototype.generate = function (builder, output) {
 
 	var result;
 
-	switch ( this.scope ) {
+	switch (this.scope) {
 
 		case CameraNode.POSITION:
 
@@ -144,27 +144,27 @@ CameraNode.prototype.generate = function ( builder, output ) {
 
 		case CameraNode.DEPTH:
 
-			var depthColor = builder.include( CameraNode.Nodes.depthColor );
+			var depthColor = builder.include(CameraNode.Nodes.depthColor);
 
-			result = depthColor + '( ' + this.near.build( builder, 'f' ) + ', ' + this.far.build( builder, 'f' ) + ' )';
+			result = depthColor + '( ' + this.near.build(builder, 'f') + ', ' + this.far.build(builder, 'f') + ' )';
 
 			break;
 
 		case CameraNode.TO_VERTEX:
 
-			result = 'normalize( ' + new PositionNode( PositionNode.WORLD ).build( builder, 'v3' ) + ' - cameraPosition )';
+			result = 'normalize( ' + new PositionNode(PositionNode.WORLD).build(builder, 'v3') + ' - cameraPosition )';
 
 			break;
 
 	}
 
-	return builder.format( result, this.getType( builder ), output );
+	return builder.format(result, this.getType(builder), output);
 
 };
 
-CameraNode.prototype.onUpdateFrame = function ( /* frame */ ) {
+CameraNode.prototype.onUpdateFrame = function ( /* frame */) {
 
-	switch ( this.scope ) {
+	switch (this.scope) {
 
 		case CameraNode.DEPTH:
 
@@ -179,19 +179,19 @@ CameraNode.prototype.onUpdateFrame = function ( /* frame */ ) {
 
 };
 
-CameraNode.prototype.copy = function ( source ) {
+CameraNode.prototype.copy = function (source) {
 
-	TempNode.prototype.copy.call( this, source );
+	TempNode.prototype.copy.call(this, source);
 
-	this.setScope( source.scope );
+	this.setScope(source.scope);
 
-	if ( source.camera ) {
+	if (source.camera) {
 
-		this.setCamera( source.camera );
+		this.setCamera(source.camera);
 
 	}
 
-	switch ( source.scope ) {
+	switch (source.scope) {
 
 		case CameraNode.DEPTH:
 
@@ -206,19 +206,19 @@ CameraNode.prototype.copy = function ( source ) {
 
 };
 
-CameraNode.prototype.toJSON = function ( meta ) {
+CameraNode.prototype.toJSON = function (meta) {
 
-	var data = this.getJSONNode( meta );
+	var data = this.getJSONNode(meta);
 
-	if ( ! data ) {
+	if (!data) {
 
-		data = this.createJSONNode( meta );
+		data = this.createJSONNode(meta);
 
 		data.scope = this.scope;
 
-		if ( this.camera ) data.camera = this.camera.uuid;
+		if (this.camera) data.camera = this.camera.uuid;
 
-		switch ( this.scope ) {
+		switch (this.scope) {
 
 			case CameraNode.DEPTH:
 
@@ -235,4 +235,4 @@ CameraNode.prototype.toJSON = function ( meta ) {
 
 };
 
-export { CameraNode };
+export {CameraNode};

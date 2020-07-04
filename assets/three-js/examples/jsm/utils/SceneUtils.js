@@ -2,14 +2,11 @@
  * @author alteredq / http://alteredqualia.com/
  */
 
-import {
-	Group,
-	Mesh
-} from "../../../build/three.module.js";
+import {Group, Mesh} from "../../../build/three.module.js";
 
 var SceneUtils = {
 
-	createMeshesFromInstancedMesh: function ( instancedMesh ) {
+	createMeshesFromInstancedMesh: function (instancedMesh) {
 
 		var group = new Group();
 
@@ -17,31 +14,31 @@ var SceneUtils = {
 		var geometry = instancedMesh.geometry;
 		var material = instancedMesh.material;
 
-		for ( var i = 0; i < count; i ++ ) {
+		for (var i = 0; i < count; i++) {
 
-			var mesh = new Mesh( geometry, material );
+			var mesh = new Mesh(geometry, material);
 
-			instancedMesh.getMatrixAt( i, mesh.matrix );
-			mesh.matrix.decompose( mesh.position, mesh.quaternion, mesh.scale );
+			instancedMesh.getMatrixAt(i, mesh.matrix);
+			mesh.matrix.decompose(mesh.position, mesh.quaternion, mesh.scale);
 
-			group.add( mesh );
+			group.add(mesh);
 
 		}
 
-		group.copy( instancedMesh );
+		group.copy(instancedMesh);
 		group.updateMatrixWorld(); // ensure correct world matrices of meshes
 
 		return group;
 
 	},
 
-	createMultiMaterialObject: function ( geometry, materials ) {
+	createMultiMaterialObject: function (geometry, materials) {
 
 		var group = new Group();
 
-		for ( var i = 0, l = materials.length; i < l; i ++ ) {
+		for (var i = 0, l = materials.length; i < l; i++) {
 
-			group.add( new Mesh( geometry, materials[ i ] ) );
+			group.add(new Mesh(geometry, materials[i]));
 
 		}
 
@@ -49,22 +46,22 @@ var SceneUtils = {
 
 	},
 
-	detach: function ( child, parent, scene ) {
+	detach: function (child, parent, scene) {
 
-		console.warn( 'THREE.SceneUtils: detach() has been deprecated. Use scene.attach( child ) instead.' );
+		console.warn('THREE.SceneUtils: detach() has been deprecated. Use scene.attach( child ) instead.');
 
-		scene.attach( child );
+		scene.attach(child);
 
 	},
 
-	attach: function ( child, scene, parent ) {
+	attach: function (child, scene, parent) {
 
-		console.warn( 'THREE.SceneUtils: attach() has been deprecated. Use parent.attach( child ) instead.' );
+		console.warn('THREE.SceneUtils: attach() has been deprecated. Use parent.attach( child ) instead.');
 
-		parent.attach( child );
+		parent.attach(child);
 
 	}
 
 };
 
-export { SceneUtils };
+export {SceneUtils};

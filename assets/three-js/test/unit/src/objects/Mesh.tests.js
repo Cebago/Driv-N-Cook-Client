@@ -3,54 +3,52 @@
  */
 /* global QUnit */
 
-import { Mesh } from '../../../../src/objects/Mesh';
+export default QUnit.module('Objects', () => {
 
-export default QUnit.module( 'Objects', () => {
-
-	QUnit.module( 'Mesh', () => {
+	QUnit.module('Mesh', () => {
 
 		// INHERITANCE
-		QUnit.todo( "Extending", ( assert ) => {
+		QUnit.todo("Extending", (assert) => {
 
-			assert.ok( false, "everything's gonna be alright" );
+			assert.ok(false, "everything's gonna be alright");
 
-		} );
+		});
 
 		// INSTANCING
-		QUnit.todo( "Instancing", ( assert ) => {
+		QUnit.todo("Instancing", (assert) => {
 
-			assert.ok( false, "everything's gonna be alright" );
+			assert.ok(false, "everything's gonna be alright");
 
-		} );
+		});
 
 		// PUBLIC STUFF
-		QUnit.todo( "isMesh", ( assert ) => {
+		QUnit.todo("isMesh", (assert) => {
 
-			assert.ok( false, "everything's gonna be alright" );
+			assert.ok(false, "everything's gonna be alright");
 
-		} );
-		QUnit.todo( "copy", ( assert ) => {
+		});
+		QUnit.todo("copy", (assert) => {
 
-			assert.ok( false, "everything's gonna be alright" );
+			assert.ok(false, "everything's gonna be alright");
 
-		} );
-		QUnit.todo( "updateMorphTargets", ( assert ) => {
+		});
+		QUnit.todo("updateMorphTargets", (assert) => {
 
-			assert.ok( false, "everything's gonna be alright" );
+			assert.ok(false, "everything's gonna be alright");
 
-		} );
-		QUnit.todo( "raycast", ( assert ) => {
+		});
+		QUnit.todo("raycast", (assert) => {
 
-			assert.ok( false, "everything's gonna be alright" );
+			assert.ok(false, "everything's gonna be alright");
 
-		} );
-		QUnit.todo( "clone", ( assert ) => {
+		});
+		QUnit.todo("clone", (assert) => {
 
-			assert.ok( false, "everything's gonna be alright" );
+			assert.ok(false, "everything's gonna be alright");
 
-		} );
+		});
 
 
-	} );
+	});
 
-} );
+});

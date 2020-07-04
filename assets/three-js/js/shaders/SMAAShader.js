@@ -16,8 +16,8 @@ THREE.SMAAEdgesShader = {
 
 	uniforms: {
 
-		"tDiffuse": { value: null },
-		"resolution": { value: new THREE.Vector2( 1 / 1024, 1 / 512 ) }
+		"tDiffuse": {value: null},
+		"resolution": {value: new THREE.Vector2(1 / 1024, 1 / 512)}
 
 	},
 
@@ -44,7 +44,7 @@ THREE.SMAAEdgesShader = {
 
 		"}"
 
-	].join( "\n" ),
+	].join("\n"),
 
 	fragmentShader: [
 
@@ -111,7 +111,7 @@ THREE.SMAAEdgesShader = {
 
 		"}"
 
-	].join( "\n" )
+	].join("\n")
 
 };
 
@@ -128,10 +128,10 @@ THREE.SMAAWeightsShader = {
 
 	uniforms: {
 
-		"tDiffuse": { value: null },
-		"tArea": { value: null },
-		"tSearch": { value: null },
-		"resolution": { value: new THREE.Vector2( 1 / 1024, 1 / 512 ) }
+		"tDiffuse": {value: null},
+		"tArea": {value: null},
+		"tSearch": {value: null},
+		"resolution": {value: new THREE.Vector2(1 / 1024, 1 / 512)}
 
 	},
 
@@ -165,7 +165,7 @@ THREE.SMAAWeightsShader = {
 
 		"}"
 
-	].join( "\n" ),
+	].join("\n"),
 
 	fragmentShader: [
 
@@ -197,12 +197,12 @@ THREE.SMAAWeightsShader = {
 
 		"float SMAASearchXLeft( sampler2D edgesTex, sampler2D searchTex, vec2 texcoord, float end ) {",
 		/**
-			* @PSEUDO_GATHER4
-			* This texcoord has been offset by (-0.25, -0.125) in the vertex shader to
-			* sample between edge, thus fetching four edges in a row.
-			* Sampling with different offsets in each direction allows to disambiguate
-			* which edges are active from the four fetched ones.
-			*/
+		 * @PSEUDO_GATHER4
+		 * This texcoord has been offset by (-0.25, -0.125) in the vertex shader to
+		 * sample between edge, thus fetching four edges in a row.
+		 * Sampling with different offsets in each direction allows to disambiguate
+		 * which edges are active from the four fetched ones.
+		 */
 		"	vec2 e = vec2( 0.0, 1.0 );",
 
 		"	for ( int i = 0; i < SMAA_MAX_SEARCH_STEPS; i ++ ) {", // WebGL port note: Changed while to for
@@ -369,7 +369,7 @@ THREE.SMAAWeightsShader = {
 
 		"}"
 
-	].join( "\n" )
+	].join("\n")
 
 };
 
@@ -377,9 +377,9 @@ THREE.SMAABlendShader = {
 
 	uniforms: {
 
-		"tDiffuse": { value: null },
-		"tColor": { value: null },
-		"resolution": { value: new THREE.Vector2( 1 / 1024, 1 / 512 ) }
+		"tDiffuse": {value: null},
+		"tColor": {value: null},
+		"resolution": {value: new THREE.Vector2(1 / 1024, 1 / 512)}
 
 	},
 
@@ -405,7 +405,7 @@ THREE.SMAABlendShader = {
 
 		"}"
 
-	].join( "\n" ),
+	].join("\n"),
 
 	fragmentShader: [
 
@@ -463,6 +463,6 @@ THREE.SMAABlendShader = {
 
 		"}"
 
-	].join( "\n" )
+	].join("\n")
 
 };

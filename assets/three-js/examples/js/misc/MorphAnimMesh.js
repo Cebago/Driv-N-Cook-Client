@@ -2,18 +2,18 @@
  * @author alteredq / http://alteredqualia.com/
  */
 
-THREE.MorphAnimMesh = function ( geometry, material ) {
+THREE.MorphAnimMesh = function (geometry, material) {
 
-	THREE.Mesh.call( this, geometry, material );
+	THREE.Mesh.call(this, geometry, material);
 
 	this.type = 'MorphAnimMesh';
 
-	this.mixer = new THREE.AnimationMixer( this );
+	this.mixer = new THREE.AnimationMixer(this);
 	this.activeAction = null;
 
 };
 
-THREE.MorphAnimMesh.prototype = Object.create( THREE.Mesh.prototype );
+THREE.MorphAnimMesh.prototype = Object.create(THREE.Mesh.prototype);
 THREE.MorphAnimMesh.prototype.constructor = THREE.MorphAnimMesh;
 
 THREE.MorphAnimMesh.prototype.setDirectionForward = function () {
@@ -24,46 +24,46 @@ THREE.MorphAnimMesh.prototype.setDirectionForward = function () {
 
 THREE.MorphAnimMesh.prototype.setDirectionBackward = function () {
 
-	this.mixer.timeScale = - 1.0;
+	this.mixer.timeScale = -1.0;
 
 };
 
-THREE.MorphAnimMesh.prototype.playAnimation = function ( label, fps ) {
+THREE.MorphAnimMesh.prototype.playAnimation = function (label, fps) {
 
-	if ( this.activeAction ) {
+	if (this.activeAction) {
 
 		this.activeAction.stop();
 		this.activeAction = null;
 
 	}
 
-	var clip = THREE.AnimationClip.findByName( this, label );
+	var clip = THREE.AnimationClip.findByName(this, label);
 
-	if ( clip ) {
+	if (clip) {
 
-		var action = this.mixer.clipAction( clip );
-		action.timeScale = ( clip.tracks.length * fps ) / clip.duration;
+		var action = this.mixer.clipAction(clip);
+		action.timeScale = (clip.tracks.length * fps) / clip.duration;
 		this.activeAction = action.play();
 
 	} else {
 
-		throw new Error( 'THREE.MorphAnimMesh: animations[' + label + '] undefined in .playAnimation()' );
+		throw new Error('THREE.MorphAnimMesh: animations[' + label + '] undefined in .playAnimation()');
 
 	}
 
 };
 
-THREE.MorphAnimMesh.prototype.updateAnimation = function ( delta ) {
+THREE.MorphAnimMesh.prototype.updateAnimation = function (delta) {
 
-	this.mixer.update( delta );
+	this.mixer.update(delta);
 
 };
 
-THREE.MorphAnimMesh.prototype.copy = function ( source ) {
+THREE.MorphAnimMesh.prototype.copy = function (source) {
 
-	THREE.Mesh.prototype.copy.call( this, source );
+	THREE.Mesh.prototype.copy.call(this, source);
 
-	this.mixer = new THREE.AnimationMixer( this );
+	this.mixer = new THREE.AnimationMixer(this);
 
 	return this;
 

@@ -1,15 +1,7 @@
-import {
-	Camera,
-	Frustum,
-	Mesh,
-	Object3D,
-	Scene,
-	Vector3
-} from '../../../src/Three';
+import {Camera, Frustum, Mesh, Object3D, Scene, Vector3} from '../../../src/Three';
 
 export class SelectionBox {
 
-	constructor( camera: Camera, scene: Scene, deep?: number );
 	camera: Camera;
 	collection: Mesh[];
 	deep: number;
@@ -17,8 +9,12 @@ export class SelectionBox {
 	scene: Scene;
 	startPoint: Vector3;
 
-	select( startPoint?: Vector3, endPoint?: Vector3 ): Mesh[];
-	updateFrustum( startPoint: Vector3, endPoint: Vector3 ): void;
-	searchChildInFrustum( frustum: Frustum, object: Object3D ): void;
+	constructor(camera: Camera, scene: Scene, deep?: number);
+
+	select(startPoint?: Vector3, endPoint?: Vector3): Mesh[];
+
+	updateFrustum(startPoint: Vector3, endPoint: Vector3): void;
+
+	searchChildInFrustum(frustum: Frustum, object: Object3D): void;
 
 }

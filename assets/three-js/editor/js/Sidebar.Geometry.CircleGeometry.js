@@ -4,11 +4,11 @@
 
 import * as THREE from '../../build/three.module.js';
 
-import { UIRow, UIText, UIInteger, UINumber } from './libs/ui.js';
+import {UIInteger, UINumber, UIRow, UIText} from './libs/ui.js';
 
-import { SetGeometryCommand } from './commands/SetGeometryCommand.js';
+import {SetGeometryCommand} from './commands/SetGeometryCommand.js';
 
-var SidebarGeometryCircleGeometry = function ( editor, object ) {
+var SidebarGeometryCircleGeometry = function (editor, object) {
 
 	var strings = editor.strings;
 
@@ -20,53 +20,53 @@ var SidebarGeometryCircleGeometry = function ( editor, object ) {
 	// radius
 
 	var radiusRow = new UIRow();
-	var radius = new UINumber( parameters.radius ).onChange( update );
+	var radius = new UINumber(parameters.radius).onChange(update);
 
-	radiusRow.add( new UIText( strings.getKey( 'sidebar/geometry/circle_geometry/radius' ) ).setWidth( '90px' ) );
-	radiusRow.add( radius );
+	radiusRow.add(new UIText(strings.getKey('sidebar/geometry/circle_geometry/radius')).setWidth('90px'));
+	radiusRow.add(radius);
 
-	container.add( radiusRow );
+	container.add(radiusRow);
 
 	// segments
 
 	var segmentsRow = new UIRow();
-	var segments = new UIInteger( parameters.segments ).setRange( 3, Infinity ).onChange( update );
+	var segments = new UIInteger(parameters.segments).setRange(3, Infinity).onChange(update);
 
-	segmentsRow.add( new UIText( strings.getKey( 'sidebar/geometry/circle_geometry/segments' ) ).setWidth( '90px' ) );
-	segmentsRow.add( segments );
+	segmentsRow.add(new UIText(strings.getKey('sidebar/geometry/circle_geometry/segments')).setWidth('90px'));
+	segmentsRow.add(segments);
 
-	container.add( segmentsRow );
+	container.add(segmentsRow);
 
 	// thetaStart
 
 	var thetaStartRow = new UIRow();
-	var thetaStart = new UINumber( parameters.thetaStart * THREE.MathUtils.RAD2DEG ).setStep( 10 ).onChange( update );
+	var thetaStart = new UINumber(parameters.thetaStart * THREE.MathUtils.RAD2DEG).setStep(10).onChange(update);
 
-	thetaStartRow.add( new UIText( strings.getKey( 'sidebar/geometry/circle_geometry/thetastart' ) ).setWidth( '90px' ) );
-	thetaStartRow.add( thetaStart );
+	thetaStartRow.add(new UIText(strings.getKey('sidebar/geometry/circle_geometry/thetastart')).setWidth('90px'));
+	thetaStartRow.add(thetaStart);
 
-	container.add( thetaStartRow );
+	container.add(thetaStartRow);
 
 	// thetaLength
 
 	var thetaLengthRow = new UIRow();
-	var thetaLength = new UINumber( parameters.thetaLength * THREE.MathUtils.RAD2DEG ).setStep( 10 ).onChange( update );
+	var thetaLength = new UINumber(parameters.thetaLength * THREE.MathUtils.RAD2DEG).setStep(10).onChange(update);
 
-	thetaLengthRow.add( new UIText( strings.getKey( 'sidebar/geometry/circle_geometry/thetalength' ) ).setWidth( '90px' ) );
-	thetaLengthRow.add( thetaLength );
+	thetaLengthRow.add(new UIText(strings.getKey('sidebar/geometry/circle_geometry/thetalength')).setWidth('90px'));
+	thetaLengthRow.add(thetaLength);
 
-	container.add( thetaLengthRow );
+	container.add(thetaLengthRow);
 
 	//
 
 	function update() {
 
-		editor.execute( new SetGeometryCommand( editor, object, new THREE.CircleBufferGeometry(
+		editor.execute(new SetGeometryCommand(editor, object, new THREE.CircleBufferGeometry(
 			radius.getValue(),
 			segments.getValue(),
 			thetaStart.getValue() * THREE.MathUtils.DEG2RAD,
 			thetaLength.getValue() * THREE.MathUtils.DEG2RAD
-		) ) );
+		)));
 
 	}
 
@@ -74,4 +74,4 @@ var SidebarGeometryCircleGeometry = function ( editor, object ) {
 
 };
 
-export { SidebarGeometryCircleGeometry };
+export {SidebarGeometryCircleGeometry};

@@ -1,7 +1,7 @@
-import { TangentSpaceNormalMap } from '../constants.js';
-import { Material } from './Material.js';
-import { Vector2 } from '../math/Vector2.js';
-import { Color } from '../math/Color.js';
+import {TangentSpaceNormalMap} from '../constants.js';
+import {Material} from './Material.js';
+import {Vector2} from '../math/Vector2.js';
+import {Color} from '../math/Color.js';
 
 /**
  * @author WestLangley / http://github.com/WestLangley
@@ -33,15 +33,15 @@ import { Color } from '../math/Color.js';
  * }
  */
 
-function MeshMatcapMaterial( parameters ) {
+function MeshMatcapMaterial(parameters) {
 
-	Material.call( this );
+	Material.call(this);
 
-	this.defines = { 'MATCAP': '' };
+	this.defines = {'MATCAP': ''};
 
 	this.type = 'MeshMatcapMaterial';
 
-	this.color = new Color( 0xffffff ); // diffuse
+	this.color = new Color(0xffffff); // diffuse
 
 	this.matcap = null;
 
@@ -52,7 +52,7 @@ function MeshMatcapMaterial( parameters ) {
 
 	this.normalMap = null;
 	this.normalMapType = TangentSpaceNormalMap;
-	this.normalScale = new Vector2( 1, 1 );
+	this.normalScale = new Vector2(1, 1);
 
 	this.displacementMap = null;
 	this.displacementScale = 1;
@@ -64,22 +64,22 @@ function MeshMatcapMaterial( parameters ) {
 	this.morphTargets = false;
 	this.morphNormals = false;
 
-	this.setValues( parameters );
+	this.setValues(parameters);
 
 }
 
-MeshMatcapMaterial.prototype = Object.create( Material.prototype );
+MeshMatcapMaterial.prototype = Object.create(Material.prototype);
 MeshMatcapMaterial.prototype.constructor = MeshMatcapMaterial;
 
 MeshMatcapMaterial.prototype.isMeshMatcapMaterial = true;
 
-MeshMatcapMaterial.prototype.copy = function ( source ) {
+MeshMatcapMaterial.prototype.copy = function (source) {
 
-	Material.prototype.copy.call( this, source );
+	Material.prototype.copy.call(this, source);
 
-	this.defines = { 'MATCAP': '' };
+	this.defines = {'MATCAP': ''};
 
-	this.color.copy( source.color );
+	this.color.copy(source.color);
 
 	this.matcap = source.matcap;
 
@@ -90,7 +90,7 @@ MeshMatcapMaterial.prototype.copy = function ( source ) {
 
 	this.normalMap = source.normalMap;
 	this.normalMapType = source.normalMapType;
-	this.normalScale.copy( source.normalScale );
+	this.normalScale.copy(source.normalScale);
 
 	this.displacementMap = source.displacementMap;
 	this.displacementScale = source.displacementScale;
@@ -107,4 +107,4 @@ MeshMatcapMaterial.prototype.copy = function ( source ) {
 };
 
 
-export { MeshMatcapMaterial };
+export {MeshMatcapMaterial};

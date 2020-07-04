@@ -1,5 +1,5 @@
 export namespace TypedArrayUtils {
-	export function quicksortIP( arr: any[], eleSize: number, orderElement: number ): any[];
+	export function quicksortIP(arr: any[], eleSize: number, orderElement: number): any[];
 
 
 	export class Kdtree {
@@ -8,15 +8,15 @@ export namespace TypedArrayUtils {
 		root: Node;
 		private maxDepth: number;
 
-		constructor( points: Int8Array | Int16Array | Int32Array | Uint8Array | Uint16Array | Uint32Array | Float32Array | Float64Array | Uint8ClampedArray, metric: ( a: any, b: any ) => number, eleSize: number );
+		constructor(points: Int8Array | Int16Array | Int32Array | Uint8Array | Uint16Array | Uint32Array | Float32Array | Float64Array | Uint8ClampedArray, metric: (a: any, b: any) => number, eleSize: number);
 
-		getPointSet( points: any, pos: number );
+		getPointSet(points: any, pos: number);
 
 		buildTree(): Node;
 
 		getMaxDepth(): number;
 
-		nearest( point: [], maxNodes: number, maxDistance: number ): any[];
+		nearest(point: [], maxNodes: number, maxDistance: number): any[];
 
 	}
 
@@ -30,7 +30,7 @@ export namespace TypedArrayUtils {
 			depth: number;
 			pos: any;
 
-			constructor( obj: any, depth: number, parent: Node, pos: any )
+			constructor(obj: any, depth: number, parent: Node, pos: any)
 
 		}
 
@@ -40,24 +40,24 @@ export namespace TypedArrayUtils {
 			content: any[];
 			scoreFunction: () => any;
 
-			constructor( scoreFunction?: () => any );
+			constructor(scoreFunction?: () => any);
 
 		}
 
 		export namespace BinaryHeap {
-			export function push( element: any ): void;
+			export function push(element: any): void;
 
 			export function pop(): any;
 
 			export function peek(): any;
 
-			export function remove( node: any ): any;
+			export function remove(node: any): any;
 
 			export function size(): number;
 
-			export function bubbleUp( n: number ): void;
+			export function bubbleUp(n: number): void;
 
-			export function sinkDown( n: number ): void;
+			export function sinkDown(n: number): void;
 		}
 	}
 }

@@ -1,12 +1,12 @@
-(function($) {
+(function ($) {
     "use strict"
-    jQuery(document).ready(function() {
+    jQuery(document).ready(function () {
         // Navigation for Mobile Device
-        $('.custom-navbar').on('click', function(){
+        $('.custom-navbar').on('click', function () {
             $('.main-menu ul').slideToggle(500);
         });
-        $(window).on('resize', function(){
-            if ( $(window).width() > 767 ) {
+        $(window).on('resize', function () {
+            if ($(window).width() > 767) {
                 $('.main-menu ul').removeAttr('style');
             }
         });
@@ -43,18 +43,18 @@
 
         // Date Picker
         jQuery('#datepicker').datetimepicker({
-            timepicker:false,
-            format:'d.m.Y',
+            timepicker: false,
+            format: 'd.m.Y',
         });
 
         // Time Picker
         jQuery('#datepicker2').datetimepicker({
-            datepicker:false,
-            format:'H:i'
+            datepicker: false,
+            format: 'H:i'
         });
 
         // Google Map
-        if ( $('#mapBox').length ){
+        if ($('#mapBox').length) {
             var $lat = $('#mapBox').data('lat');
             var $lon = $('#mapBox').data('lon');
             var $zoom = $('#mapBox').data('zoom');
@@ -63,16 +63,16 @@
             var $markerLat = $('#mapBox').data('mlat');
             var $markerLon = $('#mapBox').data('mlon');
             var map = new GMaps({
-            el: '#mapBox',
-            lat: $lat,
-            lng: $lon,
-            scrollwheel: false,
-            scaleControl: true,
-            streetViewControl: false,
-            panControl: true,
-            disableDoubleClickZoom: true,
-            mapTypeControl: false,
-            zoom: $zoom,
+                el: '#mapBox',
+                lat: $lat,
+                lng: $lon,
+                scrollwheel: false,
+                scaleControl: true,
+                streetViewControl: false,
+                panControl: true,
+                disableDoubleClickZoom: true,
+                mapTypeControl: false,
+                zoom: $zoom,
                 styles: [
                     {
                         "featureType": "water",
@@ -263,10 +263,10 @@
 
     });
 
-    jQuery(window).on('load', function() {
+    jQuery(window).on('load', function () {
         // WOW JS
         new WOW().init();
         // Preloader
-		$('.preloader').fadeOut(500);
+        $('.preloader').fadeOut(500);
     });
 })(jQuery);

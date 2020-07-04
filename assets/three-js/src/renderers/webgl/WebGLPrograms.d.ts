@@ -1,15 +1,15 @@
-import { WebGLRenderer } from './../WebGLRenderer';
-import { WebGLProgram } from './WebGLProgram';
-import { WebGLCapabilities } from './WebGLCapabilities';
-import { WebGLExtensions } from './WebGLExtensions';
-import { Material } from './../../materials/Material';
-import { Scene } from './../../scenes/Scene';
+import {WebGLRenderer} from './../WebGLRenderer';
+import {WebGLProgram} from './WebGLProgram';
+import {WebGLCapabilities} from './WebGLCapabilities';
+import {WebGLExtensions} from './WebGLExtensions';
+import {Material} from './../../materials/Material';
+import {Scene} from './../../scenes/Scene';
 
 export class WebGLPrograms {
 
-	constructor( renderer: WebGLRenderer, extensions: WebGLExtensions, capabilities: WebGLCapabilities );
-
 	programs: WebGLProgram[];
+
+	constructor(renderer: WebGLRenderer, extensions: WebGLExtensions, capabilities: WebGLCapabilities);
 
 	getParameters(
 		material: Material,
@@ -20,11 +20,14 @@ export class WebGLPrograms {
 		nClipIntersection: number,
 		object: any
 	): any;
-	getProgramCacheKey( parameters: any ): string;
+
+	getProgramCacheKey(parameters: any): string;
+
 	acquireProgram(
 		parameters: any,
 		cacheKey: string
 	): WebGLProgram;
-	releaseProgram( program: WebGLProgram ): void;
+
+	releaseProgram(program: WebGLProgram): void;
 
 }

@@ -1,15 +1,8 @@
-import { Sphere } from './../math/Sphere';
-import { Geometry } from './../core/Geometry';
-import { BufferGeometry } from './../core/BufferGeometry';
+import {Sphere} from './../math/Sphere';
+import {Geometry} from './../core/Geometry';
+import {BufferGeometry} from './../core/BufferGeometry';
 
 export class PolyhedronBufferGeometry extends BufferGeometry {
-
-	constructor(
-		vertices: number[],
-		indices: number[],
-		radius?: number,
-		detail?: number
-	);
 
 	parameters: {
 		vertices: number[];
@@ -18,16 +11,16 @@ export class PolyhedronBufferGeometry extends BufferGeometry {
 		detail: number;
 	};
 
-}
-
-export class PolyhedronGeometry extends Geometry {
-
 	constructor(
 		vertices: number[],
 		indices: number[],
 		radius?: number,
 		detail?: number
 	);
+
+}
+
+export class PolyhedronGeometry extends Geometry {
 
 	parameters: {
 		vertices: number[];
@@ -36,5 +29,12 @@ export class PolyhedronGeometry extends Geometry {
 		detail: number;
 	};
 	boundingSphere: Sphere;
+
+	constructor(
+		vertices: number[],
+		indices: number[],
+		radius?: number,
+		detail?: number
+	);
 
 }

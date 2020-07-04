@@ -15,9 +15,9 @@ var VerticalTiltShiftShader = {
 
 	uniforms: {
 
-		"tDiffuse": { value: null },
-		"v": { value: 1.0 / 512.0 },
-		"r": { value: 0.35 }
+		"tDiffuse": {value: null},
+		"v": {value: 1.0 / 512.0},
+		"r": {value: 0.35}
 
 	},
 
@@ -32,7 +32,7 @@ var VerticalTiltShiftShader = {
 
 		"}"
 
-	].join( "\n" ),
+	].join("\n"),
 
 	fragmentShader: [
 
@@ -62,8 +62,8 @@ var VerticalTiltShiftShader = {
 
 		"}"
 
-	].join( "\n" )
+	].join("\n")
 
 };
 
-export { VerticalTiltShiftShader };
+export {VerticalTiltShiftShader};

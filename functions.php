@@ -1,27 +1,30 @@
 <?php
 require_once "conf.inc.php";
 
-function connectDB(){
-    try{
-        $pdo = new PDO(DBDRIVER.":host=".DBHOST.";dbname=".DBNAME ,DBUSER,DBPWD);
+function connectDB()
+{
+    try {
+        $pdo = new PDO(DBDRIVER . ":host=" . DBHOST . ";dbname=" . DBNAME, DBUSER, DBPWD);
         $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-    }catch(Exception $e){
-        die("Erreur SQL : ".$e->getMessage());
+    } catch (Exception $e) {
+        die("Erreur SQL : " . $e->getMessage());
     }
     return $pdo;
 }
 
-function createToken($email){
-    $token = md5($email."€monTokenDrivNCook£".time().uniqid());
+function createToken($email)
+{
+    $token = md5($email . "€monTokenDrivNCook£" . time() . uniqid());
     $token = substr($token, 0, rand(15, 20));
     return $token;
 }
 
-function login($email){
+function login($email)
+{
     $token = createToken($email);
     $pdo = connectDB();
     $queryPrepared = $pdo->prepare("UPDATE USERTOKEN, USER SET USERTOKEN.token = :token WHERE user = idUser AND emailAddress = :email AND tokenType = 'Site' ;");
-    $queryPrepared->execute([":token"=>$token, ":email"=>$email]);
+    $queryPrepared->execute([":token" => $token, ":email" => $email]);
     $_SESSION["token"] = $token;
     $_SESSION["email"] = $email;
 }
@@ -30,7 +33,8 @@ function login($email){
  * @return array
  */
 
-function getTrucks(){
+function getTrucks()
+{
     $pdo = connectDB();
     $queryPrepared = $pdo->prepare("SELECT idTruck, truckName, truckPicture, categorie FROM TRUCK;");
     $queryPrepared->execute();
@@ -41,7 +45,8 @@ function getTrucks(){
  * @param $idTruck
  * @return bool
  */
-function isOpen($idTruck){
+function isOpen($idTruck)
+{
     $translateDay = [
         1 => "Lundi",
         2 => "Mardi",
@@ -61,9 +66,10 @@ function isOpen($idTruck){
 /**
  * @return bool
  */
-function isConnected(){
-    if(!empty($_SESSION["email"])
-        && !empty($_SESSION["token"]) ){
+function isConnected()
+{
+    if (!empty($_SESSION["email"])
+        && !empty($_SESSION["token"])) {
         $email = $_SESSION["email"];
         $token = $_SESSION["token"];
         //Vérification d'un correspondant en base de données
@@ -73,10 +79,10 @@ function isConnected(){
                                      AND user = idUser 
                                      AND tokenType = 'Site'");
         $queryPrepared->execute([
-            ":email"=>$email,
-            ":token"=>$token
+            ":email" => $email,
+            ":token" => $token
         ]);
-        if (!empty($queryPrepared->fetch()) ){
+        if (!empty($queryPrepared->fetch())) {
             login($email);
             return true;
         }
@@ -85,8 +91,9 @@ function isConnected(){
     return false;
 }
 
-function isActivated(){
-    if(!empty($_SESSION["email"]) && !empty($_SESSION["token"]) ){
+function isActivated()
+{
+    if (!empty($_SESSION["email"]) && !empty($_SESSION["token"])) {
         $email = $_SESSION["email"];
         $token = $_SESSION["token"];
         $pdo = connectDB();
@@ -95,8 +102,8 @@ function isActivated(){
                                           AND user = idUser 
                                           AND tokenType = 'Site'");
         $queryPrepared->execute([
-            ":email"=>$email,
-            ":token"=>$token
+            ":email" => $email,
+            ":token" => $token
         ]);
         $isActivated = $queryPrepared->fetch();
         return $isActivated["isActivated"];
@@ -104,8 +111,9 @@ function isActivated(){
     return false;
 }
 
-function isAdmin(){
-    if(!empty($_SESSION["email"]) && !empty($_SESSION["token"]) ){
+function isAdmin()
+{
+    if (!empty($_SESSION["email"]) && !empty($_SESSION["token"])) {
         $email = $_SESSION["email"];
         $token = $_SESSION["token"];
         $pdo = connectDB();
@@ -115,24 +123,25 @@ function isAdmin(){
                                                  AND userRole = idRole
                                                  AND tokenType = 'Site'");
         $queryPrepared->execute([
-            ":email"=>$email,
-            ":token"=>$token
+            ":email" => $email,
+            ":token" => $token
         ]);
         $isAdmin = $queryPrepared->fetch();
         $isAdmin = $isAdmin["roleName"];
-        if ($isAdmin == "Administrateur"){
+        if ($isAdmin == "Administrateur") {
             return true;
         }
         return false;
     }
 }
 
-function logout($email){
+function logout($email)
+{
     $pdo = connectDB();
     $queryPrepared = $pdo->prepare("UPDATE USER, USERTOKEN SET USERTOKEN.token = null WHERE emailAddress = :email 
                                                     AND idUser = user 
                                                     AND tokenType = 'Site'");
-    $queryPrepared->execute([":email"=>$email]);
+    $queryPrepared->execute([":email" => $email]);
 }
 
 /**
@@ -140,9 +149,10 @@ function logout($email){
  * @param $tabLang
  * @param $setLanguage
  */
-function getTranslate($text, $tabLang, $setLanguage){
+function getTranslate($text, $tabLang, $setLanguage)
+{
     //si la value existe on traduit, sinon on laisse le texte pas défault
-    if(array_key_exists($text,$tabLang) && array_key_exists($setLanguage, $tabLang[$text]) )
+    if (array_key_exists($text, $tabLang) && array_key_exists($setLanguage, $tabLang[$text]))
         echo $tabLang[$text][$setLanguage];
     else
         echo $text;
@@ -151,8 +161,9 @@ function getTranslate($text, $tabLang, $setLanguage){
 /**
  * @return bool|mixed
  */
-function getUserInfos(){
-    if(!empty($_SESSION["email"]) && !empty($_SESSION["token"]) ){
+function getUserInfos()
+{
+    if (!empty($_SESSION["email"]) && !empty($_SESSION["token"])) {
         $email = $_SESSION["email"];
         $token = $_SESSION["token"];
         $pdo = connectDB();
@@ -161,10 +172,10 @@ function getUserInfos(){
                                           AND user = idUser 
                                           AND tokenType = 'Site'");
         $queryPrepared->execute([
-            ":email"=>$email,
-            ":token"=>$token
+            ":email" => $email,
+            ":token" => $token
         ]);
-        return $queryPrepared->fetch    (PDO::FETCH_ASSOC);
+        return $queryPrepared->fetch(PDO::FETCH_ASSOC);
     }
     return false;
 }

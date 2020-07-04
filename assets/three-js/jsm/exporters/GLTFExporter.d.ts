@@ -1,7 +1,4 @@
-import {
-	Object3D,
-	AnimationClip
-} from '../../../src/Three';
+import {AnimationClip, Object3D} from '../../../src/Three';
 
 export interface GLTFExporterOptions {
 	binary?: boolean;
@@ -19,6 +16,6 @@ export class GLTFExporter {
 
 	constructor();
 
-	parse( input: Object3D, onCompleted: ( gltf: object ) => void, options: GLTFExporterOptions ): void;
+	parse(input: Object3D, onCompleted: (gltf: object) => void, options: GLTFExporterOptions): void;
 
 }

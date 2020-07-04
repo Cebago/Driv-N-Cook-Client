@@ -13,7 +13,7 @@ var TechnicolorShader = {
 
 	uniforms: {
 
-		"tDiffuse": { value: null }
+		"tDiffuse": {value: null}
 
 	},
 
@@ -28,7 +28,7 @@ var TechnicolorShader = {
 
 		"}"
 
-	].join( "\n" ),
+	].join("\n"),
 
 	fragmentShader: [
 
@@ -44,8 +44,8 @@ var TechnicolorShader = {
 
 		"}"
 
-	].join( "\n" )
+	].join("\n")
 
 };
 
-export { TechnicolorShader };
+export {TechnicolorShader};

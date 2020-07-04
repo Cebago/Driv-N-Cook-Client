@@ -6,7 +6,6 @@
 // TODO: all views could not be testable, waiting modular code before implement units tests on them
 
 import './unit/qunit-utils.js';
-
 //editor
 import './unit/editor/Command.tests';
 import './unit/editor/Config.tests';
@@ -55,7 +54,6 @@ import './unit/editor/Storage.tests';
 import './unit/editor/Toolbar.tests';
 import './unit/editor/Viewport.tests';
 import './unit/editor/Viewport.Info.tests';
-
 //editor/commands
 import './unit/editor/commands/AddObjectCommand.tests';
 import './unit/editor/commands/AddScriptCommand.tests';

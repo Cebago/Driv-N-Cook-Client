@@ -2,79 +2,79 @@
  * @author sunag / http://www.sunag.com.br/
  */
 
-import { Node } from '../core/Node.js';
+import {Node} from '../core/Node.js';
 
-function SwitchNode( node, components ) {
+function SwitchNode(node, components) {
 
-	Node.call( this );
+	Node.call(this);
 
 	this.node = node;
 	this.components = components || 'x';
 
 }
 
-SwitchNode.prototype = Object.create( Node.prototype );
+SwitchNode.prototype = Object.create(Node.prototype);
 SwitchNode.prototype.constructor = SwitchNode;
 SwitchNode.prototype.nodeType = "Switch";
 
-SwitchNode.prototype.getType = function ( builder ) {
+SwitchNode.prototype.getType = function (builder) {
 
-	return builder.getTypeFromLength( this.components.length );
+	return builder.getTypeFromLength(this.components.length);
 
 };
 
-SwitchNode.prototype.generate = function ( builder, output ) {
+SwitchNode.prototype.generate = function (builder, output) {
 
-	var type = this.node.getType( builder ),
-		node = this.node.build( builder, type ),
-		inputLength = builder.getTypeLength( type ) - 1;
+	var type = this.node.getType(builder),
+		node = this.node.build(builder, type),
+		inputLength = builder.getTypeLength(type) - 1;
 
-	if ( inputLength > 0 ) {
+	if (inputLength > 0) {
 
 		// get max length
 
 		var outputLength = 0,
-			components = builder.colorToVectorProperties( this.components );
+			components = builder.colorToVectorProperties(this.components);
 
 		var i, len = components.length;
 
-		for ( i = 0; i < len; i ++ ) {
+		for (i = 0; i < len; i++) {
 
-			outputLength = Math.max( outputLength, builder.getIndexByElement( components.charAt( i ) ) );
+			outputLength = Math.max(outputLength, builder.getIndexByElement(components.charAt(i)));
 
 		}
 
-		if ( outputLength > inputLength ) outputLength = inputLength;
+		if (outputLength > inputLength) outputLength = inputLength;
 
 		// split
 
 		node += '.';
 
-		for ( i = 0; i < len; i ++ ) {
+		for (i = 0; i < len; i++) {
 
-			var idx = builder.getIndexByElement( components.charAt( i ) );
+			var idx = builder.getIndexByElement(components.charAt(i));
 
-			if ( idx > outputLength ) idx = outputLength;
+			if (idx > outputLength) idx = outputLength;
 
-			node += builder.getElementByIndex( idx );
+			node += builder.getElementByIndex(idx);
 
 		}
 
-		return builder.format( node, this.getType( builder ), output );
+		return builder.format(node, this.getType(builder), output);
 
 	} else {
 
 		// join
 
-		return builder.format( node, type, output );
+		return builder.format(node, type, output);
 
 	}
 
 };
 
-SwitchNode.prototype.copy = function ( source ) {
+SwitchNode.prototype.copy = function (source) {
 
-	Node.prototype.copy.call( this, source );
+	Node.prototype.copy.call(this, source);
 
 	this.node = source.node;
 	this.components = source.components;
@@ -83,15 +83,15 @@ SwitchNode.prototype.copy = function ( source ) {
 
 };
 
-SwitchNode.prototype.toJSON = function ( meta ) {
+SwitchNode.prototype.toJSON = function (meta) {
 
-	var data = this.getJSONNode( meta );
+	var data = this.getJSONNode(meta);
 
-	if ( ! data ) {
+	if (!data) {
 
-		data = this.createJSONNode( meta );
+		data = this.createJSONNode(meta);
 
-		data.node = this.node.toJSON( meta ).uuid;
+		data.node = this.node.toJSON(meta).uuid;
 		data.components = this.components;
 
 	}
@@ -100,4 +100,4 @@ SwitchNode.prototype.toJSON = function ( meta ) {
 
 };
 
-export { SwitchNode };
+export {SwitchNode};
