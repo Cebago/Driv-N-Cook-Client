@@ -3,10 +3,31 @@ require 'navbar.php';
 
 
 ?>
+<body onload="getListOfEvents()"></body>
 
 
-<button onclick="getListOfEvents()"> COUCOU </button>
+<!-- Banner Area Starts -->
+<section class="banner-area banner-area2 contact-bg text-center">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <h1><i>Découvrez les évènements près de chez vous</i></h1>
 
+            </div>
+        </div>
+    </div>
+</section>
+<!-- Banner Area End -->
+
+<!-- Food Area starts -->
+<section class="food-area section-padding">
+    <div class="container">
+        <div class="row" id="containerToEvents">
+
+
+        </div>
+    </div>
+</section>
 
 <script src="scripts/scripts.js"></script>
 <script async defer

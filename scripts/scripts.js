@@ -162,6 +162,14 @@ function getListOfEvents(){
 }
 
 function getLocation(events) {
+
+    var pos = {
+        lat: 48.928596,
+        lng: 2.506742
+    };
+
+    calculDistance(pos, events);
+/*
     if(navigator.geolocation) {
         console.log("navigator.geolocation is available");
         navigator.geolocation.getCurrentPosition(function (position) {
@@ -175,30 +183,77 @@ function getLocation(events) {
     }else{
         console.log("Impossble de récupérer l'adresse actuelle")
     }
+
+ */
 }
 
 
 
 function calculDistance(origin, events) {
-
     let addressTab = [];
     events.forEach(function (event) {
         addressTab.push( event["eventAddress"] + " " +event["eventCity"]+" " + event["eventPostalCode"]);
     })
+    console.log(addressTab)
     var service = new google.maps.DistanceMatrixService();
     service.getDistanceMatrix(
         {
             origins: [origin],
-            destinations: [addressTab],
+            destinations: addressTab,
             travelMode: 'DRIVING',
             unitSystem:  google.maps.UnitSystem.METRIC,
         }, callback);
 
     function callback(response, status) {
         var results = response.rows[0].elements;
-        for (var j = 0; j < results.length; j++) {
-            console.log(" Vous êtes à : " + results[j].distance.text + " de "+  destination);
+        if(status == 'OK'){
+            results = sortDistances(results);
+            for (let j = 0; j < results.length; j++) {
+                console.log(" Vous êtes à : " + results[j].distance.text + " de " + events[j]["eventName"]);
+                let child = document.createElement('div');
+
+                let cardDiv = document.createElement('div');
+                cartDiv.className = "col-md-4 col-sm-6";
+                child.appendChild(cardDiv);
+
+                let cartDiv2 = document.createElement('div');
+                cartDiv2.className = "single-food";
+                child.appendChild(cartDiv2);
+
+                let cartImg = document.createElement('div');
+                cartImg.className = "food-img";
+                cartDiv2.appendChild(cartImg);
+
+                let img = document.createElement('img');
+                img.src = results[j]["eventImg"];
+                img.className = "img-fluid"
+                img.style.height = "350px"
+                cartImg.appendChild(img);
+
+                let parentDiv = document.getElementById("containerToEvents");
+                parentDiv.appendChild(child);
+
+
+
+            }
+        }else{
+            //todo -> afficher tous les events
         }
     }
 
+}
+
+
+
+
+
+
+function sortDistances(array) {
+    return array.sort(function(rowA,rowB) {
+        let a = rowA.distance.text;
+        let b = rowB.distance.text;
+
+        return	a<b ? -1 :
+            a>b ? 1 : 0;
+    })
 }
