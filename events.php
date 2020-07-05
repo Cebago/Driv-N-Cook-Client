@@ -30,7 +30,7 @@ $info = $queryPrepared->fetchAll(PDO::FETCH_ASSOC);
 
     function calculDistance(origin, destination) {
 
-        console.dir(destination);
+
 
 
         var service = new google.maps.DistanceMatrixService();
@@ -45,7 +45,7 @@ $info = $queryPrepared->fetchAll(PDO::FETCH_ASSOC);
         function callback(response, status) {
             var results = response.rows[0].elements;
             for (var j = 0; j < results.length; j++) {
-                console.log("Distance : " + results[j].distance.text);
+                console.log(" Vous êtes à : " + results[j].distance.text + " de "+ destination);
             }
         }
 
