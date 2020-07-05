@@ -20,7 +20,7 @@ require 'navbar.php';
 <!-- Banner Area End -->
 
 <!-- Food Area starts -->
-<section class="food-area section-padding">
+<section class="update-area section-padding">
     <div class="container">
         <div class="row" id="containerToEvents">
 

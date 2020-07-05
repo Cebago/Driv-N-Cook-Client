@@ -209,32 +209,54 @@ function calculDistance(origin, events) {
         if(status == 'OK'){
             results = sortDistances(results);
             for (let j = 0; j < results.length; j++) {
+                console.log(document.location.href)
                 console.log(" Vous êtes à : " + results[j].distance.text + " de " + events[j]["eventName"]);
-                let child = document.createElement('div');
-
+                let child = document.getElementById("containerToEvents");
                 let cardDiv = document.createElement('div');
-                cartDiv.className = "col-md-4 col-sm-6";
+                cardDiv.className = "col-md-4";
                 child.appendChild(cardDiv);
 
                 let cartDiv2 = document.createElement('div');
                 cartDiv2.className = "single-food";
-                child.appendChild(cartDiv2);
+                cardDiv.appendChild(cartDiv2);
 
                 let cartImg = document.createElement('div');
                 cartImg.className = "food-img";
                 cartDiv2.appendChild(cartImg);
 
                 let img = document.createElement('img');
-                img.src = results[j]["eventImg"];
+                img.src = events[j]["eventImg"];
                 img.className = "img-fluid"
-                img.style.height = "350px"
                 cartImg.appendChild(img);
 
-                let parentDiv = document.getElementById("containerToEvents");
-                parentDiv.appendChild(child);
+                let content =  document.createElement('div');
+                content.className = "food-content";
+                cartDiv2.appendChild(content);
 
+                let post =  document.createElement('div');
+                cartImg.className = "post-admin d-lg-flex mb-3";
+                content.appendChild(post);
 
+                let spanTruck =  document.createElement('span');
+                spanTruck.innerHTML = '<i class="post-admin d-lg-flex mb-3"></i>'+ events[j]["truckName"];
+                post.appendChild(spanTruck);
 
+                let spanDate =  document.createElement('span');
+                spanDate.innerHTML = '<i class="fa fa-calendar-o mr-2"></i>'+ events[j]["eventBeginDate"];
+                post.appendChild(spanDate);
+
+                let spanDistance =  document.createElement('span');
+                spanDistance.innerHTML = '<i class="fa fa-map-signs mr-2"></i>'+ results[j].distance.text;
+                post.appendChild(spanDistance);
+
+                let eventName =  document.createElement('h5');
+                eventName.textContent = events[j]["eventName"];
+                content.appendChild(eventName);
+
+                let eventDetails =  document.createElement('p');
+                eventDetails.className = "pt-3 eventText ";
+                eventDetails.textContent = events[j]["eventDesc"];
+                content.appendChild(eventDetails);
             }
         }else{
             //todo -> afficher tous les events
@@ -242,6 +264,8 @@ function calculDistance(origin, events) {
     }
 
 }
+
+
 
 
 
