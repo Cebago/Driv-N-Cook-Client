@@ -145,3 +145,60 @@ function removeFilterTruck() {
     }
 }
 
+
+function getListOfEvents(){
+    const request = new XMLHttpRequest();
+    request.onreadystatechange = function () {
+        if (request.readyState === 4) {
+            if (request.status === 200) {
+                let result = JSON.parse(request.responseText);
+                console.log("list event OK")
+                    getLocation(result);
+            }
+        }
+    };
+    request.open('GET', 'functions/getEvents.php');
+    request.send();
+}
+
+function getLocation(events) {
+    if(navigator.geolocation) {
+        console.log("navigator.geolocation is available");
+        navigator.geolocation.getCurrentPosition(function (position) {
+            var pos = {
+                lat: position.coords.latitude,
+                lng: position.coords.longitude
+            };
+            console.log("get location OK")
+            calculDistance(pos, events)
+        });
+    }else{
+        console.log("Impossble de récupérer l'adresse actuelle")
+    }
+}
+
+
+
+function calculDistance(origin, events) {
+
+    let addressTab = [];
+    events.forEach(function (event) {
+        addressTab.push( event["eventAddress"] + " " +event["eventCity"]+" " + event["eventPostalCode"]);
+    })
+    var service = new google.maps.DistanceMatrixService();
+    service.getDistanceMatrix(
+        {
+            origins: [origin],
+            destinations: [addressTab],
+            travelMode: 'DRIVING',
+            unitSystem:  google.maps.UnitSystem.METRIC,
+        }, callback);
+
+    function callback(response, status) {
+        var results = response.rows[0].elements;
+        for (var j = 0; j < results.length; j++) {
+            console.log(" Vous êtes à : " + results[j].distance.text + " de "+  destination);
+        }
+    }
+
+}
