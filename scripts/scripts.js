@@ -157,18 +157,18 @@ function deleteQuantity(cart,menu,thisParameter) {
     const count = document.getElementById('count');
 
     if (Number(input.innerText) >= 1){
-
-        count.innerText = Number(count.innerText) - 1;
-        input.innerText = Number(input.innerText) - 1;
-
-        thisParameter.removeAttribute("disabled");
-
+        
         const request = new XMLHttpRequest();
         request.onreadystatechange = function() {
             if(request.readyState === 4) {
                 if(request.status === 200) {
                     if (request.responseText !== "") {
                         alert(request.responseText);
+                    }else{
+                        count.innerText = Number(count.innerText) - 1;
+                        input.innerText = Number(input.innerText) - 1;
+
+                        thisParameter.removeAttribute("disabled");
                     }
                 }
             }
@@ -185,15 +185,19 @@ function addQuantity(cart,menu) {
     let input = document.getElementById("input"+menu);
     const count = document.getElementById('count');
 
-    count.innerText = Number(count.innerText) + 1;
-    input.innerText = Number(input.innerText) + 1;
-
     const request = new XMLHttpRequest();
     request.onreadystatechange = function () {
         if (request.readyState === 4) {
             if (request.status === 200) {
                 if (request.responseText !== "") {
                     alert(request.responseText);
+                }else{
+                    if(input != null){
+                        input.innerText = Number(input.innerText) + 1;
+                    }
+                    if(count != null){
+                        count.innerText = Number(count.innerText) + 1;
+                    }
                 }
             }
         }
@@ -207,8 +211,7 @@ function completelyDelete(cart, menu) {
 
     const count = document.getElementById('count');
     let deleteMenu = document.getElementById("delete"+menu);
-    deleteMenu.remove();
-    count.innerText = Number(count.innerText) - 1;
+
 
     const request = new XMLHttpRequest();
     request.onreadystatechange = function () {
@@ -216,6 +219,10 @@ function completelyDelete(cart, menu) {
             if (request.status === 200) {
                 if (request.responseText !== "") {
                     alert(request.responseText);
+                }else{
+                    count.innerText = Number(count.innerText) - 1;
+                    deleteMenu.remove();
+
                 }
             }
         }

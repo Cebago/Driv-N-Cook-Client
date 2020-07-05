@@ -16,6 +16,7 @@ if (isActivated() && isConnected()) {
     $truck = $queryPrepared->fetchAll(PDO::FETCH_ASSOC);
 
     $count = 0;
+    $cart = lastCart($_SESSION["email"]);
 
     ?>
     <?php include "navbar.php"; ?>
@@ -84,7 +85,7 @@ if (isActivated() && isConnected()) {
                         <div class="col-lg-5 col-md-6 align-self-center">
                             <h1><?php echo $count; ?>.</h1>
                             <div class="deshes-text">
-                                <h3><span><?php echo $value["menuName"] ?></span></h3>
+                                <h3><span id="<?php echo $value["idMenu"]?>"><?php echo $value["menuName"] ?></span></h3>
                                 <ul>
                                     <?php foreach ($products as $product) {
                                         echo "<li>" . $product["productName"] . "</li>";
@@ -92,7 +93,7 @@ if (isActivated() && isConnected()) {
                                 </ul>
                                 <span class="style-change"><?php echo number_format($value["menuPrice"], 2) . "€" ?></span>
                                 <a href="#" class="template-btn3 mt-3"
-                                   onclick='addQuantity(<?php echo $value["idMenu"]; ?>)'>Ajouter à mon panier
+                                   onclick='addQuantity(<?php echo $cart.", ".$value["idMenu"]; ?>)'>Ajouter à mon panier
                                     <span><i class="fa fa-long-arrow-right"></i></span></a>
                             </div>
                         </div>
@@ -118,7 +119,7 @@ if (isActivated() && isConnected()) {
                                 </ul>
                                 <span class="style-change"><?php echo number_format($value["menuPrice"], 2) . "€" ?></span>
                                 <a href="#" class="template-btn3 mt-3"
-                                   onclick='addQuantity(<?php echo $value["idMenu"]; ?>)'>Ajouter à mon panier
+                                   onclick='addQuantity(<?php echo $cart.", ".$value["idMenu"]; ?>)'>Ajouter à mon panier
                                     <span><i class="fa fa-long-arrow-right"></i></span></a>
                             </div>
                         </div>
