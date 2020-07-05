@@ -1,133 +1,189 @@
-<?php include "header.php"?>
+<?php
+session_start();
+require "conf.inc.php";
+require "functions.php";
+
+if (isConnected() && isActivated() ) {
+
+    include "header.php";
+    include "navbar.php";
+    ?>
     <div class="container py-5">
-        <!-- For demo purpose -->
+
         <div class="row mb-4">
             <div class="col-lg-8 mx-auto text-center">
-                <h1 class="display-4">Payement</h1>
+                <h1 class="display-4">Paiement</h1>
+                <?php
+                if (isset($_SESSION["errors"])) {
+                    $errors = $_SESSION["errors"];
+                    echo "<div class='alert alert-danger col-md-7 mx-auto text-left' role='alert'>";
+                    foreach ($errors as $error) {
+                        echo "<li>" . $error . "</li>";
+                    }
+                    echo "</div>";
+                    unset($_SESSION["errors"]);
+                }
+                ?>
             </div>
-        </div> <!-- End -->
+        </div>
         <div class="row mr-5">
             <div class="col-lg-6 mx-auto">
                 <div class="card ">
                     <div class="card-header">
                         <div class="bg-white shadow-sm pt-4 pl-2 pr-2 pb-2">
-                            <!-- Credit card form tabs -->
+
                             <ul role="tablist" class="nav bg-light nav-pills rounded nav-fill mb-4">
-                                <li class="nav-item"> <a data-toggle="pill" href="#credit-card" class="nav-link active "> <i class="fas fa-credit-card mr-2"></i> Carte de crédit </a> </li>
-                                <li class="nav-item"> <a data-toggle="pill" href="#paypal" class="nav-link "> <i class="fas fa-wallet mr-2"></i> Espèce </a> </li>
-                                <!--                            <li class="nav-item"> <a data-toggle="pill" href="#net-banking" class="nav-link "> <i class="fas fa-mobile-alt mr-2"></i> Net Banking </a> </li>-->
+                                <li class="nav-item">
+                                    <a data-toggle="pill" href="#credit-card" class="nav-link active ">
+                                        <i class="fas fa-credit-card mr-2"></i>&nbsp;Carte de crédit
+                                    </a>
+                                </li>
                             </ul>
-                        </div> <!-- End -->
-                        <!-- Credit card form content -->
+                        </div>
                         <div class="tab-content">
-                            <!-- credit card info-->
                             <div id="credit-card" class="tab-pane fade show active pt-4">
-                                <form role="form">
-                                    <div class="form-group"> <label for="username">
-                                            <h6>Card Owner</h6>
-                                        </label> <input type="text" name="username" placeholder="Card Owner Name" required class="form-control "> </div>
-                                    <div class="form-group"> <label for="cardNumber">
-                                            <h6>Card number</h6>
+                                <form role="form" method="POST" action="functions/payMyCart.php">
+                                    <div class="form-group">
+                                        <label for="username">
+                                            <h6>Propriétaire de la carte</h6>
                                         </label>
-                                        <div class="input-group"> <input type="text" name="cardNumber" placeholder="Valid card number" class="form-control " required>
-                                            <div class="input-group-append"> <span class="input-group-text text-muted"> <i class="fab fa-cc-visa mx-1"></i> <i class="fab fa-cc-mastercard mx-1"></i> <i class="fab fa-cc-amex mx-1"></i> </span> </div>
+                                        <input type="text" name="username" placeholder="Propriétaire de la carte"
+                                               required class="form-control" value="<?php echo (isset($_SESSION["input"]))
+                                            ? $_SESSION["input"]["username"]
+                                            : ""; ?>">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="cardNumber">
+                                            <h6>Numéro de carte</h6>
+                                        </label>
+                                        <div class="input-group">
+                                            <input type="text" name="cardNumber"
+                                                   placeholder="Numéro de carte"
+                                                   class="form-control " required
+                                                   value="<?php echo (isset($_SESSION["input"]))
+                                                       ? $_SESSION["input"]["cardNumber"]
+                                                       : "";
+                                                   if (isset($_SESSION['input'])) {
+                                                       unset($_SESSION["input"]);
+                                                   }?>">
+                                            <div class="input-group-append">
+                                                <span class="input-group-text text-muted">
+                                                    <i class="fab fa-cc-visa mx-1"></i>
+                                                    <i class="fab fa-cc-mastercard mx-1"></i>
+                                                    <i class="fab fa-cc-amex mx-1"></i>
+                                                </span>
+                                            </div>
                                         </div>
                                     </div>
                                     <div class="row">
                                         <div class="col-sm-8">
-                                            <div class="form-group"> <label><span class="hidden-xs">
-                                                    <h6>Expiration Date</h6>
-                                                </span></label>
-                                                <div class="input-group"> <input type="number" placeholder="MM" name="" class="form-control" required> <input type="number" placeholder="YY" name="" class="form-control" required> </div>
+                                            <div class="form-group">
+                                                <label>
+                                                    <span class="hidden-xs">
+                                                        <h6>Date d'expiration</h6>
+                                                    </span>
+                                                </label>
+                                                <div class="input-group">
+                                                    <input type="number" placeholder="MM" name="month" class="form-control"
+                                                           required>
+                                                    <input type="number" placeholder="AA" name="year" class="form-control"
+                                                           required>
+                                                </div>
                                             </div>
                                         </div>
                                         <div class="col-sm-4">
-                                            <div class="form-group mb-4"> <label data-toggle="tooltip" title="Three digit CV code on the back of your card">
-                                                    <h6>CVV <i class="fa fa-question-circle d-inline"></i></h6>
-                                                </label> <input type="text" required class="form-control"> </div>
+                                            <div class="form-group mb-4">
+                                                <label data-toggle="tooltip"
+                                                       title="Three digit CV code on the back of your card">
+                                                    <h6>CVV
+                                                        <i class="fa fa-question-circle d-inline"></i>
+                                                    </h6>
+                                                </label>
+                                                <input type="text" name="ccv" required class="form-control">
+                                            </div>
                                         </div>
                                     </div>
-                                    <div class="card-footer"> <button type="button" class="subscribe btn btn-primary btn-block shadow-sm"> Confirm Payment </button>
+                                    <div class="card-footer">
+                                        <button type="submit" class="subscribe btn btn-success btn-block shadow-sm">
+                                            <i class="fas fa-money-check"></i>
+                                            &nbsp;Confirmer le paiement
+                                        </button>
                                 </form>
                             </div>
-                        </div> <!-- End -->
-                        <!-- Paypal info -->
-                        <div id="paypal" class="tab-pane fade pt-4">
-                            <h6 class="pb-2">Select your paypal account type</h6>
-                            <div class="form-group "> <label class="radio-inline"> <input type="radio" name="optradio" checked> Domestic </label> <label class="radio-inline"> <input type="radio" name="optradio" class="ml-5">International </label></div>
-                            <p> <button type="button" class="btn btn-primary "><i class="fab fa-paypal mr-2"></i> Log into my Paypal</button> </p>
-                            <p class="text-muted"> Note: After clicking on the button, you will be directed to a secure gateway for payment. After completing the payment process, you will be redirected back to the website to view details of your order. </p>
-                        </div> <!-- End -->
-                        <!-- bank transfer info -->
-                        <!--                    <div id="net-banking" class="tab-pane fade pt-3">-->
-                        <!--                        <div class="form-group "> <label for="Select Your Bank">-->
-                        <!--                                <h6>Select your Bank</h6>-->
-                        <!--                            </label> <select class="form-control" id="ccmonth">-->
-                        <!--                                <option value="" selected disabled>--Please select your Bank--</option>-->
-                        <!--                                <option>Bank 1</option>-->
-                        <!--                                <option>Bank 2</option>-->
-                        <!--                                <option>Bank 3</option>-->
-                        <!--                                <option>Bank 4</option>-->
-                        <!--                                <option>Bank 5</option>-->
-                        <!--                                <option>Bank 6</option>-->
-                        <!--                                <option>Bank 7</option>-->
-                        <!--                                <option>Bank 8</option>-->
-                        <!--                                <option>Bank 9</option>-->
-                        <!--                                <option>Bank 10</option>-->
-                        <!--                            </select> </div>-->
-                        <!--                        <div class="form-group">-->
-                        <!--                            <p> <button type="button" class="btn btn-primary "><i class="fas fa-mobile-alt mr-2"></i> Proceed Pyment</button> </p>-->
-                        <!--                        </div>-->
-                        <!--                        <p class="text-muted">Note: After clicking on the button, you will be directed to a secure gateway for payment. After completing the payment process, you will be redirected back to the website to view details of your order. </p>-->
-                        <!--                    </div> <!-- End -->
-                        <!-- End -->
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
-
-
         <div class="row mb-4">
             <div class="col-lg-8 mx-auto text-center">
                 <h4 class="d-flex justify-content-between align-items-center mb-3">
                     <span class="text-muted">Mon panier</span>
-                    <span class="badge badge-secondary badge-pill">3</span>
+                    <span class="badge badge-secondary badge-pill">
+                        <?php
+                        echo $quantity["quantity"];
+                        ?>
+                    </span>
                 </h4>
             </div>
-            <div class="col-lg-6 mx-auto">
-                <div class="card ">
-                    <li class="list-group-item d-flex justify-content-between lh-condensed">
-                        <div>
-                            <h6 class="my-0">Product name</h6>
-                            <small class="text-muted">Brief description</small>
-                        </div>
-                        <span class="text-muted">$12</span>
-                    </li>
+            <div class="col-lg-8 mx-auto">
+                <div class="card">
+                    <?php
+                    $cart = lastCart($_SESSION["email"]);
 
+                    $pdo = connectDB();
+                    $queryPrepared = $pdo->prepare("SELECT menuName, menuImage, quantity, idMenu, cartPrice
+                                                                FROM MENUS, CARTMENU, CART
+                                                                WHERE CARTMENU.menu = idMenu 
+                                                                  AND CARTMENU.cart = idCart 
+                                                                  AND idCart = :cart");
+                    $queryPrepared->execute([
+                        ":cart" => $cart
+                    ]);
+                    $menu = $queryPrepared->fetchAll(PDO::FETCH_ASSOC);
+                    $total = $menu[0]["cartPrice"];
+                    foreach ($menu as $priceMenu) {
+                        $queryPrepared = $pdo->prepare("SELECT menuPrice FROM MENUS, CARTMENU WHERE menu = idMenu AND idMenu = :menu");
+                        $queryPrepared->execute([
+                            ":menu" => $priceMenu["idMenu"]
+                        ]);
+                        $price = $queryPrepared->fetch(PDO::FETCH_ASSOC);
+                        $price = $price["menuPrice"];
+                        ?>
+                        <li class="list-group-item d-flex justify-content-between lh-condensed">
+                            <div>
+                                <h6 class="my-0 text-muted">
+                                    <?php
+                                    echo $priceMenu["quantity"] . "x&nbsp;" . $priceMenu["menuName"];
+                                    ?>
+                                </h6>
+<!--                                <small class="text-muted">-->
+<!--                                    --><?php
+//                                    echo $menu["ingredientCategory"];
+//                                    ?>
+<!--                                </small>-->
+                            </div>
+                            <span class="text-muted">
+                                <?php
+                                $final = $price * $priceMenu["quantity"];
+                                echo number_format($final, 2) . "&nbsp;€";
+                                ?>
+                            </span>
+                        </li>
+                        <?php
+                    }
+                    ?>
                     <li class="list-group-item d-flex justify-content-between lh-condensed">
                         <div>
-                            <h6 class="my-0">Second product</h6>
-                            <small class="text-muted">Brief description</small>
+                            <h6 class="my-0 text-muted">
+                                <strong>Total:</strong>
+                            </h6>
                         </div>
-                        <span class="text-muted">$8</span>
-                    </li>
-                    <li class="list-group-item d-flex justify-content-between lh-condensed">
-                        <div>
-                            <h6 class="my-0">Third item</h6>
-                            <small class="text-muted">Brief description</small>
-                        </div>
-                        <span class="text-muted">$5</span>
-                    </li>
-                    <li class="list-group-item d-flex justify-content-between bg-light">
-                        <div class="text-success">
-                            <h6 class="my-0">Promo code</h6>
-                            <small>EXAMPLECODE</small>
-                        </div>
-                        <span class="text-success">-$5</span>
-                    </li>
-                    <li class="list-group-item d-flex justify-content-between">
-                        <span>Total (USD)</span>
-                        <strong>$20</strong>
+                        <span class="text-muted">
+                            <?php
+                            echo number_format($total, 2) . "&nbsp;€";
+                            ?>
+                        </span>
                     </li>
                 </div>
             </div>
@@ -135,4 +191,10 @@
     </div>
 
 
-<?php include "footer.php"?>
+    <?php
+    include "footer.php";
+} else {
+    header("Location: login.php");
+}
+
+?>
