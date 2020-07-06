@@ -130,6 +130,19 @@ CREATE TABLE CART(
      user INTEGER,
      FOREIGN KEY (user) REFERENCES USER(idUser)
 );
+CREATE TABLE PRODUCTCATEGORY(
+    idCategory INTEGER PRIMARY KEY AUTO_INCREMENT,
+    categoryName VARCHAR(50),
+    categoryPicture VARCHAR(100)
+);
+CREATE TABLE ADVANTAGE(
+  idAdvantage INTEGER PRIMARY KEY AUTO_INCREMENT,
+  advantageName VARCHAR(50),
+  advantagePicture VARCHAR(100),
+  advantagePoints INTEGER,
+  category INTEGER,
+  FOREIGN KEY (category) REFERENCES PRODUCTCATEGORY(idCategory)
+);
 CREATE TABLE ORDERS(
     idOrder INTEGER PRIMARY KEY AUTO_INCREMENT,
     orderPrice FLOAT,
@@ -141,7 +154,9 @@ CREATE TABLE ORDERS(
     user INTEGER NOT NULL,
     FOREIGN KEY (user) REFERENCES USER(idUser),
     cart INTEGER,
-    FOREIGN KEY (cart) REFERENCES CART(idCart)
+    FOREIGN KEY (cart) REFERENCES CART(idCart),
+    advantage INTEGER,
+    FOREIGN KEY (advantage) REFERENCES ADVANTAGE(idAdvantage)
 );
 CREATE TABLE ORDERSTATUS(
     orders INTEGER,
@@ -192,11 +207,6 @@ CREATE TABLE STORE(
     price FLOAT,
     FOREIGN KEY (warehouse) REFERENCES WAREHOUSES(idWarehouse),
     FOREIGN KEY (ingredient) REFERENCES INGREDIENTS(idIngredient)
-);
-CREATE TABLE PRODUCTCATEGORY(
-    idCategory INTEGER PRIMARY KEY AUTO_INCREMENT,
-    categoryName VARCHAR(50),
-    categoryPicture VARCHAR(100)
 );
 CREATE TABLE PRODUCTS(
     idProduct INTEGER PRIMARY KEY AUTO_INCREMENT,
@@ -285,14 +295,7 @@ CREATE TABLE USERTOKEN(
     user INTEGER,
     FOREIGN KEY (user) REFERENCES USER(idUser)
 );
-CREATE TABLE ADVANTAGE(
-    idAdvantage INTEGER PRIMARY KEY AUTO_INCREMENT,
-    advantageName VARCHAR(50),
-    advantagePicture VARCHAR(100),
-    advantagePoints INTEGER,
-    category INTEGER,
-    FOREIGN KEY (category) REFERENCES PRODUCTCATEGORY(idCategory)
-);
+
 
 
 USE pa2a2drivncook;
