@@ -291,6 +291,24 @@ Copyright &copy;<script>document.write(new Date().getFullYear());</script> All r
     </div>
     <?php include "footer.php"; ?>
 </footer>
+<div class="modal fade" id="staticModal" data-backdrop="static" data-keyboard="false" tabindex="-1" role="dialog" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="staticBackdropLabel">Erreur</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                Vous ne pouvez pas ajouter un menu venant d'un autre camion
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Fermer</button>
+            </div>
+        </div>
+    </div>
+</div>
 <script src="scripts/scripts.js"></script>
 <?php
 } else {

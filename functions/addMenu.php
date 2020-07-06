@@ -17,16 +17,16 @@ if (isset($_GET["menu"]) && isset($_GET["cart"])) {
     ]);
     $idTruck = $queryPrepared->fetch(PDO::FETCH_ASSOC);
 
-    $queryPrepared = $pdo->prepare("SELECT truck FROM CARTMENU, MENUS WHERE cart = :cart AND menu = idMenu AND truck = :truck ;");
+    $queryPrepared = $pdo->prepare("SELECT truck FROM CARTMENU, MENUS WHERE cart = :cart AND menu = idMenu AND truck != :truck ;");
     $queryPrepared->execute([
         ":cart" => $idCart,
-        ":truck"=>$idTruck["truck"]
+        ":truck" => $idTruck["truck"]
     ]);
     $menuInCart = $queryPrepared->fetchAll(PDO::FETCH_ASSOC);
 
-    if(empty($menuInCart)){
+    if (!empty($menuInCart)) {
         echo "Vous ne pouvez pas ajouter un menu provenant d'un autre camion";
-    }else{
+    } else {
         $queryPrepared = $pdo->prepare("INSERT INTO CARTMENU (cart,menu,quantity) VALUES (:cart,:menu,1) ON DUPLICATE KEY UPDATE quantity = quantity + 1;");
         $queryPrepared->execute([
             ":cart" => $idCart,

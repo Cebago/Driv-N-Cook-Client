@@ -21,10 +21,10 @@ if (isConnected() && isActivated()) {
     $queryPrepared->execute([
         ":email" => $email
     ]);
-    if (empty($queryPrepared->fetch(PDO::FETCH_ASSOC))) {
+    $quantity = $queryPrepared->fetch(PDO::FETCH_ASSOC);
+    if (empty($quantity)) {
         $quantity = 0;
     } else {
-        $quantity = $queryPrepared->fetch(PDO::FETCH_ASSOC);
         $quantity = $quantity["quantity"];
     }
 
@@ -32,10 +32,6 @@ if (isConnected() && isActivated()) {
 
 
 ?>
-
-
-</head>
-
 <body>
 
 <!-- Preloader Starts -->

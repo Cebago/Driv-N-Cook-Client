@@ -190,7 +190,7 @@ function addQuantity(cart,menu) {
         if (request.readyState === 4) {
             if (request.status === 200) {
                 if (request.responseText !== "") {
-                    alert(request.responseText);
+                    $('#staticModal').modal('show');
                 }else{
                     if(input != null){
                         input.innerText = Number(input.innerText) + 1;
