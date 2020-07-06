@@ -115,13 +115,13 @@ if (isConnected() && isActivated()) {
                                 if (isConnected() && isActivated()) { ?>
                                     <a href="login.php" class="btn btn-transparent btn-lg active" role="button"
                                        aria-pressed="true"><i class="fas fa-user-circle"></i>&nbsp;
-                                        Mon compte
                                     <?php
+                                    getTranslate("Mon compte", $tabLang, $setLanguage);
                                     } else { ?>
                                     <a href="login.php" class="btn btn-transparent btn-lg active" role="button"
                                        aria-pressed="true"><i class="fas fa-user-circle"></i>&nbsp;
-                                        Connexion
                                     <?php
+                                    getTranslate("Connexion", $tabLang, $setLanguage);
                                     }
                                     ?>
                                     </a>
@@ -131,6 +131,7 @@ if (isConnected() && isActivated()) {
                 </div>
             </div>
         </div>
+    </header>
 </div>
 </body>
 <!-- Header Area End -->

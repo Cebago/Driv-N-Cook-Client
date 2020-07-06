@@ -68,6 +68,16 @@
       "es_ES" : "Cerrado",
       "en_EN" : "Close",
       "fr_FR" : "Fermeture"
+    },
+    "Mon compte" : {
+      "es_ES" : "Mi cuenta",
+      "en_EN" : "My account",
+      "fr_FR" : "Mon compte"
+    },
+    "Connexion" : {
+      "es_ES" : "Conexión",
+      "en_EN" : "Log in",
+      "fr_FR" : "Connexion"
     }
   }
 }
