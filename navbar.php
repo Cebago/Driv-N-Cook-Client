@@ -14,13 +14,21 @@ if (isset($_COOKIE['Lang'])) {
     $setLanguage = "fr_FR";
 }
 
-$email = $_SESSION["email"];
-$pdo = connectDB();
-$queryPrepared = $pdo->prepare("SELECT SUM(quantity) as quantity FROM CARTMENU, CART, MENUS, USER WHERE CARTMENU.cart = idCart AND MENUS.idMenu = CARTMENU.menu AND CART.user = idUser AND emailAddress = :email  GROUP BY idCart;");
-$queryPrepared->execute([
-    ":email" => $email
-]);
-$quantity = $queryPrepared->fetch(PDO::FETCH_ASSOC);
+if (isConnected() && isActivated()) {
+    $email = $_SESSION["email"];
+    $pdo = connectDB();
+    $queryPrepared = $pdo->prepare("SELECT SUM(quantity) as quantity FROM CARTMENU, CART, MENUS, USER WHERE CARTMENU.cart = idCart AND MENUS.idMenu = CARTMENU.menu AND CART.user = idUser AND emailAddress = :email  GROUP BY idCart;");
+    $queryPrepared->execute([
+        ":email" => $email
+    ]);
+    if (empty($queryPrepared->fetch(PDO::FETCH_ASSOC))) {
+        $quantity = 0;
+    } else {
+        $quantity = $queryPrepared->fetch(PDO::FETCH_ASSOC);
+        $quantity = $quantity["quantity"];
+    }
+
+}
 
 
 ?>
@@ -56,25 +64,43 @@ $quantity = $queryPrepared->fetch(PDO::FETCH_ASSOC);
                     </div>
                     <div class="main-menu">
                         <ul>
-                            <li class="active"><a
-                                        href="index.html"><?php getTranslate("accueil", $tabLang, $setLanguage); ?></a>
+                            <li class="active">
+                                <a
+                                        href="index.html"><?php getTranslate("accueil", $tabLang, $setLanguage); ?>
+                                </a>
                             </li>
                             <li>
-                                <a href="truckMenu.php"><?php getTranslate("nos camions", $tabLang, $setLanguage); ?></a>
-                            </li>
-                            <li><a href="menu.html"><?php getTranslate("evenements", $tabLang, $setLanguage); ?></a>
+                                <a href="truckMenu.php">
+                                    <?php getTranslate("nos camions", $tabLang, $setLanguage); ?>
+                                </a>
                             </li>
                             <li>
-                                <a href="http://franchises.drivncook.fr"><?php getTranslate("rejoignez-nous", $tabLang, $setLanguage); ?></a>
+                                <a href="menu.html">
+                                    <?php getTranslate("evenements", $tabLang, $setLanguage); ?>
+                                </a>
                             </li>
-                            <li><a href="payment.php" class="btn btn-transparent btn-lg active" role="button"
-                                   aria-pressed="true"><i class="fas fa-shopping-cart"></i>&nbsp<span
-                                            class="badge badge-alert"
-                                            id="count"><?php echo $quantity["quantity"]; ?></span></a></li>
+                            <li>
+                                <a href="http://franchises.drivncook.fr">
+                                    <?php getTranslate("rejoignez-nous", $tabLang, $setLanguage); ?>
+                                </a>
+                            </li>
+                            <?php
+                            if (isConnected() && isActivated()) {?>
+                            <li>
+                                <a href="payment.php" class="btn btn-transparent btn-lg active" role="button"
+                                   aria-pressed="true"><i class="fas fa-shopping-cart"></i>&nbsp
+                                    <span class="badge badge-alert" id="count">
+                                        <?php echo $quantity; ?>
+                                    </span>
+                                </a>
+                            </li>
+                            <?php } ?>
                             <li class="nav-item dropdown">
                                 <a class="nav-link dropdown-toggle" id="dropdown09" data-toggle="dropdown"
-                                   aria-haspopup="true" aria-expanded="false"><span
-                                            class="flag-icon <?php echo $headerTabLang[$setLanguage]["icon"] ?>"> </span> <?php echo $headerTabLang[$setLanguage]["name"] ?>
+                                   aria-haspopup="true" aria-expanded="false">
+                                    <span class="flag-icon <?php echo $headerTabLang[$setLanguage]["icon"] ?>">
+                                    </span>
+                                    <?php echo $headerTabLang[$setLanguage]["name"] ?>
                                 </a>
                                 <div class="dropdown-menu bg-info border-light" aria-labelledby="dropdown09">
                                     <?php

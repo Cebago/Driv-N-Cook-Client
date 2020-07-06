@@ -5,6 +5,7 @@ require 'functions.php';
 
 if (isActivated() && isConnected()) {
     include 'header.php';
+    if (isset($_GET["idTruck"])) {
     $printedMenus = 0;
     $pdo = connectDB();
     $queryPrepared = $pdo->prepare("SELECT menuName, menuImage, menuPrice, idMenu, truck FROM MENUS, TRUCK WHERE MENUS.truck = TRUCK.idTruck AND truck = :truck");
@@ -92,9 +93,18 @@ if (isActivated() && isConnected()) {
                                     } ?>
                                 </ul>
                                 <span class="style-change"><?php echo number_format($value["menuPrice"], 2) . "€" ?></span>
+                                <?php
+                                if (isConnected() && isActivated()) {
+                                ?>
                                 <a href="#" class="template-btn3 mt-3"
                                    onclick='addQuantity(<?php echo $cart.", ".$value["idMenu"]; ?>)'>Ajouter à mon panier
-                                    <span><i class="fa fa-long-arrow-right"></i></span></a>
+                                    <span>
+                                        <i class="fa fa-long-arrow-right"></i>
+                                    </span>
+                                </a>
+                                <?php
+                                }
+                                ?>
                             </div>
                         </div>
                         <div class="col-lg-5 offset-lg-2 col-md-6 align-self-center mt-4 mt-md-0">
@@ -276,6 +286,9 @@ Copyright &copy;<script>document.write(new Date().getFullYear());</script> All r
 </footer>
 <script src="scripts/scripts.js"></script>
 <?php } else {
+        header("Location: truckMenu.php?idTruck=1");
+    }
+} else {
     header("Location: login.php");
 }
 

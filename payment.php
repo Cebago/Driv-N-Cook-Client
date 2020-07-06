@@ -121,7 +121,7 @@ if (isConnected() && isActivated() ) {
                     <span class="text-muted">Mon panier</span>
                     <span class="badge badge-secondary badge-pill">
                         <?php
-                        echo $quantity["quantity"];
+                        echo $quantity;
                         ?>
                     </span>
                 </h4>
@@ -141,6 +141,7 @@ if (isConnected() && isActivated() ) {
                         ":cart" => $cart
                     ]);
                     $menu = $queryPrepared->fetchAll(PDO::FETCH_ASSOC);
+                    if (!empty($menu)) {
                     $total = $menu[0]["cartPrice"];
                     foreach ($menu as $priceMenu) {
                         $queryPrepared = $pdo->prepare("SELECT menuPrice FROM MENUS, CARTMENU WHERE menu = idMenu AND idMenu = :menu");
@@ -170,9 +171,6 @@ if (isConnected() && isActivated() ) {
                                 ?>
                             </span>
                         </li>
-                        <?php
-                    }
-                    ?>
                     <li class="list-group-item d-flex justify-content-between lh-condensed">
                         <div>
                             <h6 class="my-0 text-muted">
@@ -185,6 +183,12 @@ if (isConnected() && isActivated() ) {
                             ?>
                         </span>
                     </li>
+                    <?php
+                    }
+                    } else {
+                        echo "Votre panier est vide";
+                    }
+                    ?>
                 </div>
             </div>
         </div>
@@ -196,5 +200,4 @@ if (isConnected() && isActivated() ) {
 } else {
     header("Location: login.php");
 }
-
 ?>
