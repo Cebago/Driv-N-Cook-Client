@@ -42,19 +42,21 @@ CREATE TABLE EVENTS(
     idEvent INTEGER PRIMARY KEY AUTO_INCREMENT,
     eventType VARCHAR(60),
     eventName VARCHAR(60),
+    eventDesc TEXT,
     eventAddress VARCHAR(100),
     eventCity VARCHAR(60),
     eventPostalCode VARCHAR(6),
     eventBeginDate DATE,
     eventEndDate DATE,
     eventStartHour TIME,
-    eventEndHour TIME
+    eventEndHour TIME,
+    eventImg VARCHAR(100)
 );
 CREATE TABLE EVENTSTATUS(
     event INTEGER,
     status INTEGER,
     PRIMARY KEY(event, status),
-    updateDate TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updateDate TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
     FOREIGN KEY (event) REFERENCES EVENTS(idEvent),
     FOREIGN KEY (status) REFERENCES STATUS(idStatus)
 );
@@ -73,11 +75,13 @@ CREATE TABLE TRUCK(
     truckManufacturers VARCHAR(100),
     truckModel VARCHAR(100),
     truckName VARCHAR(50),
+    categorie VARCHAR(100),
     licensePlate VARCHAR(10),
     km INTEGER,
     createDate TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     user INTEGER,
-    FOREIGN KEY (user) REFERENCES USER(idUser)
+    FOREIGN KEY (user) REFERENCES USER(idUser),
+    truckPicture VARCHAR(100)
 );
 CREATE TABLE OPENDAYS(
     idOpen INTEGER PRIMARY KEY AUTO_INCREMENT,
@@ -91,7 +95,7 @@ CREATE TABLE TRUCKSTATUS(
     truck INTEGER,
     status INTEGER,
     PRIMARY KEY(truck, status),
-    updateDate TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updateDate TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
     FOREIGN KEY (truck) REFERENCES TRUCK(idTruck),
     FOREIGN KEY (status) REFERENCES STATUS(idStatus)
 );
@@ -112,35 +116,45 @@ CREATE TABLE HOST(
 CREATE TABLE MAINTENANCE(
     idMaintenance INTEGER PRIMARY KEY AUTO_INCREMENT,
     maintenanceName VARCHAR(60),
-    maintenancePrice DOUBLE,
+    maintenancePrice FLOAT,
     maintenanceDate DATE,
     km INTEGER,
     truck INTEGER NOT NULL,
     FOREIGN KEY (truck) REFERENCES TRUCK(idTruck)
 );
+CREATE TABLE CART(
+     idCart INTEGER PRIMARY KEY AUTO_INCREMENT,
+     cartPrice FLOAT,
+     updateDate TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+     cartType VARCHAR(60),
+     user INTEGER,
+     FOREIGN KEY (user) REFERENCES USER(idUser)
+);
 CREATE TABLE ORDERS(
     idOrder INTEGER PRIMARY KEY AUTO_INCREMENT,
-    orderPrice DOUBLE,
+    orderPrice FLOAT,
     orderDate TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     orderInvoice VARCHAR(150),
     orderType VARCHAR(100),
     truck INTEGER NOT NULL,
     FOREIGN KEY (truck) REFERENCES TRUCK(idTruck),
     user INTEGER NOT NULL,
-    FOREIGN KEY (user) REFERENCES USER(idUser)
+    FOREIGN KEY (user) REFERENCES USER(idUser),
+    cart INTEGER,
+    FOREIGN KEY (cart) REFERENCES CART(idCart)
 );
 CREATE TABLE ORDERSTATUS(
     orders INTEGER,
     status INTEGER,
     PRIMARY KEY(orders, status),
-    updateDate TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updateDate TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
     FOREIGN KEY (orders) REFERENCES ORDERS(idOrder),
     FOREIGN KEY (status) REFERENCES STATUS(idStatus)    
 );
 CREATE TABLE MENUS(
     idMenu INTEGER PRIMARY KEY AUTO_INCREMENT,
     menuName VARCHAR(60),
-    menuPrice DOUBLE,
+    menuPrice FLOAT,
     menuImage VARCHAR(100),
     truck INTEGER,
     FOREIGN KEY (truck) REFERENCES TRUCK(idTruck)
@@ -149,7 +163,7 @@ CREATE TABLE MENUSSTATUS(
     menus INTEGER,
     status INTEGER,
     PRIMARY KEY(menus, status),
-    updateDate TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updateDate TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
     FOREIGN KEY (menus) REFERENCES MENUS(idMenu),
     FOREIGN KEY (status) REFERENCES STATUS(idStatus)    
 );
@@ -164,36 +178,30 @@ CREATE TABLE CONTACT(
     contactSubject VARCHAR(60),
     contactDescription TEXT,
     createDate TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    isRead TINYINT(1) DEFAULT 0,
     user INTEGER,
-    FOREIGN KEY (user) REFERENCES USER(idUser)
+    FOREIGN KEY (user) REFERENCES USER(idUser),
+    receiver INTEGER,
+    FOREIGN KEY (receiver) REFERENCES TRUCK(idTruck)
 );
 CREATE TABLE STORE(
     warehouse INTEGER,
     ingredient INTEGER,
     PRIMARY KEY (warehouse, ingredient),
     available TINYINT(1) DEFAULT 0,
-    price DOUBLE,
+    price FLOAT,
     FOREIGN KEY (warehouse) REFERENCES WAREHOUSES(idWarehouse),
     FOREIGN KEY (ingredient) REFERENCES INGREDIENTS(idIngredient)
-);
-CREATE TABLE CART(
-    idCart INTEGER PRIMARY KEY AUTO_INCREMENT,
-    cartPrice DOUBLE,
-    updateDate TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    cartType VARCHAR(60),
-    user INTEGER,
-    FOREIGN KEY (user) REFERENCES USER(idUser)
 );
 CREATE TABLE PRODUCTCATEGORY(
     idCategory INTEGER PRIMARY KEY AUTO_INCREMENT,
     categoryName VARCHAR(50),
     categoryPicture VARCHAR(100)
 );
-
 CREATE TABLE PRODUCTS(
     idProduct INTEGER PRIMARY KEY AUTO_INCREMENT,
     productName VARCHAR(60),
-    productPrice DOUBLE,
+    productPrice FLOAT,
     truck INTEGER,
     FOREIGN KEY (truck) REFERENCES TRUCK(idTruck),
     category INTEGER,
@@ -203,7 +211,7 @@ CREATE TABLE PRODUCTSTATUS(
     product INTEGER,
     status INTEGER,
     PRIMARY KEY(product, status),
-    updateDate TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updateDate TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
     FOREIGN KEY (product) REFERENCES PRODUCTS(idProduct),
     FOREIGN KEY (status) REFERENCES STATUS(idStatus)
 );
@@ -227,7 +235,7 @@ CREATE TABLE CARTSTATUS(
     cart INTEGER,
     status INTEGER,
     PRIMARY KEY(cart, status),
-    updateDate TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updateDate TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
     FOREIGN KEY (cart) REFERENCES CART(idCart),
     FOREIGN KEY (status) REFERENCES STATUS(idStatus)
 );
@@ -243,7 +251,7 @@ CREATE TABLE TRANSACTION(
     idTransaction INTEGER PRIMARY KEY AUTO_INCREMENT,
     transactionDate TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     transactionType VARCHAR(150),
-    price DOUBLE,
+    price FLOAT,
     user INTEGER,
     FOREIGN KEY (user) REFERENCES USER(idUser),
     orders INTEGER,
@@ -277,6 +285,15 @@ CREATE TABLE USERTOKEN(
     user INTEGER,
     FOREIGN KEY (user) REFERENCES USER(idUser)
 );
+CREATE TABLE ADVANTAGE(
+    idAdvantage INTEGER PRIMARY KEY AUTO_INCREMENT,
+    advantageName VARCHAR(50),
+    advantagePicture VARCHAR(100),
+    advantagePoints INTEGER,
+    category INTEGER,
+    FOREIGN KEY (category) REFERENCES PRODUCTCATEGORY(idCategory)
+);
+
 
 USE pa2a2drivncook;
 INSERT INTO SITEROLE(roleName) VALUES ('Client');
@@ -307,4 +324,7 @@ INSERT INTO STATUS (statusName, statusDescription, statusType) VALUES ('En cours
 INSERT INTO STATUS (statusName, statusDescription, statusType) VALUES ('Disponible','Le menu est disponible','Menu');
 INSERT INTO STATUS (statusName, statusDescription, statusType) VALUES ('Indisponible','Le menu est indisponible','Menu');
 INSERT INTO STATUS (statusName, statusDescription, statusType) VALUES ('En cours d\'édition','Le menu est en cours d\'édition','Menu');
+INSERT INTO STATUS (statusName, statusDescription, statusType) VALUES ('En cours de préparation','La commande est en cours de préparation par notre franchisé','Commande');
+INSERT INTO STATUS (statusName, statusDescription, statusType) VALUES ('Préparée','La commande est prête à être récupérée','Commande');
+INSERT INTO STATUS (statusName, statusDescription, statusType) VALUES ('En attente de préparation','La commandes est en attente de préparation','Commande');
 
