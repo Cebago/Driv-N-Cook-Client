@@ -78,6 +78,21 @@
       "es_ES" : "Conexión",
       "en_EN" : "Log in",
       "fr_FR" : "Connexion"
+    },
+    "Mon profil" : {
+      "es_ES" : "Mi perfil",
+      "en_EN" : "My profile",
+      "fr_FR" : "Mon profil"
+    },
+    "Mot de passe" : {
+      "es_ES" : "Mi contraseña",
+      "en_EN" : "My password",
+      "fr_FR" : "Mon mot de passe"
+    },
+    "Déconnexion" : {
+      "es_ES" : "Desconexión",
+      "en_EN" : "Logout",
+      "fr_FR" : "Déconnexion"
     }
   }
 }

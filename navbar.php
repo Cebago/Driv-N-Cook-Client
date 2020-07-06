@@ -111,20 +111,37 @@ if (isConnected() && isActivated()) {
                                 </div>
                             </li>
                             <li>
-                                <?php
-                                if (isConnected() && isActivated()) { ?>
-                                    <a href="login.php" class="btn btn-transparent btn-lg active" role="button"
-                                       aria-pressed="true"><i class="fas fa-user-circle"></i>&nbsp;
-                                    <?php
-                                    getTranslate("Mon compte", $tabLang, $setLanguage);
-                                    } else { ?>
-                                    <a href="login.php" class="btn btn-transparent btn-lg active" role="button"
-                                       aria-pressed="true"><i class="fas fa-user-circle"></i>&nbsp;
-                                    <?php
-                                    getTranslate("Connexion", $tabLang, $setLanguage);
-                                    }
-                                    ?>
+                            <?php
+                            if (isConnected() && isActivated()) { ?>
+                                <a href="#" class="btn btn-transparent btn-lg active" role="button"
+                                   aria-pressed="true" data-toggle="dropdown"><i class="fas fa-user-circle"></i>&nbsp;
+                            <?php
+                                getTranslate("Mon compte", $tabLang, $setLanguage);
+                                echo "</a>";
+                            } else { ?>
+                                <a href="login.php" class="btn btn-transparent btn-lg active" role="button"
+                                   aria-pressed="true"><i class="fas fa-user-circle"></i>&nbsp;
+                            <?php
+                                getTranslate("Connexion", $tabLang, $setLanguage);
+                                echo "</a>";
+                            }
+                            ?>
+                                <div class="dropdown-menu dropdown-menu-lg-left">
+                                    <a class="dropdown-item" href="myProfile.php">
+                                        <?php
+                                        getTranslate("Mon profil", $tabLang, $setLanguage)
+                                        ?>
                                     </a>
+                                    <a class="dropdown-item" href="myPassword.php">
+                                        <?php
+                                        getTranslate("Mot de passe", $tabLang, $setLanguage)
+                                        ?>
+                                    </a>
+                                    <a class="dropdown-item" href="functions/logout.php"><i class="fas fa-sign-out-alt"></i>&nbsp;
+                                        <?php
+                                        getTranslate("Déconnexion", $tabLang, $setLanguage)
+                                        ?></a>
+                                </div>
                             </li>
                         </ul>
                     </div>
