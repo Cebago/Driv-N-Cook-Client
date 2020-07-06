@@ -179,3 +179,12 @@ function getUserInfos()
     }
     return false;
 }
+
+
+function getEventsPreview(){
+    $pdo = connectDB();
+    $queryPrepared = $pdo->prepare("SELECT idEvent, truckName, eventDesc, eventImg, eventType, eventName, eventAddress, eventCity, eventPostalCode, eventBeginDate, eventEndDate, eventStartHour, eventEndHour FROM EVENTS, HOST, TRUCK WHERE event = idEvent AND truck = idTruck AND eventType = 'Dégustation' LIMIT 3");
+    $queryPrepared->execute();
+    return $queryPrepared->fetchAll(PDO::FETCH_ASSOC);
+
+}
