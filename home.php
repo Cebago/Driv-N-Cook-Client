@@ -77,6 +77,8 @@ require('navbar.php');
 </section>
 <!-- Banner Area End -->
 
+
+
 <!-- Welcome Area Starts -->
 <section class="welcome-area section-padding2">
     <div class="container-fluid">
@@ -289,7 +291,7 @@ $events = getEventsPreview();
             <div class="col-lg-12">
                 <div class="testimonial-slider owl-carousel">
                     <?php foreach ($events as $event){?>
-                    <div class="single-slide d-sm-flex">
+                    <div class="single-slide d-sm-flex" style="height: 200px;">
                         <div class="customer-img mr-4 mb-4 mb-sm-0">
                             <img src="<?php echo $event["eventImg"]?>" alt="">
                         </div>
