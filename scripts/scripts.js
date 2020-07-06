@@ -209,11 +209,10 @@ function calculDistance(origin, events) {
         if(status == 'OK'){
             results = sortDistances(results);
             for (let j = 0; j < results.length; j++) {
-                console.log(document.location.href)
-                console.log(" Vous êtes à : " + results[j].distance.text + " de " + events[j]["eventName"]);
                 let child = document.getElementById("containerToEvents");
+
                 let cardDiv = document.createElement('div');
-                cardDiv.className = "col-md-4";
+                cardDiv.className = "col-md-4 my-2";
                 child.appendChild(cardDiv);
 
                 let cartDiv2 = document.createElement('div');
@@ -227,6 +226,7 @@ function calculDistance(origin, events) {
                 let img = document.createElement('img');
                 img.src = events[j]["eventImg"];
                 img.className = "img-fluid"
+                img.style.height = "250px"
                 cartImg.appendChild(img);
 
                 let content =  document.createElement('div');
@@ -238,15 +238,15 @@ function calculDistance(origin, events) {
                 content.appendChild(post);
 
                 let spanTruck =  document.createElement('span');
-                spanTruck.innerHTML = '<i class="post-admin d-lg-flex mb-3"></i>'+ events[j]["truckName"];
+                spanTruck.innerHTML = '<i class="fa fa-user"></i> '+ events[j]["truckName"]+"<br>";
                 post.appendChild(spanTruck);
 
                 let spanDate =  document.createElement('span');
-                spanDate.innerHTML = '<i class="fa fa-calendar-o mr-2"></i>'+ events[j]["eventBeginDate"];
+                spanDate.innerHTML = '<i class="fa fa-calendar-o mr-2"></i>'+ events[j]["eventBeginDate"]+"<br>";
                 post.appendChild(spanDate);
 
                 let spanDistance =  document.createElement('span');
-                spanDistance.innerHTML = '<i class="fa fa-map-signs mr-2"></i>'+ results[j].distance.text;
+                spanDistance.innerHTML = '<i class="fa fa-map-signs mr-2"></i>'+ results[j].distance.text+"<br>";
                 post.appendChild(spanDistance);
 
                 let eventName =  document.createElement('h5');
