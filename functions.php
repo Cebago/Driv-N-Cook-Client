@@ -1,6 +1,9 @@
 <?php
 require_once "conf.inc.php";
 
+/**
+ * @return PDO
+ */
 function connectDB(){
     try{
         $pdo = new PDO(DBDRIVER.":host=".DBHOST.";dbname=".DBNAME ,DBUSER,DBPWD);
@@ -11,12 +14,19 @@ function connectDB(){
     return $pdo;
 }
 
+/**
+ * @param $email
+ * @return false|string
+ */
 function createToken($email){
     $token = md5($email."€monTokenDrivNCook£".time().uniqid());
     $token = substr($token, 0, rand(15, 20));
     return $token;
 }
 
+/**
+ * @param $email
+ */
 function login($email){
     $token = createToken($email);
     $pdo = connectDB();
@@ -58,7 +68,9 @@ function isOpen($idTruck){
 
 }
 
-
+/**
+ * @return bool
+ */
 function isConnected(){
     if(!empty($_SESSION["email"])
         && !empty($_SESSION["token"]) ){
@@ -83,6 +95,9 @@ function isConnected(){
     return false;
 }
 
+/**
+ * @return bool
+ */
 function isActivated(){
     if(!empty($_SESSION["email"]) && !empty($_SESSION["token"]) ){
         $email = $_SESSION["email"];
@@ -129,16 +144,18 @@ function getMenus($value){
         ":menu" => $value["idMenu"]
     ]);
     $menus = $queryPrepared->fetchAll(PDO::FETCH_ASSOC);
-   foreach ($menus as $menu){
+    foreach ($menus as $menu){
        if($menu["available"] == 0) {
           return 0;
        }
     }
-   return $menus;
+    return $menus;
 
 }
 
-
+/**
+ * @return bool
+ */
 function isAdmin(){
     if(!empty($_SESSION["email"]) && !empty($_SESSION["token"]) ){
         $email = $_SESSION["email"];
@@ -162,6 +179,9 @@ function isAdmin(){
     }
 }
 
+/**
+ * @param $email
+ */
 function logout($email){
     $pdo = connectDB();
     $queryPrepared = $pdo->prepare("UPDATE USER, USERTOKEN SET USERTOKEN.token = null WHERE emailAddress = :email 
@@ -170,12 +190,18 @@ function logout($email){
     $queryPrepared->execute([":email"=>$email]);
 }
 
+/**
+ * @param $text
+ * @param $tabLang
+ * @param $setLanguage
+ * @return mixed
+ */
 function getTranslate($text, $tabLang, $setLanguage){
     //si la value existe on traduit, sinon on laisse le texte pas défault
     if(array_key_exists($text,$tabLang) && array_key_exists($setLanguage, $tabLang[$text]) )
-        echo $tabLang[$text][$setLanguage];
+        return $tabLang[$text][$setLanguage];
     else
-        echo $text;
+        return $text;
 }
 
 /**
@@ -189,4 +215,62 @@ function lastCart($email)
     $queryPrepared->execute([":email" => $email]);
     $idCart = $queryPrepared->fetch(PDO::FETCH_ASSOC);
     return $idCart["idCart"];
+}
+
+/**
+ * @param $idMenu
+ * @return mixed|null
+ */
+function getStatusOfMenu($idMenu)
+{
+    $pdo = connectDB();
+    $queryPrepared = $pdo->prepare("SELECT status FROM MENUSSTATUS WHERE menus = :menu");
+    $queryPrepared->execute([":menu" => $idMenu]);
+    $status = $queryPrepared->fetch(PDO::FETCH_ASSOC);
+    if (empty($status)) {
+        return null;
+    }
+    return $status["status"];
+}
+
+/**
+ * @param $idProduct
+ * @return mixed|null
+ */
+function getStatusOfProduct($idProduct)
+{
+    $pdo = connectDB();
+    $queryPrepared = $pdo->prepare("SELECT status FROM PRODUCTSTATUS WHERE product = :product");
+    $queryPrepared->execute([":product" => $idProduct]);
+    $status = $queryPrepared->fetch(PDO::FETCH_ASSOC);
+    if (empty($status)) {
+        return null;
+    }
+    return $status["status"];
+}
+
+/**
+ * @param $idTruck
+ * @return array|null
+ */
+function allProductsFromTruck($idTruck)
+{
+    $pdo = connectDB();
+    $queryPrepared = $pdo->prepare("SELECT idProduct, productName, productPrice, available FROM PRODUCTS, TRUCK, STORE, WAREHOUSES, COMPOSE, INGREDIENTS, TRUCKWAREHOUSE
+                                                            WHERE WAREHOUSES.idWarehouse = STORE.warehouse
+                                                            AND COMPOSE.ingredient = idIngredient
+                                                            AND COMPOSE.product = idProduct
+                                                            AND warehouseType = 'Camion'
+                                                            AND STORE.ingredient = idIngredient
+                                                            AND STORE.warehouse = idWarehouse
+                                                            AND TRUCKWAREHOUSE.truck = idTruck
+                                                            AND TRUCKWAREHOUSE.warehouse = idWarehouse
+                                                            AND available = true
+                                                            AND idTruck = :truck");
+    $queryPrepared->execute([":truck" => $idTruck]);
+    $products = $queryPrepared->fetchAll(PDO::FETCH_ASSOC);
+    if (empty($products)) {
+        return null;
+    }
+    return $products;
 }

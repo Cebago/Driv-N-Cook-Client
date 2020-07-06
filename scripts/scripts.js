@@ -14,6 +14,7 @@ function getOpenDays(idtruck) {
                     if (search === null) {
                         const thd = document.createElement("th");
                         thd.scope = "row";
+                        thd.className = "text-center";
                         thd.id = myJson[i]["openDay"];
                         thd.innerText = myJson[i]["openDay"];
                         tr.appendChild(thd);

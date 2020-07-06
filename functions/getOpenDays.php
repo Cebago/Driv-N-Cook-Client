@@ -3,6 +3,18 @@ session_start();
 require "../conf.inc.php";
 require "../functions.php";
 
+//$lang = $_POST["lang"];
+
+$jsonFile = file_get_contents('../assets/traduction.json');
+$jsonFile = json_decode($jsonFile, true);
+$tabLang = $jsonFile['values'];
+if (isset($_COOKIE['Lang'])) {
+    $setLanguage = $_COOKIE['Lang'];
+} else {
+    setcookie("Lang", "fr_FR", time() + 86400, '/');
+    $setLanguage = "fr_FR";
+}
+
 $truck = $_POST["truck"];
 
 $pdo = connectDB();
@@ -20,6 +32,7 @@ for ($i = 0; $i < count($day); $i++) {
     ]);
     $open = $queryPrepared->fetchAll(PDO::FETCH_ASSOC);
     $tmp = array_merge($tmp, $open);
+    $tmp[$i]["openDay"] = getTranslate($tmp[$i]["openDay"], $tabLang, $setLanguage);
 }
 
 echo json_encode($tmp);

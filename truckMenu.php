@@ -29,7 +29,6 @@ include "navbar.php"; ?>
                 <h1><i><?php foreach ($truck as $key) {
                             echo $key["truckName"];
                         } ?></i></h1>
-                <p class="pt-2"><i>Beast kind form divide night above let moveth bearing darkness.</i></p>
             </div>
         </div>
     </div>
@@ -38,19 +37,19 @@ include "navbar.php"; ?>
 
 <section class="food-area section-padding2">
     <div class="section-top2 text-center">
-        <h3><span><?php getTranslate("Horaire du camion", $tabLang, $setLanguage);?></span></h3>
+        <h3><span><?php echo getTranslate("Horaire du camion", $tabLang, $setLanguage);?></span></h3>
     </div>
     <div class="container">
         <div class="row">
-            <div class="col-md-9 ml-5 mt-4">
+            <div class="col-md-9 ml-5 mt-4 mx-auto">
                 <div class="tab-content card mt-1" id="myTabContent">
                     <div class="tab-pane fade show active" id="openDays" role="tabpanel" aria-labelledby="home-tab">
                         <table class="table" id="openTable">
                             <thead class="table-warning">
                             <tr>
-                                <th scope="col"><?php getTranslate("Jour de la semaine", $tabLang, $setLanguage);?></th>
-                                <th scope="col"><?php getTranslate("Ouverture", $tabLang, $setLanguage);?></th>
-                                <th scope="col"><?php getTranslate("Fermeture", $tabLang, $setLanguage);?></th>
+                                <th scope="col" class="text-center"><?php echo getTranslate("Jour de la semaine", $tabLang, $setLanguage);?></th>
+                                <th scope="col"><?php echo getTranslate("Ouverture", $tabLang, $setLanguage);?></th>
+                                <th scope="col"><?php echo getTranslate("Fermeture", $tabLang, $setLanguage);?></th>
                             </tr>
                             </thead>
                             <tbody id="tableBody">
@@ -61,24 +60,33 @@ include "navbar.php"; ?>
             </div>
         </div>
     </div>
+    <div class="col-md-12 text-center mt-5 mb-2">
+        <h3><a class="template-btn mt-3" href="#menus"><?php echo getTranslate("Voir les menus", $tabLang, $setLanguage)?></a></h3>
+        <h3><a class="template-btn mt-3" href="#products"><?php echo getTranslate("Voir les produits", $tabLang, $setLanguage)?></a></h3>
+    </div>
 </section>
 
-<section class="food-area">
+<section class="food-area" id="menus">
     <!-- Deshes Area Starts -->
     <div class="deshes-area section-padding">
         <div class="container">
             <div class="row">
                 <div class="col-lg-12">
                     <div class="section-top2 text-center">
-                        <h3>Our <span>special</span> deshes</h3>
-                        <p><i>Beast kind form divide night above let moveth bearing darkness.</i></p>
+                        <h3><span><?php echo getTranslate("Tous les menus disponibles", $tabLang, $setLanguage) ?></span></h3>
                     </div>
                 </div>
             </div>
-            <?php foreach ($result as $value) {
-                $products = getMenus($value);
-                if (empty($products))
+            <?php
+            $count = 0;
+            foreach ($result as $value) {
+                if (getStatusOfMenu($value["idMenu"] == null
+                    || getStatusOfMenu($value["idMenu"] == 23
+                    || empty(getMenus($value))
+                    ))) {
                     continue;
+                }
+                $products = getMenus($value);
                 $printedMenus++;
                 if ($count % 2 == 0) {
                     ?>
@@ -96,8 +104,9 @@ include "navbar.php"; ?>
                                 <?php
                                 if (isConnected() && isActivated()) {
                                 ?>
-                                <a href="#" class="template-btn3 mt-3"
-                                   onclick='addQuantity(<?php echo $cart.", ".$value["idMenu"]; ?>)'>Ajouter à mon panier
+                                <a href="javascript:void(0)" class="template-btn3 mt-3"
+                                   onclick='addQuantity(<?php echo $cart.", ".$value["idMenu"]; ?>)'>
+                                    <?php echo getTranslate("Ajouter à mon panier", $tabLang, $setLanguage) ?>
                                     <span>
                                         <i class="fa fa-long-arrow-right"></i>
                                     </span>
@@ -131,12 +140,87 @@ include "navbar.php"; ?>
                                 <?php
                                 if (isConnected() && isActivated()) {
                                 ?>
-                                <a href="#" class="template-btn3 mt-3"
-                                   onclick='addQuantity(<?php echo $cart.", ".$value["idMenu"]; ?>)'>Ajouter à mon panier
+                                <a href="javascript:void(0)" class="template-btn3 mt-3"
+                                   onclick='addQuantity(<?php echo $cart.", ".$value["idMenu"]; ?>)'>
+                                    <?php echo getTranslate("Ajouter à mon panier", $tabLang, $setLanguage) ?>
                                     <span><i class="fa fa-long-arrow-right"></i>
                                     </span>
                                 </a>
                                 <?php
+                                }
+                                ?>
+                            </div>
+                        </div>
+                    </div>
+
+                    <?php $count++;
+                } ?>
+            <?php } ?>
+        </div>
+    </div>
+</section>
+
+<section class="food-area" id="products">
+    <!-- Deshes Area Starts -->
+    <div class="deshes-area section-padding">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="section-top2 text-center">
+                        <h3><span><?php echo getTranslate("Tous les menus disponibles", $tabLang, $setLanguage) ?></span></h3>
+                    </div>
+                </div>
+            </div>
+            <?php
+            $count = 0;
+            $products = allProductsFromTruck($_GET["idTruck"]);
+            foreach ($products as $product) {
+                if ($count % 2 == 0) {
+                    ?>
+                    <div class="row">
+                        <div class="col-lg-5 col-md-6 align-self-center">
+                            <h1><?php echo $count; ?>.</h1>
+                            <div class="deshes-text">
+                                <h3><span id="<?php echo $product["idProduct"]?>"><?php echo $product["productName"] ?></span></h3>
+                                <span class="style-change"><?php echo number_format($product["productPrice"], 2) . "€" ?></span>
+                                <?php
+                                if (isConnected() && isActivated()) {
+                                    ?>
+                                    <a href="javascript:void(0)" class="template-btn3 mt-3"
+                                       onclick='addProductQuantity(<?php echo $cart.", ".$product["idProduct"] ?>)'>
+                                        <?php echo getTranslate("Ajouter à mon panier", $tabLang, $setLanguage) ?>
+                                        <span>
+                                        <i class="fa fa-long-arrow-right"></i>
+                                    </span>
+                                    </a>
+                                    <?php
+                                }
+                                ?>
+                            </div>
+                        </div>
+                    </div>
+                    <?php $count++;
+                } else { ?>
+                    <!--            NEXT                    -->
+                    <div class="row mt-5">
+                        <div class="col-lg-5 col-md-6 align-self-center order-2 order-md-1 mt-4 mt-md-0">
+                            <img src="<?php echo $value["menuImage"] ?>" class="img-fluid" alt="">
+                        </div>
+                        <div class="col-lg-5 offset-lg-2 col-md-6 align-self-center order-1 order-md-2">
+                            <h1><?php echo $count; ?>.</h1>
+                            <div class="deshes-text">
+                                <h3><span><?php echo $product["productName"] ?></span></h3>
+                                <span class="style-change"><?php echo number_format($product["productPrice"], 2) . "€" ?></span>
+                                <?php
+                                if (isConnected() && isActivated()) {
+                                    ?>
+                                    <a href="javascript:void(0)" class="template-btn3 mt-3"
+                                       onclick='addProductQuantity(<?php echo $cart.", ".$product["idProduct"] ?>)'>
+                                        <?php echo getTranslate("Ajouter à mon panier", $tabLang, $setLanguage) ?>
+                                        <span><i class="fa fa-long-arrow-right"></i>
+                                    </span>
+                                    </a>
+                                    <?php
                                 }
                                 ?>
                             </div>
@@ -295,16 +379,16 @@ Copyright &copy;<script>document.write(new Date().getFullYear());</script> All r
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="staticBackdropLabel">Erreur</h5>
+                <h5 class="modal-title" id="staticBackdropLabel"><?php echo getTranslate("Erreur", $tabLang, $setLanguage) ?></h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
             <div class="modal-body">
-                Vous ne pouvez pas ajouter un menu venant d'un autre camion
+                <?php echo getTranslate("Vous ne pouvez pas ajouter un menu venant d'un autre camion", $tabLang, $setLanguage) ?>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Fermer</button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal"><?php echo getTranslate("Fermer", $tabLang, $setLanguage) ?></button>
             </div>
         </div>
     </div>

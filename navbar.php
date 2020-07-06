@@ -62,22 +62,22 @@ if (isConnected() && isActivated()) {
                         <ul>
                             <li class="active">
                                 <a
-                                    href="home.php"><?php getTranslate("accueil", $tabLang, $setLanguage); ?>
+                                    href="home.php"><?php echo getTranslate("accueil", $tabLang, $setLanguage); ?>
                                 </a>
                             </li>
                             <li>
                                 <a href="truckMenu.php">
-                                    <?php getTranslate("nos camions", $tabLang, $setLanguage); ?>
+                                    <?php echo getTranslate("nos camions", $tabLang, $setLanguage); ?>
                                 </a>
                             </li>
                             <li>
                                 <a href="menu.html">
-                                    <?php getTranslate("evenements", $tabLang, $setLanguage); ?>
+                                    <?php echo getTranslate("evenements", $tabLang, $setLanguage); ?>
                                 </a>
                             </li>
                             <li>
                                 <a href="http://franchises.drivncook.fr">
-                                    <?php getTranslate("rejoignez-nous", $tabLang, $setLanguage); ?>
+                                    <?php echo getTranslate("rejoignez-nous", $tabLang, $setLanguage); ?>
                                 </a>
                             </li>
                             <?php
@@ -112,30 +112,30 @@ if (isConnected() && isActivated()) {
                                 <a href="#" class="btn btn-transparent btn-lg active" role="button"
                                    aria-pressed="true" data-toggle="dropdown"><i class="fas fa-user-circle"></i>&nbsp;
                             <?php
-                                getTranslate("Mon compte", $tabLang, $setLanguage);
+                                echo getTranslate("Mon compte", $tabLang, $setLanguage);
                                 echo "</a>";
                             } else { ?>
                                 <a href="login.php" class="btn btn-transparent btn-lg active" role="button"
                                    aria-pressed="true"><i class="fas fa-user-circle"></i>&nbsp;
                             <?php
-                                getTranslate("Connexion", $tabLang, $setLanguage);
+                                echo getTranslate("Connexion", $tabLang, $setLanguage);
                                 echo "</a>";
                             }
                             ?>
                                 <div class="dropdown-menu dropdown-menu-lg-left">
                                     <a class="dropdown-item" href="myProfile.php">
                                         <?php
-                                        getTranslate("Mon profil", $tabLang, $setLanguage)
+                                        echo getTranslate("Mon profil", $tabLang, $setLanguage)
                                         ?>
                                     </a>
                                     <a class="dropdown-item" href="myPassword.php">
                                         <?php
-                                        getTranslate("Mot de passe", $tabLang, $setLanguage)
+                                        echo getTranslate("Mot de passe", $tabLang, $setLanguage)
                                         ?>
                                     </a>
                                     <a class="dropdown-item" href="functions/logout.php"><i class="fas fa-sign-out-alt"></i>&nbsp;
                                         <?php
-                                        getTranslate("Déconnexion", $tabLang, $setLanguage)
+                                        echo getTranslate("Déconnexion", $tabLang, $setLanguage)
                                         ?></a>
                                 </div>
                             </li>

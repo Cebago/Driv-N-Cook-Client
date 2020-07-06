@@ -7,8 +7,8 @@ require('navbar.php');
     <div class="container">
         <div class="row">
             <div class="col-lg-12">
-                <h6><?php getTranslate("titre1", $tabLang, $setLanguage); ?></h6>
-                <h1><?php getTranslate("titre2", $tabLang, $setLanguage); ?></h1>
+                <h6><?php echo getTranslate("titre1", $tabLang, $setLanguage); ?></h6>
+                <h1><?php echo getTranslate("titre2", $tabLang, $setLanguage); ?></h1>
             </div>
         </div>
     </div>
