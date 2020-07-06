@@ -2,25 +2,23 @@
 session_start();
 require 'conf.inc.php';
 require 'functions.php';
+include 'header.php';
+if (isset($_GET["idTruck"])) {
+$printedMenus = 0;
+$pdo = connectDB();
+$queryPrepared = $pdo->prepare("SELECT menuName, menuImage, menuPrice, idMenu, truck FROM MENUS, TRUCK WHERE MENUS.truck = TRUCK.idTruck AND truck = :truck");
+$queryPrepared->execute([":truck" => $_GET["idTruck"]]);
+$result = $queryPrepared->fetchAll(PDO::FETCH_ASSOC);
 
-if (isActivated() && isConnected()) {
-    include 'header.php';
-    if (isset($_GET["idTruck"])) {
-    $printedMenus = 0;
-    $pdo = connectDB();
-    $queryPrepared = $pdo->prepare("SELECT menuName, menuImage, menuPrice, idMenu, truck FROM MENUS, TRUCK WHERE MENUS.truck = TRUCK.idTruck AND truck = :truck");
-    $queryPrepared->execute([":truck" => $_GET["idTruck"]]);
-    $result = $queryPrepared->fetchAll(PDO::FETCH_ASSOC);
+$queryPrepared = $pdo->prepare("SELECT truckName FROM TRUCK WHERE idTruck = :idTruck");
+$queryPrepared->execute([":idTruck" => $_GET["idTruck"]]);
+$truck = $queryPrepared->fetchAll(PDO::FETCH_ASSOC);
 
-    $queryPrepared = $pdo->prepare("SELECT truckName FROM TRUCK WHERE idTruck = :idTruck");
-    $queryPrepared->execute([":idTruck" => $_GET["idTruck"]]);
-    $truck = $queryPrepared->fetchAll(PDO::FETCH_ASSOC);
-
-    $count = 0;
+$count = 0;
+if (isConnected() && isActivated()) {
     $cart = lastCart($_SESSION["email"]);
-
-    ?>
-    <?php include "navbar.php"; ?>
+}
+include "navbar.php"; ?>
 <body onload="getOpenDays('<?php echo $_GET["idTruck"]; ?>')">
 
 <!-- Banner Area Starts -->
@@ -61,6 +59,8 @@ if (isActivated() && isConnected()) {
                     </div>
                 </div>
             </div>
+        </div>
+    </div>
 </section>
 
 <section class="food-area">
@@ -128,9 +128,17 @@ if (isActivated() && isConnected()) {
                                     } ?>
                                 </ul>
                                 <span class="style-change"><?php echo number_format($value["menuPrice"], 2) . "€" ?></span>
+                                <?php
+                                if (isConnected() && isActivated()) {
+                                ?>
                                 <a href="#" class="template-btn3 mt-3"
                                    onclick='addQuantity(<?php echo $cart.", ".$value["idMenu"]; ?>)'>Ajouter à mon panier
-                                    <span><i class="fa fa-long-arrow-right"></i></span></a>
+                                    <span><i class="fa fa-long-arrow-right"></i>
+                                    </span>
+                                </a>
+                                <?php
+                                }
+                                ?>
                             </div>
                         </div>
                     </div>
@@ -139,7 +147,6 @@ if (isActivated() && isConnected()) {
                 } ?>
             <?php } ?>
         </div>
-    </div>
     </div>
 </section>
 <!-- Deshes Area End -->
@@ -209,7 +216,7 @@ if (isActivated() && isConnected()) {
             <div class="row">
                 <div class="col-md-4">
                     <div class="single-widget single-widget1">
-                        <a href="index.html"><img src="assets/images/logo/logo.png" alt=""></a>
+                        <a href="home.php"><img src="assets/images/logo/logo.png" alt=""></a>
                         <p class="mt-3">Which morning fourth great won't is to fly bearing man. Called unto shall
                             seed,
                             deep, herb set seed land divide after over first creeping. First creature set upon stars
@@ -285,11 +292,10 @@ Copyright &copy;<script>document.write(new Date().getFullYear());</script> All r
     <?php include "footer.php"; ?>
 </footer>
 <script src="scripts/scripts.js"></script>
-<?php } else {
-        header("Location: truckMenu.php?idTruck=1");
-    }
+<?php
 } else {
-    header("Location: login.php");
+    header("Location: truckMenu.php?idTruck=1");
 }
+
 
 

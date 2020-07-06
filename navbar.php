@@ -39,9 +39,9 @@ if (isConnected() && isActivated()) {
 <body>
 
 <!-- Preloader Starts -->
-<!--<div class="preloader">-->
-<!--    <div class="spinner"></div>-->
-<!--</div>-->
+<div class="preloader">
+    <div class="spinner"></div>
+</div>
 <!-- Preloader End -->
 
 <!-- Header Area Starts -->
@@ -51,7 +51,7 @@ if (isConnected() && isActivated()) {
             <div class="row">
                 <div class="col-lg-2">
                     <div class="logo-area">
-                        <a href="index.html"><img src="./img/logo.png" alt="logo"></a>
+                        <a href="home.php"><img src="./img/logo.png" alt="logo"></a>
                         <span>Driv'n Cook</span>
                     </div>
 
@@ -66,7 +66,7 @@ if (isConnected() && isActivated()) {
                         <ul>
                             <li class="active">
                                 <a
-                                        href="index.html"><?php getTranslate("accueil", $tabLang, $setLanguage); ?>
+                                    href="home.php"><?php getTranslate("accueil", $tabLang, $setLanguage); ?>
                                 </a>
                             </li>
                             <li>
@@ -108,9 +108,23 @@ if (isConnected() && isActivated()) {
                                         if ($key != $setLanguage)
                                             echo "<a class=\"dropdown-item\" href=\"./functions/changeLanguage.php?lang=" . $key . "\" ><span class=\"flag-icon " . $value['icon'] . "\"> </span> " . $value['name'] . "</a>";
                                     } ?>
-
-
                                 </div>
+                            </li>
+                            <li>
+                                <?php
+                                if (isConnected() && isActivated()) { ?>
+                                    <a href="login.php" class="btn btn-transparent btn-lg active" role="button"
+                                       aria-pressed="true"><i class="fas fa-user-circle"></i>&nbsp;
+                                        Mon compte
+                                    <?php
+                                    } else { ?>
+                                    <a href="login.php" class="btn btn-transparent btn-lg active" role="button"
+                                       aria-pressed="true"><i class="fas fa-user-circle"></i>&nbsp;
+                                        Connexion
+                                    <?php
+                                    }
+                                    ?>
+                                    </a>
                             </li>
                         </ul>
                     </div>

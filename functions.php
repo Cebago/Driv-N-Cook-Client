@@ -79,7 +79,7 @@ function isConnected(){
             return true;
         }
     }
-    session_destroy();
+    //session_destroy();
     return false;
 }
 
