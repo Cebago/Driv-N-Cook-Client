@@ -48,8 +48,8 @@ include "navbar.php"; ?>
                             <thead class="table-warning">
                             <tr>
                                 <th scope="col" class="text-center"><?php echo getTranslate("Jour de la semaine", $tabLang, $setLanguage);?></th>
-                                <th scope="col"><?php echo getTranslate("Ouverture", $tabLang, $setLanguage);?></th>
-                                <th scope="col"><?php echo getTranslate("Fermeture", $tabLang, $setLanguage);?></th>
+                                <th scope="col" class="text-center"><?php echo getTranslate("Ouverture", $tabLang, $setLanguage);?></th>
+                                <th scope="col" class="text-center"><?php echo getTranslate("Fermeture", $tabLang, $setLanguage);?></th>
                             </tr>
                             </thead>
                             <tbody id="tableBody">
@@ -96,7 +96,9 @@ include "navbar.php"; ?>
                             <div class="deshes-text">
                                 <h3><span id="<?php echo $value["idMenu"]?>"><?php echo $value["menuName"] ?></span></h3>
                                 <ul>
-                                    <?php foreach ($products as $product) {
+                                    <?php
+                                    var_dump($products);
+                                    foreach ($products as $product) {
                                         echo "<li>" . $product["productName"] . "</li>";
                                     } ?>
                                 </ul>
@@ -132,7 +134,9 @@ include "navbar.php"; ?>
                             <div class="deshes-text">
                                 <h3><span><?php echo $value["menuName"] ?></span></h3>
                                 <ul>
-                                    <?php foreach ($products as $product) {
+                                    <?php
+                                    var_dump($products);
+                                    foreach ($products as $product) {
                                         echo "<li>" . $product["productName"] . "</li>";
                                     } ?>
                                 </ul>
@@ -167,7 +171,7 @@ include "navbar.php"; ?>
             <div class="row">
                 <div class="col-lg-12">
                     <div class="section-top2 text-center">
-                        <h3><span><?php echo getTranslate("Tous les menus disponibles", $tabLang, $setLanguage) ?></span></h3>
+                        <h3><span><?php echo getTranslate("Tous les produits disponibles", $tabLang, $setLanguage) ?></span></h3>
                     </div>
                 </div>
             </div>

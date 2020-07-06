@@ -32,6 +32,9 @@ for ($i = 0; $i < count($day); $i++) {
     ]);
     $open = $queryPrepared->fetchAll(PDO::FETCH_ASSOC);
     $tmp = array_merge($tmp, $open);
+}
+
+for ($i = 0; $i < count($tmp); $i++) {
     $tmp[$i]["openDay"] = getTranslate($tmp[$i]["openDay"], $tabLang, $setLanguage);
 }
 

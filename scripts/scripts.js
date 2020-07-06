@@ -21,7 +21,7 @@ function getOpenDays(idtruck) {
                     } else {
 
                         search.setAttribute("rowspan", "2");
-                        search.className = "align-middle";
+                        search.className = "align-middle text-center";
                     }
                     const td1 = document.createElement("td");
                     td1.innerText = myJson[i]["startHour"];
