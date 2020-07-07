@@ -50,7 +50,6 @@ if (isset($_POST["inputEmail"])) {
                 $header .= "X-Mailer: PHP\n";
                 $header .= "Return-Path: <no-reply@" . $domaineAddresse . "\n";
                 $header .= "Content-Type: text/html; charset=iso-8859-1\n";
-                $html = file_get_contents("../" . $_POST["selectNewsletter"]);
                 $subject = "Réinitialisation de votre mot de passe";
                 mail($destination, $subject, $html, $header);
             }
