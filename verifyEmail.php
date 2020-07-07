@@ -5,7 +5,6 @@ require "conf.inc.php";
 require "functions.php";
 
 if (isset($_POST["inputEmail"])) {
-
     if (count($_POST) == 1
         && !empty($_POST["inputEmail"])) {
 
@@ -43,7 +42,17 @@ if (isset($_POST["inputEmail"])) {
                     ":email" => $email,
                     ":id" => $id
                 ]);
-                //TODO ENVOYER LE MAIL AVEC LIEN DE REDIRECTION VERS NEWPASSWORD
+                $admin = ($_SERVER["SERVER_ADMIN"]);
+                $destination = $email;
+                $domaineAddresse = substr($admin, strpos($admin, '@') + 1, strlen($admin));
+                $header = "From: no-reply@" . $domaineAddresse . "\n";
+                $header .= "X-Sender: <no-reply@" . $domaineAddresse . "\n";
+                $header .= "X-Mailer: PHP\n";
+                $header .= "Return-Path: <no-reply@" . $domaineAddresse . "\n";
+                $header .= "Content-Type: text/html; charset=iso-8859-1\n";
+                $html = file_get_contents("../" . $_POST["selectNewsletter"]);
+                $subject = "Réinitialisation de votre mot de passe";
+                mail($destination, $subject, $html, $header);
             }
             if (!$error) {
                 unset($_POST["inputEmail"]);

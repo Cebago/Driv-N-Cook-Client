@@ -19,7 +19,7 @@ require "header.php";
 <!-- Start Sample Area -->
 <section class="sample-text-area section-padding4">
     <div class="col-sm-9 col-md-7 col-lg-5 mx-auto">
-        <div class="card card-login mx-auto mt-5 p-5">
+        <div class="card card-login mx-auto mt-5 p-3">
             <div class="card-body">
                 <?php
                 if (isset($_SESSION["errors"])) {
@@ -138,14 +138,6 @@ Copyright &copy;<script>document.write(new Date().getFullYear());</script> All r
 </footer>
 <!-- Footer Area End -->
 
-
-<!-- Javascript -->
-<script src="assets/js/vendor/jquery-2.2.4.min.js"></script>
-<script src="assets/js/vendor/bootstrap-4.1.3.min.js"></script>
-<script src="assets/js/vendor/wow.min.js"></script>
-<script src="assets/js/vendor/owl-carousel.min.js"></script>
-<script src="assets/js/vendor/jquery.datetimepicker.full.min.js"></script>
-<script src="assets/js/vendor/jquery.nice-select.min.js"></script>
-<script src="assets/js/main.js"></script>
-</body>
-</html>
+<?php
+require 'footer.php';
+?>
