@@ -162,7 +162,14 @@ function deleteMenuQuantity(cart, menu) {
 function addMenuQuantity(cart, menu) {
 
     let input = document.getElementById("inputMenu" + menu);
+    let inputPrice = document.getElementById("inputPriceMenu" + menu);
+    let total = document.getElementById("total" + cart);
     const count = document.getElementById('count');
+
+    inputPrice = inputPrice.innerText.split("€")[0];
+    let tmp = total.innerText.split("€")[0];
+
+
 
     const request = new XMLHttpRequest();
     request.onreadystatechange = function () {
@@ -177,11 +184,15 @@ function addMenuQuantity(cart, menu) {
                     if (count != null) {
                         count.innerText = Number(count.innerText) + 1;
                     }
+                    if (total != null) {
+                        tmp = Number(tmp) + Number(inputPrice);
+                    }
+                    total.innerHTML = tmp + "€";
                 }
             }
         }
     };
-    request.open('GET', 'functions/addMenu.php?cart=' + cart + '&menu=' + menu);
+    request.open('GET', 'functions/addMenu.php?cart=' + cart + '&menu=' + menu + '&total=' + tmp);
     request.send();
 }
 

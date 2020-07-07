@@ -4,9 +4,10 @@ require "../conf.inc.php";
 require "../functions.php";
 session_start();
 
-if (isset($_GET["menu"]) && isset($_GET["cart"])) {
+if (isset($_GET["menu"]) && isset($_GET["cart"]) && isset($_GET["total"])) {
     $idCart = $_GET["cart"];
     $idMenu = $_GET["menu"];
+    $total = $_GET["total"];
     $email = $_SESSION["email"];
 
     $pdo = connectDB();
@@ -33,6 +34,14 @@ if (isset($_GET["menu"]) && isset($_GET["cart"])) {
             ":menu" => $idMenu
         ]);
     }
+
+    $queryPrepared = $pdo->prepare("UPDATE CART SET cartPrice = :price WHERE idCart = :cart;");
+    $queryPrepared->execute([
+        ":price" => $total,
+        ":cart" => $idCart
+    ]);
+    $total = $queryPrepared->fetch(PDO::FETCH_ASSOC);
+
 } else {
     echo "Erreur lors de la modification. Merci de réessayer";
 }
