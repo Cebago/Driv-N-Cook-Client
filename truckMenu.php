@@ -143,7 +143,7 @@ include "navbar.php"; ?>
                                         echo "</ul></li>";
                                     } ?>
                                 </ul>
-                                <span class="style-change"><?php echo number_format($menu["menuPrice"], 2) . "€" ?></span>
+                                <span class="style-change" id="inputPriceMenu<?php echo $menu["idMenu"]; ?>"><?php echo number_format($menu["menuPrice"], 2) . "€" ?></span>
                                 <?php
                                 if (isConnected() && isActivated()) {
                                 ?>
@@ -187,7 +187,7 @@ include "navbar.php"; ?>
                                         echo "</ul></li>";
                                     } ?>
                                 </ul>
-                                <span class="style-change"><?php echo number_format($menu["menuPrice"], 2) . "€" ?></span>
+                                <span class="style-change" id="inputPriceMenu<?php echo $menu["idMenu"]; ?>"><?php echo number_format($menu["menuPrice"], 2) . "€" ?></span>
                                 <?php
                                 if (isConnected() && isActivated()) {
                                     ?>
