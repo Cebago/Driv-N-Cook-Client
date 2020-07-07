@@ -51,6 +51,9 @@ if (isset($_POST["inputEmail"])) {
                 $header .= "Return-Path: <no-reply@" . $domaineAddresse . "\n";
                 $header .= "Content-Type: text/html; charset=iso-8859-1\n";
                 $subject = "Réinitialisation de votre mot de passe";
+                $link = "https://" . $admin . "/newPassword.php?id=" . $id ."&cle=" . $token;
+                $html = file_get_contents("./mail.php");
+                $html = str_replace("{{LINK}}", $link, $html);
                 mail($destination, $subject, $html, $header);
             }
             if (!$error) {
