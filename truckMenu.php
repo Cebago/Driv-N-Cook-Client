@@ -6,9 +6,6 @@ include 'header.php';
 if (isset($_GET["idTruck"])) {
 $printedMenus = 0;
 $pdo = connectDB();
-$queryPrepared = $pdo->prepare("SELECT menuName, menuImage, menuPrice, idMenu, truck FROM MENUS, TRUCK WHERE MENUS.truck = TRUCK.idTruck AND truck = :truck");
-$queryPrepared->execute([":truck" => $_GET["idTruck"]]);
-$result = $queryPrepared->fetchAll(PDO::FETCH_ASSOC);
 
 $queryPrepared = $pdo->prepare("SELECT truckName FROM TRUCK WHERE idTruck = :idTruck");
 $queryPrepared->execute([":idTruck" => $_GET["idTruck"]]);
@@ -26,9 +23,13 @@ include "navbar.php"; ?>
     <div class="container">
         <div class="row">
             <div class="col-lg-12">
-                <h1><i><?php foreach ($truck as $key) {
+                <h1>
+                    <i>
+                        <?php foreach ($truck as $key) {
                             echo $key["truckName"];
-                        } ?></i></h1>
+                        } ?>
+                    </i>
+                </h1>
             </div>
         </div>
     </div>
@@ -37,7 +38,11 @@ include "navbar.php"; ?>
 
 <section class="food-area section-padding2">
     <div class="section-top2 text-center">
-        <h3><span><?php echo getTranslate("Horaire du camion", $tabLang, $setLanguage);?></span></h3>
+        <h3>
+            <span>
+                <?php echo getTranslate("Horaire du camion", $tabLang, $setLanguage);?>
+            </span>
+        </h3>
     </div>
     <div class="container">
         <div class="row">
@@ -47,9 +52,15 @@ include "navbar.php"; ?>
                         <table class="table" id="openTable">
                             <thead class="table-warning">
                             <tr>
-                                <th scope="col" class="text-center"><?php echo getTranslate("Jour de la semaine", $tabLang, $setLanguage);?></th>
-                                <th scope="col" class="text-center"><?php echo getTranslate("Ouverture", $tabLang, $setLanguage);?></th>
-                                <th scope="col" class="text-center"><?php echo getTranslate("Fermeture", $tabLang, $setLanguage);?></th>
+                                <th scope="col" class="text-center">
+                                    <?php echo getTranslate("Jour de la semaine", $tabLang, $setLanguage);?>
+                                </th>
+                                <th scope="col" class="text-center">
+                                    <?php echo getTranslate("Ouverture", $tabLang, $setLanguage);?>
+                                </th>
+                                <th scope="col" class="text-center">
+                                    <?php echo getTranslate("Fermeture", $tabLang, $setLanguage);?>
+                                </th>
                             </tr>
                             </thead>
                             <tbody id="tableBody">
@@ -61,8 +72,16 @@ include "navbar.php"; ?>
         </div>
     </div>
     <div class="col-md-12 text-center mt-5 mb-2">
-        <h3><a class="template-btn mt-3" href="#menus"><?php echo getTranslate("Voir les menus", $tabLang, $setLanguage)?></a></h3>
-        <h3><a class="template-btn mt-3" href="#products"><?php echo getTranslate("Voir les produits", $tabLang, $setLanguage)?></a></h3>
+        <h3>
+            <a class="template-btn mt-3" href="#menus">
+                <?php echo getTranslate("Voir les menus", $tabLang, $setLanguage)?>
+            </a>
+        </h3>
+        <h3>
+            <a class="template-btn mt-3" href="#products">
+                <?php echo getTranslate("Voir les produits", $tabLang, $setLanguage)?>
+            </a>
+        </h3>
     </div>
 </section>
 
@@ -73,41 +92,63 @@ include "navbar.php"; ?>
             <div class="row">
                 <div class="col-lg-12">
                     <div class="section-top2 text-center">
-                        <h3><span><?php echo getTranslate("Tous les menus disponibles", $tabLang, $setLanguage) ?></span></h3>
+                        <h3>
+                            <span>
+                                <?php echo getTranslate("Tous les menus disponibles", $tabLang, $setLanguage) ?>
+                            </span>
+                        </h3>
                     </div>
                 </div>
             </div>
             <?php
             $count = 0;
-            foreach ($result as $value) {
-                if (getStatusOfMenu($value["idMenu"] == null
-                    || getStatusOfMenu($value["idMenu"] == 23
-                    || empty(getMenus($value))
+            $menus = allMenuFromTruck($_GET["idTruck"]);
+            foreach ($menus as $menu) {
+                if (getStatusOfMenu($menu["idMenu"] != null
+                    && getStatusOfMenu($menu["idMenu"] == 23
                     ))) {
                     continue;
                 }
-                $products = getMenus($value);
+                $products = getProductsOfMenu($menu["idMenu"]);
+                if (empty($products)) {
+                    continue;
+                }
+                foreach ($products as $product) {
+                    if (getStatusOfProduct($product["idProduct"]) != null && getStatusOfProduct($product["idProduct"]) == 20) {
+                        continue 2;
+                    }
+                    $ingredients = ingredientsFromProduct($product["idProduct"]);
+                    foreach ($ingredients as $ingredient) {
+                        if (!availableInTruck($ingredient["idIngredient"], $_GET["idTruck"])) {
+                            continue 3;
+                        }
+                    }
+                }
                 $printedMenus++;
                 if ($count % 2 == 0) {
                     ?>
                     <div class="row">
                         <div class="col-lg-5 col-md-6 align-self-center">
-                            <h1><?php echo $count; ?>.</h1>
+                            <h1><?php echo $count + 1; ?>.</h1>
                             <div class="deshes-text">
-                                <h3><span id="<?php echo $value["idMenu"]?>"><?php echo $value["menuName"] ?></span></h3>
+                                <h3><span id="<?php echo $menu["idMenu"]?>"><?php echo $menu["menuName"] ?></span></h3>
                                 <ul>
                                     <?php
-                                    var_dump($products);
                                     foreach ($products as $product) {
-                                        echo "<li>" . $product["productName"] . "</li>";
+                                        $ingredients = ingredientsFromProduct($product["idProduct"]);
+                                        echo "<li>" . $product["productName"] . "<ul>";
+                                        foreach ($ingredients as $ingredient) {
+                                            echo "<li>&nbsp;&nbsp;-&nbsp;" . $ingredient["ingredientName"] . "</li>";
+                                        }
+                                        echo "</ul></li>";
                                     } ?>
                                 </ul>
-                                <span class="style-change"><?php echo number_format($value["menuPrice"], 2) . "€" ?></span>
+                                <span class="style-change"><?php echo number_format($menu["menuPrice"], 2) . "€" ?></span>
                                 <?php
                                 if (isConnected() && isActivated()) {
                                 ?>
                                 <a href="javascript:void(0)" class="template-btn3 mt-3"
-                                   onclick='addQuantity(<?php echo $cart.", ".$value["idMenu"]; ?>)'>
+                                   onclick='addQuantity(<?php echo $cart.", ".$menu["idMenu"]; ?>)'>
                                     <?php echo getTranslate("Ajouter à mon panier", $tabLang, $setLanguage) ?>
                                     <span>
                                         <i class="fa fa-long-arrow-right"></i>
@@ -119,7 +160,7 @@ include "navbar.php"; ?>
                             </div>
                         </div>
                         <div class="col-lg-5 offset-lg-2 col-md-6 align-self-center mt-4 mt-md-0">
-                            <img src="<?php echo $value["menuImage"] ?>" class="img-fluid" alt="">
+                            <img src="<?php echo $menu["menuImage"] ?>" class="img-fluid" alt="">
                         </div>
                     </div>
                     <?php $count++;
@@ -127,30 +168,37 @@ include "navbar.php"; ?>
                     <!--            NEXT                    -->
                     <div class="row mt-5">
                         <div class="col-lg-5 col-md-6 align-self-center order-2 order-md-1 mt-4 mt-md-0">
-                            <img src="<?php echo $value["menuImage"] ?>" class="img-fluid" alt="">
+                            <img src="<?php echo $menu["menuImage"] ?>" class="img-fluid" alt="">
                         </div>
                         <div class="col-lg-5 offset-lg-2 col-md-6 align-self-center order-1 order-md-2">
-                            <h1><?php echo $count; ?>.</h1>
+                            <h1><?php echo $count + 1; ?>.</h1>
                             <div class="deshes-text">
-                                <h3><span><?php echo $value["menuName"] ?></span></h3>
+                                <h3>
+                                    <span id="<?php echo $menu["idMenu"]?>"><?php echo $menu["menuName"] ?></span>
+                                </h3>
                                 <ul>
                                     <?php
-                                    var_dump($products);
                                     foreach ($products as $product) {
-                                        echo "<li>" . $product["productName"] . "</li>";
+                                        $ingredients = ingredientsFromProduct($product["idProduct"]);
+                                        echo "<li>" . $product["productName"] . "<ul>";
+                                        foreach ($ingredients as $ingredient) {
+                                            echo "<li>&nbsp;&nbsp;-&nbsp;" . $ingredient["ingredientName"] . "</li>";
+                                        }
+                                        echo "</ul></li>";
                                     } ?>
                                 </ul>
-                                <span class="style-change"><?php echo number_format($value["menuPrice"], 2) . "€" ?></span>
+                                <span class="style-change"><?php echo number_format($menu["menuPrice"], 2) . "€" ?></span>
                                 <?php
                                 if (isConnected() && isActivated()) {
-                                ?>
-                                <a href="javascript:void(0)" class="template-btn3 mt-3"
-                                   onclick='addQuantity(<?php echo $cart.", ".$value["idMenu"]; ?>)'>
-                                    <?php echo getTranslate("Ajouter à mon panier", $tabLang, $setLanguage) ?>
-                                    <span><i class="fa fa-long-arrow-right"></i>
+                                    ?>
+                                    <a href="javascript:void(0)" class="template-btn3 mt-3"
+                                       onclick='addQuantity(<?php echo $cart.", ".$menu["idMenu"]; ?>)'>
+                                        <?php echo getTranslate("Ajouter à mon panier", $tabLang, $setLanguage) ?>
+                                        <span>
+                                        <i class="fa fa-long-arrow-right"></i>
                                     </span>
-                                </a>
-                                <?php
+                                    </a>
+                                    <?php
                                 }
                                 ?>
                             </div>
@@ -178,15 +226,38 @@ include "navbar.php"; ?>
             <?php
             $count = 0;
             $products = allProductsFromTruck($_GET["idTruck"]);
-            foreach ($products as $product) {
-                if ($count % 2 == 0) {
+            if (!empty($products)) {
+                foreach ($products as $product) {
+                    if (getStatusOfProduct($product["idProduct"]) != null && getStatusOfProduct($product["idProduct"]) == 20) {
+                        continue;
+                    }
+                    $ingredients = ingredientsFromProduct($product["idProduct"]);
+                    foreach ($ingredients as $ingredient) {
+                        if (!availableInTruck($ingredient["idIngredient"], $_GET["idTruck"])) {
+                            continue 2;
+                        }
+                    }
+                    if ($count % 2 == 0) {
                     ?>
                     <div class="row">
                         <div class="col-lg-5 col-md-6 align-self-center">
-                            <h1><?php echo $count; ?>.</h1>
+                            <h1><?php echo $count + 1; ?>.</h1>
                             <div class="deshes-text">
-                                <h3><span id="<?php echo $product["idProduct"]?>"><?php echo $product["productName"] ?></span></h3>
-                                <span class="style-change"><?php echo number_format($product["productPrice"], 2) . "€" ?></span>
+                                <h3>
+                                    <span id="<?php echo $product["idProduct"]?>">
+                                        <?php echo $product["productName"] ?>
+                                    </span>
+                                </h3>
+                                <ul>
+                                    <?php
+                                    foreach ($ingredients as $ingredient) {
+                                        echo "<li>" . $ingredient["ingredientName"] . "</li>";
+                                    }
+                                    ?>
+                                </ul>
+                                <span class="style-change">
+                                    <?php echo number_format($product["productPrice"], 2) . "€" ?>
+                                </span>
                                 <?php
                                 if (isConnected() && isActivated()) {
                                     ?>
@@ -208,13 +279,26 @@ include "navbar.php"; ?>
                     <!--            NEXT                    -->
                     <div class="row mt-5">
                         <div class="col-lg-5 col-md-6 align-self-center order-2 order-md-1 mt-4 mt-md-0">
-                            <img src="<?php echo $value["menuImage"] ?>" class="img-fluid" alt="">
+                            <img src="#" class="img-fluid" alt="">
                         </div>
                         <div class="col-lg-5 offset-lg-2 col-md-6 align-self-center order-1 order-md-2">
-                            <h1><?php echo $count; ?>.</h1>
+                            <h1><?php echo $count + 1; ?>.</h1>
                             <div class="deshes-text">
-                                <h3><span><?php echo $product["productName"] ?></span></h3>
-                                <span class="style-change"><?php echo number_format($product["productPrice"], 2) . "€" ?></span>
+                                <h3>
+                                    <span>
+                                        <?php echo $product["productName"] ?>
+                                    </span>
+                                </h3>
+                                <ul>
+                                    <?php
+                                    foreach ($ingredients as $ingredient) {
+                                        echo "<li>" . getTranslate($ingredient["ingredientName"], $tabLang, $setLanguage) . "</li>";
+                                    }
+                                    ?>
+                                </ul>
+                                <span class="style-change">
+                                    <?php echo number_format($product["productPrice"], 2) . "€" ?>
+                                </span>
                                 <?php
                                 if (isConnected() && isActivated()) {
                                     ?>
@@ -232,8 +316,9 @@ include "navbar.php"; ?>
                     </div>
 
                     <?php $count++;
-                } ?>
-            <?php } ?>
+                    }
+                }
+            } ?>
         </div>
     </div>
 </section>

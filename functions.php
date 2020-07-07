@@ -256,21 +256,78 @@ function getStatusOfProduct($idProduct)
 function allProductsFromTruck($idTruck)
 {
     $pdo = connectDB();
-    $queryPrepared = $pdo->prepare("SELECT idProduct, productName, productPrice, available FROM PRODUCTS, TRUCK, STORE, WAREHOUSES, COMPOSE, INGREDIENTS, TRUCKWAREHOUSE
-                                                            WHERE WAREHOUSES.idWarehouse = STORE.warehouse
-                                                            AND COMPOSE.ingredient = idIngredient
-                                                            AND COMPOSE.product = idProduct
-                                                            AND warehouseType = 'Camion'
-                                                            AND STORE.ingredient = idIngredient
-                                                            AND STORE.warehouse = idWarehouse
-                                                            AND TRUCKWAREHOUSE.truck = idTruck
-                                                            AND TRUCKWAREHOUSE.warehouse = idWarehouse
-                                                            AND available = true
-                                                            AND idTruck = :truck");
+    $queryPrepared = $pdo->prepare("SELECT idProduct, productName, productPrice FROM PRODUCTS WHERE truck = :truck");
     $queryPrepared->execute([":truck" => $idTruck]);
     $products = $queryPrepared->fetchAll(PDO::FETCH_ASSOC);
     if (empty($products)) {
         return null;
     }
     return $products;
+}
+
+/**
+ * @param $idTruck
+ * @return array|null
+ */
+function allMenuFromTruck($idTruck)
+{
+    $pdo = connectDB();
+    $queryPrepared = $pdo->prepare("SELECT idMenu, menuName, menuPrice, menuImage FROM MENUS WHERE truck = :truck ");
+    $queryPrepared->execute([":truck" => $idTruck]);
+    $menus = $queryPrepared->fetchAll(PDO::FETCH_ASSOC);
+    if (empty($menus)) {
+        return null;
+    }
+    return $menus;
+}
+
+/**
+ * @param $idMenu
+ * @return array|null
+ */
+function getProductsOfMenu($idMenu)
+{
+    $pdo = connectDB();
+    $queryPrepared = $pdo->prepare("SELECT idProduct, productName, productPrice FROM PRODUCTS, SOLDIN WHERE product = idProduct AND menu = :menu");
+    $queryPrepared->execute([":menu" => $idMenu]);
+    $menus = $queryPrepared->fetchAll(PDO::FETCH_ASSOC);
+    if (empty($menus)) {
+        return null;
+    }
+    return $menus;
+}
+
+/**
+ * @param $idProduct
+ * @return array|null
+ */
+function ingredientsFromProduct($idProduct)
+{
+    $pdo = connectDB();
+    $queryPrepared = $pdo->prepare("SELECT idIngredient, ingredientName FROM INGREDIENTS, COMPOSE WHERE ingredient = idIngredient AND product = :product");
+    $queryPrepared->execute([":product" => $idProduct]);
+    $menus = $queryPrepared->fetchAll(PDO::FETCH_ASSOC);
+    if (empty($menus)) {
+        return null;
+    }
+    return $menus;
+}
+
+function availableInTruck($idIngredient, $idTruck)
+{
+    $pdo = connectDB();
+    $queryPrepared = $pdo->prepare("SELECT idWarehouse FROM WAREHOUSES, TRUCKWAREHOUSE WHERE idWarehouse = warehouse AND warehouseType = 'Camion' AND truck = :truck");
+    $queryPrepared->execute([":truck" => $idTruck]);
+    $warehouse = $queryPrepared->fetch(PDO::FETCH_ASSOC);
+    $warehouse = $warehouse["idWarehouse"];
+
+    $queryPrepared = $pdo->prepare("SELECT available FROM STORE WHERE warehouse = :warehouse AND ingredient = :ingredient");
+    $queryPrepared->execute([
+        ":warehouse" => $warehouse,
+        ":ingredient" => $idIngredient
+    ]);
+    $available = $queryPrepared->fetch(PDO::FETCH_ASSOC);
+    $available = $available["available"];
+    return $available;
+
 }
