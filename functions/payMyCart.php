@@ -44,7 +44,7 @@ if (isConnected() && isActivated()) {
         } else {
 
             $pdo = connectDB();
-            $queryPrepared = $pdo->prepare("SELECT idTruck, idUser FROM TRUCK, USER WHERE user = idUser AND emailAddress = :email");
+            $queryPrepared = $pdo->prepare("SELECT idUser FROM USER WHERE emailAddress = :email");
             $queryPrepared->execute([":email" => $_SESSION["email"]]);
             $info = $queryPrepared->fetch(PDO::FETCH_ASSOC);
             $idUser = $info["idUser"];
@@ -56,10 +56,24 @@ if (isConnected() && isActivated()) {
             $price = $queryPrepared->fetch(PDO::FETCH_ASSOC);
             $price = $price["cartPrice"];
 
+            if (menusInCart($cart) != null) {
+                $queryPrepared = $pdo->prepare("SELECT truck FROM MENUS, CART, CARTMENU WHERE cart = idCart AND menu = idMenu AND idCart = :cart");
+                $queryPrepared->execute([
+                    ":cart" => $cart
+                ]);
+            } else {
+                $queryPrepared = $pdo->prepare("SELECT truck FROM PRODUCTS, CART, CARTPRODUCT WHERE cart = idCart AND product = idProduct AND idCart = :cart");
+                $queryPrepared->execute([
+                    ":cart" => $cart
+                ]);
+            }
+            $truck = $queryPrepared->fetch(PDO::FETCH_ASSOC);
+            $truck = $truck["truck"];
+
             $queryPrepared = $pdo->prepare("INSERT INTO ORDERS (orderPrice, orderType, truck, user) VALUES (:orderPrice, 'Commande client', :truck, :user)");
             $queryPrepared->execute([
                 ":orderPrice" => $price,
-                ":truck" => $idTruck,
+                ":truck" => $truck,
                 ":user" => $idUser
             ]);
             $order = $pdo->lastInsertId();
@@ -67,9 +81,13 @@ if (isConnected() && isActivated()) {
             $queryPrepared->execute([
                 ":order" => $order
             ]);
+            $queryPrepared = $pdo->prepare("INSERT INTO ORDERSTATUS (orders, status) VALUES (:order, 27)");
+            $queryPrepared->execute([
+                ":order" => $order
+            ]);
 
             $queryPrepared = $pdo->prepare("INSERT INTO TRANSACTION (transactionType, price, user, orders) 
-                                                        VALUES ('buyWarehouse', :price, :user, :order)");
+                                                        VALUES ('client', :price, :user, :order)");
             $queryPrepared->execute([
                 ":price" => $price,
                 ":user" => $idUser,
@@ -81,33 +99,19 @@ if (isConnected() && isActivated()) {
                 ":cart" => $cart
             ]);
 
-            $queryPrepared = $pdo->prepare("SELECT idIngredient FROM INGREDIENTS, CARTINGREDIENT, CART WHERE ingredient = idIngredient AND cart = idCart AND idCart = :cart");
-            $queryPrepared->execute([":cart" => $cart]);
-            $ingredients = $queryPrepared->fetchAll(PDO::FETCH_ASSOC);
 
-            $warehouse = truckWarehouse($idTruck);
-
-            foreach ($ingredients as $ingredient) {
-                $queryPrepared = $pdo->prepare("INSERT INTO STORE (warehouse, ingredient, available) VALUES (:warehouse, :ingredient, 1) ON DUPLICATE KEY UPDATE available = 1");
-                $queryPrepared->execute([
-                    ":warehouse" => $warehouse,
-                    ":ingredient" => $ingredient["idIngredient"]
-                ]);
-            }
-
-            $queryPrepared = $pdo->prepare("INSERT INTO CART (cartPrice, cartType, user) VALUES (0, 'Commande Franchisé', :user)");
+            $queryPrepared = $pdo->prepare("INSERT INTO CART (cartPrice, cartType, user) VALUES (0, 'Commande client', :user)");
             $queryPrepared->execute([":user" => $idUser]);
 
             $newCart = $pdo->lastInsertId();
             $queryPrepared = $pdo->prepare("INSERT INTO CARTSTATUS (cart, status) VALUES (:cart, 9)");
             $queryPrepared->execute([":cart" => $newCart]);
 
-            header("Location: home.php");
+            header("Location: ../orderHistory.php");
         }
-
     } else {
         die("Ne pas modifier le formulaire");
     }
 } else {
-    header("Location: login.php");
+    header("Location: ../login.php");
 }

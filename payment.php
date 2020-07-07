@@ -118,10 +118,8 @@ if (isConnected() && isActivated() ) {
                                 </form>
                             </div>
                             <div id="money" class="tab-pane fade pt-3" role="tabpanel" aria-labelledby="moneyLink">
-                                <a href="#">
-                                    <h5 class="text-center">
-                                        Payer au camion
-                                    </h5>
+                                <a href="./functions/orderMyCart.php" class="genric-btn primary circle">
+                                    <i class="fas fa-truck-loading"></i>&nbsp;Payer au camion
                                 </a>
                             </div>
                         </div>
