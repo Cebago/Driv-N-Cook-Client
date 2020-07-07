@@ -1,11 +1,15 @@
+/**
+ *
+ * @param idtruck
+ */
 function getOpenDays(idtruck) {
     const table = document.getElementById("tableBody");
     table.innerText = "";
 
     const request = new XMLHttpRequest();
-    request.onreadystatechange = function() {
-        if(request.readyState === 4) {
-            if(request.status === 200) {
+    request.onreadystatechange = function () {
+        if (request.readyState === 4) {
+            if (request.status === 200) {
                 let myJson = JSON.parse(request.responseText);
                 const tbody = document.getElementById("tableBody");
                 for (let i = 0; i < myJson.length; i++) {
@@ -44,26 +48,10 @@ function getOpenDays(idtruck) {
     setTimeout(refreshTable, 1000);
 }
 
-function refreshTable() {
-    const content = document.getElementById("tablebody");
-
-    const request = new XMLHttpRequest();
-    request.onreadystatechange = function() {
-        if(request.readyState === 4) {
-            if(request.status === 200) {
-                //console.log(request.responseText);
-                content.innerHTML = request.responseText;
-            }
-        }
-    };
-    request.open('GET', './functions/getTruckList.php', true);
-    request.send();
-}
-
 function showMap() {
     let opt = {  //point où regarder
-        center: new google.maps.LatLng(48.8376962,2.3896693),
-        zoom: 8 ,
+        center: new google.maps.LatLng(48.8376962, 2.3896693),
+        zoom: 8,
         mapTypeId: google.maps.MapTypeId.ROADMAP
     };
     var map;
@@ -85,8 +73,8 @@ function showMap() {
                         });
 
                         let geocoder = new google.maps.Geocoder; //affiche la localisation du camion
-                        let latlng = {lat: parseFloat(myJson[0]["lat"]), lng: parseFloat(myJson[0]["lng"])  };
-                        geocoder.geocode({'location': latlng}, function(results, status) {
+                        let latlng = {lat: parseFloat(myJson[0]["lat"]), lng: parseFloat(myJson[0]["lng"])};
+                        geocoder.geocode({'location': latlng}, function (results, status) {
                             if (status === 'OK') {
                                 if (results[0]) {
 
@@ -98,7 +86,7 @@ function showMap() {
                                         '<div id="siteNotice">' +
                                         '</div>' +
                                         '<h6>' + myJson[0]["truckName"] + '</h6>' +
-                                        '<div>'+results[0].formatted_address+'</div>'+
+                                        '<div>' + results[0].formatted_address + '</div>' +
                                         '<div id="bodyContent">' +
                                         '</div>';
                                     let smallInfo = new google.maps.InfoWindow({
@@ -111,7 +99,7 @@ function showMap() {
                                     });
                                     marker.addListener('click', function () {
                                         window.open(
-                                            'http://drivncook.fr/trucks?idTrucks='+myJson["idTruck"],
+                                            'http://drivncook.fr/trucks?idTrucks=' + myJson["idTruck"],
                                             '_blank'
                                         );
                                     });
@@ -132,58 +120,48 @@ function showMap() {
     request.send();
 }
 
-// function addQuantity(idMenu) {
-//
-//     const request = new XMLHttpRequest();
-//     request.onreadystatechange = function () {
-//         if (request.readyState === 4) {
-//             if (request.status === 200) {
-//                 if (request.responseText !== "") {
-//                     alert(request.responseText);
-//                 }
-//             }
-//         }
-//     };
-//     request.open('GET', 'functions/addMenu.php?idMenu=' + idMenu);
-//     request.send();
-//
-//     const count = document.getElementById('count');
-//     count.innerText = Number(count.innerText) + 1;
-// }
+/**
+ *
+ * @param cart
+ * @param menu
+ */
+function deleteMenuQuantity(cart, menu) {
 
-
-function deleteQuantity(cart,menu,thisParameter) {
-
-    let input = document.getElementById("input"+menu);
+    let input = document.getElementById("inputMenu" + menu);
     const count = document.getElementById('count');
 
-    if (Number(input.innerText) >= 1){
-        
+    if (Number(input.innerText) > 1) {
+
         const request = new XMLHttpRequest();
-        request.onreadystatechange = function() {
-            if(request.readyState === 4) {
-                if(request.status === 200) {
+        request.onreadystatechange = function () {
+            if (request.readyState === 4) {
+                if (request.status === 200) {
                     if (request.responseText !== "") {
                         alert(request.responseText);
-                    }else{
+                    } else {
                         count.innerText = Number(count.innerText) - 1;
                         input.innerText = Number(input.innerText) - 1;
-
-                        thisParameter.removeAttribute("disabled");
                     }
                 }
             }
         };
-        request.open('GET', 'functions/deleteMenu.php?cart='+cart+'&menu='+menu);
+        request.open('GET', 'functions/deleteMenu.php?cart=' + cart + '&menu=' + menu);
         request.send();
 
+    } else {
+        completelyMenuDelete(cart, menu);
     }
 
 }
 
-function addQuantity(cart,menu) {
+/**
+ *
+ * @param cart
+ * @param menu
+ */
+function addMenuQuantity(cart, menu) {
 
-    let input = document.getElementById("input"+menu);
+    let input = document.getElementById("inputMenu" + menu);
     const count = document.getElementById('count');
 
     const request = new XMLHttpRequest();
@@ -192,27 +170,31 @@ function addQuantity(cart,menu) {
             if (request.status === 200) {
                 if (request.responseText !== "") {
                     $('#staticModal').modal('show');
-                }else{
-                    if(input != null){
+                } else {
+                    if (input != null) {
                         input.innerText = Number(input.innerText) + 1;
                     }
-                    if(count != null){
+                    if (count != null) {
                         count.innerText = Number(count.innerText) + 1;
                     }
                 }
             }
         }
     };
-    request.open('GET', 'functions/addMenu.php?cart='+cart+'&menu='+menu);
+    request.open('GET', 'functions/addMenu.php?cart=' + cart + '&menu=' + menu);
     request.send();
-
 }
 
-function completelyDelete(cart, menu) {
+/**
+ *
+ * @param cart
+ * @param menu
+ */
+function completelyMenuDelete(cart, menu) {
 
     const count = document.getElementById('count');
-    let deleteMenu = document.getElementById("delete"+menu);
-
+    let deleteMenu = document.getElementById("deleteMenu" + menu);
+    let qty = document.getElementById("inputMenu" + menu);
 
     const request = new XMLHttpRequest();
     request.onreadystatechange = function () {
@@ -220,15 +202,114 @@ function completelyDelete(cart, menu) {
             if (request.status === 200) {
                 if (request.responseText !== "") {
                     alert(request.responseText);
-                }else{
-                    count.innerText = Number(count.innerText) - 1;
+                } else {
+                    if (Number(count.innerText > Number(qty.innerText))) {
+                        count.innerText = Number(count.innerText) - Number(qty.innerText);
+                    } else {
+                        count.innerText = 0;
+                    }
                     deleteMenu.remove();
-
                 }
             }
         }
     };
-    request.open('GET', 'functions/completelyDelete.php?cart='+cart+'&menu='+menu);
+    request.open('GET', 'functions/completelyDelete.php?cart=' + cart + '&menu=' + menu);
     request.send();
+}
 
+/**
+ *
+ * @param cart
+ * @param product
+ */
+function deleteProductQuantity(cart, product) {
+
+    let input = document.getElementById("inputProduct" + product);
+    const count = document.getElementById('count');
+
+    if (Number(input.innerText) > 1) {
+
+        const request = new XMLHttpRequest();
+        request.onreadystatechange = function () {
+            if (request.readyState === 4) {
+                if (request.status === 200) {
+                    if (request.responseText !== "") {
+                        alert(request.responseText);
+                    } else {
+                        count.innerText = Number(count.innerText) - 1;
+                        input.innerText = Number(input.innerText) - 1;
+                    }
+                }
+            }
+        };
+        request.open('GET', 'functions/deleteProduct.php?cart=' + cart + '&product=' + product);
+        request.send();
+
+    } else {
+        completelyProductDelete(cart, product);
+    }
+
+}
+
+/**
+ *
+ * @param cart
+ * @param product
+ */
+function addProductQuantity(cart, product) {
+
+    let input = document.getElementById("inputProduct" + product);
+    const count = document.getElementById('count');
+
+    const request = new XMLHttpRequest();
+    request.onreadystatechange = function () {
+        if (request.readyState === 4) {
+            if (request.status === 200) {
+                if (request.responseText !== "") {
+                    $('#staticModal').modal('show');
+                } else {
+                    if (input != null) {
+                        input.innerText = Number(input.innerText) + 1;
+                    }
+                    if (count != null) {
+                        count.innerText = Number(count.innerText) + 1;
+                    }
+                }
+            }
+        }
+    };
+    request.open('GET', 'functions/addProduct.php?cart=' + cart + '&product=' + product);
+    request.send();
+}
+
+/**
+ *
+ * @param cart
+ * @param product
+ */
+function completelyProductDelete(cart, product) {
+
+    const count = document.getElementById('count');
+    let deleteMenu = document.getElementById("deleteProduct" + product);
+    let qty = document.getElementById("inputProduct" + product);
+
+    const request = new XMLHttpRequest();
+    request.onreadystatechange = function () {
+        if (request.readyState === 4) {
+            if (request.status === 200) {
+                if (request.responseText !== "") {
+                    alert(request.responseText);
+                } else {
+                    if (Number(count.innerText > Number(qty.innerText))) {
+                        count.innerText = Number(count.innerText) - Number(qty.innerText);
+                    } else {
+                        count.innerText = 0;
+                    }
+                    deleteMenu.remove();
+                }
+            }
+        }
+    };
+    request.open('GET', 'functions/completelyProductDelete.php?cart=' + cart + '&product=' + product);
+    request.send();
 }

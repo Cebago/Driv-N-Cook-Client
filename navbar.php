@@ -21,12 +21,24 @@ if (isConnected() && isActivated()) {
     $queryPrepared->execute([
         ":email" => $email
     ]);
-    $quantity = $queryPrepared->fetch(PDO::FETCH_ASSOC);
-    if (empty($quantity)) {
-        $quantity = 0;
+    $menu = $queryPrepared->fetch(PDO::FETCH_ASSOC);
+    $queryPrepared = $pdo->prepare("SELECT SUM(quantity) as quantity FROM CARTPRODUCT, CART, PRODUCTS, USER WHERE CARTPRODUCT.cart = idCart AND PRODUCTS.idProduct = CARTPRODUCT.product AND CART.user = idUser AND emailAddress = :email  GROUP BY idCart;");
+    $queryPrepared->execute([
+        ":email" => $email
+    ]);
+    $product = $queryPrepared->fetch(PDO::FETCH_ASSOC);
+
+    if (empty($product)) {
+        $product = 0;
     } else {
-        $quantity = $quantity["quantity"];
+        $product = $product["quantity"];
     }
+    if (empty($menu)) {
+        $menu = 0;
+    } else {
+        $menu = $menu["quantity"];
+    }
+    $quantity = $menu + $product;
 
 }
 

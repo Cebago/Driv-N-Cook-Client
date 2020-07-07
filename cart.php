@@ -7,13 +7,8 @@ if (isActivated() && isConnected()) {
     include 'header.php';
     $printedMenus = 0;
     $idCart = lastCart($_SESSION["email"]);
-
     $menus = menusInCart($idCart);
 
-
-//if (isset($_GET["idTruck"])){
-//    header("Location: cart.php?idTruck=1");
-//}
 
     ?>
 
@@ -42,55 +37,59 @@ if (isActivated() && isConnected()) {
         </div>
         <div class="row">
 
-            <?php foreach ($menus as $menu) {
-                $products = getProductsOfMenu($menu["idMenu"], $menu["truck"]);
-                if (empty($products)) {
-                    $queryPrepared = $pdo->prepare("DELETE FROM CARTMENU WHERE cart = :cart AND menu = :menu");
-                    $queryPrepared->execute([
-                        ":cart" => $idCart["idCart"],
-                        ":menu" => $menu["idMenu"]
-                    ]);
-                    continue;
-                }
-                    $printedMenus++;
-                ?>
-                <div class="col-md-5 col-sm-4" id="delete<?php echo $menu["idMenu"];?>">
-                    <div class="single-food">
-                        <div class="food-img">
-                            <img src="<?php echo $menu["menuImage"] ?>" class="img-fluid" alt="">
-                        </div>
-                        <div class="food-content">
-                            <div class="d-flex justify-content-between">
-                                <h5><?php echo $menu["menuName"] ?></h5>
-                                <ul>
-                                    <?php foreach ($products as $product) {
-                                        echo "<li>" . $product["productName"] . "</li>";
-                                    } ?>
-                                </ul>
-                                <span class="style-change"><?php echo number_format($menu["menuPrice"], 2) . "€" ?></span>
+            <?php
+            if (empty($menus)) {
+                echo "Vous n'avez aucun menu au panier";
+            } else {
+                foreach ($menus as $menu) {
+                    $products = getProductsOfMenu($menu["idMenu"], $menu["truck"]);
+                    if (empty($products)) {
+                        $queryPrepared = $pdo->prepare("DELETE FROM CARTMENU WHERE cart = :cart AND menu = :menu");
+                        $queryPrepared->execute([
+                            ":cart" => $idCart["idCart"],
+                            ":menu" => $menu["idMenu"]
+                        ]);
+                        continue;
+                    }
+                        $printedMenus++;
+                    ?>
+                    <div class="col-md-5 col-sm-4" id="deleteMenu<?php echo $menu["idMenu"];?>">
+                        <div class="single-food">
+                            <div class="food-img">
+                                <img src="<?php echo $menu["menuImage"] ?>" class="img-fluid" alt="">
                             </div>
-                            <div class="d-flex justify-content-between">
-                                <span class="style-change"
-                                      id="input<?php echo $menu["idMenu"]; ?>"><?php echo $menu["quantity"]; ?></span>
+                            <div class="food-content">
+                                <div class="d-flex justify-content-between">
+                                    <h5><?php echo $menu["menuName"] ?></h5>
+                                    <ul>
+                                        <?php foreach ($products as $product) {
+                                            echo "<li>" . $product["productName"] . "</li>";
+                                        } ?>
+                                    </ul>
+                                    <span class="style-change"><?php echo number_format($menu["menuPrice"], 2) . "€" ?></span>
+                                </div>
+                                <div class="d-flex justify-content-between">
+                                    <span class="style-change"
+                                          id="inputMenu<?php echo $menu["idMenu"]; ?>"><?php echo $menu["quantity"]; ?></span>
+                                </div>
+                                <button type="button"
+                                        onclick='deleteMenuQuantity(<?php echo $idCart . ", " . $menu["idMenu"]; ?>,this)'
+                                        class="btn btn-sm btn-danger ml-1" id="<?php echo $menu["idMenu"] ?>"><i
+                                            class="fas fa-minus"></i></button>
+                                <button type="button"
+                                        onclick='addMenuQuantity(<?php echo $idCart . ", " . $menu["idMenu"]; ?>)'
+                                        class="btn btn-sm btn-success ml-1"><i class="fas fa-plus"></i></button>
+                                <button type="button"
+                                        onclick='completelyMenuDelete(<?php echo $idCart .', '. $menu["idMenu"]; ?>)'
+                                        class="btn btn-sm btn-secondary ml-1 pull-right">Supprimer</i></button>
                             </div>
-                            <button type="button"
-                                    onclick='deleteQuantity(<?php echo $idCart . ", " . $menu["idMenu"]; ?>,this)'
-                                    class="btn btn-sm btn-danger ml-1" id="<?php echo $menu["idMenu"] ?>"><i
-                                        class="fas fa-minus"></i></button>
-                            <button type="button"
-                                    onclick='addQuantity(<?php echo $idCart . ", " . $menu["idMenu"]; ?>)'
-                                    class="btn btn-sm btn-success ml-1"><i class="fas fa-plus"></i></button>
-                            <button type="button"
-                                    onclick='completelyDelete(<?php echo $idCart .', '. $menu["idMenu"]; ?>)'
-                                    class="btn btn-sm btn-secondary ml-1 pull-right">Supprimer</i></button>
                         </div>
                     </div>
-                </div>
-            <?php } ?>
+                <?php
+                }
+            }
+            ?>
         </div>
-    </div>
-    <div class="pull-right col-md-3">
-        <a href="payment.php" class="template-btn template-btn2 mt-4">Payer</a>
     </div>
 </section>
 <section class="food-area section-padding4">
@@ -107,10 +106,10 @@ if (isActivated() && isConnected()) {
                 foreach ($products as $product) {
                     $printedMenus++;
                     ?>
-                    <div class="col-md-5 col-sm-4" id="delete<?php echo $product["idProduct"];?>">
+                    <div class="col-md-5 col-sm-4" id="deleteProduct<?php echo $product["idProduct"];?>">
                         <div class="single-food">
                             <div class="food-img">
-                                <img src="<?php echo $product["productImage"] ?>" class="img-fluid" alt="">
+                                <img src="#" class="img-fluid" alt="">
                             </div>
                             <div class="food-content">
                                 <div class="d-flex justify-content-between">
@@ -119,17 +118,17 @@ if (isActivated() && isConnected()) {
                                 </div>
                                 <div class="d-flex justify-content-between">
                                     <span class="style-change"
-                                          id="input<?php echo $product["idProduct"]; ?>"><?php echo $product["quantity"]; ?></span>
+                                          id="inputProduct<?php echo $product["idProduct"]; ?>"><?php echo $product["quantity"]; ?></span>
                                 </div>
                                 <button type="button"
-                                        onclick='deleteQuantity(<?php echo $idCart . ", " . $product["idProduct"]; ?>,this)'
+                                        onclick='deleteProductQuantity(<?php echo $idCart . ", " . $product["idProduct"]; ?>,this)'
                                         class="btn btn-sm btn-danger ml-1" id="<?php echo $product["idProduct"] ?>"><i
                                             class="fas fa-minus"></i></button>
                                 <button type="button"
-                                        onclick='addQuantity(<?php echo $idCart . ", " . $product["idProduct"]; ?>)'
+                                        onclick='addProductQuantity(<?php echo $idCart . ", " . $product["idProduct"]; ?>)'
                                         class="btn btn-sm btn-success ml-1"><i class="fas fa-plus"></i></button>
                                 <button type="button"
-                                        onclick='completelyDelete(<?php echo $idCart .', '. $product["idProduct"]; ?>)'
+                                        onclick='completelyProductDelete(<?php echo $idCart .', '. $product["idProduct"]; ?>)'
                                         class="btn btn-sm btn-secondary ml-1 pull-right">Supprimer</i></button>
                             </div>
                         </div>
@@ -139,6 +138,9 @@ if (isActivated() && isConnected()) {
             }
             ?>
         </div>
+    </div>
+    <div class="pull-right col-md-3">
+        <a href="payment.php" class="template-btn template-btn2 mt-4">Payer</a>
     </div>
 </section>
 

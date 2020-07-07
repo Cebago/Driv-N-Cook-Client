@@ -148,7 +148,7 @@ include "navbar.php"; ?>
                                 if (isConnected() && isActivated()) {
                                 ?>
                                 <a href="javascript:void(0)" class="template-btn3 mt-3"
-                                   onclick='addQuantity(<?php echo $cart.", ".$menu["idMenu"]; ?>)'>
+                                   onclick='addMenuQuantity(<?php echo $cart.", ".$menu["idMenu"]; ?>)'>
                                     <?php echo getTranslate("Ajouter à mon panier", $tabLang, $setLanguage) ?>
                                     <span>
                                         <i class="fa fa-long-arrow-right"></i>
@@ -192,7 +192,7 @@ include "navbar.php"; ?>
                                 if (isConnected() && isActivated()) {
                                     ?>
                                     <a href="javascript:void(0)" class="template-btn3 mt-3"
-                                       onclick='addQuantity(<?php echo $cart.", ".$menu["idMenu"]; ?>)'>
+                                       onclick='addMenuQuantity(<?php echo $cart.", ".$menu["idMenu"]; ?>)'>
                                         <?php echo getTranslate("Ajouter à mon panier", $tabLang, $setLanguage) ?>
                                         <span>
                                         <i class="fa fa-long-arrow-right"></i>
