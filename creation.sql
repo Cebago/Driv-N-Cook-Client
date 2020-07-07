@@ -91,6 +91,19 @@ CREATE TABLE OPENDAYS(
     truck INTEGER,
     FOREIGN KEY (truck) REFERENCES TRUCK(idTruck)
 );
+CREATE TABLE PRODUCTCATEGORY(
+    idCategory INTEGER PRIMARY KEY AUTO_INCREMENT,
+    categoryName VARCHAR(50),
+    categoryPicture VARCHAR(100)
+);
+CREATE TABLE ADVANTAGE(
+    idAdvantage INTEGER PRIMARY KEY AUTO_INCREMENT,
+    advantageName VARCHAR(50),
+    advantagePicture VARCHAR(100),
+    advantagePoints INTEGER,
+    category INTEGER,
+    FOREIGN KEY (category) REFERENCES PRODUCTCATEGORY(idCategory)
+);
 CREATE TABLE TRUCKSTATUS(
     truck INTEGER,
     status INTEGER,
@@ -127,21 +140,10 @@ CREATE TABLE CART(
      cartPrice FLOAT,
      updateDate TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
      cartType VARCHAR(60),
+     advantage INTEGER,
+     FOREIGN KEY (advantage) REFERENCES ADVANTAGE(idAdvantage),
      user INTEGER,
      FOREIGN KEY (user) REFERENCES USER(idUser)
-);
-CREATE TABLE PRODUCTCATEGORY(
-    idCategory INTEGER PRIMARY KEY AUTO_INCREMENT,
-    categoryName VARCHAR(50),
-    categoryPicture VARCHAR(100)
-);
-CREATE TABLE ADVANTAGE(
-  idAdvantage INTEGER PRIMARY KEY AUTO_INCREMENT,
-  advantageName VARCHAR(50),
-  advantagePicture VARCHAR(100),
-  advantagePoints INTEGER,
-  category INTEGER,
-  FOREIGN KEY (category) REFERENCES PRODUCTCATEGORY(idCategory)
 );
 CREATE TABLE ORDERS(
     idOrder INTEGER PRIMARY KEY AUTO_INCREMENT,
