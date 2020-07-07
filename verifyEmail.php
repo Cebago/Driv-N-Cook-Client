@@ -48,16 +48,16 @@ if (isset($_POST["inputEmail"])) {
             if (!$error) {
                 unset($_POST["inputEmail"]);
                 $_SESSION["success"] = $listOfSuccess;
-                header("Location: forgotPassword");
+                header("Location: forgotPassword.php");
             } else {
                 unset($_POST["inputEmail"]);
                 $_SESSION["errors"] = $listOfErrors;
-                header("Location: forgotPassword");
+                header("Location: forgotPassword.php");
             }
         }
     } else {
         die("Tentative de Hack .... !!!!");
     }
 } else {
-    header("Location: login");
+    header("Location: login.php");
 }

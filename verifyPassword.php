@@ -37,7 +37,7 @@ if (isset($_SESSION["id"]) && isset($_SESSION["token"])) {
             $_SESSION["errors"] = $listOfErrors;
             $_SESSION["inputErrors"] = $_POST;
             //Rediriger sur newPassword.php
-            $link = "https://where2go.fr/newPassword?id=" . urlencode($id) . "&cle=" . urlencode($token);
+            $link = "https://" . $_SERVER["SERVER_NAME"] . "/newPassword?id=" . urlencode($id) . "&cle=" . urlencode($token);
             header("Location: " . $link);
         } else {
             $pdo = connectDB();
