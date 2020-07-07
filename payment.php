@@ -51,7 +51,7 @@ if (isConnected() && isActivated() ) {
                                 <form role="form" method="POST" action="functions/payMyCart.php">
                                     <div class="form-group">
                                         <label for="username">
-                                            <h6>Propriétaire de la carte</h6>
+                                            <h6 class="text-muted">Propriétaire de la carte</h6>
                                         </label>
                                         <input type="text" name="username" placeholder="Propriétaire de la carte"
                                                required class="form-control" value="<?php echo (isset($_SESSION["input"]))
@@ -60,7 +60,7 @@ if (isConnected() && isActivated() ) {
                                     </div>
                                     <div class="form-group">
                                         <label for="cardNumber">
-                                            <h6>Numéro de carte</h6>
+                                            <h6 class="text-muted">Numéro de carte</h6>
                                         </label>
                                         <div class="input-group">
                                             <input type="text" name="cardNumber"
@@ -86,7 +86,7 @@ if (isConnected() && isActivated() ) {
                                             <div class="form-group">
                                                 <label>
                                                     <span class="hidden-xs">
-                                                        <h6>Date d'expiration</h6>
+                                                        <h6 class="text-muted">Date d'expiration</h6>
                                                     </span>
                                                 </label>
                                                 <div class="input-group">
@@ -101,7 +101,7 @@ if (isConnected() && isActivated() ) {
                                             <div class="form-group mb-4">
                                                 <label data-toggle="tooltip"
                                                        title="Three digit CV code on the back of your card">
-                                                    <h6>CVV
+                                                    <h6 class="text-muted">CVV
                                                         <i class="fa fa-question-circle d-inline"></i>
                                                     </h6>
                                                 </label>
@@ -109,6 +109,39 @@ if (isConnected() && isActivated() ) {
                                             </div>
                                         </div>
                                     </div>
+
+                                    <?php
+                                    $pdo = connectDB();
+                                    $queryPrepared = $pdo->prepare("SELECT points FROM USER, FIDELITY WHERE emailAddress = :email AND idFidelity = fidelityCard");
+                                    $queryPrepared->execute([
+                                            ":email" => $_SESSION["email"]
+                                    ]);
+                                    $fidelity = $queryPrepared->fetch(PDO::FETCH_ASSOC);
+                                    if (!empty($fidelity) && $fidelity["points"] > 0) {
+                                    ?>
+                                        <div class="form-group">
+                                            <label for="select">
+                                                <h6 class="text-muted">Avantages disponibles</h6>
+                                            </label>
+                                            <select class="custom-select" id="select" name="advantageSelect">
+                                                <option selected value="">Liste des avantages disponibles</option>
+                                                <?php
+                                                $queryPrepared = $pdo->prepare("SELECT idAdvantage, advantageName FROM ADVANTAGE WHERE advantagePoints <= :points");
+                                                $queryPrepared->execute([
+                                                        ":points" => $fidelity["points"]
+                                                ]);
+                                                $advantages = $queryPrepared->fetchAll(PDO::FETCH_ASSOC);
+                                                if (!empty($advantages)) {
+                                                    foreach ($advantages as $advantage) {
+                                                        echo "<option value='" . $advantage["idAdvantage"] . "'>" . $advantage["advantageName"] . "</option>";
+                                                    }
+                                                }
+                                                ?>
+                                            </select>
+                                        </div>
+                                    <?php
+                                    }
+                                    ?>
                                     <div class="card-footer">
                                         <button type="submit" class="genric-btn primary circle arrow mx-auto col-md-12 shadow-sm">
                                             <i class="far fa-credit-card"></i>
@@ -118,6 +151,10 @@ if (isConnected() && isActivated() ) {
                                 </form>
                             </div>
                             <div id="money" class="tab-pane fade pt-3" role="tabpanel" aria-labelledby="moneyLink">
+                                <p class="text-muted">
+                                    La validation de votre avantage se fera une fois votre solde de points présenté à
+                                    notre franchisé via l'utilisation de notre application
+                                </p>
                                 <a href="./functions/orderMyCart.php" class="genric-btn primary circle">
                                     <i class="fas fa-truck-loading"></i>&nbsp;Payer au camion
                                 </a>

@@ -17,6 +17,16 @@ if (isConnected() && isActivated()) {
     $price = $queryPrepared->fetch(PDO::FETCH_ASSOC);
     $price = $price["cartPrice"];
 
+    $pointsToAdd = number_format($price);
+    $queryPrepared = $pdo->prepare("SELECT points FROM USER, FIDELITY WHERE idFidelity = fidelityCard AND emailAddress = :email");
+    $queryPrepared->execute([":email" => $_SESSION["email"]]);
+    $points = $queryPrepared->fetch(PDO::FETCH_ASSOC);
+    if (!empty($points)) {
+        $pointsToAdd += $points;
+        $queryPrepared = $pdo->prepare("UPDATE FIDELITY, USER SET points = :points WHERE emailAddress = :email");
+        $queryPrepared->execute([":email" => $_SESSION["email"]]);
+    }
+
     if (menusInCart($cart) != null) {
         $queryPrepared = $pdo->prepare("SELECT truck FROM MENUS, CART, CARTMENU WHERE cart = idCart AND menu = idMenu AND idCart = :cart");
         $queryPrepared->execute([
@@ -37,8 +47,9 @@ if (isConnected() && isActivated()) {
         ":truck" => $truck,
         ":user" => $idUser
     ]);
+
     $order = $pdo->lastInsertId();
-    $queryPrepared = $pdo->prepare("INSERT INTO ORDERSTATUS (orders, status) VALUES (:order, 3)");
+    $queryPrepared = $pdo->prepare("INSERT INTO ORDERSTATUS (orders, status) VALUES (:order, 1)");
     $queryPrepared->execute([
         ":order" => $order
     ]);
@@ -46,6 +57,21 @@ if (isConnected() && isActivated()) {
     $queryPrepared->execute([
         ":order" => $order
     ]);
+
+    if (isset($_POST["advantageSelect"])) {
+        $queryPrepared = $pdo->prepare("SELECT points FROM USER, FIDELITY WHERE idFidelity = fidelityCard AND emailAddress = :email");
+        $queryPrepared->execute([":email" => $_SESSION["email"]]);
+        $points = $queryPrepared->fetch(PDO::FETCH_ASSOC);
+        if (!empty($points)) {
+            $queryPrepared = $pdo->prepare("SELECT advantagePoints FROM ADVANTAGE WHERE idAdvantage = :id");
+            $queryPrepared->execute([":id" => $_POST["advantageSelect"]]);
+            $cost = $queryPrepared->fetch(PDO::FETCH_ASSOC);
+            $cost = $cost["advantagePoints"];
+            $points -= $cost;
+            $queryPrepared = $pdo->prepare("UPDATE FIDELITY, USER SET points = :points WHERE emailAddress = :email");
+            $queryPrepared->execute([":email" => $_SESSION["email"]]);
+        }
+    }
 
     $queryPrepared = $pdo->prepare("UPDATE CARTSTATUS SET status = 8 WHERE cart = :cart");
     $queryPrepared->execute([
