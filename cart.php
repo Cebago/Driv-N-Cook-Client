@@ -6,29 +6,18 @@ require 'functions.php';
 if (isActivated() && isConnected()) {
     include 'header.php';
     $printedMenus = 0;
-    $pdo = connectDB();
+    $idCart = lastCart($_SESSION["email"]);
 
-    $queryPrepared = $pdo->prepare("SELECT truckName FROM TRUCK WHERE idTruck = :idTruck");
-    $queryPrepared->execute([":idTruck" => $_GET["idTruck"]]);
-    $truck = $queryPrepared->fetchAll(PDO::FETCH_ASSOC);
-
-    $queryPrepared = $pdo->prepare("SELECT idCart FROM CART, USER WHERE user = idUser AND emailAddress = :email ORDER BY idCart DESC LIMIT 1");
-    $queryPrepared->execute([":email" => $_SESSION["email"]]);
-    $idCart = $queryPrepared->fetch(PDO::FETCH_ASSOC);
-
-    $queryPrepared = $pdo->prepare("SELECT menuName, menuImage, menuPrice, idMenu, truck, quantity FROM MENUS, TRUCK, CARTMENU, CART WHERE MENUS.truck = TRUCK.idTruck AND idCart = :cart AND menu = idMenu AND idCart = cart");
-    $queryPrepared->execute([":cart" => $idCart["idCart"]]);
-    $result = $queryPrepared->fetchAll(PDO::FETCH_ASSOC);
+    $menus = menusInCart($idCart);
 
 
 //if (isset($_GET["idTruck"])){
-//    header("Location: cartMenu.php?idTruck=1");
+//    header("Location: cart.php?idTruck=1");
 //}
 
     ?>
 
     <?php include "navbar.php"; ?>
-<body onload="getOpenDays('<?php echo $_GET["idTruck"]; ?>//')">
 <body>
 
 <!-- Banner Area Starts -->
@@ -36,10 +25,11 @@ if (isActivated() && isConnected()) {
     <div class="container">
         <div class="row">
             <div class="col-lg-12">
-                <h1 class="style-change"><i><?php foreach ($truck as $key) {
-                            echo $key["truckName"];
-                        } ?></i></h1>
-                <p class="pt-2"><i>Beast kind form divide night above let moveth bearing darkness.</i></p>
+                <h1 class="style-change">
+                    <i>
+                        Votre panier
+                    </i>
+                </h1>
             </div>
         </div>
     </div>
@@ -48,66 +38,114 @@ if (isActivated() && isConnected()) {
 <section class="food-area section-padding4">
     <div class="container">
         <div class="section-top2 text-center">
-            <h3><span>Nos menus</span></h3>
+            <h3><span>Vos menus au panier</span></h3>
         </div>
         <div class="row">
 
-            <?php foreach ($result as $value) {
-                $products = getMenus($value);
+            <?php foreach ($menus as $menu) {
+                $products = getProductsOfMenu($menu["idMenu"], $menu["truck"]);
                 if (empty($products)) {
                     $queryPrepared = $pdo->prepare("DELETE FROM CARTMENU WHERE cart = :cart AND menu = :menu");
                     $queryPrepared->execute([
                         ":cart" => $idCart["idCart"],
-                        ":menu" => $value["idMenu"]
+                        ":menu" => $menu["idMenu"]
                     ]);
                     continue;
                 }
                     $printedMenus++;
                 ?>
-                <div class="col-md-5 col-sm-4" id="delete<?php echo $value["idMenu"];?>">
+                <div class="col-md-5 col-sm-4" id="delete<?php echo $menu["idMenu"];?>">
                     <div class="single-food">
                         <div class="food-img">
-                            <img src="<?php echo $value["menuImage"] ?>" class="img-fluid" alt="">
+                            <img src="<?php echo $menu["menuImage"] ?>" class="img-fluid" alt="">
                         </div>
                         <div class="food-content">
                             <div class="d-flex justify-content-between">
-                                <h5><?php echo $value["menuName"] ?></h5>
+                                <h5><?php echo $menu["menuName"] ?></h5>
                                 <ul>
                                     <?php foreach ($products as $product) {
                                         echo "<li>" . $product["productName"] . "</li>";
                                     } ?>
                                 </ul>
-                                <span class="style-change"><?php echo number_format($value["menuPrice"], 2) . "€" ?></span>
+                                <span class="style-change"><?php echo number_format($menu["menuPrice"], 2) . "€" ?></span>
                             </div>
                             <div class="d-flex justify-content-between">
                                 <span class="style-change"
-                                      id="input<?php echo $value["idMenu"]; ?>"><?php echo $value["quantity"]; ?></span>
+                                      id="input<?php echo $menu["idMenu"]; ?>"><?php echo $menu["quantity"]; ?></span>
                             </div>
                             <button type="button"
-                                    onclick='deleteQuantity(<?php echo $idCart["idCart"] . ", " . $value["idMenu"]; ?>,this)'
-                                    class="btn btn-sm btn-danger ml-1" id="<?php echo $value["idMenu"] ?>"><i
+                                    onclick='deleteQuantity(<?php echo $idCart . ", " . $menu["idMenu"]; ?>,this)'
+                                    class="btn btn-sm btn-danger ml-1" id="<?php echo $menu["idMenu"] ?>"><i
                                         class="fas fa-minus"></i></button>
                             <button type="button"
-                                    onclick='addQuantity(<?php echo $idCart["idCart"] . ", " . $value["idMenu"]; ?>)'
+                                    onclick='addQuantity(<?php echo $idCart . ", " . $menu["idMenu"]; ?>)'
                                     class="btn btn-sm btn-success ml-1"><i class="fas fa-plus"></i></button>
                             <button type="button"
-                                    onclick='completelyDelete(<?php echo $idCart["idCart"].', '. $value["idMenu"]; ?>)'
+                                    onclick='completelyDelete(<?php echo $idCart .', '. $menu["idMenu"]; ?>)'
                                     class="btn btn-sm btn-secondary ml-1 pull-right">Supprimer</i></button>
                         </div>
                     </div>
                 </div>
-
             <?php } ?>
-
         </div>
     </div>
-
     <div class="pull-right col-md-3">
         <a href="payment.php" class="template-btn template-btn2 mt-4">Payer</a>
     </div>
-
 </section>
+<section class="food-area section-padding4">
+    <div class="container">
+        <div class="section-top2 text-center">
+            <h3><span>Vos produits au panier</span></h3>
+        </div>
+        <div class="row">
+            <?php
+            $products = productsInCart($idCart);
+            if ($products == null) {
+                echo "Vous n'avez aucun produit au panier";
+            } else {
+                foreach ($products as $product) {
+                    $printedMenus++;
+                    ?>
+                    <div class="col-md-5 col-sm-4" id="delete<?php echo $product["idProduct"];?>">
+                        <div class="single-food">
+                            <div class="food-img">
+                                <img src="<?php echo $product["productImage"] ?>" class="img-fluid" alt="">
+                            </div>
+                            <div class="food-content">
+                                <div class="d-flex justify-content-between">
+                                    <h5><?php echo $product["productName"] ?></h5>
+                                    <span class="style-change"><?php echo number_format($product["productPrice"], 2) . "€" ?></span>
+                                </div>
+                                <div class="d-flex justify-content-between">
+                                    <span class="style-change"
+                                          id="input<?php echo $product["idProduct"]; ?>"><?php echo $product["quantity"]; ?></span>
+                                </div>
+                                <button type="button"
+                                        onclick='deleteQuantity(<?php echo $idCart . ", " . $product["idProduct"]; ?>,this)'
+                                        class="btn btn-sm btn-danger ml-1" id="<?php echo $product["idProduct"] ?>"><i
+                                            class="fas fa-minus"></i></button>
+                                <button type="button"
+                                        onclick='addQuantity(<?php echo $idCart . ", " . $product["idProduct"]; ?>)'
+                                        class="btn btn-sm btn-success ml-1"><i class="fas fa-plus"></i></button>
+                                <button type="button"
+                                        onclick='completelyDelete(<?php echo $idCart .', '. $product["idProduct"]; ?>)'
+                                        class="btn btn-sm btn-secondary ml-1 pull-right">Supprimer</i></button>
+                            </div>
+                        </div>
+                    </div>
+                <?php
+                }
+            }
+            ?>
+        </div>
+    </div>
+</section>
+
+
 <!-- Food Area End -->
+
+
 
 <!-- Table Area Starts -->
 <section class="table-area section-padding">

@@ -109,7 +109,7 @@ include "navbar.php"; ?>
                     ))) {
                     continue;
                 }
-                $products = getProductsOfMenu($menu["idMenu"]);
+                $products = getProductsOfMenu($menu["idMenu"], $_GET["idTruck"]);
                 if (empty($products)) {
                     continue;
                 }

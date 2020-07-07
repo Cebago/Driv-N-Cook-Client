@@ -272,7 +272,7 @@ function allProductsFromTruck($idTruck)
 function allMenuFromTruck($idTruck)
 {
     $pdo = connectDB();
-    $queryPrepared = $pdo->prepare("SELECT idMenu, menuName, menuPrice, menuImage FROM MENUS WHERE truck = :truck ");
+    $queryPrepared = $pdo->prepare("SELECT idMenu, menuName, menuPrice, menuImage FROM MENUS WHERE truck = :truck");
     $queryPrepared->execute([":truck" => $idTruck]);
     $menus = $queryPrepared->fetchAll(PDO::FETCH_ASSOC);
     if (empty($menus)) {
@@ -283,13 +283,17 @@ function allMenuFromTruck($idTruck)
 
 /**
  * @param $idMenu
+ * @param $idTruck
  * @return array|null
  */
-function getProductsOfMenu($idMenu)
+function getProductsOfMenu($idMenu, $idTruck)
 {
     $pdo = connectDB();
-    $queryPrepared = $pdo->prepare("SELECT idProduct, productName, productPrice FROM PRODUCTS, SOLDIN WHERE product = idProduct AND menu = :menu");
-    $queryPrepared->execute([":menu" => $idMenu]);
+    $queryPrepared = $pdo->prepare("SELECT idProduct, productName, productPrice FROM PRODUCTS, SOLDIN WHERE product = idProduct AND menu = :menu AND truck = :truck");
+    $queryPrepared->execute([
+        ":menu" => $idMenu,
+        ":truck" => $idTruck
+        ]);
     $menus = $queryPrepared->fetchAll(PDO::FETCH_ASSOC);
     if (empty($menus)) {
         return null;
@@ -329,5 +333,36 @@ function availableInTruck($idIngredient, $idTruck)
     $available = $queryPrepared->fetch(PDO::FETCH_ASSOC);
     $available = $available["available"];
     return $available;
+}
 
+/**
+ * @param $idCart
+ * @return array|null
+ */
+function menusInCart($idCart)
+{
+    $pdo = connectDB();
+    $queryPrepared = $pdo->prepare("SELECT idMenu, menuImage, menuName, menuPrice, truck, quantity FROM CARTMENU, MENUS WHERE menu = idMenu AND cart = :cart");
+    $queryPrepared->execute([":cart" => $idCart]);
+    $menus = $queryPrepared->fetchAll(PDO::FETCH_ASSOC);
+    if (empty($menus)) {
+        return null;
+    }
+    return $menus;
+}
+
+/**
+ * @param $idCart
+ * @return array|null
+ */
+function productsInCart($idCart)
+{
+    $pdo = connectDB();
+    $queryPrepared = $pdo->prepare("SELECT idProduct, productPrice, productName, quantity, truck FROM PRODUCTS, CARTPRODUCT WHERE cart = :cart AND idProduct = product");
+    $queryPrepared->execute([":cart" => $idCart]);
+    $menus = $queryPrepared->fetchAll(PDO::FETCH_ASSOC);
+    if (empty($menus)) {
+        return null;
+    }
+    return $menus;
 }
