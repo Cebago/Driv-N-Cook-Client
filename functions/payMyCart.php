@@ -44,14 +44,19 @@ if (isConnected() && isActivated()) {
         } else {
 
             $pdo = connectDB();
+            $queryPrepared = $pdo->prepare("SELECT idTruck, idUser FROM TRUCK, USER WHERE user = idUser AND emailAddress = :email");
+            $queryPrepared->execute([":email" => $_SESSION["email"]]);
+            $info = $queryPrepared->fetch(PDO::FETCH_ASSOC);
+            $idUser = $info["idUser"];
 
+            $cart = lastCart($_SESSION["email"]);
 
             $queryPrepared = $pdo->prepare("SELECT cartPrice FROM CART WHERE idCart = :cart");
             $queryPrepared->execute([":cart" => $cart]);
             $price = $queryPrepared->fetch(PDO::FETCH_ASSOC);
             $price = $price["cartPrice"];
 
-            $queryPrepared = $pdo->prepare("INSERT INTO ORDERS (orderPrice, orderType, truck, user) VALUES (:orderPrice, 'Commande Franchisé', :truck, :user)");
+            $queryPrepared = $pdo->prepare("INSERT INTO ORDERS (orderPrice, orderType, truck, user) VALUES (:orderPrice, 'Commande client', :truck, :user)");
             $queryPrepared->execute([
                 ":orderPrice" => $price,
                 ":truck" => $idTruck,
