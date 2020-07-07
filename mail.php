@@ -1,39 +1,12 @@
-<?php
-require "conf.inc.php";
-require "functions.php";
-if (!isset($_GET["cle"], $_GET["id"])) {
-    header("Location: login.php");
-}
-if (!empty($_GET["id"]) && !empty($_GET["cle"])) {
-    $id = $_GET["id"];
-    $token = $_GET["cle"];
-}
-$_SESSION["id"] = $id;
-$_SESSION["token"] = $token;
-$pdo = connectDB();
-$queryPrepared = $pdo->prepare("SELECT USERTOKEN.token FROM USER, USERTOKEN WHERE idUser = :id AND tokenType = 'Site' AND user = idUser");
-$queryPrepared->execute([
-    ":id" => $id
-]);
-$result = $queryPrepared->fetch();
-
-if ($result["token"] != $token) {
-    unset($_SESSION["id"]);
-    header("Location: forgotPassword.php");
-}
-require "header.php";
-?>
+<?php require "header.php"?>
 <body>
-<?php
-require "navbar.php";
-?>
 
 <!-- Banner Area Starts -->
 <section class="banner-area banner-area2 blog-page text-center">
     <div class="container">
         <div class="row">
             <div class="col-lg-12">
-                <h1><i>Réinitialiser le mot de passe</i></h1>
+                <h1><i>Changer mon mot de passe</i></h1>
             </div>
         </div>
     </div>
@@ -42,42 +15,12 @@ require "navbar.php";
 
 <!-- Start Sample Area -->
 <section class="sample-text-area section-padding4">
-    <div class="card-body">
-        <form method="POST" action="verifyPassword.php">
-            <div class="col-sm-9 col-md-7 col-lg-6 mx-auto">
-                <div class="card card-login mx-auto mt-5 p-5">
-                    <?php
-                    if (isset($_SESSION["errors"])) {
-                        echo "<div class='alert alert-danger'>";
-                        foreach ($_SESSION["errors"] as $error) {
-                            echo "<li>" . $error;
-                        }
-                        echo "</div>";
-                    }
-                    unset($_SESSION["errors"]);
-                    ?>
-                    <p class="text-justify">Votre mot de passe doit contenir au moins un chiffre, une minuscule
-                        et une majuscule et comprendre au moins 8 caractères.</p>
-                    <div class="form-group">
-                        <div class="form-label-group">
-                            <input type="password" class="form-control focus" placeholder="Nouveau mot de passe"
-                                   required="required" autofocus="autofocus" name="password">
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <div class="form-label-group">
-                            <input type="password" class="form-control focus"
-                                   placeholder="Confirmation mot de passe" required="required"
-                                   autofocus="autofocus" name="passwordConfirm">
-                        </div>
-                    </div>
-                    <input class="btn btn-primary degrade btn-block pt-2 pb-2 " type="submit" value="Connexion">
-                </div>
-            </div>
-        </form>
+    <div class="container col-md-2 mx-auto">
+        <a class="genric-btn primary circle mx-auto" href="{{LINK}}">Changer mon mot de passe</a>
     </div>
 </section>
 <!-- End Sample Area -->
+
 
 <!-- Footer Area Starts -->
 <footer class="footer-area">
@@ -160,6 +103,15 @@ Copyright &copy;<script>document.write(new Date().getFullYear());</script> All r
     </div>
 </footer>
 <!-- Footer Area End -->
-<?php
-require 'footer.php';
-?>
+
+
+<!-- Javascript -->
+<script src="assets/js/vendor/jquery-2.2.4.min.js"></script>
+<script src="assets/js/vendor/bootstrap-4.1.3.min.js"></script>
+<script src="assets/js/vendor/wow.min.js"></script>
+<script src="assets/js/vendor/owl-carousel.min.js"></script>
+<script src="assets/js/vendor/jquery.datetimepicker.full.min.js"></script>
+<script src="assets/js/vendor/jquery.nice-select.min.js"></script>
+<script src="assets/js/main.js"></script>
+</body>
+</html>

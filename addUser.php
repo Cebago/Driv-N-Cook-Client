@@ -3,13 +3,14 @@ session_start();
 require "conf.inc.php";
 require "functions.php";
 
-if (count($_POST) == 6
+if (count($_POST) == 7
     && !empty($_POST["firstName"])
     && !empty($_POST["lastName"])
     && !empty($_POST["inputEmail"])
     && !empty($_POST["inputPassword"])
     && !empty($_POST["confirmPassword"])
     && !empty($_POST["captcha"])
+    && !empty($_POST["newsletterAgreement"])
 ) {
 
 
@@ -86,7 +87,7 @@ if (count($_POST) == 6
         $_SESSION["errors"] = $listOfErrors;
         $_SESSION["inputErrors"] = $_POST;
         //Rediriger sur register.php
-        header("Location: register.php");
+        header("Location: login.php");
 
     } else {
         $pdo = connectDB();
@@ -116,6 +117,13 @@ if (count($_POST) == 6
         ]);
         $result = $queryPrepared->fetch();
         $idUser = $result["idUser"];
+
+        if ($_POST["newsletterAgreement"] == "on") {
+            $queryPrepared = $pdo->prepare("UPDATE USER SET acceptEmails = true WHERE emailAddress = :email");
+            $queryPrepared->execute([
+                ":email" => $email
+            ]);
+        }
 
         $queryPrepared = $pdo->prepare("INSERT INTO USERTOKEN (tokenType, user) VALUE ('Site', :user)");
         $queryPrepared->execute([

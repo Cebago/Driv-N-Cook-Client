@@ -24,8 +24,8 @@ if (isset($_GET, $_GET['id'], $_GET['cle']) && count($_GET) == 2) {
         ]);
         header("Location: login.php");
     } else {
-        header("Location: register.php");
+        header("Location: login.php");
     }
 } else {
-    header("Location: register.php");
+    header("Location: login.php");
 }
