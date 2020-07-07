@@ -151,9 +151,10 @@ function getListOfEvents(){
     request.onreadystatechange = function () {
         if (request.readyState === 4) {
             if (request.status === 200) {
-                let result = JSON.parse(request.responseText);
-                console.log("list event OK")
+                if(request.responseText !== '') {
+                    let result = JSON.parse(request.responseText);
                     getLocation(result);
+                }
             }
         }
     };
@@ -161,40 +162,39 @@ function getListOfEvents(){
     request.send();
 }
 
-function getLocation(events) {
 
-    var pos = {
-        lat: 48.928596,
-        lng: 2.506742
-    };
 
-    calculDistance(pos, events);
-/*
-    if(navigator.geolocation) {
-        console.log("navigator.geolocation is available");
-        navigator.geolocation.getCurrentPosition(function (position) {
-            var pos = {
-                lat: position.coords.latitude,
-                lng: position.coords.longitude
-            };
-            console.log("get location OK")
-            calculDistance(pos, events)
-        });
-    }else{
-        console.log("Impossble de récupérer l'adresse actuelle")
+function getLocation(eventsParam) {
+    events = eventsParam;
+
+    if (navigator.geolocation) {//si la geoloc est activé sur le navigateur
+        //on appelle la méthode getCurrentPosition qui appelle l'api du navigateur (par défaut google)
+        //on lui met en paramètre les fonctions qui seront appellées en retour, success or error
+        navigator.geolocation.getCurrentPosition(successCallback, errorCallback);
+    }else {
+        errorCallback()
     }
 
- */
+}
+function errorCallback(result) {
+    console.log(result);
+}
+
+function successCallback(position){
+    let pos = {
+        'lng': position.coords.longitude,
+        'lat': position.coords.latitude
+    }
+    calculDistance(pos);
 }
 
 
-
-function calculDistance(origin, events) {
+function calculDistance(origin) {
     let addressTab = [];
     events.forEach(function (event) {
         addressTab.push( event["eventAddress"] + " " +event["eventCity"]+" " + event["eventPostalCode"]);
     })
-    console.log(addressTab)
+
     var service = new google.maps.DistanceMatrixService();
     service.getDistanceMatrix(
         {
