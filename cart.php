@@ -76,7 +76,7 @@ if (isActivated() && isConnected()) {
                                           id="inputMenu<?php echo $menu["idMenu"]; ?>"><?php echo $menu["quantity"]; ?></span>
                                 </div>
                                 <button type="button"
-                                        onclick='deleteMenuQuantity(<?php echo $idCart . ", " . $menu["idMenu"]; ?>,this)'
+                                        onclick='deleteMenuQuantity(<?php echo $idCart . ", " . $menu["idMenu"]; ?>)'
                                         class="btn btn-sm btn-danger ml-1" id="<?php echo $menu["idMenu"] ?>"><i
                                             class="fas fa-minus"></i></button>
                                 <button type="button"
@@ -121,14 +121,14 @@ if (isActivated() && isConnected()) {
                             <div class="food-content">
                                 <div class="d-flex justify-content-between">
                                     <h5><?php echo $product["productName"] ?></h5>
-                                    <span class="style-change"><?php echo number_format($product["productPrice"], 2)?></span>
+                                    <span class="style-change" id="inputPriceProduct<?php echo $product["idProduct"]; ?>"><?php echo number_format($product["productPrice"], 2) . "€"?></span>
                                 </div>
                                 <div class="d-flex justify-content-between">
                                     <span class="style-change"
                                           id="inputProduct<?php echo $product["idProduct"]; ?>"><?php echo $product["quantity"]; ?></span>
                                 </div>
                                 <button type="button"
-                                        onclick='deleteProductQuantity(<?php echo $idCart . ", " . $product["idProduct"]; ?>,this)'
+                                        onclick='deleteProductQuantity(<?php echo $idCart . ", " . $product["idProduct"]; ?>)'
                                         class="btn btn-sm btn-danger ml-1" id="<?php echo $product["idProduct"] ?>"><i
                                             class="fas fa-minus"></i></button>
                                 <button type="button"
@@ -151,7 +151,7 @@ if (isActivated() && isConnected()) {
         <h4><span class="style-change" id="total<?php echo $idCart?>"><?php echo number_format($total,2)."€"; ?></span></h4>
     </div>
     <div class="pull-right col-md-3">
-        <a href="payment.php" class="template-btn template-btn2 mt-4" onclick="addPrice(<?php echo $idCart . ", " . $product["idProduct"]?>)">Payer</a>
+        <a href="payment.php" class="template-btn template-btn2 mt-4">Payer</a>
     </div>
 </section>
 

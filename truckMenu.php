@@ -255,7 +255,7 @@ include "navbar.php"; ?>
                                     }
                                     ?>
                                 </ul>
-                                <span class="style-change">
+                                <span class="style-change" id="inputPriceProduct<?php echo $product["idProduct"]; ?>">
                                     <?php echo number_format($product["productPrice"], 2) . "€" ?>
                                 </span>
                                 <?php
@@ -296,7 +296,7 @@ include "navbar.php"; ?>
                                     }
                                     ?>
                                 </ul>
-                                <span class="style-change">
+                                <span class="style-change" id="inputPriceProduct<?php echo $product["idProduct"]; ?>">
                                     <?php echo number_format($product["productPrice"], 2) . "€" ?>
                                 </span>
                                 <?php

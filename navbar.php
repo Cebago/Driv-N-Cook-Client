@@ -95,7 +95,7 @@ if (isConnected() && isActivated()) {
                             <?php
                             if (isConnected() && isActivated()) {?>
                             <li>
-                                <a href="payment.php" class="btn btn-transparent btn-lg active" role="button"
+                                <a href="cart.php" class="btn btn-transparent btn-lg active" role="button"
                                    aria-pressed="true"><i class="fas fa-shopping-cart"></i>&nbsp
                                     <span class="badge badge-alert" id="count">
                                         <?php echo $quantity; ?>

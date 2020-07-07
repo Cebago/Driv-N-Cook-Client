@@ -45,7 +45,6 @@ function getOpenDays(idtruck) {
     request.send(
         'truck=' + idtruck
     );
-    setTimeout(refreshTable, 1000);
 }
 
 function showMap() {
@@ -128,10 +127,10 @@ function showMap() {
 function deleteMenuQuantity(cart, menu) {
 
     let input = document.getElementById("inputMenu" + menu);
+    let inputPrice = document.getElementById("inputPriceMenu" + menu);
     const count = document.getElementById('count');
-
+    inputPrice = inputPrice.innerText.split("€")[0];
     if (Number(input.innerText) > 1) {
-
         const request = new XMLHttpRequest();
         request.onreadystatechange = function () {
             if (request.readyState === 4) {
@@ -141,17 +140,21 @@ function deleteMenuQuantity(cart, menu) {
                     } else {
                         count.innerText = Number(count.innerText) - 1;
                         input.innerText = Number(input.innerText) - 1;
+                        let total = document.getElementById("total" + cart);
+                        if (total !== null) {
+                            let tmp = total.innerText.split("€")[0];
+                            tmp = Number(tmp) - Number(inputPrice);
+                            total.innerText = tmp + "€";
+                        }
                     }
                 }
             }
         };
         request.open('GET', 'functions/deleteMenu.php?cart=' + cart + '&menu=' + menu);
         request.send();
-
     } else {
         completelyMenuDelete(cart, menu);
     }
-
 }
 
 /**
@@ -160,17 +163,10 @@ function deleteMenuQuantity(cart, menu) {
  * @param menu
  */
 function addMenuQuantity(cart, menu) {
-
     let input = document.getElementById("inputMenu" + menu);
     let inputPrice = document.getElementById("inputPriceMenu" + menu);
-    let total = document.getElementById("total" + cart);
     const count = document.getElementById('count');
-
     inputPrice = inputPrice.innerText.split("€")[0];
-    let tmp = total.innerText.split("€")[0];
-
-
-
     const request = new XMLHttpRequest();
     request.onreadystatechange = function () {
         if (request.readyState === 4) {
@@ -184,15 +180,17 @@ function addMenuQuantity(cart, menu) {
                     if (count != null) {
                         count.innerText = Number(count.innerText) + 1;
                     }
-                    if (total != null) {
+                    let total = document.getElementById("total" + cart);
+                    if (total !== null) {
+                        let tmp = total.innerText.split("€")[0];
                         tmp = Number(tmp) + Number(inputPrice);
+                        total.innerText = tmp + "€";
                     }
-                    total.innerHTML = tmp + "€";
                 }
             }
         }
     };
-    request.open('GET', 'functions/addMenu.php?cart=' + cart + '&menu=' + menu + '&total=' + tmp);
+    request.open('GET', 'functions/addMenu.php?cart=' + cart + '&menu=' + menu);
     request.send();
 }
 
@@ -202,11 +200,12 @@ function addMenuQuantity(cart, menu) {
  * @param menu
  */
 function completelyMenuDelete(cart, menu) {
-
     const count = document.getElementById('count');
     let deleteMenu = document.getElementById("deleteMenu" + menu);
     let qty = document.getElementById("inputMenu" + menu);
-
+    let inputPrice = document.getElementById("inputPriceMenu" + menu);
+    inputPrice = inputPrice.innerText.split("€")[0];
+    qty = Number(qty.innerText);
     const request = new XMLHttpRequest();
     request.onreadystatechange = function () {
         if (request.readyState === 4) {
@@ -218,6 +217,12 @@ function completelyMenuDelete(cart, menu) {
                         count.innerText = Number(count.innerText) - Number(qty.innerText);
                     } else {
                         count.innerText = 0;
+                    }
+                    let total = document.getElementById("total" + cart);
+                    if (total !== null) {
+                        let tmp = total.innerText.split("€")[0];
+                        tmp = Number(tmp) - qty * Number(inputPrice);
+                        total.innerText = tmp + "€";
                     }
                     deleteMenu.remove();
                 }
@@ -237,9 +242,9 @@ function deleteProductQuantity(cart, product) {
 
     let input = document.getElementById("inputProduct" + product);
     const count = document.getElementById('count');
-
+    let inputPrice = document.getElementById("inputPriceProduct" + product);
+    inputPrice = inputPrice.innerText.split("€")[0];
     if (Number(input.innerText) > 1) {
-
         const request = new XMLHttpRequest();
         request.onreadystatechange = function () {
             if (request.readyState === 4) {
@@ -249,13 +254,18 @@ function deleteProductQuantity(cart, product) {
                     } else {
                         count.innerText = Number(count.innerText) - 1;
                         input.innerText = Number(input.innerText) - 1;
+                        let total = document.getElementById("total" + cart);
+                        if (total !== null) {
+                            let tmp = total.innerText.split("€")[0];
+                            tmp = Number(tmp) - Number(inputPrice);
+                            total.innerText = tmp + "€";
+                        }
                     }
                 }
             }
         };
         request.open('GET', 'functions/deleteProduct.php?cart=' + cart + '&product=' + product);
         request.send();
-
     } else {
         completelyProductDelete(cart, product);
     }
@@ -268,10 +278,10 @@ function deleteProductQuantity(cart, product) {
  * @param product
  */
 function addProductQuantity(cart, product) {
-
     let input = document.getElementById("inputProduct" + product);
     const count = document.getElementById('count');
-
+    let inputPrice = document.getElementById("inputPriceProduct" + product);
+    inputPrice = inputPrice.innerText.split("€")[0];
     const request = new XMLHttpRequest();
     request.onreadystatechange = function () {
         if (request.readyState === 4) {
@@ -284,6 +294,12 @@ function addProductQuantity(cart, product) {
                     }
                     if (count != null) {
                         count.innerText = Number(count.innerText) + 1;
+                    }
+                    let total = document.getElementById("total" + cart);
+                    if (total !== null) {
+                        let tmp = total.innerText.split("€")[0];
+                        tmp = Number(tmp) + Number(inputPrice);
+                        total.innerText = tmp + "€";
                     }
                 }
             }
@@ -299,11 +315,12 @@ function addProductQuantity(cart, product) {
  * @param product
  */
 function completelyProductDelete(cart, product) {
-
     const count = document.getElementById('count');
     let deleteMenu = document.getElementById("deleteProduct" + product);
     let qty = document.getElementById("inputProduct" + product);
-
+    let inputPrice = document.getElementById("inputPriceProduct" + product);
+    inputPrice = inputPrice.innerText.split("€")[0];
+    qty = Number(qty.innerText);
     const request = new XMLHttpRequest();
     request.onreadystatechange = function () {
         if (request.readyState === 4) {
@@ -315,6 +332,12 @@ function completelyProductDelete(cart, product) {
                         count.innerText = Number(count.innerText) - Number(qty.innerText);
                     } else {
                         count.innerText = 0;
+                    }
+                    let total = document.getElementById("total" + cart);
+                    if (total !== null) {
+                        let tmp = total.innerText.split("€")[0];
+                        tmp = Number(tmp) - qty * Number(inputPrice);
+                        total.innerText = tmp + "€";
                     }
                     deleteMenu.remove();
                 }

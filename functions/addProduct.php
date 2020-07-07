@@ -11,11 +11,12 @@ if (isset($_GET["product"]) && isset($_GET["cart"])) {
 
     $pdo = connectDB();
 
-    $queryPrepared = $pdo->prepare("SELECT truck FROM PRODUCTS WHERE idProduct = :product;");
+    $queryPrepared = $pdo->prepare("SELECT truck, productPrice FROM PRODUCTS WHERE idProduct = :product;");
     $queryPrepared->execute([
         ":product" => $idProduct
     ]);
     $idTruck = $queryPrepared->fetch(PDO::FETCH_ASSOC);
+    $price = $idTruck["productPrice"];
 
     $queryPrepared = $pdo->prepare("SELECT truck FROM CARTPRODUCT, PRODUCTS WHERE cart = :cart AND product = idProduct AND truck != :truck ;");
     $queryPrepared->execute([
@@ -38,6 +39,12 @@ if (isset($_GET["product"]) && isset($_GET["cart"])) {
         $queryPrepared->execute([
             ":cart" => $idCart,
             ":product" => $idProduct
+        ]);
+
+        $queryPrepared = $pdo->prepare("UPDATE CART SET cartPrice = cartPrice + :price WHERE idCart = :cart");
+        $queryPrepared->execute([
+            ":price" => $price,
+            ":cart" => $idCart
         ]);
     }
 } else {
