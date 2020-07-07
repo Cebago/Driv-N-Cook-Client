@@ -1,8 +1,4 @@
 <?php
-require "header.php";
-?>
-<body>
-<?php
 require "navbar.php";
 ?>
 
@@ -11,7 +7,11 @@ require "navbar.php";
     <div class="container">
         <div class="row">
             <div class="col-lg-12">
-                <h1><i>Elements</i></h1>
+                <h1>
+                    <i>
+                        <?php echo getTranslate("Connexion", $tabLang, $setLanguage) ?>
+                    </i>
+                </h1>
             </div>
         </div>
     </div>

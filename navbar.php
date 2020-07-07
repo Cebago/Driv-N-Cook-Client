@@ -33,7 +33,7 @@ if (isset($_COOKIE['Lang'])) {
             <div class="row">
                 <div class="col-lg-2">
                     <div class="logo-area">
-                        <a href="index.html"><img src="./img/logo.png" alt="logo"></a>
+                        <a href="home.php"><img src="./img/logo.png" alt="logo"></a>
                     </div>
 
                 </div>
@@ -46,7 +46,7 @@ if (isset($_COOKIE['Lang'])) {
                     <div class="main-menu">
                         <ul>
                             <li class="active"><a
-                                        href="index.html"><?php getTranslate("accueil", $tabLang, $setLanguage); ?></a>
+                                        href="home.php"><?php getTranslate("accueil", $tabLang, $setLanguage); ?></a>
                             </li>
                             <li>
                                 <a href="viewTrucks.php"><?php getTranslate("nos camions", $tabLang, $setLanguage); ?></a>
@@ -54,7 +54,7 @@ if (isset($_COOKIE['Lang'])) {
                             <li><a href="menu.html"><?php getTranslate("evenements", $tabLang, $setLanguage); ?></a>
                             </li>
                             <li>
-                                <a href="http://franchises.drivncook.fr"><?php getTranslate("rejoignez-nous", $tabLang, $setLanguage); ?></a>
+                                <a href="./assets/three-js/examples/test.html"><?php getTranslate("rejoignez-nous", $tabLang, $setLanguage); ?></a>
                             </li>
                             <li class="nav-item dropdown">
                                 <a class="nav-link dropdown-toggle" id="dropdown09" data-toggle="dropdown"
@@ -67,8 +67,6 @@ if (isset($_COOKIE['Lang'])) {
                                         if ($key != $setLanguage)
                                             echo "<a class=\"dropdown-item\" href=\"./functions/changeLanguage.php?lang=" . $key . "\" ><span class=\"flag-icon " . $value['icon'] . "\"> </span> " . $value['name'] . "</a>";
                                     } ?>
-
-
                                 </div>
                             </li>
                         </ul>
