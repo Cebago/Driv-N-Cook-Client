@@ -184,7 +184,7 @@ function successCallback(position){
     let pos = {
         'lng': position.coords.longitude,
         'lat': position.coords.latitude
-    }
+    };
     calculDistance(pos);
 }
 
@@ -193,7 +193,7 @@ function calculDistance(origin) {
     let addressTab = [];
     events.forEach(function (event) {
         addressTab.push( event["eventAddress"] + " " +event["eventCity"]+" " + event["eventPostalCode"]);
-    })
+    });
 
     var service = new google.maps.DistanceMatrixService();
     service.getDistanceMatrix(
@@ -206,66 +206,74 @@ function calculDistance(origin) {
 
     function callback(response, status) {
         var results = response.rows[0].elements;
-        if(status == 'OK'){
-            results = sortDistances(results);
+        if(0){
+            results = sortDistances(events,results);
             for (let j = 0; j < results.length; j++) {
-                let child = document.getElementById("containerToEvents");
-
-                let cardDiv = document.createElement('div');
-                cardDiv.className = "col-md-4 my-2";
-                child.appendChild(cardDiv);
-
-                let cartDiv2 = document.createElement('div');
-                cartDiv2.className = "single-food";
-                cardDiv.appendChild(cartDiv2);
-
-                let cartImg = document.createElement('div');
-                cartImg.className = "food-img";
-                cartDiv2.appendChild(cartImg);
-
-                let img = document.createElement('img');
-                img.src = events[j]["eventImg"];
-                img.className = "img-fluid"
-                img.style.height = "250px"
-                cartImg.appendChild(img);
-
-                let content =  document.createElement('div');
-                content.className = "food-content";
-                cartDiv2.appendChild(content);
-
-                let post =  document.createElement('div');
-                cartImg.className = "post-admin d-lg-flex mb-3";
-                content.appendChild(post);
-
-                let spanTruck =  document.createElement('span');
-                spanTruck.innerHTML = '<i class="fa fa-user"></i> '+ events[j]["truckName"]+"<br>";
-                post.appendChild(spanTruck);
-
-                let spanDate =  document.createElement('span');
-                spanDate.innerHTML = '<i class="fa fa-calendar-o mr-2"></i>'+ events[j]["eventBeginDate"]+"<br>";
-                post.appendChild(spanDate);
-
-                let spanDistance =  document.createElement('span');
-                spanDistance.innerHTML = '<i class="fa fa-map-signs mr-2"></i>'+ results[j].distance.text+"<br>";
-                post.appendChild(spanDistance);
-
-                let eventName =  document.createElement('h5');
-                eventName.textContent = events[j]["eventName"];
-                content.appendChild(eventName);
-
-                let eventDetails =  document.createElement('p');
-                eventDetails.className = "pt-3 eventText ";
-                eventDetails.textContent = events[j]["eventDesc"];
-                content.appendChild(eventDetails);
+                displayEvents(events,results);
             }
         }else{
             //todo -> afficher tous les events
+            for (let j = 0; j < events.length; j++) {
+                displayEvents(events, null);
+            }
+
         }
     }
 
 }
 
+function displayEvents(tab, results){
+    let child = document.getElementById("containerToEvents");
 
+    let cardDiv = document.createElement('div');
+    cardDiv.className = "col-md-4 my-2";
+    child.appendChild(cardDiv);
+
+    let cartDiv2 = document.createElement('div');
+    cartDiv2.className = "single-food";
+    cardDiv.appendChild(cartDiv2);
+
+    let cartImg = document.createElement('div');
+    cartImg.className = "food-img";
+    cartDiv2.appendChild(cartImg);
+
+    let img = document.createElement('img');
+    img.src = events[j]["eventImg"];
+    img.className = "img-fluid";
+    img.style.height = "250px";
+    cartImg.appendChild(img);
+
+    let content =  document.createElement('div');
+    content.className = "food-content";
+    cartDiv2.appendChild(content);
+
+    let post =  document.createElement('div');
+    cartImg.className = "post-admin d-lg-flex mb-3";
+    content.appendChild(post);
+
+    let spanTruck =  document.createElement('span');
+    spanTruck.innerHTML = '<i class="fa fa-user"></i> '+ tab[j]["truckName"]+"<br>";
+    post.appendChild(spanTruck);
+
+    let spanDate =  document.createElement('span');
+    spanDate.innerHTML = '<i class="fa fa-calendar-o mr-2"></i>'+ tab[j]["eventBeginDate"]+"<br>";
+    post.appendChild(spanDate);
+
+    if(result != null){
+        let spanDistance =  document.createElement('span');
+        spanDistance.innerHTML = '<i class="fa fa-map-signs mr-2"></i>'+ results[j].distance.text+"<br>";
+        post.appendChild(spanDistance);
+    }
+
+    let eventName =  document.createElement('h5');
+    eventName.textContent = events[j]["eventName"];
+    content.appendChild(eventName);
+
+    let eventDetails =  document.createElement('p');
+    eventDetails.className = "pt-3 eventText ";
+    eventDetails.textContent = events[j]["eventDesc"];
+    content.appendChild(eventDetails);
+}
 
 
 
