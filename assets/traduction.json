@@ -564,6 +564,14 @@
       "en_EN" : "Our <span>events</span>",
       "es_ES" : "Nuestros <span>eventos</span>",
       "fr_FR" : "Nos <span>événements</span>"
+    },
+    "Ouvert du" : {
+      "en_EN" : "Open from",
+      "es_ES" : "Abierto de"
+    },
+    "au" : {
+      "en_EN" : "to",
+      "es_ES" : "al"
     }
   },
   "ingredients": {
