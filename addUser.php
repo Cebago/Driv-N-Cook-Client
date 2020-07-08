@@ -125,6 +125,12 @@ if (count($_POST) == 7
             ]);
         }
 
+        $queryPrepared = $pdo->prepare("INSERT INTO CART (cartPrice, user, cartType) VALUES (0, :user, 'Commande client')");
+        $queryPrepared->execute([
+            ":user" => $idUser
+        ]);
+
+
         $queryPrepared = $pdo->prepare("INSERT INTO USERTOKEN (tokenType, user) VALUE ('Site', :user)");
         $queryPrepared->execute([
             ":user" => $idUser

@@ -256,6 +256,38 @@
       "fr_FR": "\" Chérie, on mange quoi ce soir ? Collègue, tu manges où ce midi? \" Ces questions vous parlent ? Nous aussi, c'est pourquoi nous avons créés Driv'n Cook, le meilleur de réseau de FoodTruck à travers la France. Fini les pâtes aux gruyères, les pâtes au ketchup, ou encore les pâtes au gruyère et au ketchup! Faites place, à de la vrai nourriture, préparée sur place, sous vos yeux, par des passionnés qui se déplacent dans votre ville pour vous faire découvrir les recettes de leurs grands parents.\"Mais, il faut connaitre le menu, et puis j'ai pas vraiment envie d'attendre là bas..\" Mais pas du tout ! Grâce à notre site internet, vous pouvez commander, payer, cumulez des points de fidélité, tout ça depuis votre canapé ! Cependant, dans une société 100% connectée, le contact humain reste primordial, il vous faudra donc simplement aller chercher votre délicieux repas, en échange d'un simple sourire. Merveilleux non? N'attendez plus, nos camions viennent à vous, venez découvrir de la nourriture, de la vrai nourriture \"",
       "es_ES": "\"Cariño, ¿qué vamos a comer esta noche? Colega, ¿dónde vas a almorzar?\"¿Estas preguntas te hablan? Nosotros también, por eso creamos Driv'n Cook, la mejor red FoodTruck en Francia.¡No más pasta gruyère, pasta de ketchup, o incluso pasta gruyère y ketchup! Dé paso a la verdadera comida, preparada en el sitio, ante sus ojos, por entusiastas que viajan a su ciudad para hacerle descubrir las recetas de sus abuelos.\"Pero, tienes que conocer el menú, y realmente no quiero esperar allí ...\" ¡Pero no del todo! ¡Gracias a nuestro sitio web, puede ordenar, pagar, ganar puntos de fidelidad, todo desde su sofá! Sin embargo, en una sociedad 100% conectada, el contacto humano sigue siendo esencial, por lo que simplemente tendrá que ir a buscar su deliciosa comida a cambio de una simple sonrisa. Maravilloso, verdad? No esperes más, nuestros camiones vienen a ti, ven a descubrir comida, comida de verdad \"",
       "en_EN": "\"Honey, what are we eating tonight? Colleague, where are you eating for lunch?\"Do these questions speak to you? We too, that's why we created Driv'n Cook, the best FoodTruck network across France. No more gruyère pasta, ketchup pasta, or even gruyère and ketchup pasta! Make way for real food, prepared on site, before your eyes, by enthusiasts who travel to your city to help you discover the recipes of their grandparents.\"But, you have to know the menu, and then I don't really want to wait there ..\" But not at all! Thanks to our website, you can order, pay, earn loyalty points, all from your sofa! However, in a 100% connected society, human contact remains essential, so you will simply have to go get your delicious meal, in exchange for a simple smile. Wonderful, right? Don't wait any longer, our trucks are coming to you, come and discover food, real food \""
+    },
+    "Votre panier" : {
+      "en_EN" : "Your cart",
+      "es_ES" : "Mi carrito"
+    },
+    "Vos menus au panier" : {
+      "en_EN" : "Your menus in cart",
+      "es_ES" : "Sus menús en la cesta"
+    },
+    "Vous n'avez aucun menu au panier" : {
+      "es_ES" : "No tienes menú en la cesta",
+      "en_EN" : "You don't have any menus in your cart"
+    },
+    "Payer" : {
+      "es_ES" : "Pagar",
+      "en_EN" : "Proceed to payment"
+    },
+    "Supprimer" : {
+      "en_EN" : "Delete",
+      "es_ES" : "Suprimir"
+    },
+    "Vos produits au panier" : {
+      "en_EN" : "Your products in cart",
+      "es_ES" : "Sus productos en la cesta"
+    },
+    "Vous n'avez aucun produit au panier" : {
+      "es_ES" : "No tienes productos en la cesta",
+      "en_EN" : "You don't have any product in your cart"
+    },
+    "Mes commandes" : {
+      "es_ES" : "Mis pedidos",
+      "en_EN" : "My orders"
     }
   },
   "ingredients": {
