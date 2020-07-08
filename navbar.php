@@ -17,14 +17,15 @@ if (isset($_COOKIE['Lang'])) {
 if (isConnected() && isActivated()) {
     $email = $_SESSION["email"];
     $pdo = connectDB();
-    $queryPrepared = $pdo->prepare("SELECT SUM(quantity) as quantity FROM CARTMENU, CART, MENUS, USER WHERE CARTMENU.cart = idCart AND MENUS.idMenu = CARTMENU.menu AND CART.user = idUser AND emailAddress = :email  GROUP BY idCart;");
+    $cart = lastCart($_SESSION["email"]);
+    $queryPrepared = $pdo->prepare("SELECT SUM(quantity) as quantity FROM CARTMENU, CART, MENUS WHERE CARTMENU.cart = idCart AND MENUS.idMenu = CARTMENU.menu AND idCart = :cart");
     $queryPrepared->execute([
-        ":email" => $email
+        ":cart" => $cart
     ]);
     $menu = $queryPrepared->fetch(PDO::FETCH_ASSOC);
-    $queryPrepared = $pdo->prepare("SELECT SUM(quantity) as quantity FROM CARTPRODUCT, CART, PRODUCTS, USER WHERE CARTPRODUCT.cart = idCart AND PRODUCTS.idProduct = CARTPRODUCT.product AND CART.user = idUser AND emailAddress = :email  GROUP BY idCart;");
+    $queryPrepared = $pdo->prepare("SELECT SUM(quantity) as quantity FROM CARTPRODUCT, CART, PRODUCTS  WHERE CARTPRODUCT.cart = idCart AND PRODUCTS.idProduct = CARTPRODUCT.product AND idCart = :cart");
     $queryPrepared->execute([
-        ":email" => $email
+        ":cart" => $cart
     ]);
     $product = $queryPrepared->fetch(PDO::FETCH_ASSOC);
 
@@ -47,9 +48,9 @@ if (isConnected() && isActivated()) {
 <body>
 
 <!-- Preloader Starts -->
-<!--<div class="preloader">
+<div class="preloader">
     <div class="spinner"></div>
-</div>-->
+</div>
 <!-- Preloader End -->
 
 <!-- Header Area Starts -->
@@ -138,6 +139,11 @@ if (isConnected() && isActivated()) {
                                     <a class="dropdown-item" href="myProfile.php">
                                         <?php
                                         echo getTranslate("Mon profil", $tabLang, $setLanguage)
+                                        ?>
+                                    </a>
+                                    <a class="dropdown-item" href="orderHistory.php">
+                                        <?php
+                                        echo getTranslate("Mes commandes", $tabLang, $setLanguage)
                                         ?>
                                     </a>
                                     <a class="dropdown-item" href="myPassword.php">

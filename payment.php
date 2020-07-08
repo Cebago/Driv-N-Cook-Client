@@ -218,7 +218,7 @@ if (isConnected() && isActivated() ) {
                                 </div>
                                 <span class="text-muted">
                                     <?php
-                                    $final = $menu["prodductPrice"] * $menu["quantity"];
+                                    $final = $product["productPrice"] * $product["quantity"];
                                     echo number_format($final, 2) . "&nbsp;€";
                                     ?>
                                 </span>

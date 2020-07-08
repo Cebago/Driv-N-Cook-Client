@@ -366,3 +366,31 @@ function productsInCart($idCart)
     }
     return $menus;
 }
+
+/**
+ * @param $email
+ * @return array|null
+ */
+function ordersOfUser($email)
+{
+    $pdo = connectDB();
+    $queryPrepared = $pdo->prepare("SELECT idOrder, orderPrice, orderDate, truck, user, cart FROM ORDERS, USER WHERE  user = idUser AND orderType = 'Commande client' AND emailAddress = :email");
+    $queryPrepared->execute([":email" => $email]);
+    $orders = $queryPrepared->fetchAll(PDO::FETCH_ASSOC);
+    if (empty($orders)) {
+        return null;
+    }
+    return $orders;
+}
+
+function statusOfOrder($idOrder)
+{
+    $pdo = connectDB();
+    $queryPrepared = $pdo->prepare("SELECT statusName FROM STATUS, ORDERSTATUS WHERE idStatus = status AND orders = :order");
+    $queryPrepared->execute([":order" => $idOrder]);
+    $status = $queryPrepared->fetchAll(PDO::FETCH_ASSOC);
+    if (empty($status)) {
+        return null;
+    }
+    return $status;
+}

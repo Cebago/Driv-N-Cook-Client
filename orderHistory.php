@@ -1,6 +1,9 @@
 <?php
 session_start();
-require "navbar.php" ?>
+require "navbar.php";
+$orders = ordersOfUser($_SESSION["email"]);
+
+?>
 <body>
 <section class="banner-area banner-area2 blog-page text-center">
     <div class="container">
@@ -13,10 +16,45 @@ require "navbar.php" ?>
 </section>
 <!-- Start Sample Area -->
 <section class="sample-text-area section-padding4">
-    <div class="container">
-        <p class="sample-text">
-            DISPLAY ALL ORDERS AND STATUS
-        </p>
+    <div class="container row col-md-10">
+        <?php
+        if ($orders != null) {
+            foreach ($orders as $order) {
+                $statuses = statusOfOrder($order["idOrder"])
+                ?>
+                <div class="card mx-auto w-25">
+                    <div class="card-header"><?php echo $order["orderDate"] . " - " . number_format($order["orderPrice"], 2) . "€" ?></div>
+                    <div class="card-body">
+                        <?php
+                        $menus = menusInCart($order["cart"]);
+                        if ($menus != null) {
+                            echo "<p class='text-muted'>Menus :</p>";
+                            echo "<ul>";
+                            foreach ($menus as $menu) {
+                                echo "<li>" . $menu["menuName"] . "</li>";
+                            }
+                            echo "</ul>";
+                        }
+                        $products = productsInCart($order["cart"]);
+                        if ($products != null) {
+                            echo "<p class='text-muted'>Produits :</p>";
+                            echo "<ul>";
+                            foreach ($products as $product) {
+                                echo "<li>" . $product["productName"] . "</li>";
+                            }
+                            echo "</ul>";
+                        }
+                        ?>
+                    </div>
+                    <div class="card-footer">
+                        <?php
+                        echo "Commande N° " . $order["idOrder"] . "&nbsp;|&nbsp;" . $statuses[0]["statusName"] . "&nbsp;-&nbsp;" . $statuses[1]["statusName"] ?>
+                    </div>
+                </div>
+        <?php
+            }
+        }
+        ?>
     </div>
 </section>
 <!-- End Sample Area -->

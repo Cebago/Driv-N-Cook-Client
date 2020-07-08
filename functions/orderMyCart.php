@@ -22,9 +22,13 @@ if (isConnected() && isActivated()) {
     $queryPrepared->execute([":email" => $_SESSION["email"]]);
     $points = $queryPrepared->fetch(PDO::FETCH_ASSOC);
     if (!empty($points)) {
+        $points = $points["points"];
         $pointsToAdd += $points;
-        $queryPrepared = $pdo->prepare("UPDATE FIDELITY, USER SET points = :points WHERE emailAddress = :email");
-        $queryPrepared->execute([":email" => $_SESSION["email"]]);
+        $queryPrepared = $pdo->prepare("UPDATE FIDELITY, USER SET points = :points WHERE emailAddress = :email AND idFidelity = fidelityCard");
+        $queryPrepared->execute([
+            "points" => $pointsToAdd,
+            ":email" => $_SESSION["email"]
+        ]);
     }
 
     if (menusInCart($cart) != null) {
@@ -41,15 +45,16 @@ if (isConnected() && isActivated()) {
     $truck = $queryPrepared->fetch(PDO::FETCH_ASSOC);
     $truck = $truck["truck"];
 
-    $queryPrepared = $pdo->prepare("INSERT INTO ORDERS (orderPrice, orderType, truck, user) VALUES (:orderPrice, 'Commande client', :truck, :user)");
+    $queryPrepared = $pdo->prepare("INSERT INTO ORDERS (orderPrice, orderType, truck, user, cart) VALUES (:orderPrice, 'Commande client', :truck, :user, :cart)");
     $queryPrepared->execute([
         ":orderPrice" => $price,
         ":truck" => $truck,
-        ":user" => $idUser
+        ":user" => $idUser,
+        ":cart" => $cart
     ]);
 
     $order = $pdo->lastInsertId();
-    $queryPrepared = $pdo->prepare("INSERT INTO ORDERSTATUS (orders, status) VALUES (:order, 1)");
+    $queryPrepared = $pdo->prepare("INSERT INTO ORDERSTATUS (orders, status) VALUES (:order, 3)");
     $queryPrepared->execute([
         ":order" => $order
     ]);
