@@ -543,6 +543,22 @@
     "Mon panier" : {
       "es_ES" : "Mi carrito",
       "en_EN" : "My cart"
+    },
+    "Votre numéro de carte bleue n'est pas bon" : {
+      "es_ES" : "Su número de tarjeta de crédito no es bueno",
+      "en_EN" : "Your credit card number is not good"
+    },
+    "Le mois saisi n'est pas bon" : {
+      "en_EN" : "The month seized is not good",
+      "es_ES" : "El mes no es bueno"
+    },
+    "L'année saisie n'est pas bonne" : {
+      "es_ES" : "El año no es bueno",
+      "en_EN" : "The year entered is not good"
+    },
+    "Le code n'est pas dans un format valide" : {
+      "en_EN" : "The code is not in a valid format",
+      "es_ES" : "El código no está en un formato válido"
     }
   },
   "ingredients": {
