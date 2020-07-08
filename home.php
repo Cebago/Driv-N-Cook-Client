@@ -156,7 +156,6 @@ $events = getEventsPreview();
             <div class="col-lg-12">
                 <div class="section-top2 text-center">
                     <h3>Nos <span>événements</span></h3>
-                    <p><i>Beast kind form divide night above let moveth bearing darkness.</i></p>
                 </div>
             </div>
         </div>
@@ -181,77 +180,6 @@ $events = getEventsPreview();
     </div>
 </section>
 <!-- Testimonial Area End -->
-
-
-
-<!-- Footer Area Starts -->
-<footer class="footer-area">
-    <div class="footer-widget section-padding">
-        <div class="container">
-            <div class="row">
-                <div class="col-md-6">
-                    <div class="single-widget single-widget1">
-                        <a href="index.html"><img src="assets/images/logo/logo2.png" alt=""></a>
-                        <p class="mt-3">Which morning fourth great won't is to fly bearing man. Called unto shall seed,
-                            deep, herb set seed land divide after over first creeping. First creature set upon stars
-                            deep male gathered said she'd an image spirit our</p>
-                    </div>
-                </div>
-                <div class="col-md-6">
-                    <div class="single-widget single-widget2 my-5 my-md-0">
-                        <h5 class="mb-4"><?php getTranslate("contactezNous", $tabLang, $setLanguage); ?></h5>
-                        <div class="d-flex">
-                            <div class="into-icon">
-                                <i class="fa fa-map-marker"></i>
-                            </div>
-                            <div class="info-text">
-                                <p>1234 Some St San Francisco, CA 94102, US 1.800.123.4567 </p>
-                            </div>
-                        </div>
-                        <div class="d-flex">
-                            <div class="into-icon">
-                                <i class="fa fa-phone"></i>
-                            </div>
-                            <div class="info-text">
-                                <p>(123) 456 78 90</p>
-                            </div>
-                        </div>
-                        <div class="d-flex">
-                            <div class="into-icon">
-                                <i class="fa fa-envelope-o"></i>
-                            </div>
-                            <div class="info-text">
-                                <p>support@axiomthemes.com</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="footer-copyright">
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-7 col-md-6">
-                        <span>Copyright &copy;<script>document.write(new Date().getFullYear());</script> All rights reserved | This template is made with <i
-                                class="fa fa-heart-o" aria-hidden="true"></i> by
-                                <a href="https://colorlib.com" target="_blank">Colorlib</a></span>
-                </div>
-                <div class="col-lg-5 col-md-6">
-                    <div class="social-icons">
-                        <ul>
-                            <li class="no-margin">Follow Us</li>
-                            <li><a href="https://www.facebook.com/ESGIParis"><i class="fa fa-facebook"></i></a></li>
-                            <li><a href="https://twitter.com/ESGI?ref_src=twsrc%5Egoogle%7Ctwcamp%5Eserp%7Ctwgr%5Eauthor"><i class="fa fa-twitter"></i></a></li>
-                            <li><a href="https://www.instagram.com/esgiparis/?hl=fr"><i class="fa fa-instagram"></i></a></li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</footer>
-<!-- Footer Area End -->
 
 <?php
 require 'footer.php';
