@@ -145,6 +145,7 @@ function removeFilterTruck() {
     }
 }
 
+var events, results;
 
 function getListOfEvents(){
     const request = new XMLHttpRequest();
@@ -152,8 +153,8 @@ function getListOfEvents(){
         if (request.readyState === 4) {
             if (request.status === 200) {
                 if(request.responseText !== '') {
-                    let result = JSON.parse(request.responseText);
-                    getLocation(result);
+                    events = JSON.parse(request.responseText);
+                    getLocation();
                 }
             }
         }
@@ -164,8 +165,7 @@ function getListOfEvents(){
 
 
 
-function getLocation(eventsParam) {
-    events = eventsParam;
+function getLocation() {
 
     if (navigator.geolocation) {//si la geoloc est activé sur le navigateur
         //on appelle la méthode getCurrentPosition qui appelle l'api du navigateur (par défaut google)
@@ -178,13 +178,16 @@ function getLocation(eventsParam) {
 }
 function errorCallback(result) {
     console.log(result);
+    for (let j = 0; j < events.length; j++) {
+        printEvent(j, null)
+    }
 }
 
 function successCallback(position){
     let pos = {
         'lng': position.coords.longitude,
         'lat': position.coords.latitude
-    };
+    }
     calculDistance(pos);
 }
 
@@ -193,40 +196,34 @@ function calculDistance(origin) {
     let addressTab = [];
     events.forEach(function (event) {
         addressTab.push( event["eventAddress"] + " " +event["eventCity"]+" " + event["eventPostalCode"]);
-    });
+    })
 
     var service = new google.maps.DistanceMatrixService();
-    service.getDistanceMatrix(
-        {
-            origins: [origin],
-            destinations: addressTab,
-            travelMode: 'DRIVING',
-            unitSystem:  google.maps.UnitSystem.METRIC,
-        }, callback);
+    let options = {
+        origins: [origin],
+        destinations: addressTab,
+        travelMode: 'DRIVING',
+        unitSystem:  google.maps.UnitSystem.METRIC,
+    }
+    service.getDistanceMatrix(options, callback);
 
     function callback(response, status) {
-        var results = response.rows[0].elements;
-        if(0){
-            results = sortDistances(events,results);
-            for (let j = 0; j < results.length; j++) {
-                displayEvents(events,results);
-            }
-        }else{
-            //todo -> afficher tous les events
-            for (let j = 0; j < events.length; j++) {
-                displayEvents(events, null);
-            }
-
+        results = response.rows[0].elements;
+        results = sortDistances(results);
+        for (let j = 0; j < results.length; j++) {
+            printEvent(j, status);
         }
     }
 
 }
 
-function displayEvents(tab, results){
+function printEvent(j, status) {
+
     let child = document.getElementById("containerToEvents");
 
     let cardDiv = document.createElement('div');
     cardDiv.className = "col-md-4 my-2";
+    cardDiv.setAttribute("onclick", "window.location.href='eventsDetails.php?idEvent="+events[j]["idEvent"]+"'");
     child.appendChild(cardDiv);
 
     let cartDiv2 = document.createElement('div');
@@ -239,40 +236,40 @@ function displayEvents(tab, results){
 
     let img = document.createElement('img');
     img.src = events[j]["eventImg"];
-    img.className = "img-fluid";
-    img.style.height = "250px";
+    img.className = "img-fluid"
+    img.style.height = "250px"
     cartImg.appendChild(img);
 
-    let content =  document.createElement('div');
+    let content = document.createElement('div');
     content.className = "food-content";
     cartDiv2.appendChild(content);
 
-    let post =  document.createElement('div');
+    let post = document.createElement('div');
     cartImg.className = "post-admin d-lg-flex mb-3";
     content.appendChild(post);
 
-    let spanTruck =  document.createElement('span');
-    spanTruck.innerHTML = '<i class="fa fa-user"></i> '+ tab[j]["truckName"]+"<br>";
+    let spanTruck = document.createElement('span');
+    spanTruck.innerHTML = '<i class="fa fa-user"></i> ' + events[j]["truckName"] + "<br>";
     post.appendChild(spanTruck);
 
-    let spanDate =  document.createElement('span');
-    spanDate.innerHTML = '<i class="fa fa-calendar-o mr-2"></i>'+ tab[j]["eventBeginDate"]+"<br>";
+    let spanDate = document.createElement('span');
+    spanDate.innerHTML = '<i class="fa fa-calendar-o mr-2"></i>' + events[j]["eventBeginDate"] + "<br>";
     post.appendChild(spanDate);
-
-    if(result != null){
-        let spanDistance =  document.createElement('span');
-        spanDistance.innerHTML = '<i class="fa fa-map-signs mr-2"></i>'+ results[j].distance.text+"<br>";
+    if(status == 'OK') {
+        let spanDistance = document.createElement('span');
+        spanDistance.innerHTML = '<i class="fa fa-map-signs mr-2"></i>' + results[j].distance.text + "<br>";
         post.appendChild(spanDistance);
     }
 
-    let eventName =  document.createElement('h5');
+    let eventName = document.createElement('h5');
     eventName.textContent = events[j]["eventName"];
     content.appendChild(eventName);
 
-    let eventDetails =  document.createElement('p');
+    let eventDetails = document.createElement('p');
     eventDetails.className = "pt-3 eventText ";
     eventDetails.textContent = events[j]["eventDesc"];
     content.appendChild(eventDetails);
+
 }
 
 
@@ -282,10 +279,8 @@ function displayEvents(tab, results){
 
 function sortDistances(array) {
     return array.sort(function(rowA,rowB) {
-        let a = rowA.distance.text;
-        let b = rowB.distance.text;
-
-        return	a<b ? -1 :
-            a>b ? 1 : 0;
+        let a = rowA.distance.value;
+        let b = rowB.distance.value;
+        return	a<b ? -1 : a>b ? 1 : 0;
     })
 }
