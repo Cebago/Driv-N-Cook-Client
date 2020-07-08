@@ -3,7 +3,7 @@ session_start();
 require "../conf.inc.php";
 require "../functions.php";
 
-if (isConnected() && isActivated()) {
+if (isConnected() && isActivated() && isClient()) {
     $pdo = connectDB();
     $queryPrepared = $pdo->prepare("SELECT idUser FROM USER WHERE emailAddress = :email");
     $queryPrepared->execute([":email" => $_SESSION["email"]]);

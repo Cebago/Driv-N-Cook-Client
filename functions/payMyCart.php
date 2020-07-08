@@ -4,7 +4,7 @@ require "../conf.inc.php";
 require "../functions.php";
 
 
-if (isConnected() && isActivated()) {
+if (isConnected() && isActivated() && isClient()) {
     if (count($_POST) >= 5 && isset($_POST["cardNumber"], $_POST["username"],
             $_POST["month"], $_POST["year"], $_POST["ccv"])) {
 

@@ -3,7 +3,7 @@ session_start();
 require 'conf.inc.php';
 require 'functions.php';
 
-if (isActivated() && isConnected()) {
+if (isActivated() && isConnected() && isClient()) {
     include 'header.php';
     $printedMenus = 0;
     $idCart = lastCart($_SESSION["email"]);

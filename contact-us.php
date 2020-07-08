@@ -4,7 +4,7 @@ require "conf.inc.php";
 require "functions.php";
 
 
-if (!isConnected())
+if (!isConnected() && isActivated() && isClient())
     header("Location: login.php");
 
 require("navbar.php");

@@ -127,7 +127,7 @@ function isActivated()
 /**
  * @return bool
  */
-function isAdmin()
+function isClient()
 {
     if (!empty($_SESSION["email"]) && !empty($_SESSION["token"])) {
         $email = $_SESSION["email"];
@@ -144,7 +144,7 @@ function isAdmin()
         ]);
         $isAdmin = $queryPrepared->fetch();
         $isAdmin = $isAdmin["roleName"];
-        if ($isAdmin == "Administrateur") {
+        if ($isAdmin == "Client") {
             return true;
         }
         return false;

@@ -13,7 +13,7 @@ if (isset($_COOKIE['Lang'])) {
     $setLanguage = "fr_FR";
 }
 
-if (isConnected() && isActivated()) {
+if (isConnected() && isActivated() && !isActivated()) {
     $email = $_SESSION["email"];
     $pdo = connectDB();
     $cart = lastCart($_SESSION["email"]);
@@ -90,7 +90,7 @@ if (isConnected() && isActivated()) {
                                 </a>
                             </li>
                             <?php
-                            if (isConnected() && isActivated()) { ?>
+                            if (isConnected() && isActivated() && !isActivated()) { ?>
                                 <li>
                                     <a href="cart.php" class="btn btn-transparent btn-lg active" role="button"
                                        aria-pressed="true">
@@ -119,7 +119,7 @@ if (isConnected() && isActivated()) {
                             </li>
                             <li>
                                 <?php
-                                if (isConnected() && isActivated()) { ?>
+                                if (isConnected() && isActivated() && !isActivated()) { ?>
                                 <a href="#" class="btn btn-transparent btn-lg active" role="button"
                                    aria-pressed="true" data-toggle="dropdown"><i class="fas fa-user-circle"></i>&nbsp;
                                     <?php
