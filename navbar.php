@@ -80,7 +80,7 @@ if (isConnected() && isActivated()) {
                                 </a>
                             </li>
                             <li>
-                                <a href="menu.html">
+                                <a href="events.php">
                                     <?php echo getTranslate("evenements", $tabLang, $setLanguage); ?>
                                 </a>
                             </li>

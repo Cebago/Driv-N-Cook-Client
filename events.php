@@ -11,8 +11,13 @@ require 'navbar.php';
     <div class="container">
         <div class="row">
             <div class="col-lg-12">
-                <h1><i>Découvrez les évènements près de chez vous</i></h1>
-
+                <h1>
+                    <i>
+                        <?php
+                        echo getTranslate("Découvrez les évènements près de chez vous", $tabLang, $setLanguage);
+                        ?>
+                    </i>
+                </h1>
             </div>
         </div>
     </div>
@@ -23,8 +28,6 @@ require 'navbar.php';
 <section class="update-area section-padding">
     <div class="container">
         <div class="row" id="containerToEvents">
-
-
         </div>
     </div>
 </section>
