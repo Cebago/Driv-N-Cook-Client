@@ -6,7 +6,9 @@
                 <div class="col-md-6">
                     <div class="single-widget single-widget1">
                         <a href="home.php"><img src="assets/images/logo/logo2.png" alt=""></a>
-                        <p class="mt-3">Découvrez les saveurs de Driv'N Cook</p>
+                        <p class="mt-3">
+                            <?php echo getTranslate("titre2", $tabLang, $setLanguage); ?>
+                        </p>
                     </div>
                 </div>
                 <div class="col-md-6">

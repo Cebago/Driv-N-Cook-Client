@@ -146,7 +146,7 @@ if (isConnected() && isActivated()) {
                                             </a>
                                             <a class="dropdown-item" href="myPassword.php">
                                                 <?php
-                                                echo getTranslate("Mot de passe", $tabLang, $setLanguage)
+                                                echo getTranslate("Mon mot de passe", $tabLang, $setLanguage)
                                                 ?>
                                             </a>
                                             <a class="dropdown-item" href="functions/logout.php"><i

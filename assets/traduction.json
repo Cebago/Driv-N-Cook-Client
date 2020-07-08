@@ -79,7 +79,7 @@
       "en_EN": "My profile",
       "fr_FR": "Mon profil"
     },
-    "Mot de passe": {
+    "Mon mot de passe": {
       "es_ES": "Mi contraseña",
       "en_EN": "My password",
       "fr_FR": "Mon mot de passe"
@@ -199,7 +199,7 @@
       "en_EN": "Subject"
     },
     "Envoyer": {
-      "es_ES": "Envoyar",
+      "es_ES": "Enviar",
       "en_EN": "Send"
     },
     "Choisir camion": {
@@ -288,6 +288,94 @@
     "Mes commandes" : {
       "es_ES" : "Mis pedidos",
       "en_EN" : "My orders"
+    },
+    "Mot de passe oublié" : {
+      "en_EN" : "Forgot password",
+      "es_ES" : "Contraseña olvidada"
+    },
+    "Merci de saisir votre adresse" : {
+      "es_ES" : "Por favor, introduzca su dirección de correo electrónico",
+      "en_EN" : "Please enter your email address"
+    },
+    "Adresse mail" : {
+      "es_ES" : "Correo electrónico",
+      "en_EN" : "Email address"
+    },
+    "L'email n'est pas valide" : {
+      "es_ES" : "El correo electrónico no es válido",
+      "en_EN" : "This email address is not valid"
+    },
+    "Aucun compte trouvé" : {
+      "en_EN" : "No account found",
+      "es_ES" : "Ninguna cuenta encontrada"
+    },
+    "Un email vous a été envoyé pour réinitialiser votre mot de passe" : {
+      "en_EN" : "An email has been sent to reset your password",
+      "es_ES" : "Se te ha enviado un correo electrónico para restablecer tu contraseña"
+    },
+    "Le prénom doit faire entre 2 et 50 caractères" : {
+      "en_EN" : "The first name must be between 2 and 50 characters",
+      "es_ES" : "El nombre debe tener entre 2 y 50 caracteres"
+    },
+    "Le nom doit faire entre 2 et 100 caractères" : {
+      "en_EN" : "The last name name must be between 2 and 50 characters",
+      "es_ES" : "El apellido debe tener entre 2 y 100 caracteres"
+    },
+    "Le captcha n'est pas correct" : {
+      "en_EN" : "The captcha is not correct",
+      "es_ES" : "El captcha no está bien"
+    },
+    "Le mot de passe doit faire entre 8 et 30 caractères avec des minuscules, majuscules et chiffres" : {
+      "en_EN" : "Password must be between 8 and 30 characters with lower case, upper case and numbers",
+      "es_ES" : "La contraseña debe tener entre 8 y 30 caracteres con minúsculas, mayúsculas y números"
+    },
+    "Le mot de passe de confirmation ne correspond pas" : {
+      "en_EN" : "Confirmation password does not match",
+      "es_ES" : "La contraseña de confirmación no coincide"
+    },
+    "L'email existe déjà" : {
+      "en_EN" : "The email already exists",
+      "es_ES" : "El correo electrónico ya existe"
+    },
+    "Une petite faim ?" : {
+      "en_EN" : "Feeling peckish",
+      "es_ES" : "¿ Un poco de hambre ?"
+    },
+    "N'hésitez pas à créer un compte pour pouvoir profiter de tous les avantages." : {
+      "en_EN" : "Do not hesitate to create an account to enjoy all the benefits.",
+      "es_ES" : "No dudes en crear una cuenta para poder disfrutar de todas las ventajas."
+    },
+    "Se connecter" : {
+      "es_ES" : "Connectarse",
+      "en_EN" : "Login"
+    },
+    "S'inscrire" : {
+      "es_ES" : "Inscribirse",
+      "en_EN" : "Register"
+    },
+    "Mot de passe" : {
+      "es_ES" : "Contraseña",
+      "en_EN" : "Password"
+    },
+    "Identifiants incorrects" : {
+      "es_ES" : "Identificadores incorrectos",
+      "en_EN" : "Incorrect identifiers"
+    },
+    "Prénom" : {
+      "en_EN" : "First name",
+      "es_ES" : "Nombre"
+    },
+    "Nom" : {
+      "en_EN" : "Last name",
+      "es_ES" : "Apellido"
+    },
+    "Confirmation de mot de passe" : {
+      "en_EN" : "Confirmation of password",
+      "es_ES" : "Confirmación de la contraseña"
+    },
+    "J'accepte de recevoir les newsletter par email" : {
+      "en_EN" : "I agree to receive newsletters by email",
+      "es_ES" : "Acepto recibir las newsletter por correo electrónico"
     }
   },
   "ingredients": {
