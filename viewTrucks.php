@@ -14,8 +14,8 @@ $listTrucks = getTrucks();
     <div class="container">
         <div class="row">
             <div class="col-lg-12">
-                <h1><i><?php getTranslate("Nos menus", $tabLang, $setLanguage) ?></i></h1>
-                <p class="pt-2"><i><?php getTranslate("titreViewTrucks1", $tabLang, $setLanguage) ?></i></p>
+                <h1><i><?php echo getTranslate("Nos menus", $tabLang, $setLanguage) ?></i></h1>
+                <p class="pt-2"><i><?php echo getTranslate("titreViewTrucks1", $tabLang, $setLanguage) ?></i></p>
             </div>
         </div>
     </div>
@@ -33,11 +33,11 @@ $listTrucks = getTrucks();
         <div class="btn-group btn-group-toggle " data-toggle="buttons">
             <label class="btn btn-success active">
                 <input type="radio" name="options" id="option1" autocomplete="off" onclick="removeFilterTruck()"
-                       checked><?php getTranslate("Tous", $tabLang, $setLanguage) ?>
+                       checked><?php echo getTranslate("Tous", $tabLang, $setLanguage) ?>
             </label>
             <label class="btn btn-success">
                 <input type="radio" name="options" id="option2" autocomplete="off"
-                       onclick="filterTruck()"> <?php getTranslate("Ouvert", $tabLang, $setLanguage) ?>
+                       onclick="filterTruck()"> <?php echo getTranslate("Ouvert", $tabLang, $setLanguage) ?>
             </label>
         </div>
 
@@ -58,15 +58,14 @@ $listTrucks = getTrucks();
                                 <?php
                                 if (isOpen($truck["idTruck"])) {
                                     echo '<span class="style-change" style="color: green">';
-                                    getTranslate("Ouvert", $tabLang, $setLanguage);
+                                    echo getTranslate("Ouvert", $tabLang, $setLanguage);
                                 } else {
                                     echo '<span class="style-change isClosed" style="color: darkred">';
-                                    getTranslate("Fermé", $tabLang, $setLanguage);
+                                    echo getTranslate("Fermé", $tabLang, $setLanguage);
                                 }
                                 echo '</span>'
 
                                 ?>
-
                             </div>
                             <p class="pt-3"><?php echo $truck["categorie"] ?> </p>
                         </div>

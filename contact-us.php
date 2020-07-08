@@ -19,7 +19,7 @@ $trucks = getTrucks();
         <div class="container">
             <div class="row">
                 <div class="col-lg-12">
-                    <h1><i><?php getTranslate("Contactez-nous", $tabLang, $setLanguage); ?></i></h1>
+                    <h1><i><?php echo getTranslate("Contactez-nous", $tabLang, $setLanguage); ?></i></h1>
 
                 </div>
             </div>
@@ -49,8 +49,8 @@ $trucks = getTrucks();
                 <div class="row" id="thanksMessage">
                     <div class="col-md-5">
                         <div class="section-top">
-                            <?php getTranslate("confirmContact1", $tabLang, $setLanguage); ?>
-                            <p> <?php getTranslate("confirmContact2", $tabLang, $setLanguage); ?></p>
+                            <?php echo getTranslate("confirmContact1", $tabLang, $setLanguage); ?>
+                            <p> <?php echo getTranslate("confirmContact2", $tabLang, $setLanguage); ?></p>
 
                         </div>
                     </div>
@@ -73,8 +73,8 @@ $trucks = getTrucks();
                 <div class="row" id="thanksMessage">
                     <div class="col-md-5">
                         <div class="section-top">
-                            <?php getTranslate("confirmContact1 ", $tabLang, $setLanguage); ?>
-                            <p> <?php getTranslate("confirmContact2", $tabLang, $setLanguage); ?></p>
+                            <?php echo getTranslate("confirmContact1 ", $tabLang, $setLanguage); ?>
+                            <p> <?php echo getTranslate("confirmContact2", $tabLang, $setLanguage); ?></p>
                         </div>
                     </div>
                 </div>
@@ -98,10 +98,10 @@ $trucks = getTrucks();
                                 </div>
                                 <input type="email" disabled value="<?php echo $user["emailAddress"] ?>" required>
                                 <input type="text" name="subject"
-                                       placeholder="<?php getTranslate("Sujet", $tabLang, $setLanguage); ?> *" required>
+                                       placeholder="<?php echo getTranslate("Sujet", $tabLang, $setLanguage); ?> *" required>
 
                                 <select name="destinataire" class="custom-select">
-                                    <option value=""><?php getTranslate("Administration", $tabLang, $setLanguage); ?></option>
+                                    <option value=""><?php echo getTranslate("Administration", $tabLang, $setLanguage); ?></option>
                                     <?php
                                     foreach ($trucks as $truck) {
                                         if ($truck["idTruck"] == $_GET["idTruck"])
@@ -118,7 +118,7 @@ $trucks = getTrucks();
                                           required></textarea>
                             </div>
                             <button type="submit"
-                                    class="template-btn"><?php getTranslate("Envoyer", $tabLang, $setLanguage); ?></button>
+                                    class="template-btn"><?php echo getTranslate("Envoyer", $tabLang, $setLanguage); ?></button>
                         </form>
                     </div>
                 </div>
