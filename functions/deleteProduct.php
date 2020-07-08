@@ -5,7 +5,7 @@ require "../functions.php";
 session_start();
 
 
-if (isset($_GET["cart"], $_GET["product"])){
+if (isset($_GET["cart"], $_GET["product"])) {
 
     $cart = $_GET["cart"];
     $product = $_GET["product"];
@@ -37,6 +37,6 @@ if (isset($_GET["cart"], $_GET["product"])){
         ":price" => $cartPrice,
         ":cart" => $cart
     ]);
-}else{
+} else {
     echo "Erreur lors de la modification. Merci de réessayer";
 }

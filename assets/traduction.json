@@ -35,134 +35,134 @@
       "en_EN": "<b>truly</b> local cuisine",
       "fr_FR": "la cuisine <b>vraiment</b> locale"
     },
-    "Désolé" : {
-      "es_ES" : "Lo siento",
-      "en_EN" : "Sorry"
+    "Désolé": {
+      "es_ES": "Lo siento",
+      "en_EN": "Sorry"
     },
-    "TitreOutOfMenus" : {
-      "es_ES" : "Nos robaron",
-      "en_EN" : "We were robed",
-      "fr_FR" : "On s'est fait dévalisé"
+    "TitreOutOfMenus": {
+      "es_ES": "Nos robaron",
+      "en_EN": "We were robed",
+      "fr_FR": "On s'est fait dévalisé"
     },
-    "Horaire du camion" : {
-      "es_ES" : "Horario de camiones",
-      "en_EN" : "Truck schedule",
-      "fr_FR" : "Horaire du camion"
+    "Horaire du camion": {
+      "es_ES": "Horario de camiones",
+      "en_EN": "Truck schedule",
+      "fr_FR": "Horaire du camion"
     },
-    "Jour de la semaine" : {
-      "es_ES" : "Día de la semana",
-      "en_EN" : "Day of the week",
-      "fr_FR" : "Jour de la semaine"
+    "Jour de la semaine": {
+      "es_ES": "Día de la semana",
+      "en_EN": "Day of the week",
+      "fr_FR": "Jour de la semaine"
     },
-    "Ouverture" : {
-      "es_ES" : "Abierto",
-      "en_EN" : "Open",
-      "fr_FR" : "Ouverture"
+    "Ouverture": {
+      "es_ES": "Abierto",
+      "en_EN": "Open",
+      "fr_FR": "Ouverture"
     },
-    "Fermeture" : {
-      "es_ES" : "Cerrado",
-      "en_EN" : "Close",
-      "fr_FR" : "Fermeture"
+    "Fermeture": {
+      "es_ES": "Cerrado",
+      "en_EN": "Close",
+      "fr_FR": "Fermeture"
     },
-    "Mon compte" : {
-      "es_ES" : "Mi cuenta",
-      "en_EN" : "My account",
-      "fr_FR" : "Mon compte"
+    "Mon compte": {
+      "es_ES": "Mi cuenta",
+      "en_EN": "My account",
+      "fr_FR": "Mon compte"
     },
-    "Connexion" : {
-      "es_ES" : "Conexión",
-      "en_EN" : "Log in",
-      "fr_FR" : "Connexion"
+    "Connexion": {
+      "es_ES": "Conexión",
+      "en_EN": "Log in",
+      "fr_FR": "Connexion"
     },
-    "Mon profil" : {
-      "es_ES" : "Mi perfil",
-      "en_EN" : "My profile",
-      "fr_FR" : "Mon profil"
+    "Mon profil": {
+      "es_ES": "Mi perfil",
+      "en_EN": "My profile",
+      "fr_FR": "Mon profil"
     },
-    "Mot de passe" : {
-      "es_ES" : "Mi contraseña",
-      "en_EN" : "My password",
-      "fr_FR" : "Mon mot de passe"
+    "Mot de passe": {
+      "es_ES": "Mi contraseña",
+      "en_EN": "My password",
+      "fr_FR": "Mon mot de passe"
     },
-    "Déconnexion" : {
-      "es_ES" : "Desconexión",
-      "en_EN" : "Logout",
-      "fr_FR" : "Déconnexion"
+    "Déconnexion": {
+      "es_ES": "Desconexión",
+      "en_EN": "Logout",
+      "fr_FR": "Déconnexion"
     },
-    "Lundi" : {
-      "es_ES" : "Lunes",
-      "en_EN" : "Monday",
-      "fr_FR" : "Lundi"
+    "Lundi": {
+      "es_ES": "Lunes",
+      "en_EN": "Monday",
+      "fr_FR": "Lundi"
     },
-    "Mardi" : {
-      "es_ES" : "Martes",
-      "en_EN" : "Tuesday",
-      "fr_FR" : "Mardi"
+    "Mardi": {
+      "es_ES": "Martes",
+      "en_EN": "Tuesday",
+      "fr_FR": "Mardi"
     },
-    "Mercredi" : {
-      "es_ES" : "Miércoles",
-      "en_EN" : "Wednesday",
-      "fr_FR" : "Mercredi"
+    "Mercredi": {
+      "es_ES": "Miércoles",
+      "en_EN": "Wednesday",
+      "fr_FR": "Mercredi"
     },
-    "Jeudi" : {
-      "es_ES" : "Jueves",
-      "en_EN" : "Thursday",
-      "fr_FR" : "Jeudi"
+    "Jeudi": {
+      "es_ES": "Jueves",
+      "en_EN": "Thursday",
+      "fr_FR": "Jeudi"
     },
-    "Vendredi" : {
-      "es_ES" : "Viernes",
-      "en_EN" : "Friday",
-      "fr_FR" : "Vendredi"
+    "Vendredi": {
+      "es_ES": "Viernes",
+      "en_EN": "Friday",
+      "fr_FR": "Vendredi"
     },
-    "Samedi" : {
-      "es_ES" : "Sábado",
-      "en_EN" : "Saturday",
-      "fr_FR" : "Samedi"
+    "Samedi": {
+      "es_ES": "Sábado",
+      "en_EN": "Saturday",
+      "fr_FR": "Samedi"
     },
-    "Dimanche" : {
-      "es_ES" : "Domingo",
-      "en_EN" : "Sunday",
-      "fr_FR" : "Dimanche"
+    "Dimanche": {
+      "es_ES": "Domingo",
+      "en_EN": "Sunday",
+      "fr_FR": "Dimanche"
     },
-    "Voir les menus" : {
-      "es_ES" : "Ver todos los menús",
-      "en_EN" : "See the menus",
-      "fr_FR" : "Voir les menus"
+    "Voir les menus": {
+      "es_ES": "Ver todos los menús",
+      "en_EN": "See the menus",
+      "fr_FR": "Voir les menus"
     },
-    "Voir les produits" : {
-      "es_ES" : "Ver todos los productos",
-      "en_EN" : "See products",
-      "fr_FR" : "Voir les produits"
+    "Voir les produits": {
+      "es_ES": "Ver todos los productos",
+      "en_EN": "See products",
+      "fr_FR": "Voir les produits"
     },
-    "Tous les menus disponibles" : {
-      "es_ES" : "Todos los menús disponibles",
-      "en_EN" : "All menus available",
-      "fr_FR" : "Tous les menus disponibles"
+    "Tous les menus disponibles": {
+      "es_ES": "Todos los menús disponibles",
+      "en_EN": "All menus available",
+      "fr_FR": "Tous les menus disponibles"
     },
-    "Tous les produits disponibles" : {
-      "es_ES" : "Todos los productos disponibles",
-      "en_EN" : "All products available",
-      "fr_FR" : "Tous les produits disponibles"
+    "Tous les produits disponibles": {
+      "es_ES": "Todos los productos disponibles",
+      "en_EN": "All products available",
+      "fr_FR": "Tous les produits disponibles"
     },
-    "Ajouter à mon panier" : {
-      "es_ES" : "Añadir a mi carrito",
-      "en_EN" : "Add to my cart",
-      "fr_FR" : "Ajouter à mon panier"
+    "Ajouter à mon panier": {
+      "es_ES": "Añadir a mi carrito",
+      "en_EN": "Add to my cart",
+      "fr_FR": "Ajouter à mon panier"
     },
-    "Erreur" : {
-      "es_ES" : "Error",
-      "en_EN" : "Error",
-      "fr_FR" : "Erreur"
+    "Erreur": {
+      "es_ES": "Error",
+      "en_EN": "Error",
+      "fr_FR": "Erreur"
     },
-    "Vous ne pouvez pas ajouter un menu venant d'un autre camion" : {
-      "es_ES" : "No se puede añadir un menú de otro camión",
-      "en_EN" : "You can’t add a menu from another truck",
-      "fr_FR" : "Vous ne pouvez pas ajouter un menu venant d'un autre camion"
+    "Vous ne pouvez pas ajouter un menu venant d'un autre camion": {
+      "es_ES": "No se puede añadir un menú de otro camión",
+      "en_EN": "You can’t add a menu from another truck",
+      "fr_FR": "Vous ne pouvez pas ajouter un menu venant d'un autre camion"
     },
-    "Fermer" : {
-      "es_ES" : "Cerrar",
-      "en_EN" : "Close",
-      "fr_FR" : "Erreur"
+    "Fermer": {
+      "es_ES": "Cerrar",
+      "en_EN": "Close",
+      "fr_FR": "Erreur"
     },
     "titre2": {
       "es_ES": "Descubre los <span class=\"prime-color\">sabores</span><br><span class=\"style-change\">de <span class=\"prime-color\">Driv'n</span>&nbsp;Cook</span>",
@@ -258,6 +258,6 @@
       "en_EN": "\"Honey, what are we eating tonight? Colleague, where are you eating for lunch?\"Do these questions speak to you? We too, that's why we created Driv'n Cook, the best FoodTruck network across France. No more gruyère pasta, ketchup pasta, or even gruyère and ketchup pasta! Make way for real food, prepared on site, before your eyes, by enthusiasts who travel to your city to help you discover the recipes of their grandparents.\"But, you have to know the menu, and then I don't really want to wait there ..\" But not at all! Thanks to our website, you can order, pay, earn loyalty points, all from your sofa! However, in a 100% connected society, human contact remains essential, so you will simply have to go get your delicious meal, in exchange for a simple smile. Wonderful, right? Don't wait any longer, our trucks are coming to you, come and discover food, real food \""
     }
   },
-  "ingredients" : {
+  "ingredients": {
   }
 }

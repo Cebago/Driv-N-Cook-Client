@@ -3,7 +3,7 @@ session_start();
 require "conf.inc.php";
 require "functions.php";
 
-if (isConnected() && isActivated() ) {
+if (isConnected() && isActivated()) {
 
     include "header.php";
     include "navbar.php";
@@ -31,7 +31,7 @@ if (isConnected() && isActivated() ) {
                     <div class="card-header">
                         <div class="bg-white shadow-sm">
                             <ul role="tablist" class="nav bg-light nav-pills nav-tabs rounded nav-fill mb-4" id="myTab">
-                                <li class="nav-item"  role="presentation">
+                                <li class="nav-item" role="presentation">
                                     <a data-toggle="tab" href="#creditCard" id="creditLink" class="nav-link active"
                                        aria-controls="creditCard" aria-selected="true">
                                         <i class="fas fa-credit-card mr-2"></i>&nbsp;Carte de crédit
@@ -47,16 +47,18 @@ if (isConnected() && isActivated() ) {
                             </ul>
                         </div>
                         <div class="tab-content" id="myTabContent">
-                            <div id="creditCard" class="tab-pane fade show active pt-3" role="tabpanel" aria-labelledby="creditLink">
+                            <div id="creditCard" class="tab-pane fade show active pt-3" role="tabpanel"
+                                 aria-labelledby="creditLink">
                                 <form role="form" method="POST" action="functions/payMyCart.php">
                                     <div class="form-group">
                                         <label for="username">
                                             <h6 class="text-muted">Propriétaire de la carte</h6>
                                         </label>
                                         <input type="text" name="username" placeholder="Propriétaire de la carte"
-                                               required class="form-control" value="<?php echo (isset($_SESSION["input"]))
-                                            ? $_SESSION["input"]["username"]
-                                            : ""; ?>">
+                                               required class="form-control"
+                                               value="<?php echo (isset($_SESSION["input"]))
+                                                   ? $_SESSION["input"]["username"]
+                                                   : ""; ?>">
                                     </div>
                                     <div class="form-group">
                                         <label for="cardNumber">
@@ -71,7 +73,7 @@ if (isConnected() && isActivated() ) {
                                                        : "";
                                                    if (isset($_SESSION['input'])) {
                                                        unset($_SESSION["input"]);
-                                                   }?>">
+                                                   } ?>">
                                             <div class="input-group-append">
                                                 <span class="input-group-text text-muted">
                                                     <i class="fab fa-cc-visa mx-1"></i>
@@ -90,9 +92,11 @@ if (isConnected() && isActivated() ) {
                                                     </span>
                                                 </label>
                                                 <div class="input-group">
-                                                    <input type="number" placeholder="MM" name="month" class="form-control"
+                                                    <input type="number" placeholder="MM" name="month"
+                                                           class="form-control"
                                                            required>
-                                                    <input type="number" placeholder="AA" name="year" class="form-control"
+                                                    <input type="number" placeholder="AA" name="year"
+                                                           class="form-control"
                                                            required>
                                                 </div>
                                             </div>
@@ -114,11 +118,11 @@ if (isConnected() && isActivated() ) {
                                     $pdo = connectDB();
                                     $queryPrepared = $pdo->prepare("SELECT points FROM USER, FIDELITY WHERE emailAddress = :email AND idFidelity = fidelityCard");
                                     $queryPrepared->execute([
-                                            ":email" => $_SESSION["email"]
+                                        ":email" => $_SESSION["email"]
                                     ]);
                                     $fidelity = $queryPrepared->fetch(PDO::FETCH_ASSOC);
                                     if (!empty($fidelity) && $fidelity["points"] > 0) {
-                                    ?>
+                                        ?>
                                         <div class="form-group">
                                             <label for="select">
                                                 <h6 class="text-muted">Avantages disponibles</h6>
@@ -128,7 +132,7 @@ if (isConnected() && isActivated() ) {
                                                 <?php
                                                 $queryPrepared = $pdo->prepare("SELECT idAdvantage, advantageName FROM ADVANTAGE WHERE advantagePoints <= :points");
                                                 $queryPrepared->execute([
-                                                        ":points" => $fidelity["points"]
+                                                    ":points" => $fidelity["points"]
                                                 ]);
                                                 $advantages = $queryPrepared->fetchAll(PDO::FETCH_ASSOC);
                                                 if (!empty($advantages)) {
@@ -139,11 +143,12 @@ if (isConnected() && isActivated() ) {
                                                 ?>
                                             </select>
                                         </div>
-                                    <?php
+                                        <?php
                                     }
                                     ?>
                                     <div class="card-footer">
-                                        <button type="submit" class="genric-btn primary circle arrow mx-auto col-md-12 shadow-sm">
+                                        <button type="submit"
+                                                class="genric-btn primary circle arrow mx-auto col-md-12 shadow-sm">
                                             <i class="far fa-credit-card"></i>
                                             &nbsp;Confirmer le paiement
                                         </button>
@@ -223,10 +228,10 @@ if (isConnected() && isActivated() ) {
                                     ?>
                                 </span>
                             </li>
-                    <?php
+                            <?php
                         }
                     }
-                        ?>
+                    ?>
                     <li class="list-group-item d-flex justify-content-between lh-condensed">
                         <div>
                             <h6 class="my-0 text-muted">

@@ -4,7 +4,7 @@
     margin: 20px auto auto auto;
 }
 
-.eventText{
+.eventText {
     overflow: hidden;
     display: -webkit-box;
     -webkit-line-clamp: 3;

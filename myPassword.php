@@ -8,7 +8,7 @@ if (!isConnected() || !isActivated()) {
 }
 
 require "header.php" ?>
-<body>
+    <body>
 <?php
 require "navbar.php";
 ?>
@@ -53,7 +53,8 @@ require "navbar.php";
                         <div class="input-group-prepend">
                             <span class="input-group-text">Nouveau Mot de passe</span>
                         </div>
-                        <input class="form-control" type="password" placeholder="Nouveau mot de passe" name="newPassword"
+                        <input class="form-control" type="password" placeholder="Nouveau mot de passe"
+                               name="newPassword"
                                required>
                     </div>
                     <div class="input-group flex-nowrap mt-1 col-md-5 mx-auto">
@@ -80,7 +81,9 @@ require "navbar.php";
                     <div class="col-md-4">
                         <div class="single-widget single-widget1">
                             <a href="index.html"><img src="assets/images/logo/logo2.png" alt=""></a>
-                            <p class="mt-3">Which morning fourth great won't is to fly bearing man. Called unto shall seed, deep, herb set seed land divide after over first creeping. First creature set upon stars deep male gathered said she'd an image spirit our</p>
+                            <p class="mt-3">Which morning fourth great won't is to fly bearing man. Called unto shall
+                                seed, deep, herb set seed land divide after over first creeping. First creature set upon
+                                stars deep male gathered said she'd an image spirit our</p>
                         </div>
                     </div>
                     <div class="col-md-4">
@@ -129,8 +132,10 @@ require "navbar.php";
                 <div class="row">
                     <div class="col-lg-7 col-md-6">
                         <span><!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
-Copyright &copy;<script>document.write(new Date().getFullYear());</script> All rights reserved | This template is made with <i class="fa fa-heart-o" aria-hidden="true"></i> by <a href="https://colorlib.com" target="_blank">Colorlib</a>
-<!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. --></span>
+Copyright &copy;<script>document.write(new Date().getFullYear());</script> All rights reserved | This template is made with <i
+                                    class="fa fa-heart-o" aria-hidden="true"></i> by <a href="https://colorlib.com"
+                                                                                        target="_blank">Colorlib</a>
+                            <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. --></span>
                     </div>
                     <div class="col-lg-5 col-md-6">
                         <div class="social-icons">

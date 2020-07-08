@@ -13,7 +13,7 @@ if (isActivated() && isConnected()) {
     ?>
 
     <?php include "navbar.php"; ?>
-<body>
+    <body>
 
 <!-- Banner Area Starts -->
 <section class="banner-area banner-area2 menu-bg text-center">
@@ -51,12 +51,12 @@ if (isActivated() && isConnected()) {
                         ]);
                         continue;
                     }
-                        $printedMenus++;
-                    if(!empty($menu["quantity"])){
+                    $printedMenus++;
+                    if (!empty($menu["quantity"])) {
                         $total += $menu["menuPrice"] * $menu["quantity"];
                     }
                     ?>
-                    <div class="col-md-5 col-sm-4" id="deleteMenu<?php echo $menu["idMenu"];?>">
+                    <div class="col-md-5 col-sm-4" id="deleteMenu<?php echo $menu["idMenu"]; ?>">
                         <div class="single-food">
                             <div class="food-img">
                                 <img src="<?php echo $menu["menuImage"] ?>" class="img-fluid" alt="">
@@ -69,7 +69,8 @@ if (isActivated() && isConnected()) {
                                             echo "<li>" . $product["productName"] . "</li>";
                                         } ?>
                                     </ul>
-                                    <span class="style-change" id="inputPriceMenu<?php echo $menu["idMenu"]; ?>"><?php echo number_format($menu["menuPrice"], 2). "€"?></span>
+                                    <span class="style-change"
+                                          id="inputPriceMenu<?php echo $menu["idMenu"]; ?>"><?php echo number_format($menu["menuPrice"], 2) . "€" ?></span>
                                 </div>
                                 <div class="d-flex justify-content-between">
                                     <span class="style-change"
@@ -83,12 +84,12 @@ if (isActivated() && isConnected()) {
                                         onclick='addMenuQuantity(<?php echo $idCart . ", " . $menu["idMenu"]; ?>)'
                                         class="btn btn-sm btn-success ml-1"><i class="fas fa-plus"></i></button>
                                 <button type="button"
-                                        onclick='completelyMenuDelete(<?php echo $idCart .', '. $menu["idMenu"]; ?>)'
+                                        onclick='completelyMenuDelete(<?php echo $idCart . ', ' . $menu["idMenu"]; ?>)'
                                         class="btn btn-sm btn-secondary ml-1 pull-right">Supprimer</i></button>
                             </div>
                         </div>
                     </div>
-                <?php
+                    <?php
                 }
             }
             ?>
@@ -109,11 +110,11 @@ if (isActivated() && isConnected()) {
                 foreach ($products as $product) {
                     $printedMenus++;
 
-                    if(!empty($product["quantity"])){
+                    if (!empty($product["quantity"])) {
                         $total += $product["productPrice"] * $product["quantity"];
                     }
                     ?>
-                    <div class="col-md-5 col-sm-4" id="deleteProduct<?php echo $product["idProduct"];?>">
+                    <div class="col-md-5 col-sm-4" id="deleteProduct<?php echo $product["idProduct"]; ?>">
                         <div class="single-food">
                             <div class="food-img">
                                 <img src="#" class="img-fluid" alt="">
@@ -121,7 +122,8 @@ if (isActivated() && isConnected()) {
                             <div class="food-content">
                                 <div class="d-flex justify-content-between">
                                     <h5><?php echo $product["productName"] ?></h5>
-                                    <span class="style-change" id="inputPriceProduct<?php echo $product["idProduct"]; ?>"><?php echo number_format($product["productPrice"], 2) . "€"?></span>
+                                    <span class="style-change"
+                                          id="inputPriceProduct<?php echo $product["idProduct"]; ?>"><?php echo number_format($product["productPrice"], 2) . "€" ?></span>
                                 </div>
                                 <div class="d-flex justify-content-between">
                                     <span class="style-change"
@@ -132,15 +134,15 @@ if (isActivated() && isConnected()) {
                                         class="btn btn-sm btn-danger ml-1" id="<?php echo $product["idProduct"] ?>"><i
                                             class="fas fa-minus"></i></button>
                                 <button type="button"
-                                        onclick='addProductQuantity(<?php echo $idCart . ", " . $product["idProduct"]?>)'
+                                        onclick='addProductQuantity(<?php echo $idCart . ", " . $product["idProduct"] ?>)'
                                         class="btn btn-sm btn-success ml-1"><i class="fas fa-plus"></i></button>
                                 <button type="button"
-                                        onclick='completelyProductDelete(<?php echo $idCart .', '. $product["idProduct"]; ?>)'
+                                        onclick='completelyProductDelete(<?php echo $idCart . ', ' . $product["idProduct"]; ?>)'
                                         class="btn btn-sm btn-secondary ml-1 pull-right">Supprimer</i></button>
                             </div>
                         </div>
                     </div>
-                <?php
+                    <?php
                 }
             }
             ?>
@@ -148,7 +150,8 @@ if (isActivated() && isConnected()) {
     </div>
 
     <div class="section-top2 pull-right col-md-4">
-        <h4><span class="style-change" id="total<?php echo $idCart?>"><?php echo number_format($total,2)."€"; ?></span></h4>
+        <h4><span class="style-change"
+                  id="total<?php echo $idCart ?>"><?php echo number_format($total, 2) . "€"; ?></span></h4>
     </div>
     <div class="pull-right col-md-3">
         <a href="payment.php" class="template-btn template-btn2 mt-4">Payer</a>
@@ -157,7 +160,6 @@ if (isActivated() && isConnected()) {
 
 
 <!-- Food Area End -->
-
 
 
 <!-- Table Area Starts -->

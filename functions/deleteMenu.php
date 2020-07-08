@@ -5,7 +5,7 @@ require "../functions.php";
 session_start();
 
 
-if (isset($_GET["cart"], $_GET["menu"])){
+if (isset($_GET["cart"], $_GET["menu"])) {
 
     $cart = $_GET["cart"];
     $menu = $_GET["menu"];
@@ -19,7 +19,7 @@ if (isset($_GET["cart"], $_GET["menu"])){
 
     $queryPrepared = $pdo->prepare("SELECT menuPrice FROM MENUS WHERE idMenu = :menu");
     $queryPrepared->execute([
-        ":menu" =>$menu,
+        ":menu" => $menu,
     ]);
     $price = $queryPrepared->fetch(PDO::FETCH_ASSOC);
     $price = $price["menuPrice"];
@@ -37,6 +37,6 @@ if (isset($_GET["cart"], $_GET["menu"])){
         ":price" => $cartPrice,
         ":cart" => $cart
     ]);
-}else{
+} else {
     echo "Erreur lors de la modification. Merci de réessayer";
 }

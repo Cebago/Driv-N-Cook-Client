@@ -1,7 +1,7 @@
 <?php
 session_start();
 require('navbar.php');
-$truckMenu=[];
+$truckMenu = [];
 $count = 0;
 ?>
 <body>
@@ -21,7 +21,6 @@ $count = 0;
 <!-- Banner Area End -->
 
 
-
 <!-- Welcome Area Starts -->
 <section class="welcome-area section-padding4">
     <div class="container-fluid">
@@ -33,9 +32,12 @@ $count = 0;
             </div>
             <div class="col-md-6 align-self-center">
                 <div class="welcome-text mt-5 mt-md-0">
-                    <h3><span class="style-change"><?php echo getTranslate("bienvenue", $tabLang, $setLanguage); ?></span>&nbsp<?php echo getTranslate("chez", $tabLang, $setLanguage); ?></h3>
+                    <h3>
+                        <span class="style-change"><?php echo getTranslate("bienvenue", $tabLang, $setLanguage); ?></span>&nbsp<?php echo getTranslate("chez", $tabLang, $setLanguage); ?>
+                    </h3>
                     <p class="pt-3"><?php echo getTranslate("descriptionHome", $tabLang, $setLanguage); ?></p>
-                    <a href="#" class="template-btn mt-3"><?php echo getTranslate("voirTruck", $tabLang, $setLanguage); ?></a>
+                    <a href="#"
+                       class="template-btn mt-3"><?php echo getTranslate("voirTruck", $tabLang, $setLanguage); ?></a>
                 </div>
             </div>
         </div>
@@ -61,8 +63,8 @@ $count = 0;
     <div class="container">
         <div class="row">
             <?php $getMenus = getMenuForHomePage();
-            foreach ($getMenus as $getMenu){
-                if($count < '6'){
+            foreach ($getMenus as $getMenu) {
+                if ($count < '6') {
                     if (!in_array($getMenu["truck"], $truckMenu)) {
                         ?>
                         <div class="col-md-4 col-sm-6">
@@ -73,7 +75,7 @@ $count = 0;
                                 <div class="food-content">
                                     <div class="d-flex justify-content-between">
                                         <h5><?php echo $getMenu["menuName"]; ?></h5>
-                                        <span class="style-change"><?php echo number_format($getMenu["menuPrice"],2)."€"; ?></span>
+                                        <span class="style-change"><?php echo number_format($getMenu["menuPrice"], 2) . "€"; ?></span>
                                     </div>
                                 </div>
                             </div>
@@ -104,10 +106,10 @@ $events = getEventsPreview();
         <div class="row">
             <div class="col-lg-12">
                 <div class="testimonial-slider owl-carousel">
-                    <?php foreach ($events as $event){?>
+                    <?php foreach ($events as $event) { ?>
                         <div class="single-slide d-sm-flex" style="height: 200px;">
                             <div class="customer-img mr-4 mb-4 mb-sm-0">
-                                <img src="<?php echo $event["eventImg"]?>" alt="">
+                                <img src="<?php echo $event["eventImg"] ?>" alt="">
                             </div>
                             <div class="customer-text">
                                 <h5><?php echo $event["eventName"] ?></h5>
@@ -115,7 +117,7 @@ $events = getEventsPreview();
                                 <p class="pt-3 eventText "><?php echo $event["eventDesc"] ?></p>
                             </div>
                         </div>
-                    <?php }?>
+                    <?php } ?>
                 </div>
             </div>
         </div>

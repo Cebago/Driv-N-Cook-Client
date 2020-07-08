@@ -1,4 +1,4 @@
-<?php require "header.php"?>
+<?php require "header.php" ?>
 <body>
 
 <!-- Banner Area Starts -->

@@ -74,7 +74,7 @@ if (isConnected() && isActivated()) {
                         <ul>
                             <li class="active">
                                 <a
-                                    href="home.php"><?php echo getTranslate("accueil", $tabLang, $setLanguage); ?>
+                                        href="home.php"><?php echo getTranslate("accueil", $tabLang, $setLanguage); ?>
                                 </a>
                             </li>
                             <li>
@@ -93,15 +93,15 @@ if (isConnected() && isActivated()) {
                                 </a>
                             </li>
                             <?php
-                            if (isConnected() && isActivated()) {?>
-                            <li>
-                                <a href="cart.php" class="btn btn-transparent btn-lg active" role="button"
-                                   aria-pressed="true"><i class="fas fa-shopping-cart"></i>&nbsp
-                                    <span class="badge badge-alert" id="count">
+                            if (isConnected() && isActivated()) { ?>
+                                <li>
+                                    <a href="cart.php" class="btn btn-transparent btn-lg active" role="button"
+                                       aria-pressed="true"><i class="fas fa-shopping-cart"></i>&nbsp
+                                        <span class="badge badge-alert" id="count">
                                         <?php echo $quantity; ?>
                                     </span>
-                                </a>
-                            </li>
+                                    </a>
+                                </li>
                             <?php } ?>
                             <li class="nav-item dropdown">
                                 <a class="nav-link dropdown-toggle" id="dropdown09" data-toggle="dropdown"
@@ -119,42 +119,43 @@ if (isConnected() && isActivated()) {
                                 </div>
                             </li>
                             <li>
-                            <?php
-                            if (isConnected() && isActivated()) { ?>
+                                <?php
+                                if (isConnected() && isActivated()) { ?>
                                 <a href="#" class="btn btn-transparent btn-lg active" role="button"
                                    aria-pressed="true" data-toggle="dropdown"><i class="fas fa-user-circle"></i>&nbsp;
-                            <?php
-                                echo getTranslate("Mon compte", $tabLang, $setLanguage);
-                                echo "</a>";
-                            } else { ?>
-                                <a href="login.php" class="btn btn-transparent btn-lg active" role="button"
-                                   aria-pressed="true"><i class="fas fa-user-circle"></i>&nbsp;
-                            <?php
-                                echo getTranslate("Connexion", $tabLang, $setLanguage);
-                                echo "</a>";
-                            }
-                            ?>
-                                <div class="dropdown-menu dropdown-menu-lg-left">
-                                    <a class="dropdown-item" href="myProfile.php">
+                                    <?php
+                                    echo getTranslate("Mon compte", $tabLang, $setLanguage);
+                                    echo "</a>";
+                                    } else { ?>
+                                    <a href="login.php" class="btn btn-transparent btn-lg active" role="button"
+                                       aria-pressed="true"><i class="fas fa-user-circle"></i>&nbsp;
                                         <?php
-                                        echo getTranslate("Mon profil", $tabLang, $setLanguage)
+                                        echo getTranslate("Connexion", $tabLang, $setLanguage);
+                                        echo "</a>";
+                                        }
                                         ?>
-                                    </a>
-                                    <a class="dropdown-item" href="orderHistory.php">
-                                        <?php
-                                        echo getTranslate("Mes commandes", $tabLang, $setLanguage)
-                                        ?>
-                                    </a>
-                                    <a class="dropdown-item" href="myPassword.php">
-                                        <?php
-                                        echo getTranslate("Mot de passe", $tabLang, $setLanguage)
-                                        ?>
-                                    </a>
-                                    <a class="dropdown-item" href="functions/logout.php"><i class="fas fa-sign-out-alt"></i>&nbsp;
-                                        <?php
-                                        echo getTranslate("Déconnexion", $tabLang, $setLanguage)
-                                        ?></a>
-                                </div>
+                                        <div class="dropdown-menu dropdown-menu-lg-left">
+                                            <a class="dropdown-item" href="myProfile.php">
+                                                <?php
+                                                echo getTranslate("Mon profil", $tabLang, $setLanguage)
+                                                ?>
+                                            </a>
+                                            <a class="dropdown-item" href="orderHistory.php">
+                                                <?php
+                                                echo getTranslate("Mes commandes", $tabLang, $setLanguage)
+                                                ?>
+                                            </a>
+                                            <a class="dropdown-item" href="myPassword.php">
+                                                <?php
+                                                echo getTranslate("Mot de passe", $tabLang, $setLanguage)
+                                                ?>
+                                            </a>
+                                            <a class="dropdown-item" href="functions/logout.php"><i
+                                                        class="fas fa-sign-out-alt"></i>&nbsp;
+                                                <?php
+                                                echo getTranslate("Déconnexion", $tabLang, $setLanguage)
+                                                ?></a>
+                                        </div>
                             </li>
                         </ul>
                     </div>

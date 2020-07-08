@@ -98,7 +98,8 @@ $trucks = getTrucks();
                                 </div>
                                 <input type="email" disabled value="<?php echo $user["emailAddress"] ?>" required>
                                 <input type="text" name="subject"
-                                       placeholder="<?php echo getTranslate("Sujet", $tabLang, $setLanguage); ?> *" required>
+                                       placeholder="<?php echo getTranslate("Sujet", $tabLang, $setLanguage); ?> *"
+                                       required>
 
                                 <select name="destinataire" class="custom-select">
                                     <option value=""><?php echo getTranslate("Administration", $tabLang, $setLanguage); ?></option>

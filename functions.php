@@ -4,9 +4,10 @@ require_once "conf.inc.php";
 /**
  * @return PDO
  */
-function connectDB(){
-    try{
-        $pdo = new PDO(DBDRIVER.":host=".DBHOST.";dbname=".DBNAME ,DBUSER,DBPWD);
+function connectDB()
+{
+    try {
+        $pdo = new PDO(DBDRIVER . ":host=" . DBHOST . ";dbname=" . DBNAME, DBUSER, DBPWD);
         $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
     } catch (Exception $e) {
         die("Erreur SQL : " . $e->getMessage());
@@ -18,8 +19,9 @@ function connectDB(){
  * @param $email
  * @return false|string
  */
-function createToken($email){
-    $token = md5($email."€monTokenDrivNCook£".time().uniqid());
+function createToken($email)
+{
+    $token = md5($email . "€monTokenDrivNCook£" . time() . uniqid());
     $token = substr($token, 0, rand(15, 20));
     return $token;
 }
@@ -27,7 +29,8 @@ function createToken($email){
 /**
  * @param $email
  */
-function login($email){
+function login($email)
+{
     $token = createToken($email);
     $pdo = connectDB();
     $queryPrepared = $pdo->prepare("UPDATE USERTOKEN, USER SET USERTOKEN.token = :token WHERE user = idUser AND emailAddress = :email AND tokenType = 'Site' ;");
@@ -73,9 +76,10 @@ function isOpen($idTruck)
 /**
  * @return bool
  */
-function isConnected(){
-    if(!empty($_SESSION["email"])
-        && !empty($_SESSION["token"]) ){
+function isConnected()
+{
+    if (!empty($_SESSION["email"])
+        && !empty($_SESSION["token"])) {
         $email = $_SESSION["email"];
         $token = $_SESSION["token"];
         //Vérification d'un correspondant en base de données
@@ -100,8 +104,9 @@ function isConnected(){
 /**
  * @return bool
  */
-function isActivated(){
-    if(!empty($_SESSION["email"]) && !empty($_SESSION["token"]) ){
+function isActivated()
+{
+    if (!empty($_SESSION["email"]) && !empty($_SESSION["token"])) {
         $email = $_SESSION["email"];
         $token = $_SESSION["token"];
         $pdo = connectDB();
@@ -122,8 +127,9 @@ function isActivated(){
 /**
  * @return bool
  */
-function isAdmin(){
-    if(!empty($_SESSION["email"]) && !empty($_SESSION["token"]) ){
+function isAdmin()
+{
+    if (!empty($_SESSION["email"]) && !empty($_SESSION["token"])) {
         $email = $_SESSION["email"];
         $token = $_SESSION["token"];
         $pdo = connectDB();
@@ -148,7 +154,8 @@ function isAdmin(){
 /**
  * @param $email
  */
-function logout($email){
+function logout($email)
+{
     $pdo = connectDB();
     $queryPrepared = $pdo->prepare("UPDATE USER, USERTOKEN SET USERTOKEN.token = null WHERE emailAddress = :email 
                                                     AND idUser = user 
@@ -162,9 +169,10 @@ function logout($email){
  * @param $setLanguage
  * @return mixed
  */
-function getTranslate($text, $tabLang, $setLanguage){
+function getTranslate($text, $tabLang, $setLanguage)
+{
     //si la value existe on traduit, sinon on laisse le texte pas défault
-    if(array_key_exists($text,$tabLang) && array_key_exists($setLanguage, $tabLang[$text]) )
+    if (array_key_exists($text, $tabLang) && array_key_exists($setLanguage, $tabLang[$text]))
         return $tabLang[$text][$setLanguage];
     else
         return $text;
@@ -259,7 +267,7 @@ function getProductsOfMenu($idMenu, $idTruck)
     $queryPrepared->execute([
         ":menu" => $idMenu,
         ":truck" => $idTruck
-        ]);
+    ]);
     $menus = $queryPrepared->fetchAll(PDO::FETCH_ASSOC);
     if (empty($menus)) {
         return null;
@@ -384,7 +392,8 @@ function getUserInfos()
 }
 
 
-function getEventsPreview(){
+function getEventsPreview()
+{
 
     $pdo = connectDB();
     $queryPrepared = $pdo->prepare("SELECT idEvent, truckName, eventDesc, eventImg, eventType, eventName, eventAddress, eventCity, eventPostalCode, eventBeginDate, eventEndDate, eventStartHour, eventEndHour FROM EVENTS, HOST, TRUCK WHERE event = idEvent AND truck = idTruck AND eventType = 'Dégustation' LIMIT 3");
@@ -393,7 +402,8 @@ function getEventsPreview(){
 
 }
 
-function getMenuForHomePage(){
+function getMenuForHomePage()
+{
 
     $pdo = connectDB();
 
