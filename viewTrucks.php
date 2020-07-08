@@ -72,13 +72,10 @@ $listTrucks = getTrucks();
                     </div>
                 </div>
                 <!-- End truck block -->
-
                 <?php
             }
             ?>
         </div>
-
-
     </div>
 </section>
 <!-- Food Area End -->
