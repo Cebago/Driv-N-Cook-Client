@@ -47,7 +47,7 @@ $listTrucks = getTrucks();
                 ?>
                 <!-- truck block -->
                 <div class="col-md-4 col-sm-6 truckCard" style="margin-top: 10px; display: block"
-                     onclick="location.href='http://127.0.0.1/Driv-N-Cook-Client/truck.php?idTruck=<?php echo $truck["idTruck"] ?>'">
+                     onclick="location.href='truckMenu.php?idTruck=<?php echo $truck["idTruck"] ?>'">
                     <div class="single-food">
                         <div class="food-img">
                             <img src="<?php echo $truck["truckPicture"] ?>" class="img-fluid" style="height: 350px">

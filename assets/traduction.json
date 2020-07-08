@@ -35,6 +35,140 @@
       "en_EN": "<b>truly</b> local cuisine",
       "fr_FR": "la cuisine <b>vraiment</b> locale"
     },
+    "titre2" : {
+      "es_ES" : "Descubre los <span class=\"prime-color\">sabores</span><br><span class=\"style-change\">de <span class=\"prime-color\">Driv'n</span>Cook</span>",
+      "en_EN" : "Discover the <span class=\"prime-color\">flavors</span><br><span class=\"style-change\">of <span class=\"prime-color\">Driv'n</span>Cook</span>",
+      "fr_FR" : "Découvrez les <span class=\"prime-color\">saveurs</span><br><span class=\"style-change\">de <span class=\"prime-color\">Driv'n</span>Cook</span>"
+    },
+    "Désolé" : {
+      "es_ES" : "Lo siento",
+      "en_EN" : "Sorry"
+    },
+    "TitreOutOfMenus" : {
+      "es_ES" : "Nos robaron",
+      "en_EN" : "We were robed",
+      "fr_FR" : "On s'est fait dévalisé"
+    },
+    "Horaire du camion" : {
+      "es_ES" : "Horario de camiones",
+      "en_EN" : "Truck schedule",
+      "fr_FR" : "Horaire du camion"
+    },
+    "Jour de la semaine" : {
+      "es_ES" : "Día de la semana",
+      "en_EN" : "Day of the week",
+      "fr_FR" : "Jour de la semaine"
+    },
+    "Ouverture" : {
+      "es_ES" : "Abierto",
+      "en_EN" : "Open",
+      "fr_FR" : "Ouverture"
+    },
+    "Fermeture" : {
+      "es_ES" : "Cerrado",
+      "en_EN" : "Close",
+      "fr_FR" : "Fermeture"
+    },
+    "Mon compte" : {
+      "es_ES" : "Mi cuenta",
+      "en_EN" : "My account",
+      "fr_FR" : "Mon compte"
+    },
+    "Connexion" : {
+      "es_ES" : "Conexión",
+      "en_EN" : "Log in",
+      "fr_FR" : "Connexion"
+    },
+    "Mon profil" : {
+      "es_ES" : "Mi perfil",
+      "en_EN" : "My profile",
+      "fr_FR" : "Mon profil"
+    },
+    "Mot de passe" : {
+      "es_ES" : "Mi contraseña",
+      "en_EN" : "My password",
+      "fr_FR" : "Mon mot de passe"
+    },
+    "Déconnexion" : {
+      "es_ES" : "Desconexión",
+      "en_EN" : "Logout",
+      "fr_FR" : "Déconnexion"
+    },
+    "Lundi" : {
+      "es_ES" : "Lunes",
+      "en_EN" : "Monday",
+      "fr_FR" : "Lundi"
+    },
+    "Mardi" : {
+      "es_ES" : "Martes",
+      "en_EN" : "Tuesday",
+      "fr_FR" : "Mardi"
+    },
+    "Mercredi" : {
+      "es_ES" : "Miércoles",
+      "en_EN" : "Wednesday",
+      "fr_FR" : "Mercredi"
+    },
+    "Jeudi" : {
+      "es_ES" : "Jueves",
+      "en_EN" : "Thursday",
+      "fr_FR" : "Jeudi"
+    },
+    "Vendredi" : {
+      "es_ES" : "Viernes",
+      "en_EN" : "Friday",
+      "fr_FR" : "Vendredi"
+    },
+    "Samedi" : {
+      "es_ES" : "Sábado",
+      "en_EN" : "Saturday",
+      "fr_FR" : "Samedi"
+    },
+    "Dimanche" : {
+      "es_ES" : "Domingo",
+      "en_EN" : "Sunday",
+      "fr_FR" : "Dimanche"
+    },
+    "Voir les menus" : {
+      "es_ES" : "Ver todos los menús",
+      "en_EN" : "See the menus",
+      "fr_FR" : "Voir les menus"
+    },
+    "Voir les produits" : {
+      "es_ES" : "Ver todos los productos",
+      "en_EN" : "See products",
+      "fr_FR" : "Voir les produits"
+    },
+    "Tous les menus disponibles" : {
+      "es_ES" : "Todos los menús disponibles",
+      "en_EN" : "All menus available",
+      "fr_FR" : "Tous les menus disponibles"
+    },
+    "Tous les produits disponibles" : {
+      "es_ES" : "Todos los productos disponibles",
+      "en_EN" : "All products available",
+      "fr_FR" : "Tous les produits disponibles"
+    },
+    "Ajouter à mon panier" : {
+      "es_ES" : "Añadir a mi carrito",
+      "en_EN" : "Add to my cart",
+      "fr_FR" : "Ajouter à mon panier"
+    },
+    "Erreur" : {
+      "es_ES" : "Error",
+      "en_EN" : "Error",
+      "fr_FR" : "Erreur"
+    },
+    "Vous ne pouvez pas ajouter un menu venant d'un autre camion" : {
+      "es_ES" : "No se puede añadir un menú de otro camión",
+      "en_EN" : "You can’t add a menu from another truck",
+      "fr_FR" : "Vous ne pouvez pas ajouter un menu venant d'un autre camion"
+    },
+    "Fermer" : {
+      "es_ES" : "Cerrar",
+      "en_EN" : "Close",
+      "fr_FR" : "Erreur"
+    },
     "titre2": {
       "es_ES": "Descubre los <span class=\"prime-color\">sabores</span><br><span class=\"style-change\">de <span class=\"prime-color\">Driv'n</span>Cook</span>",
       "en_EN": "Discover the <span class=\"prime-color\">flavors</span><br><span class=\"style-change\">of <span class=\"prime-color\">Driv'n</span>Cook</span>",

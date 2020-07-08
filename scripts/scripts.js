@@ -1,3 +1,7 @@
+/**
+ *
+ * @param idtruck
+ */
 function getOpenDays(idtruck) {
     const table = document.getElementById("tableBody");
     table.innerText = "";
@@ -14,13 +18,14 @@ function getOpenDays(idtruck) {
                     if (search === null) {
                         const thd = document.createElement("th");
                         thd.scope = "row";
+                        thd.className = "text-center";
                         thd.id = myJson[i]["openDay"];
                         thd.innerText = myJson[i]["openDay"];
                         tr.appendChild(thd);
                     } else {
 
                         search.setAttribute("rowspan", "2");
-                        search.className = "align-middle";
+                        search.className = "align-middle text-center";
                     }
                     const td1 = document.createElement("td");
                     td1.innerText = myJson[i]["startHour"];
@@ -40,23 +45,6 @@ function getOpenDays(idtruck) {
     request.send(
         'truck=' + idtruck
     );
-    setTimeout(refreshTable, 1000);
-}
-
-function refreshTable() {
-    const content = document.getElementById("tablebody");
-
-    const request = new XMLHttpRequest();
-    request.onreadystatechange = function () {
-        if (request.readyState === 4) {
-            if (request.status === 200) {
-                //console.log(request.responseText);
-                content.innerHTML = request.responseText;
-            }
-        }
-    };
-    request.open('GET', './functions/getTruckList.php', true);
-    request.send();
 }
 
 function showMap() {
@@ -79,7 +67,7 @@ function showMap() {
                     for (let i = 0; i < myJson.length; i++) {
 
                         let geocoder = new google.maps.Geocoder; //affiche la localisation du camion
-                        let latlng = {lat: parseFloat(myJson[i]["lat"]), lng: parseFloat(myJson[i]["lng"])};
+                        let latlng = {lat: parseFloat(myJson[0]["lat"]), lng: parseFloat(myJson[0]["lng"])};
                         geocoder.geocode({'location': latlng}, function (results, status) {
                             if (status === 'OK') {
                                 if (results[0]) {
@@ -91,7 +79,7 @@ function showMap() {
                                     var smallInfoString = '<div id="content" class="dataInfos">' +
                                         '<div id="siteNotice">' +
                                         '</div>' +
-                                        '<h5>' + myJson[i]["truckName"] + '</h5>' +
+                                        '<h6>' + myJson[0]["truckName"] + '</h6>' +
                                         '<img src = "' + myJson[i]["truckPicture"] + '" style="width: 100px">' +
                                         '<div>' + results[i].formatted_address + '</div>' +
                                         '<div id="bodyContent">' +
@@ -109,7 +97,7 @@ function showMap() {
                                     });
                                     marker.addListener('click', function () {
                                         window.open(
-                                            'http://127.0.0.1/Driv-N-Cook-Client/truck.php?idTruck=' + myJson[i]["idTruck"],
+                                            'http://drivncook.fr/trucks?idTrucks=' + myJson["idTruck"],
                                             '_blank'
                                         );
                                     });
@@ -128,6 +116,235 @@ function showMap() {
         return 0;
     };
     request.open('GET', 'functions/getTruck.php');
+    request.send();
+}
+
+/**
+ *
+ * @param cart
+ * @param menu
+ */
+function deleteMenuQuantity(cart, menu) {
+
+    let input = document.getElementById("inputMenu" + menu);
+    let inputPrice = document.getElementById("inputPriceMenu" + menu);
+    const count = document.getElementById('count');
+    inputPrice = inputPrice.innerText.split("€")[0];
+    if (Number(input.innerText) > 1) {
+        const request = new XMLHttpRequest();
+        request.onreadystatechange = function () {
+            if (request.readyState === 4) {
+                if (request.status === 200) {
+                    if (request.responseText !== "") {
+                        alert(request.responseText);
+                    } else {
+                        count.innerText = Number(count.innerText) - 1;
+                        input.innerText = Number(input.innerText) - 1;
+                        let total = document.getElementById("total" + cart);
+                        if (total !== null) {
+                            let tmp = total.innerText.split("€")[0];
+                            tmp = Number(tmp) - Number(inputPrice);
+                            total.innerText = tmp + "€";
+                        }
+                    }
+                }
+            }
+        };
+        request.open('GET', 'functions/deleteMenu.php?cart=' + cart + '&menu=' + menu);
+        request.send();
+    } else {
+        completelyMenuDelete(cart, menu);
+    }
+}
+
+/**
+ *
+ * @param cart
+ * @param menu
+ */
+function addMenuQuantity(cart, menu) {
+    let input = document.getElementById("inputMenu" + menu);
+    let inputPrice = document.getElementById("inputPriceMenu" + menu);
+    const count = document.getElementById('count');
+    inputPrice = inputPrice.innerText.split("€")[0];
+    const request = new XMLHttpRequest();
+    request.onreadystatechange = function () {
+        if (request.readyState === 4) {
+            if (request.status === 200) {
+                if (request.responseText !== "") {
+                    $('#staticModal').modal('show');
+                } else {
+                    if (input != null) {
+                        input.innerText = Number(input.innerText) + 1;
+                    }
+                    if (count != null) {
+                        count.innerText = Number(count.innerText) + 1;
+                    }
+                    let total = document.getElementById("total" + cart);
+                    if (total !== null) {
+                        let tmp = total.innerText.split("€")[0];
+                        tmp = Number(tmp) + Number(inputPrice);
+                        total.innerText = tmp + "€";
+                    }
+                }
+            }
+        }
+    };
+    request.open('GET', 'functions/addMenu.php?cart=' + cart + '&menu=' + menu);
+    request.send();
+}
+
+/**
+ *
+ * @param cart
+ * @param menu
+ */
+function completelyMenuDelete(cart, menu) {
+    const count = document.getElementById('count');
+    let deleteMenu = document.getElementById("deleteMenu" + menu);
+    let qty = document.getElementById("inputMenu" + menu);
+    let inputPrice = document.getElementById("inputPriceMenu" + menu);
+    inputPrice = inputPrice.innerText.split("€")[0];
+    qty = Number(qty.innerText);
+    const request = new XMLHttpRequest();
+    request.onreadystatechange = function () {
+        if (request.readyState === 4) {
+            if (request.status === 200) {
+                if (request.responseText !== "") {
+                    alert(request.responseText);
+                } else {
+                    if (Number(count.innerText > Number(qty.innerText))) {
+                        count.innerText = Number(count.innerText) - Number(qty.innerText);
+                    } else {
+                        count.innerText = 0;
+                    }
+                    let total = document.getElementById("total" + cart);
+                    if (total !== null) {
+                        let tmp = total.innerText.split("€")[0];
+                        tmp = Number(tmp) - qty * Number(inputPrice);
+                        total.innerText = tmp + "€";
+                    }
+                    deleteMenu.remove();
+                }
+            }
+        }
+    };
+    request.open('GET', 'functions/completelyDelete.php?cart=' + cart + '&menu=' + menu);
+    request.send();
+}
+
+/**
+ *
+ * @param cart
+ * @param product
+ */
+function deleteProductQuantity(cart, product) {
+
+    let input = document.getElementById("inputProduct" + product);
+    const count = document.getElementById('count');
+    let inputPrice = document.getElementById("inputPriceProduct" + product);
+    inputPrice = inputPrice.innerText.split("€")[0];
+    if (Number(input.innerText) > 1) {
+        const request = new XMLHttpRequest();
+        request.onreadystatechange = function () {
+            if (request.readyState === 4) {
+                if (request.status === 200) {
+                    if (request.responseText !== "") {
+                        alert(request.responseText);
+                    } else {
+                        count.innerText = Number(count.innerText) - 1;
+                        input.innerText = Number(input.innerText) - 1;
+                        let total = document.getElementById("total" + cart);
+                        if (total !== null) {
+                            let tmp = total.innerText.split("€")[0];
+                            tmp = Number(tmp) - Number(inputPrice);
+                            total.innerText = tmp + "€";
+                        }
+                    }
+                }
+            }
+        };
+        request.open('GET', 'functions/deleteProduct.php?cart=' + cart + '&product=' + product);
+        request.send();
+    } else {
+        completelyProductDelete(cart, product);
+    }
+
+}
+
+/**
+ *
+ * @param cart
+ * @param product
+ */
+function addProductQuantity(cart, product) {
+    let input = document.getElementById("inputProduct" + product);
+    const count = document.getElementById('count');
+    let inputPrice = document.getElementById("inputPriceProduct" + product);
+    inputPrice = inputPrice.innerText.split("€")[0];
+    const request = new XMLHttpRequest();
+    request.onreadystatechange = function () {
+        if (request.readyState === 4) {
+            if (request.status === 200) {
+                if (request.responseText !== "") {
+                    $('#staticModal').modal('show');
+                } else {
+                    if (input != null) {
+                        input.innerText = Number(input.innerText) + 1;
+                    }
+                    if (count != null) {
+                        count.innerText = Number(count.innerText) + 1;
+                    }
+                    let total = document.getElementById("total" + cart);
+                    if (total !== null) {
+                        let tmp = total.innerText.split("€")[0];
+                        tmp = Number(tmp) + Number(inputPrice);
+                        total.innerText = tmp + "€";
+                    }
+                }
+            }
+        }
+    };
+    request.open('GET', 'functions/addProduct.php?cart=' + cart + '&product=' + product);
+    request.send();
+}
+
+/**
+ *
+ * @param cart
+ * @param product
+ */
+function completelyProductDelete(cart, product) {
+    const count = document.getElementById('count');
+    let deleteMenu = document.getElementById("deleteProduct" + product);
+    let qty = document.getElementById("inputProduct" + product);
+    let inputPrice = document.getElementById("inputPriceProduct" + product);
+    inputPrice = inputPrice.innerText.split("€")[0];
+    qty = Number(qty.innerText);
+    const request = new XMLHttpRequest();
+    request.onreadystatechange = function () {
+        if (request.readyState === 4) {
+            if (request.status === 200) {
+                if (request.responseText !== "") {
+                    alert(request.responseText);
+                } else {
+                    if (Number(count.innerText > Number(qty.innerText))) {
+                        count.innerText = Number(count.innerText) - Number(qty.innerText);
+                    } else {
+                        count.innerText = 0;
+                    }
+                    let total = document.getElementById("total" + cart);
+                    if (total !== null) {
+                        let tmp = total.innerText.split("€")[0];
+                        tmp = Number(tmp) - qty * Number(inputPrice);
+                        total.innerText = tmp + "€";
+                    }
+                    deleteMenu.remove();
+                }
+            }
+        }
+    };
+    request.open('GET', 'functions/completelyProductDelete.php?cart=' + cart + '&product=' + product);
     request.send();
 }
 
