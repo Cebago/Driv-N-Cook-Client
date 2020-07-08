@@ -448,6 +448,49 @@
     "Réinitialiser le mot de passe" : {
       "en_EN" : "Reset the password",
       "es_ES" : "Restablecer la contraseña"
+    },
+    "Historique" : {
+      "en_EN" : "History",
+      "es_ES" : "Historial"
+    },
+    "Menus" : {
+      "es_ES" : "Menús"
+    },
+    "Produits" : {
+      "es_ES" : "Productos",
+      "en_EN" : "Products"
+    },
+    "Commande" : {
+      "en_EN" : "Order",
+      "es_ES" : "Pedido"
+    },
+    "Payée" : {
+      "es_ES" : "Padago",
+      "en_EN" : "Paid"
+    },
+    "In progress" : {
+      "en_EN" : "In progress",
+      "es_ES" : "En curso"
+    },
+    "En attente de paiement" : {
+      "en_EN" : "Waiting for payment",
+      "es_ES" : "Pendiente de pago"
+    },
+    "Récupérée" : {
+      "en_EN" : "Recovered",
+      "es_ES" : "Recuperado"
+    },
+    "En cours de préparation" : {
+      "en_EN" : "Being prepared",
+      "es_ES" : "En preparación"
+    },
+    "En attente de préparation" : {
+      "en_EN" : "Waiting to be prepared",
+      "es_ES" : "En espera de preparación"
+    },
+    "Préparée" : {
+      "en_EN" : "Prepared",
+      "es_ES" : "Preparado"
     }
   },
   "ingredients": {
