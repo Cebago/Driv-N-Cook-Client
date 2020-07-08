@@ -34,7 +34,7 @@ if (!isConnected() || !isActivated()) {
                         $errors = $_SESSION["errors"];
                         echo "<div class='alert alert-danger col-md-7 mx-auto text-left' role='alert'>";
                         foreach ($errors as $error) {
-                            echo "<li>" . $error . "</li>";
+                            echo "<li>" . getTranslate($error, $tabLang, $setLanguage) . "</li>";
                         }
                         echo "</div>";
                         unset($_SESSION["errors"]);
