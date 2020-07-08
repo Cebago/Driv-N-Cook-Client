@@ -1,10 +1,13 @@
 <?php
-require("navbar.php");
+session_start();
+require "conf.inc.php";
+require "functions.php";
 
 
 if (!isConnected())
     header("Location: login.php");
 
+require("navbar.php");
 
 $user = getUserInfos();
 $trucks = getTrucks();

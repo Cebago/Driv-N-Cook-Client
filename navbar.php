@@ -47,9 +47,9 @@ if (isConnected() && isActivated()) {
 <body>
 
 <!-- Preloader Starts -->
-<div class="preloader">
+<!--<div class="preloader">
     <div class="spinner"></div>
-</div>
+</div>-->
 <!-- Preloader End -->
 
 <!-- Header Area Starts -->
