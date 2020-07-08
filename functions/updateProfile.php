@@ -3,7 +3,7 @@ session_start();
 require '../conf.inc.php';
 require '../functions.php';
 
-if (count($_POST) == 12
+if (count($_POST) == 11
     && !empty($_POST["idUser"])
     && !empty($_POST["lastname"])
     && !empty($_POST["firstname"])
@@ -14,7 +14,6 @@ if (count($_POST) == 12
     && !empty($_POST["address"])
     && !empty($_POST["postalCode"])
     && !empty($_POST["city"])
-    && !empty($_POST["licenseNumber"])
     && !empty($_POST["fidelityCard"])) {
 
     $listOfErrors = [];
@@ -27,7 +26,17 @@ if (count($_POST) == 12
     $address = htmlspecialchars(ucwords(trim($_POST["address"])));
     $zip = $_POST["postalCode"];
     $city = htmlspecialchars(ucwords(trim($_POST["city"])));
-    $license = $_POST["licenseNumber"];
+
+    $pdo = connectDB();
+    $queryPrepared = $pdo->prepare("UPDATE USER SET firstname = :firstname, lastname = :lastname, phoneNumber = :phoneNumber, address = :address, city = :city, postalCode = :postalCode WHERE idUser = :id");
+    $queryPrepared->execute([
+        ":firstname" => $firstName,
+        ":lastname" => $lastName,
+        ":phoneNumber" => $phone,
+        ":address" => $address,
+        ":city" => $city,
+        ":postalCode" => $zip
+    ]);
 
 
 } else {

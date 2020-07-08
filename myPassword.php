@@ -14,7 +14,7 @@ require "navbar.php";
 ?>
 
     <!-- Banner Area Starts -->
-    <section class="banner-area banner-area2 blog-page text-center section-padding4">
+    <section class="banner-area banner-area2 blog-page text-center">
         <div class="container">
             <div class="row">
                 <div class="col-lg-12">
@@ -26,7 +26,7 @@ require "navbar.php";
     <!-- Banner Area End -->
 
     <!-- Start Sample Area -->
-    <section class="sample-text-area">
+    <section class="sample-text-area section-padding4">
         <div class="col-md-11 mx-auto mt-5">
             <div class="mt-5">
                 <div>
