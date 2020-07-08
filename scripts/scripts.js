@@ -54,9 +54,7 @@ function showMap() {
         mapTypeId: google.maps.MapTypeId.ROADMAP
     };
     var map;
-
     map = new google.maps.Map(document.getElementById("mapAllTrucks"), opt);
-
     const request = new XMLHttpRequest();
     request.onreadystatechange = function () {
         if (request.readyState === 4) {
@@ -65,9 +63,8 @@ function showMap() {
                     let myJson = JSON.parse(request.responseText);
                     console.log(myJson);
                     for (let i = 0; i < myJson.length; i++) {
-
                         let geocoder = new google.maps.Geocoder; //affiche la localisation du camion
-                        let latlng = {lat: parseFloat(myJson[0]["lat"]), lng: parseFloat(myJson[0]["lng"])};
+                        let latlng = {lat: parseFloat(myJson[i]["lat"]), lng: parseFloat(myJson[i]["lng"])};
                         geocoder.geocode({'location': latlng}, function (results, status) {
                             if (status === 'OK') {
                                 if (results[0]) {
@@ -79,7 +76,7 @@ function showMap() {
                                     var smallInfoString = '<div id="content" class="dataInfos">' +
                                         '<div id="siteNotice">' +
                                         '</div>' +
-                                        '<h6>' + myJson[0]["truckName"] + '</h6>' +
+                                        '<h5>' + myJson[i]["truckName"] + '</h5>' +
                                         '<img src = "' + myJson[i]["truckPicture"] + '" style="width: 100px">' +
                                         '<div>' + results[i].formatted_address + '</div>' +
                                         '<div id="bodyContent">' +
@@ -87,8 +84,6 @@ function showMap() {
                                     let smallInfo = new google.maps.InfoWindow({
                                         content: smallInfoString
                                     });
-
-
                                     marker.addListener('mouseover', function () {
                                         smallInfo.open(map, marker);
                                     });
@@ -97,11 +92,10 @@ function showMap() {
                                     });
                                     marker.addListener('click', function () {
                                         window.open(
-                                            'http://drivncook.fr/trucks?idTrucks=' + myJson["idTruck"],
+                                            'truckMenu.php?idTruck=' + myJson[i]["idTruck"],
                                             '_blank'
                                         );
                                     });
-
                                 } else {
                                     window.alert('No results found');
                                 }
@@ -118,7 +112,6 @@ function showMap() {
     request.open('GET', 'functions/getTruck.php');
     request.send();
 }
-
 /**
  *
  * @param cart
