@@ -491,6 +491,14 @@
     "Préparée" : {
       "en_EN" : "Prepared",
       "es_ES" : "Preparado"
+    },
+    "Paiement" : {
+      "es_ES" : "Pago",
+      "en_EN" : "Payment"
+    },
+    "Carte de crédit" : {
+      "en_EN" : "Credit card",
+      "es_ES" : "Tarjeta de crédito"
     }
   },
   "ingredients": {
