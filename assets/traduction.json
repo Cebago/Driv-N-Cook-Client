@@ -559,6 +559,11 @@
     "Le code n'est pas dans un format valide" : {
       "en_EN" : "The code is not in a valid format",
       "es_ES" : "El código no está en un formato válido"
+    },
+    "eventPres" : {
+      "en_EN" : "Our <span>events</span>",
+      "es_ES" : "Nuestros <span>eventos</span>",
+      "fr_FR" : "Nos <span>événements</span>"
     }
   },
   "ingredients": {
