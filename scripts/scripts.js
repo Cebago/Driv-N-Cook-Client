@@ -356,15 +356,17 @@ function removeFilterTruck() {
     }
 }
 
+var events, results;
 
 function getListOfEvents() {
     const request = new XMLHttpRequest();
     request.onreadystatechange = function () {
         if (request.readyState === 4) {
             if (request.status === 200) {
-                let result = JSON.parse(request.responseText);
-                console.log("list event OK")
-                getLocation(result);
+                if(request.responseText !== '') {
+                    events = JSON.parse(request.responseText);
+                    getLocation();
+                }
             }
         }
     };
@@ -372,116 +374,124 @@ function getListOfEvents() {
     request.send();
 }
 
-function getLocation(events) {
 
-    var pos = {
-        lat: 48.928596,
-        lng: 2.506742
-    };
 
-    calculDistance(pos, events);
-    /*
-        if(navigator.geolocation) {
-            console.log("navigator.geolocation is available");
-            navigator.geolocation.getCurrentPosition(function (position) {
-                var pos = {
-                    lat: position.coords.latitude,
-                    lng: position.coords.longitude
-                };
-                console.log("get location OK")
-                calculDistance(pos, events)
-            });
-        }else{
-            console.log("Impossble de récupérer l'adresse actuelle")
-        }
+function getLocation() {
 
-     */
+    if (navigator.geolocation) {//si la geoloc est activé sur le navigateur
+        //on appelle la méthode getCurrentPosition qui appelle l'api du navigateur (par défaut google)
+        //on lui met en paramètre les fonctions qui seront appellées en retour, success or error
+        navigator.geolocation.getCurrentPosition(successCallback, errorCallback);
+    }else {
+        errorCallback()
+    }
+
+}
+function errorCallback(result) {
+    console.log(result);
+    for (let j = 0; j < events.length; j++) {
+        printEvent(j, null)
+    }
+}
+
+function successCallback(position){
+    let pos = {
+        'lng': position.coords.longitude,
+        'lat': position.coords.latitude
+    }
+    calculDistance(pos);
 }
 
 
-function calculDistance(origin, events) {
+function calculDistance(origin) {
     let addressTab = [];
     events.forEach(function (event) {
         addressTab.push(event["eventAddress"] + " " + event["eventCity"] + " " + event["eventPostalCode"]);
     })
-    console.log(addressTab)
+
     var service = new google.maps.DistanceMatrixService();
-    service.getDistanceMatrix(
-        {
-            origins: [origin],
-            destinations: addressTab,
-            travelMode: 'DRIVING',
-            unitSystem: google.maps.UnitSystem.METRIC,
-        }, callback);
+    let options = {
+        origins: [origin],
+        destinations: addressTab,
+        travelMode: 'DRIVING',
+        unitSystem:  google.maps.UnitSystem.METRIC,
+    }
+    service.getDistanceMatrix(options, callback);
 
     function callback(response, status) {
-        var results = response.rows[0].elements;
-        if (status == 'OK') {
-            results = sortDistances(results);
-            for (let j = 0; j < results.length; j++) {
-                let child = document.getElementById("containerToEvents");
-
-                let cardDiv = document.createElement('div');
-                cardDiv.className = "col-md-4 my-2";
-                child.appendChild(cardDiv);
-
-                let cartDiv2 = document.createElement('div');
-                cartDiv2.className = "single-food";
-                cardDiv.appendChild(cartDiv2);
-
-                let cartImg = document.createElement('div');
-                cartImg.className = "food-img";
-                cartDiv2.appendChild(cartImg);
-
-                let img = document.createElement('img');
-                img.src = events[j]["eventImg"];
-                img.className = "img-fluid"
-                img.style.height = "250px"
-                cartImg.appendChild(img);
-
-                let content = document.createElement('div');
-                content.className = "food-content";
-                cartDiv2.appendChild(content);
-
-                let post = document.createElement('div');
-                cartImg.className = "post-admin d-lg-flex mb-3";
-                content.appendChild(post);
-
-                let spanTruck = document.createElement('span');
-                spanTruck.innerHTML = '<i class="fa fa-user"></i> ' + events[j]["truckName"] + "<br>";
-                post.appendChild(spanTruck);
-
-                let spanDate = document.createElement('span');
-                spanDate.innerHTML = '<i class="fa fa-calendar-o mr-2"></i>' + events[j]["eventBeginDate"] + "<br>";
-                post.appendChild(spanDate);
-
-                let spanDistance = document.createElement('span');
-                spanDistance.innerHTML = '<i class="fa fa-map-signs mr-2"></i>' + results[j].distance.text + "<br>";
-                post.appendChild(spanDistance);
-
-                let eventName = document.createElement('h5');
-                eventName.textContent = events[j]["eventName"];
-                content.appendChild(eventName);
-
-                let eventDetails = document.createElement('p');
-                eventDetails.className = "pt-3 eventText ";
-                eventDetails.textContent = events[j]["eventDesc"];
-                content.appendChild(eventDetails);
-            }
-        } else {
-            //todo -> afficher tous les events
+        results = response.rows[0].elements;
+        results = sortDistances(results);
+        for (let j = 0; j < results.length; j++) {
+            printEvent(j, status);
         }
     }
 
 }
 
+function printEvent(j, status) {
+
+    let child = document.getElementById("containerToEvents");
+
+    let cardDiv = document.createElement('div');
+    cardDiv.className = "col-md-4 my-2";
+    cardDiv.setAttribute("onclick", "window.location.href='eventsDetails.php?idEvent="+events[j]["idEvent"]+"'");
+    child.appendChild(cardDiv);
+
+    let cartDiv2 = document.createElement('div');
+    cartDiv2.className = "single-food";
+    cardDiv.appendChild(cartDiv2);
+
+    let cartImg = document.createElement('div');
+    cartImg.className = "food-img";
+    cartDiv2.appendChild(cartImg);
+
+    let img = document.createElement('img');
+    img.src = events[j]["eventImg"];
+    img.className = "img-fluid"
+    img.style.height = "250px"
+    cartImg.appendChild(img);
+
+    let content = document.createElement('div');
+    content.className = "food-content";
+    cartDiv2.appendChild(content);
+
+    let post = document.createElement('div');
+    cartImg.className = "post-admin d-lg-flex mb-3";
+    content.appendChild(post);
+
+    let spanTruck = document.createElement('span');
+    spanTruck.innerHTML = '<i class="fa fa-user"></i> ' + events[j]["truckName"] + "<br>";
+    post.appendChild(spanTruck);
+
+    let spanDate = document.createElement('span');
+    spanDate.innerHTML = '<i class="fa fa-calendar-o mr-2"></i>' + events[j]["eventBeginDate"] + "<br>";
+    post.appendChild(spanDate);
+    if(status == 'OK') {
+        let spanDistance = document.createElement('span');
+        spanDistance.innerHTML = '<i class="fa fa-map-signs mr-2"></i>' + results[j].distance.text + "<br>";
+        post.appendChild(spanDistance);
+    }
+
+    let eventName = document.createElement('h5');
+    eventName.textContent = events[j]["eventName"];
+    content.appendChild(eventName);
+
+    let eventDetails = document.createElement('p');
+    eventDetails.className = "pt-3 eventText ";
+    eventDetails.textContent = events[j]["eventDesc"];
+    content.appendChild(eventDetails);
+
+}
+
+
+
+
+
 
 function sortDistances(array) {
-    return array.sort(function (rowA, rowB) {
-        let a = rowA.distance.text;
-        let b = rowB.distance.text;
-
-        return a < b ? -1 :
-            a > b ? 1 : 0;
+    return array.sort(function(rowA,rowB) {
+        let a = rowA.distance.value;
+        let b = rowB.distance.value;
+        return	a<b ? -1 : a>b ? 1 : 0;
     })
 }
