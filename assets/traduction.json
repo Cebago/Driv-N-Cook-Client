@@ -499,6 +499,50 @@
     "Carte de crédit" : {
       "en_EN" : "Credit card",
       "es_ES" : "Tarjeta de crédito"
+    },
+    "Espèces" : {
+      "en_EN" : "cash",
+      "es_ES" : "Efectivo"
+    },
+    "Propriétaire de la carte" : {
+      "es_ES" : "Titular de la tarjeta",
+      "en_EN" : "Card owner"
+    },
+    "Numéro de la carte" : {
+      "es_ES" : "Número de tarjeta",
+      "en_EN" : "Card number"
+    },
+    "Date d'expiration" : {
+      "es_ES" : "Fecha de expiración",
+      "en_EN" : "Expiration date"
+    },
+    "AA" : {
+      "en_EN" : "YY"
+    },
+
+    "Avantages disponibles" : {
+      "en_EN" : "Advantages available",
+      "es_ES" : "Ventajas disponibles"
+    },
+    "Liste des avantages disponibles" : {
+      "en_EN" : "List of advantages",
+      "es_ES" : "Lista de ventajas"
+    },
+    "Confirmer le paiement" : {
+      "es_ES" : "Confirmar el pago",
+      "en_EN" : "Confirm the payment"
+    },
+    "La validation de votre avantage se fera une fois votre solde de points présenté à notre franchisé via l'utilisation de notre application" : {
+      "en_EN" : "The validation of your advantage will be done once your points balance is presented to our franchisee via the use of our application",
+      "es_ES" : "La validación de su ventaja se hará una vez que su saldo de puntos presentado a nuestro franquiciado a través del uso de nuestra aplicación"
+    },
+    "Payer au camion" : {
+      "es_ES" : "Pagar al camión",
+      "en_EN" : "Pay to truck"
+    },
+    "Mon panier" : {
+      "es_ES" : "Mi carrito",
+      "en_EN" : "My cart"
     }
   },
   "ingredients": {

@@ -51,14 +51,15 @@ if (!isConnected() || !isActivated()) {
                                     <li class="nav-item" role="presentation">
                                         <a data-toggle="tab" href="#creditCard" id="creditLink" class="nav-link active"
                                            aria-controls="creditCard" aria-selected="true">
-                                            <i class="fas fa-credit-card mr-2"></i>&nbsp;Carte de crédit
+                                            <i class="fas fa-credit-card mr-2"></i>&nbsp;
+                                            <?php echo getTranslate("Carte de crédit", $tabLang, $setLanguage); ?>
                                         </a>
                                     </li>
                                     <li class="nav-item" role="presentation">
                                         <a data-toggle="tab" href="#money" id="moneyLink" class="nav-link"
                                            aria-controls="money" aria-selected="false">
                                             <i class="fas fa-money-bill-wave"></i>
-                                            Espèces
+                                            <?php echo getTranslate("Espèces", $tabLang, $setLanguage); ?>
                                         </a>
                                     </li>
                                 </ul>
@@ -69,9 +70,12 @@ if (!isConnected() || !isActivated()) {
                                     <form role="form" method="POST" action="functions/payMyCart.php">
                                         <div class="form-group">
                                             <label for="username">
-                                                <h6 class="text-muted">Propriétaire de la carte</h6>
+                                                <h6 class="text-muted">
+                                                    <?php echo getTranslate("Propriétaire de la carte", $tabLang, $setLanguage); ?>
+                                                </h6>
                                             </label>
-                                            <input type="text" name="username" placeholder="Propriétaire de la carte"
+                                            <input type="text" name="username"
+                                                   placeholder="<?php echo getTranslate("Propriétaire de la carte", $tabLang, $setLanguage); ?>"
                                                    required class="form-control"
                                                    value="<?php echo (isset($_SESSION["input"]))
                                                        ? $_SESSION["input"]["username"]
@@ -79,11 +83,13 @@ if (!isConnected() || !isActivated()) {
                                         </div>
                                         <div class="form-group">
                                             <label for="cardNumber">
-                                                <h6 class="text-muted">Numéro de carte</h6>
+                                                <h6 class="text-muted">
+                                                    <?php echo getTranslate("Numéro de carte", $tabLang, $setLanguage); ?>
+                                                </h6>
                                             </label>
                                             <div class="input-group">
                                                 <input type="text" name="cardNumber"
-                                                       placeholder="Numéro de carte"
+                                                       placeholder="<?php echo getTranslate("Numéro de carte", $tabLang, $setLanguage); ?>"
                                                        class="form-control " required
                                                        value="<?php echo (isset($_SESSION["input"]))
                                                            ? $_SESSION["input"]["cardNumber"]
@@ -105,14 +111,16 @@ if (!isConnected() || !isActivated()) {
                                                 <div class="form-group">
                                                     <label>
                                                     <span class="hidden-xs">
-                                                        <h6 class="text-muted">Date d'expiration</h6>
+                                                        <h6 class="text-muted">
+                                                            <?php echo getTranslate("Date d'expiration", $tabLang, $setLanguage); ?>
+                                                        </h6>
                                                     </span>
                                                     </label>
                                                     <div class="input-group">
                                                         <input type="number" placeholder="MM" name="month"
                                                                class="form-control"
                                                                required>
-                                                        <input type="number" placeholder="AA" name="year"
+                                                        <input type="number" placeholder="<?php echo getTranslate("AA", $tabLang, $setLanguage); ?>" name="year"
                                                                class="form-control"
                                                                required>
                                                     </div>
@@ -120,12 +128,7 @@ if (!isConnected() || !isActivated()) {
                                             </div>
                                             <div class="col-sm-4">
                                                 <div class="form-group mb-4">
-                                                    <label data-toggle="tooltip" title=""
-                                                           data-original-title="Three digit CV code on the back of your card">
-                                                        <h6 class="text-muted">CVV
-                                                            <i class="fa fa-question-circle d-inline"></i>
-                                                        </h6>
-                                                    </label>
+                                                    <h6 class="text-muted">CCV</h6>
                                                     <input type="text" name="ccv" required class="form-control">
                                                 </div>
                                             </div>
@@ -142,10 +145,14 @@ if (!isConnected() || !isActivated()) {
                                             ?>
                                             <div class="form-group">
                                                 <label for="select">
-                                                    <h6 class="text-muted">Avantages disponibles</h6>
+                                                    <h6 class="text-muted">
+                                                        <?php echo getTranslate("Avantages disponibles", $tabLang, $setLanguage); ?>
+                                                    </h6>
                                                 </label>
                                                 <select class="custom-select" id="select" name="advantageSelect">
-                                                    <option selected value="">Liste des avantages disponibles</option>
+                                                    <option selected value="">
+                                                        <?php echo getTranslate("Liste des avantages disponibles", $tabLang, $setLanguage); ?>
+                                                    </option>
                                                     <?php
                                                     $queryPrepared = $pdo->prepare("SELECT idAdvantage, advantageName FROM ADVANTAGE WHERE advantagePoints <= :points");
                                                     $queryPrepared->execute([
@@ -167,18 +174,18 @@ if (!isConnected() || !isActivated()) {
                                             <button type="submit"
                                                     class="genric-btn primary circle arrow mx-auto col-md-12 shadow-sm">
                                                 <i class="far fa-credit-card"></i>
-                                                &nbsp;Confirmer le paiement
+                                                &nbsp;<?php echo getTranslate("Confirmer le paiement", $tabLang, $setLanguage); ?>
                                             </button>
                                         </div>
                                     </form>
                                 </div>
                                 <div id="money" class="tab-pane fade pt-3" role="tabpanel" aria-labelledby="moneyLink">
                                     <p class="text-muted">
-                                        La validation de votre avantage se fera une fois votre solde de points présenté à
-                                        notre franchisé via l'utilisation de notre application
+                                        <?php echo getTranslate("La validation de votre avantage se fera une fois votre solde de points présenté à notre franchisé via l'utilisation de notre application", $tabLang, $setLanguage); ?>
                                     </p>
                                     <a href="./functions/orderMyCart.php" class="genric-btn primary circle">
-                                        <i class="fas fa-truck-loading"></i>&nbsp;Payer au camion
+                                        <i class="fas fa-truck-loading"></i>&nbsp;
+                                        <?php echo getTranslate("Payer au camion", $tabLang, $setLanguage); ?>
                                     </a>
                                 </div>
                             </div>
@@ -189,7 +196,9 @@ if (!isConnected() || !isActivated()) {
             <div class="row mb-4 mt-5">
                 <div class="col-lg-8 mx-auto text-center">
                     <h4 class="d-flex justify-content-between align-items-center mb-3">
-                        <span class="text-muted">Mon panier</span>
+                        <span class="text-muted">
+                            <?php echo getTranslate("Mon panier", $tabLang, $setLanguage); ?>
+                        </span>
                         <span class="badge badge-secondary badge-pill">
                         <?php
                         echo $quantity;
