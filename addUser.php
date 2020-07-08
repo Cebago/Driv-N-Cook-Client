@@ -87,7 +87,7 @@ if (count($_POST) == 7
         $_SESSION["errors"] = $listOfErrors;
         $_SESSION["inputErrors"] = $_POST;
         //Rediriger sur register.php
-        header("Location: login.php");
+        header("Location: login.php?errors=true");
 
     } else {
         $pdo = connectDB();
@@ -124,6 +124,12 @@ if (count($_POST) == 7
                 ":email" => $email
             ]);
         }
+
+        $queryPrepared = $pdo->prepare("INSERT INTO CART (cartPrice, user, cartType) VALUES (0, :user, 'Commande client')");
+        $queryPrepared->execute([
+            ":user" => $idUser
+        ]);
+
 
         $queryPrepared = $pdo->prepare("INSERT INTO USERTOKEN (tokenType, user) VALUE ('Site', :user)");
         $queryPrepared->execute([

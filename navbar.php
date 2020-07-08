@@ -42,16 +42,13 @@ if (isConnected() && isActivated()) {
 
 }
 
-
 ?>
 <body>
-
 <!-- Preloader Starts -->
 <div class="preloader">
     <div class="spinner"></div>
 </div>
 <!-- Preloader End -->
-
 <!-- Header Area Starts -->
 <div class="sticky-top ">
     <header class="header-area shadow-lg p-3 mb-5 bg-info rounded-pill">
@@ -88,7 +85,7 @@ if (isConnected() && isActivated()) {
                                 </a>
                             </li>
                             <li>
-                                <a href="http://franchises.drivncook.fr">
+                                <a href="./assets/three-js/examples/test.html">
                                     <?php echo getTranslate("rejoignez-nous", $tabLang, $setLanguage); ?>
                                 </a>
                             </li>
@@ -96,7 +93,9 @@ if (isConnected() && isActivated()) {
                             if (isConnected() && isActivated()) { ?>
                                 <li>
                                     <a href="cart.php" class="btn btn-transparent btn-lg active" role="button"
-                                       aria-pressed="true"><i class="fas fa-shopping-cart"></i>&nbsp
+                                       aria-pressed="true">
+                                        <i class="fas fa-shopping-cart"></i>
+                                        &nbsp
                                         <span class="badge badge-alert" id="count">
                                         <?php echo $quantity; ?>
                                     </span>
@@ -147,7 +146,7 @@ if (isConnected() && isActivated()) {
                                             </a>
                                             <a class="dropdown-item" href="myPassword.php">
                                                 <?php
-                                                echo getTranslate("Mot de passe", $tabLang, $setLanguage)
+                                                echo getTranslate("Mon mot de passe", $tabLang, $setLanguage)
                                                 ?>
                                             </a>
                                             <a class="dropdown-item" href="functions/logout.php"><i

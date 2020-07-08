@@ -79,7 +79,7 @@
       "en_EN": "My profile",
       "fr_FR": "Mon profil"
     },
-    "Mot de passe": {
+    "Mon mot de passe": {
       "es_ES": "Mi contraseña",
       "en_EN": "My password",
       "fr_FR": "Mon mot de passe"
@@ -199,7 +199,7 @@
       "en_EN": "Subject"
     },
     "Envoyer": {
-      "es_ES": "Envoyar",
+      "es_ES": "Enviar",
       "en_EN": "Send"
     },
     "Choisir camion": {
@@ -256,6 +256,309 @@
       "fr_FR": "\" Chérie, on mange quoi ce soir ? Collègue, tu manges où ce midi? \" Ces questions vous parlent ? Nous aussi, c'est pourquoi nous avons créés Driv'n Cook, le meilleur de réseau de FoodTruck à travers la France. Fini les pâtes aux gruyères, les pâtes au ketchup, ou encore les pâtes au gruyère et au ketchup! Faites place, à de la vrai nourriture, préparée sur place, sous vos yeux, par des passionnés qui se déplacent dans votre ville pour vous faire découvrir les recettes de leurs grands parents.\"Mais, il faut connaitre le menu, et puis j'ai pas vraiment envie d'attendre là bas..\" Mais pas du tout ! Grâce à notre site internet, vous pouvez commander, payer, cumulez des points de fidélité, tout ça depuis votre canapé ! Cependant, dans une société 100% connectée, le contact humain reste primordial, il vous faudra donc simplement aller chercher votre délicieux repas, en échange d'un simple sourire. Merveilleux non? N'attendez plus, nos camions viennent à vous, venez découvrir de la nourriture, de la vrai nourriture \"",
       "es_ES": "\"Cariño, ¿qué vamos a comer esta noche? Colega, ¿dónde vas a almorzar?\"¿Estas preguntas te hablan? Nosotros también, por eso creamos Driv'n Cook, la mejor red FoodTruck en Francia.¡No más pasta gruyère, pasta de ketchup, o incluso pasta gruyère y ketchup! Dé paso a la verdadera comida, preparada en el sitio, ante sus ojos, por entusiastas que viajan a su ciudad para hacerle descubrir las recetas de sus abuelos.\"Pero, tienes que conocer el menú, y realmente no quiero esperar allí ...\" ¡Pero no del todo! ¡Gracias a nuestro sitio web, puede ordenar, pagar, ganar puntos de fidelidad, todo desde su sofá! Sin embargo, en una sociedad 100% conectada, el contacto humano sigue siendo esencial, por lo que simplemente tendrá que ir a buscar su deliciosa comida a cambio de una simple sonrisa. Maravilloso, verdad? No esperes más, nuestros camiones vienen a ti, ven a descubrir comida, comida de verdad \"",
       "en_EN": "\"Honey, what are we eating tonight? Colleague, where are you eating for lunch?\"Do these questions speak to you? We too, that's why we created Driv'n Cook, the best FoodTruck network across France. No more gruyère pasta, ketchup pasta, or even gruyère and ketchup pasta! Make way for real food, prepared on site, before your eyes, by enthusiasts who travel to your city to help you discover the recipes of their grandparents.\"But, you have to know the menu, and then I don't really want to wait there ..\" But not at all! Thanks to our website, you can order, pay, earn loyalty points, all from your sofa! However, in a 100% connected society, human contact remains essential, so you will simply have to go get your delicious meal, in exchange for a simple smile. Wonderful, right? Don't wait any longer, our trucks are coming to you, come and discover food, real food \""
+    },
+    "Votre panier" : {
+      "en_EN" : "Your cart",
+      "es_ES" : "Mi carrito"
+    },
+    "Vos menus au panier" : {
+      "en_EN" : "Your menus in cart",
+      "es_ES" : "Sus menús en la cesta"
+    },
+    "Vous n'avez aucun menu au panier" : {
+      "es_ES" : "No tienes menú en la cesta",
+      "en_EN" : "You don't have any menus in your cart"
+    },
+    "Payer" : {
+      "es_ES" : "Pagar",
+      "en_EN" : "Proceed to payment"
+    },
+    "Supprimer" : {
+      "en_EN" : "Delete",
+      "es_ES" : "Suprimir"
+    },
+    "Vos produits au panier" : {
+      "en_EN" : "Your products in cart",
+      "es_ES" : "Sus productos en la cesta"
+    },
+    "Vous n'avez aucun produit au panier" : {
+      "es_ES" : "No tienes productos en la cesta",
+      "en_EN" : "You don't have any product in your cart"
+    },
+    "Mes commandes" : {
+      "es_ES" : "Mis pedidos",
+      "en_EN" : "My orders"
+    },
+    "Mot de passe oublié" : {
+      "en_EN" : "Forgot password",
+      "es_ES" : "Contraseña olvidada"
+    },
+    "Merci de saisir votre adresse" : {
+      "es_ES" : "Por favor, introduzca su dirección de correo electrónico",
+      "en_EN" : "Please enter your email address"
+    },
+    "Adresse mail" : {
+      "es_ES" : "Correo electrónico",
+      "en_EN" : "Email address"
+    },
+    "L'email n'est pas valide" : {
+      "es_ES" : "El correo electrónico no es válido",
+      "en_EN" : "This email address is not valid"
+    },
+    "Aucun compte trouvé" : {
+      "en_EN" : "No account found",
+      "es_ES" : "Ninguna cuenta encontrada"
+    },
+    "Un email vous a été envoyé pour réinitialiser votre mot de passe" : {
+      "en_EN" : "An email has been sent to reset your password",
+      "es_ES" : "Se te ha enviado un correo electrónico para restablecer tu contraseña"
+    },
+    "Le prénom doit faire entre 2 et 50 caractères" : {
+      "en_EN" : "The first name must be between 2 and 50 characters",
+      "es_ES" : "El nombre debe tener entre 2 y 50 caracteres"
+    },
+    "Le nom doit faire entre 2 et 100 caractères" : {
+      "en_EN" : "The last name name must be between 2 and 50 characters",
+      "es_ES" : "El apellido debe tener entre 2 y 100 caracteres"
+    },
+    "Le captcha n'est pas correct" : {
+      "en_EN" : "The captcha is not correct",
+      "es_ES" : "El captcha no está bien"
+    },
+    "Le mot de passe doit faire entre 8 et 30 caractères avec des minuscules, majuscules et chiffres" : {
+      "en_EN" : "Password must be between 8 and 30 characters with lower case, upper case and numbers",
+      "es_ES" : "La contraseña debe tener entre 8 y 30 caracteres con minúsculas, mayúsculas y números"
+    },
+    "Le mot de passe de confirmation ne correspond pas" : {
+      "en_EN" : "Confirmation password does not match",
+      "es_ES" : "La contraseña de confirmación no coincide"
+    },
+    "L'email existe déjà" : {
+      "en_EN" : "The email already exists",
+      "es_ES" : "El correo electrónico ya existe"
+    },
+    "Une petite faim ?" : {
+      "en_EN" : "Feeling peckish",
+      "es_ES" : "¿ Un poco de hambre ?"
+    },
+    "N'hésitez pas à créer un compte pour pouvoir profiter de tous les avantages." : {
+      "en_EN" : "Do not hesitate to create an account to enjoy all the benefits.",
+      "es_ES" : "No dudes en crear una cuenta para poder disfrutar de todas las ventajas."
+    },
+    "Se connecter" : {
+      "es_ES" : "Connectarse",
+      "en_EN" : "Login"
+    },
+    "S'inscrire" : {
+      "es_ES" : "Inscribirse",
+      "en_EN" : "Register"
+    },
+    "Mot de passe" : {
+      "es_ES" : "Contraseña",
+      "en_EN" : "Password"
+    },
+    "Identifiants incorrects" : {
+      "es_ES" : "Identificadores incorrectos",
+      "en_EN" : "Incorrect identifiers"
+    },
+    "Prénom" : {
+      "en_EN" : "First name",
+      "es_ES" : "Nombre"
+    },
+    "Nom" : {
+      "en_EN" : "Last name",
+      "es_ES" : "Apellido"
+    },
+    "Confirmation de mot de passe" : {
+      "en_EN" : "Confirmation of password",
+      "es_ES" : "Confirmación de la contraseña"
+    },
+    "J'accepte de recevoir les newsletter par email" : {
+      "en_EN" : "I agree to receive newsletters by email",
+      "es_ES" : "Acepto recibir las newsletter por correo electrónico"
+    },
+    "Changer mon mot de passe" : {
+      "es_ES" : "Cambiar mi contrasenã",
+      "en_EN" : "Change my password"
+    },
+    "Ancien mot de passe" : {
+      "es_ES" : "Contraseña antigua",
+      "en_EN" : "Old password"
+    },
+    "Nouveau mot de passe" : {
+      "es_ES" : "Contraseña antigua",
+      "en_EN" : "New password"
+    },
+    "Votre mot de passe actuel ne correspond pas" : {
+      "es_ES" : "Su contraseña actual no coincide",
+      "en_EN" : "Your current password does not match"
+    },
+    "Ville" : {
+      "es_ES" : "Ciudad",
+      "en_EN" : "City"
+    },
+    "Date de création du compte" : {
+      "es_ES" : "Fecha de creación de la cuenta",
+      "en_EN" : "Account creation date"
+    },
+    "Numéro de téléphone" : {
+      "es_ES" : "Número telefónico",
+      "en_EN" : "Phone number"
+    },
+    "Numéro d'utilisateur" : {
+      "es_ES" : "Número de usuario",
+      "en_EN" : "User ID"
+    },
+    "Votre rôle sur le site" : {
+      "es_ES" : "Su papel en el sitio",
+      "en_EN" : "Your role on the site"
+    },
+    "Votre numéro de carte fidélité" : {
+      "es_ES" : "Número de usuario",
+      "en_EN" : "User ID"
+    },
+    "Code postal" : {
+      "es_ES" : "Código postal",
+      "en_EN" : "Postal code"
+    },
+    "Consultation du profil" : {
+      "es_ES" : "Consulta del perfil",
+      "en_EN" : "Consultation of the profile"
+    },
+    "Adresse" : {
+      "es_ES" : "Dirección",
+      "en_EN" : "Address"
+    },
+    "Débloquer le formulaire" : {
+      "es_ES" : "Desbloquear el formulario",
+      "en_EN" : "Unblock the form"
+    },
+    "Valider le formulaire" : {
+      "es_ES" : "Validar el formulario",
+      "en_EN" : "Validate the form"
+    },
+    "Annuler le formulaire" : {
+      "es_ES" : "Cancelar el formulario",
+      "en_EN" : "Cancel the form"
+    },
+    "Client" : {
+      "en_EN" : "Customer",
+      "es_ES" : "Cliente"
+    },
+    "Réinitialiser le mot de passe" : {
+      "en_EN" : "Reset the password",
+      "es_ES" : "Restablecer la contraseña"
+    },
+    "Historique" : {
+      "en_EN" : "History",
+      "es_ES" : "Historial"
+    },
+    "Menus" : {
+      "es_ES" : "Menús"
+    },
+    "Produits" : {
+      "es_ES" : "Productos",
+      "en_EN" : "Products"
+    },
+    "Commande" : {
+      "en_EN" : "Order",
+      "es_ES" : "Pedido"
+    },
+    "Payée" : {
+      "es_ES" : "Padago",
+      "en_EN" : "Paid"
+    },
+    "In progress" : {
+      "en_EN" : "In progress",
+      "es_ES" : "En curso"
+    },
+    "En attente de paiement" : {
+      "en_EN" : "Waiting for payment",
+      "es_ES" : "Pendiente de pago"
+    },
+    "Récupérée" : {
+      "en_EN" : "Recovered",
+      "es_ES" : "Recuperado"
+    },
+    "En cours de préparation" : {
+      "en_EN" : "Being prepared",
+      "es_ES" : "En preparación"
+    },
+    "En attente de préparation" : {
+      "en_EN" : "Waiting to be prepared",
+      "es_ES" : "En espera de preparación"
+    },
+    "Préparée" : {
+      "en_EN" : "Prepared",
+      "es_ES" : "Preparado"
+    },
+    "Paiement" : {
+      "es_ES" : "Pago",
+      "en_EN" : "Payment"
+    },
+    "Carte de crédit" : {
+      "en_EN" : "Credit card",
+      "es_ES" : "Tarjeta de crédito"
+    },
+    "Espèces" : {
+      "en_EN" : "cash",
+      "es_ES" : "Efectivo"
+    },
+    "Propriétaire de la carte" : {
+      "es_ES" : "Titular de la tarjeta",
+      "en_EN" : "Card owner"
+    },
+    "Numéro de la carte" : {
+      "es_ES" : "Número de tarjeta",
+      "en_EN" : "Card number"
+    },
+    "Date d'expiration" : {
+      "es_ES" : "Fecha de expiración",
+      "en_EN" : "Expiration date"
+    },
+    "AA" : {
+      "en_EN" : "YY"
+    },
+
+    "Avantages disponibles" : {
+      "en_EN" : "Advantages available",
+      "es_ES" : "Ventajas disponibles"
+    },
+    "Liste des avantages disponibles" : {
+      "en_EN" : "List of advantages",
+      "es_ES" : "Lista de ventajas"
+    },
+    "Confirmer le paiement" : {
+      "es_ES" : "Confirmar el pago",
+      "en_EN" : "Confirm the payment"
+    },
+    "La validation de votre avantage se fera une fois votre solde de points présenté à notre franchisé via l'utilisation de notre application" : {
+      "en_EN" : "The validation of your advantage will be done once your points balance is presented to our franchisee via the use of our application",
+      "es_ES" : "La validación de su ventaja se hará una vez que su saldo de puntos presentado a nuestro franquiciado a través del uso de nuestra aplicación"
+    },
+    "Payer au camion" : {
+      "es_ES" : "Pagar al camión",
+      "en_EN" : "Pay to truck"
+    },
+    "Mon panier" : {
+      "es_ES" : "Mi carrito",
+      "en_EN" : "My cart"
+    },
+    "Votre numéro de carte bleue n'est pas bon" : {
+      "es_ES" : "Su número de tarjeta de crédito no es bueno",
+      "en_EN" : "Your credit card number is not good"
+    },
+    "Le mois saisi n'est pas bon" : {
+      "en_EN" : "The month seized is not good",
+      "es_ES" : "El mes no es bueno"
+    },
+    "L'année saisie n'est pas bonne" : {
+      "es_ES" : "El año no es bueno",
+      "en_EN" : "The year entered is not good"
+    },
+    "Le code n'est pas dans un format valide" : {
+      "en_EN" : "The code is not in a valid format",
+      "es_ES" : "El código no está en un formato válido"
     }
   },
   "ingredients": {

@@ -22,7 +22,14 @@ if (isset($_POST["inputEmail"]) && isset($_POST["inputPassword"]) && !empty($_PO
 }
 require "navbar.php";
 ?>
-
+<?php
+/*if ($_GET["errors"] == true) {*/?><!--
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
+            integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
+            crossorigin="anonymous">
+    $('#signin').tab('show')
+</script>
+--><?php /*} */?>
     <!-- Banner Area Starts -->
     <section class="banner-area banner-area2 blog-page text-center">
         <div class="container">
@@ -42,9 +49,11 @@ require "navbar.php";
     <!-- Start Sample Area -->
     <section class="sample-text-area">
         <div class="container">
-            <h3 class="text-heading title_color">Une petite faim ?</h3>
+            <h3 class="text-heading title_color">
+                <?php echo getTranslate("Une petite faim ?", $tabLang, $setLanguage); ?>
+            </h3>
             <p class="sample-text">
-                N'hésitez pas à créer un compte pour pouvoir profiter de tous les avantages.
+                <?php echo getTranslate("N'hésitez pas à créer un compte pour pouvoir profiter de tous les avantages.", $tabLang, $setLanguage); ?>
             </p>
         </div>
     </section>
@@ -57,11 +66,15 @@ require "navbar.php";
                 <ul class="nav nav-tabs" id="myTab" role="tablist">
                     <li class="nav-item" role="presentation">
                         <a class="nav-link active" id="home-tab" data-toggle="tab" href="#login" role="tab"
-                           aria-controls="home" aria-selected="true">Se connecter</a>
+                           aria-controls="home" aria-selected="true">
+                            <?php echo getTranslate("Se connecter", $tabLang, $setLanguage); ?>
+                        </a>
                     </li>
                     <li class="nav-item" role="presentation">
                         <a class="nav-link" id="profile-tab" data-toggle="tab" href="#signin" role="tab"
-                           aria-controls="profile" aria-selected="false">S'inscrire</a>
+                           aria-controls="profile" aria-selected="false">
+                            <?php echo getTranslate("S'inscrire", $tabLang, $setLanguage); ?>
+                        </a>
                     </li>
                 </ul>
                 <div class="tab-content" id="myTabContent">
@@ -69,36 +82,36 @@ require "navbar.php";
                         <div class="card-body">
                             <?php
                             if (!empty($error)) {
-                                echo "<div class='alert alert-danger'><li>Identifiants incorrects</div>";
+                                echo    "<div class='alert alert-danger'><li>" . getTranslate("Identifiants incorrects", $tabLang, $setLanguage) . "</li></div>";
                             }
                             ?>
                             <form method="POST" action="login.php">
                                 <div class="form-group">
                                     <div class="form-label-group">
                                         <label for="inputEmail">
-                                            Addresse email :
+                                            <?php echo getTranslate("Adresse mail", $tabLang, $setLanguage); ?>
+                                            :
                                         </label>
-                                        <input type="email" id="inputEmail" class="form-control focus"
-                                               placeholder="Adresse mail" required="required" autofocus="autofocus"
-                                               name="inputEmail"
+                                        <input type="email" class="form-control focus"
+                                               placeholder="<?php echo getTranslate("Adresse mail", $tabLang, $setLanguage); ?>" required="required" autofocus="autofocus"
+                                               name="inputEmail" autocomplete="username"
                                                value="<?php echo (isset($_POST['inputEmail'])) ? $_POST['inputEmail'] : '' ?>">
                                     </div>
                                 </div>
                                 <div class="form-group">
                                     <div class="form-label-group">
                                         <label for="inputPassword">
-                                            Mot de passe :
+                                            <?php echo getTranslate("Mot de passe", $tabLang, $setLanguage); ?> :
                                         </label>
-                                        <input type="password" id="inputPassword" class="form-control focus"
-                                               placeholder="Mot de passe" required="required" name="inputPassword">
+                                        <input type="password" class="form-control focus" autocomplete="current-password"
+                                               placeholder="<?php echo getTranslate("Mot de passe", $tabLang, $setLanguage); ?>" required="required" name="inputPassword">
                                     </div>
                                 </div>
-                                <input class="genric-btn primary circle " type="submit" value="Connexion">
+                                <input class="genric-btn primary circle " type="submit" value="<?php echo getTranslate("Se connecter", $tabLang, $setLanguage); ?>">
                             </form>
                             <div class="text-center">
-                                <a class="d-block small pt-3 text-center text-secondary" href="forgotPassword.php">Mot
-                                    de
-                                    passe oublié ?
+                                <a class="d-block small pt-3 text-center text-secondary" href="forgotPassword.php">
+                                    <?php echo getTranslate("Mot de passe oublié", $tabLang, $setLanguage); ?>
                                 </a>
                             </div>
                         </div>
@@ -110,7 +123,7 @@ require "navbar.php";
                                 if (isset($_SESSION["errors"])) {
                                     echo "<div class='alert alert-danger'>";
                                     foreach ($_SESSION["errors"] as $error) {
-                                        echo "<li>" . $error;
+                                        echo "<li>" . getTranslate($error, $tabLang, $setLanguage) . "</li>";
                                     }
                                     echo "</div>";
                                 }
@@ -121,12 +134,11 @@ require "navbar.php";
                                         <div class="form-row">
                                             <div class="col-6">
                                                 <div class="form-group">
-                                                    <!-- Prénom -->
                                                     <label for="firstName">
-                                                        Prénom :
+                                                        <?php echo getTranslate("Prénom", $tabLang, $setLanguage) ?> :
                                                     </label>
                                                     <input type="text" id="firstName" class="form-control focus"
-                                                           placeholder="Prénom" required="required" name="firstName"
+                                                           placeholder="<?php echo getTranslate("Prénom", $tabLang, $setLanguage) ?>" required="required" name="firstName"
                                                            value="<?php echo (isset($_SESSION["inputErrors"]))
                                                                ? $_SESSION["inputErrors"]["firstName"]
                                                                : ""; ?>">
@@ -134,12 +146,11 @@ require "navbar.php";
                                             </div>
                                             <div class="col-6">
                                                 <div class="form-group">
-                                                    <!-- Nom -->
                                                     <label for="lastName">
-                                                        Nom :
+                                                        <?php echo getTranslate("Nom", $tabLang, $setLanguage) ?> :
                                                     </label>
                                                     <input type="text" id="lastName" class="form-control focus"
-                                                           placeholder="Nom" required="required" name="lastName"
+                                                           placeholder="<?php echo getTranslate("Nom", $tabLang, $setLanguage) ?>" required="required" name="lastName"
                                                            value="<?php echo (isset($_SESSION["inputErrors"]))
                                                                ? $_SESSION["inputErrors"]["lastName"]
                                                                : ""; ?>">
@@ -148,33 +159,31 @@ require "navbar.php";
                                         </div>
                                     </div>
                                     <div class="form-group">
-                                        <!-- Email -->
                                         <label for="inputEmail">
-                                            Adresse email :
+                                            <?php echo getTranslate("Adresse mail", $tabLang, $setLanguage); ?> :
                                         </label>
                                         <input type="email" id="inputEmail" class="form-control focus"
-                                               placeholder="Email"
+                                               placeholder="<?php echo getTranslate("Adresse mail", $tabLang, $setLanguage); ?>"
                                                required="required" name="inputEmail"
                                                value="<?php echo (isset($_SESSION["inputErrors"]))
                                                    ? $_SESSION["inputErrors"]["inputEmail"]
                                                    : ""; ?>">
                                     </div>
                                     <div class="form-group">
-                                        <!-- Mot de passe -->
                                         <label for="inputPassword">
-                                            Mot de passe :
+                                            <?php echo getTranslate("Mot de passe", $tabLang, $setLanguage); ?> :
                                         </label>
                                         <input type="password" id="inputPassword" class="form-control focus"
-                                               placeholder="Mot de passe" required="required" name="inputPassword"
+                                               placeholder="<?php echo getTranslate("Mot de passe", $tabLang, $setLanguage); ?>" required="required" name="inputPassword"
                                                autocomplete="off">
                                     </div>
                                     <div class="form-group">
                                         <!-- Confirmation mot de passe -->
                                         <label for="confirmPassword">
-                                            Confirmation de mot de passe :
+                                            <?php echo getTranslate("Confirmation de mot de passe", $tabLang, $setLanguage); ?> :
                                         </label>
                                         <input type="password" id="confirmPassword" class="form-control focus"
-                                               placeholder="Confirmation mot de passe" required="required"
+                                               placeholder="<?php echo getTranslate("Confirmation de mot de passe", $tabLang, $setLanguage); ?>" required="required"
                                                name="confirmPassword" autocomplete="off">
                                     </div>
                                     <div class="form-group">
@@ -192,10 +201,11 @@ require "navbar.php";
                                     <div class="custom-control custom-checkbox mb-5">
                                         <input type="checkbox" name="newsletterAgreement" class="custom-control-input"
                                                id="customCheck1">
-                                        <label class="custom-control-label" for="customCheck1">J'accepte de recevoir les
-                                            newsletter par email</label>
+                                        <label class="custom-control-label" for="customCheck1">
+                                            <?php echo getTranslate("J'accepte de recevoir les newsletter par email", $tabLang, $setLanguage); ?>
+                                        </label>
                                     </div>
-                                    <input class="genric-btn primary circle" type="submit" value="Inscription">
+                                    <input class="genric-btn primary circle" type="submit" value="<?php echo getTranslate("S'inscrire", $tabLang, $setLanguage); ?>">
                                 </form>
                             </div>
                         </div>
@@ -205,91 +215,6 @@ require "navbar.php";
         </div>
     </section>
     <!-- End Button -->
-
-    <!-- Footer Area Starts -->
-    <footer class="footer-area">
-        <div class="footer-widget section-padding">
-            <div class="container">
-                <div class="row">
-                    <div class="col-md-4">
-                        <div class="single-widget single-widget1">
-                            <a href="index.html"><img alt="" src="assets/images/logo/logo2.png"></a>
-                            <p class="mt-3">Which morning fourth great won't is to fly bearing man. Called unto shall
-                                seed,
-                                deep, herb set seed land divide after over first creeping. First creature set upon stars
-                                deep male gathered said she'd an image spirit our</p>
-                        </div>
-                    </div>
-                    <div class="col-md-4">
-                        <div class="single-widget single-widget2 my-5 my-md-0">
-                            <h5 class="mb-4">contact us</h5>
-                            <div class="d-flex">
-                                <div class="into-icon">
-                                    <i class="fa fa-map-marker"></i>
-                                </div>
-                                <div class="info-text">
-                                    <p>1234 Some St San Francisco, CA 94102, US 1.800.123.4567 </p>
-                                </div>
-                            </div>
-                            <div class="d-flex">
-                                <div class="into-icon">
-                                    <i class="fa fa-phone"></i>
-                                </div>
-                                <div class="info-text">
-                                    <p>(123) 456 78 90</p>
-                                </div>
-                            </div>
-                            <div class="d-flex">
-                                <div class="into-icon">
-                                    <i class="fa fa-envelope-o"></i>
-                                </div>
-                                <div class="info-text">
-                                    <p>support@axiomthemes.com</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-4">
-                        <div class="single-widget single-widget3">
-                            <h5 class="mb-4">opening hours</h5>
-                            <p>Monday ...................... Closed</p>
-                            <p>Tue-Fri .............. 10 am - 12 pm</p>
-                            <p>Sat-Sun ............... 8 am - 11 pm</p>
-                            <p>Holidays ............. 10 am - 12 pm</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="footer-copyright">
-            <div class="container">
-                <div class="row">
-                    <div class="col-lg-7 col-md-6">
-                        <span><!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
-Copyright &copy;<script>document.write(new Date().getFullYear());</script> All rights reserved | This template is made with <i
-                                    aria-hidden="true" class="fa fa-heart-o"></i> by <a href="https://colorlib.com"
-                                                                                        target="_blank">Colorlib</a>
-                            <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. --></span>
-                    </div>
-                    <div class="col-lg-5 col-md-6">
-                        <div class="social-icons">
-                            <ul>
-                                <li class="no-margin">Follow Us</li>
-                                <li><a href="#"><i class="fa fa-facebook"></i></a></li>
-                                <li><a href="#"><i class="fa fa-twitter"></i></a></li>
-                                <li><a href="#"><i class="fa fa-google-plus"></i></a></li>
-                                <li><a href="#"><i class="fa fa-pinterest"></i></a></li>
-                                <li><a href="#"><i class="fa fa-instagram"></i></a></li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </footer>
-    <!-- Footer Area End -->
-
-
 <?php
 require 'footer.php';
 ?>
