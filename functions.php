@@ -182,9 +182,20 @@ function getUserInfos()
 
 
 function getEventsPreview(){
+
     $pdo = connectDB();
     $queryPrepared = $pdo->prepare("SELECT idEvent, truckName, eventDesc, eventImg, eventType, eventName, eventAddress, eventCity, eventPostalCode, eventBeginDate, eventEndDate, eventStartHour, eventEndHour FROM EVENTS, HOST, TRUCK WHERE event = idEvent AND truck = idTruck AND eventType = 'Dégustation' LIMIT 3");
     $queryPrepared->execute();
     return $queryPrepared->fetchAll(PDO::FETCH_ASSOC);
+
+}
+
+function getMenuForHomePage(){
+
+    $pdo = connectDB();
+
+    $queryPrepared = $pdo->prepare("SELECT menuName, menuPrice, truck FROM MENUS ;");
+    $queryPrepared->execute();
+    return $getMenuName = $queryPrepared->fetchAll(PDO::FETCH_ASSOC);
 
 }
