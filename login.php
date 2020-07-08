@@ -107,7 +107,7 @@ require "navbar.php";
                                                placeholder="<?php echo getTranslate("Mot de passe", $tabLang, $setLanguage); ?>" required="required" name="inputPassword">
                                     </div>
                                 </div>
-                                <input class="genric-btn primary circle " type="submit" value="Connexion">
+                                <input class="genric-btn primary circle " type="submit" value="<?php echo getTranslate("Se connecter", $tabLang, $setLanguage); ?>">
                             </form>
                             <div class="text-center">
                                 <a class="d-block small pt-3 text-center text-secondary" href="forgotPassword.php">

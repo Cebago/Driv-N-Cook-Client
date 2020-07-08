@@ -376,6 +376,78 @@
     "J'accepte de recevoir les newsletter par email" : {
       "en_EN" : "I agree to receive newsletters by email",
       "es_ES" : "Acepto recibir las newsletter por correo electrónico"
+    },
+    "Changer mon mot de passe" : {
+      "es_ES" : "Cambiar mi contrasenã",
+      "en_EN" : "Change my password"
+    },
+    "Ancien mot de passe" : {
+      "es_ES" : "Contraseña antigua",
+      "en_EN" : "Old password"
+    },
+    "Nouveau mot de passe" : {
+      "es_ES" : "Contraseña antigua",
+      "en_EN" : "New password"
+    },
+    "Votre mot de passe actuel ne correspond pas" : {
+      "es_ES" : "Su contraseña actual no coincide",
+      "en_EN" : "Your current password does not match"
+    },
+    "Ville" : {
+      "es_ES" : "Ciudad",
+      "en_EN" : "City"
+    },
+    "Date de création du compte" : {
+      "es_ES" : "Fecha de creación de la cuenta",
+      "en_EN" : "Account creation date"
+    },
+    "Numéro de téléphone" : {
+      "es_ES" : "Número telefónico",
+      "en_EN" : "Phone number"
+    },
+    "Numéro d'utilisateur" : {
+      "es_ES" : "Número de usuario",
+      "en_EN" : "User ID"
+    },
+    "Votre rôle sur le site" : {
+      "es_ES" : "Su papel en el sitio",
+      "en_EN" : "Your role on the site"
+    },
+    "Votre numéro de carte fidélité" : {
+      "es_ES" : "Número de usuario",
+      "en_EN" : "User ID"
+    },
+    "Code postal" : {
+      "es_ES" : "Código postal",
+      "en_EN" : "Postal code"
+    },
+    "Consultation du profil" : {
+      "es_ES" : "Consulta del perfil",
+      "en_EN" : "Consultation of the profile"
+    },
+    "Adresse" : {
+      "es_ES" : "Dirección",
+      "en_EN" : "Address"
+    },
+    "Débloquer le formulaire" : {
+      "es_ES" : "Desbloquear el formulario",
+      "en_EN" : "Unblock the form"
+    },
+    "Valider le formulaire" : {
+      "es_ES" : "Validar el formulario",
+      "en_EN" : "Validate the form"
+    },
+    "Annuler le formulaire" : {
+      "es_ES" : "Cancelar el formulario",
+      "en_EN" : "Cancel the form"
+    },
+    "Client" : {
+      "en_EN" : "Customer",
+      "es_ES" : "Cliente"
+    },
+    "Réinitialiser le mot de passe" : {
+      "en_EN" : "Reset the password",
+      "es_ES" : "Restablecer la contraseña"
     }
   },
   "ingredients": {
