@@ -184,7 +184,7 @@ if (isActivated() && isConnected() && isClient()) {
     </div>
     <div class="pull-right col-md-3">
         <a href="payment.php" class="template-btn template-btn2 mt-4">
-            <?php getTranslate("Payer", $tabLang, $setLanguage); ?>
+            <?php echo getTranslate("Payer", $tabLang, $setLanguage); ?>
         </a>
     </div>
 </section>
