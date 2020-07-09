@@ -74,7 +74,8 @@ require "navbar.php";
                                name="confirm" required>
                     </div>
                     <div class="mt-5 col-md-2 mx-auto">
-                        <button class="btn btn-warning" type="submit"><?php echo getTranslate("Changer mon mot de passe", $tabLang, $setLanguage); ?></button>
+                        <button class="btn btn-warning"
+                                type="submit"><?php echo getTranslate("Changer mon mot de passe", $tabLang, $setLanguage); ?></button>
                     </div>
                 </form>
             </div>

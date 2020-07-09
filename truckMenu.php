@@ -132,7 +132,8 @@ if (isset($_GET["idTruck"])) {
                             <div class="col-lg-5 col-md-6 align-self-center">
                                 <h1><?php echo $count + 1; ?>.</h1>
                                 <div class="deshes-text">
-                                    <h3><span id="<?php echo $menu["idMenu"] ?>"><?php echo $menu["menuName"] ?></span></h3>
+                                    <h3><span id="<?php echo $menu["idMenu"] ?>"><?php echo $menu["menuName"] ?></span>
+                                    </h3>
                                     <ul>
                                         <?php
                                         foreach ($products as $product) {

@@ -6,8 +6,8 @@ require "functions.php";
 if (!isConnected() || !isActivated() || !isActivated()) {
     header("Location: login.php");
 }
-    include "navbar.php";
-    ?>
+include "navbar.php";
+?>
     <section class="banner-area banner-area2 menu-bg text-center">
         <div class="container">
             <div class="row">
@@ -47,7 +47,8 @@ if (!isConnected() || !isActivated() || !isActivated()) {
                     <div class="card ">
                         <div class="card-header">
                             <div class="bg-white shadow-sm">
-                                <ul role="tablist" class="nav bg-light nav-pills nav-tabs rounded nav-fill mb-4" id="myTab">
+                                <ul role="tablist" class="nav bg-light nav-pills nav-tabs rounded nav-fill mb-4"
+                                    id="myTab">
                                     <li class="nav-item" role="presentation">
                                         <a data-toggle="tab" href="#creditCard" id="creditLink" class="nav-link active"
                                            aria-controls="creditCard" aria-selected="true">
@@ -120,7 +121,9 @@ if (!isConnected() || !isActivated() || !isActivated()) {
                                                         <input type="number" placeholder="MM" name="month"
                                                                class="form-control"
                                                                required>
-                                                        <input type="number" placeholder="<?php echo getTranslate("AA", $tabLang, $setLanguage); ?>" name="year"
+                                                        <input type="number"
+                                                               placeholder="<?php echo getTranslate("AA", $tabLang, $setLanguage); ?>"
+                                                               name="year"
                                                                class="form-control"
                                                                required>
                                                     </div>

@@ -73,7 +73,8 @@ require "navbar.php";
                         <div class="form-group">
                             <div class="form-label-group">
                                 <input type="password" class="form-control focus"
-                                       placeholder="<?php echo getTranslate("Confirmation de mot de passe", $tabLang, $setLanguage); ?>" required="required"
+                                       placeholder="<?php echo getTranslate("Confirmation de mot de passe", $tabLang, $setLanguage); ?>"
+                                       required="required"
                                        autofocus="autofocus" name="passwordConfirm">
                             </div>
                         </div>

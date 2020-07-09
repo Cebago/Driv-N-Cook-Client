@@ -363,7 +363,7 @@ function getListOfEvents() {
     request.onreadystatechange = function () {
         if (request.readyState === 4) {
             if (request.status === 200) {
-                if(request.responseText !== '') {
+                if (request.responseText !== '') {
                     events = JSON.parse(request.responseText);
                     getLocation();
                 }
@@ -375,18 +375,18 @@ function getListOfEvents() {
 }
 
 
-
 function getLocation() {
 
     if (navigator.geolocation) {//si la geoloc est activé sur le navigateur
         //on appelle la méthode getCurrentPosition qui appelle l'api du navigateur (par défaut google)
         //on lui met en paramètre les fonctions qui seront appellées en retour, success or error
         navigator.geolocation.getCurrentPosition(successCallback, errorCallback);
-    }else {
+    } else {
         errorCallback()
     }
 
 }
+
 function errorCallback(result) {
     console.log(result);
     for (let j = 0; j < events.length; j++) {
@@ -394,7 +394,7 @@ function errorCallback(result) {
     }
 }
 
-function successCallback(position){
+function successCallback(position) {
     let pos = {
         'lng': position.coords.longitude,
         'lat': position.coords.latitude
@@ -414,7 +414,7 @@ function calculDistance(origin) {
         origins: [origin],
         destinations: addressTab,
         travelMode: 'DRIVING',
-        unitSystem:  google.maps.UnitSystem.METRIC,
+        unitSystem: google.maps.UnitSystem.METRIC,
     }
     service.getDistanceMatrix(options, callback);
 
@@ -434,7 +434,7 @@ function printEvent(j, status) {
 
     let cardDiv = document.createElement('div');
     cardDiv.className = "col-md-4 my-2";
-    cardDiv.setAttribute("onclick", "window.location.href='eventsDetails.php?idEvent="+events[j]["idEvent"]+"'");
+    cardDiv.setAttribute("onclick", "window.location.href='eventsDetails.php?idEvent=" + events[j]["idEvent"] + "'");
     child.appendChild(cardDiv);
 
     let cartDiv2 = document.createElement('div');
@@ -466,7 +466,7 @@ function printEvent(j, status) {
     let spanDate = document.createElement('span');
     spanDate.innerHTML = '<i class="fa fa-calendar-o mr-2"></i>' + events[j]["eventBeginDate"] + "<br>";
     post.appendChild(spanDate);
-    if(status == 'OK') {
+    if (status == 'OK') {
         let spanDistance = document.createElement('span');
         spanDistance.innerHTML = '<i class="fa fa-map-signs mr-2"></i>' + results[j].distance.text + "<br>";
         post.appendChild(spanDistance);
@@ -484,14 +484,10 @@ function printEvent(j, status) {
 }
 
 
-
-
-
-
 function sortDistances(array) {
-    return array.sort(function(rowA,rowB) {
+    return array.sort(function (rowA, rowB) {
         let a = rowA.distance.value;
         let b = rowB.distance.value;
-        return	a<b ? -1 : a>b ? 1 : 0;
+        return a < b ? -1 : a > b ? 1 : 0;
     })
 }
