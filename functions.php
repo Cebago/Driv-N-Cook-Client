@@ -33,7 +33,7 @@ function login($email)
 {
     $token = createToken($email);
     $pdo = connectDB();
-    $queryPrepared = $pdo->prepare("UPDATE USERTOKEN, USER SET USERTOKEN.token = :token WHERE user = idUser AND emailAddress = :email AND tokenType = 'Site' ;");
+    $queryPrepared = $pdo->prepare("UPDATE USERTOKEN, USER SET USERTOKEN.token = :token WHERE user = idUser AND emailAddress = :email AND tokenType = 'Site'");
     $queryPrepared->execute([":token" => $token, ":email" => $email]);
     $_SESSION["token"] = $token;
     $_SESSION["email"] = $email;
@@ -142,13 +142,13 @@ function isClient()
             ":email" => $email,
             ":token" => $token
         ]);
-        $isAdmin = $queryPrepared->fetch();
-        $isAdmin = $isAdmin["roleName"];
-        if ($isAdmin == "Client") {
+        $role = $queryPrepared->fetch();
+        $role = $role["roleName"];
+        if ($role == "Client") {
             return true;
         }
-        return false;
     }
+    return false;
 }
 
 /**
