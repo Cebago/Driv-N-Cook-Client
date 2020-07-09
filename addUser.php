@@ -9,7 +9,6 @@ if (!empty($_POST["firstName"])
     && !empty($_POST["inputPassword"])
     && !empty($_POST["confirmPassword"])
     && !empty($_POST["captcha"])
-    && !empty($_POST["newsletterAgreement"])
 ) {
 
 
