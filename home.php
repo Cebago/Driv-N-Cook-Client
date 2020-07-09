@@ -36,7 +36,7 @@ $count = 0;
                         <span class="style-change"><?php echo getTranslate("bienvenue", $tabLang, $setLanguage); ?></span>&nbsp<?php echo getTranslate("chez", $tabLang, $setLanguage); ?>
                     </h3>
                     <p class="pt-3"><?php echo getTranslate("descriptionHome", $tabLang, $setLanguage); ?></p>
-                    <a href="#"
+                    <a href="./viewTrucks.php"
                        class="template-btn mt-3"><?php echo getTranslate("voirTruck", $tabLang, $setLanguage); ?></a>
                 </div>
             </div>
