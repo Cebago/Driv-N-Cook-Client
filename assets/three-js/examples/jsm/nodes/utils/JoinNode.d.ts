@@ -1,8 +1,6 @@
-import { TempNode } from '../core/TempNode';
+import {TempNode} from '../core/TempNode';
 
 export class JoinNode extends TempNode {
-
-	constructor( x: Node, y: Node, z?: Node, w?: Node );
 
 	x: Node;
 	y: Node;
@@ -10,7 +8,10 @@ export class JoinNode extends TempNode {
 	w: Node | undefined;
 	nodeType: string;
 
+	constructor(x: Node, y: Node, z?: Node, w?: Node);
+
 	getNumElements(): number;
-	copy( source: JoinNode ): this;
+
+	copy(source: JoinNode): this;
 
 }

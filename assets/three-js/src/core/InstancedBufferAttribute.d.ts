@@ -1,5 +1,5 @@
-import { BufferGeometry } from './BufferGeometry';
-import { BufferAttribute } from './BufferAttribute';
+import {BufferGeometry} from './BufferGeometry';
+import {BufferAttribute} from './BufferAttribute';
 
 /**
  * @see <a href="https://github.com/mrdoob/three.js/blob/master/examples/jsm/utils/BufferGeometryUtils.js">examples/jsm/utils/BufferGeometryUtils.js</a>
@@ -8,7 +8,9 @@ export namespace BufferGeometryUtils {
 	export function mergeBufferGeometries(
 		geometries: BufferGeometry[]
 	): BufferGeometry;
-	export function computeTangents( geometry: BufferGeometry ): null;
+
+	export function computeTangents(geometry: BufferGeometry): null;
+
 	export function mergeBufferAttributes(
 		attributes: BufferAttribute[]
 	): BufferAttribute;
@@ -26,10 +28,11 @@ export namespace GeometryUtils {
 		geometry2: any,
 		materialIndexOffset?: any
 	): any;
+
 	/**
 	 * @deprecated Use {@link Geometry#center geometry.center()} instead.
 	 */
-	export function center( geometry: any ): any;
+	export function center(geometry: any): any;
 }
 
 /**
@@ -37,13 +40,13 @@ export namespace GeometryUtils {
  */
 export class InstancedBufferAttribute extends BufferAttribute {
 
+	meshPerAttribute: number;
+
 	constructor(
 		array: ArrayLike<number>,
 		itemSize: number,
 		normalized?: boolean,
 		meshPerAttribute?: number
 	);
-
-	meshPerAttribute: number;
 
 }

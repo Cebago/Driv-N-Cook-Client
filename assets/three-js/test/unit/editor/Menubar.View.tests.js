@@ -3,18 +3,16 @@
  */
 /* global QUnit */
 
-import { NothingsIsExportedYet } from '../../../editor/js/Menubar.View';
+export default QUnit.module('Editor', () => {
 
-export default QUnit.module( 'Editor', () => {
+	QUnit.module.todo('Menubar.View', () => {
 
-	QUnit.module.todo( 'Menubar.View', () => {
+		QUnit.test('write me !', (assert) => {
 
-		QUnit.test( 'write me !', ( assert ) => {
+			assert.ok(false, "everything's gonna be alright");
 
-			assert.ok( false, "everything's gonna be alright" );
+		});
 
-		} );
+	});
 
-	} );
-
-} );
+});

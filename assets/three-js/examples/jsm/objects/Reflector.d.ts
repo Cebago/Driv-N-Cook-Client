@@ -1,10 +1,4 @@
-import {
-	Mesh,
-	BufferGeometry,
-	Color,
-	TextureEncoding,
-	WebGLRenderTarget
-} from '../../../src/Three';
+import {BufferGeometry, Color, Mesh, TextureEncoding, WebGLRenderTarget} from '../../../src/Three';
 
 export interface ReflectorOptions {
 	color?: Color;
@@ -17,7 +11,7 @@ export interface ReflectorOptions {
 
 export class Reflector extends Mesh {
 
-	constructor( geometry?: BufferGeometry, options?: ReflectorOptions );
+	constructor(geometry?: BufferGeometry, options?: ReflectorOptions);
 
 	getRenderTarget(): WebGLRenderTarget;
 

@@ -11,41 +11,41 @@
  * @param   {string}        type            The type of data (uint8, uint16, ...)
  * @param   {ArrayBuffer}   arrayBuffer     The buffer with volume data
  */
-THREE.Volume = function ( xLength, yLength, zLength, type, arrayBuffer ) {
+THREE.Volume = function (xLength, yLength, zLength, type, arrayBuffer) {
 
-	if ( arguments.length > 0 ) {
+	if (arguments.length > 0) {
 
 		/**
 		 * @member {number} xLength Width of the volume in the IJK coordinate system
 		 */
-		this.xLength = Number( xLength ) || 1;
+		this.xLength = Number(xLength) || 1;
 		/**
 		 * @member {number} yLength Height of the volume in the IJK coordinate system
 		 */
-		this.yLength = Number( yLength ) || 1;
+		this.yLength = Number(yLength) || 1;
 		/**
 		 * @member {number} zLength Depth of the volume in the IJK coordinate system
 		 */
-		this.zLength = Number( zLength ) || 1;
+		this.zLength = Number(zLength) || 1;
 
 		/**
 		 * @member {TypedArray} data Data of the volume
 		 */
 
-		switch ( type ) {
+		switch (type) {
 
 			case 'Uint8' :
 			case 'uint8' :
 			case 'uchar' :
 			case 'unsigned char' :
 			case 'uint8_t' :
-				this.data = new Uint8Array( arrayBuffer );
+				this.data = new Uint8Array(arrayBuffer);
 				break;
 			case 'Int8' :
 			case 'int8' :
 			case 'signed char' :
 			case 'int8_t' :
-				this.data = new Int8Array( arrayBuffer );
+				this.data = new Int8Array(arrayBuffer);
 				break;
 			case 'Int16' :
 			case 'int16' :
@@ -54,7 +54,7 @@ THREE.Volume = function ( xLength, yLength, zLength, type, arrayBuffer ) {
 			case 'signed short' :
 			case 'signed short int' :
 			case 'int16_t' :
-				this.data = new Int16Array( arrayBuffer );
+				this.data = new Int16Array(arrayBuffer);
 				break;
 			case 'Uint16' :
 			case 'uint16' :
@@ -62,21 +62,21 @@ THREE.Volume = function ( xLength, yLength, zLength, type, arrayBuffer ) {
 			case 'unsigned short' :
 			case 'unsigned short int' :
 			case 'uint16_t' :
-				this.data = new Uint16Array( arrayBuffer );
+				this.data = new Uint16Array(arrayBuffer);
 				break;
 			case 'Int32' :
 			case 'int32' :
 			case 'int' :
 			case 'signed int' :
 			case 'int32_t' :
-				this.data = new Int32Array( arrayBuffer );
+				this.data = new Int32Array(arrayBuffer);
 				break;
 			case 'Uint32' :
 			case 'uint32' :
 			case 'uint' :
 			case 'unsigned int' :
 			case 'uint32_t' :
-				this.data = new Uint32Array( arrayBuffer );
+				this.data = new Uint32Array(arrayBuffer);
 				break;
 			case 'longlong' :
 			case 'long long' :
@@ -95,19 +95,19 @@ THREE.Volume = function ( xLength, yLength, zLength, type, arrayBuffer ) {
 			case 'Float32' :
 			case 'float32' :
 			case 'float' :
-				this.data = new Float32Array( arrayBuffer );
+				this.data = new Float32Array(arrayBuffer);
 				break;
 			case 'Float64' :
 			case 'float64' :
 			case 'double' :
-				this.data = new Float64Array( arrayBuffer );
+				this.data = new Float64Array(arrayBuffer);
 				break;
 			default :
-				this.data = new Uint8Array( arrayBuffer );
+				this.data = new Uint8Array(arrayBuffer);
 
 		}
 
-		if ( this.data.length !== this.xLength * this.yLength * this.zLength ) {
+		if (this.data.length !== this.xLength * this.yLength * this.zLength) {
 
 			throw 'Error in THREE.Volume constructor, lengths are not matching arrayBuffer size';
 
@@ -118,11 +118,11 @@ THREE.Volume = function ( xLength, yLength, zLength, type, arrayBuffer ) {
 	/**
 	 * @member {Array}  spacing Spacing to apply to the volume from IJK to RAS coordinate system
 	 */
-	this.spacing = [ 1, 1, 1 ];
+	this.spacing = [1, 1, 1];
 	/**
 	 * @member {Array}  offset Offset of the volume in the RAS coordinate system
 	 */
-	this.offset = [ 0, 0, 0 ];
+	this.offset = [0, 0, 0];
 	/**
 	 * @member {THREE.Martrix3} matrix The IJK to RAS matrix
 	 */
@@ -135,46 +135,46 @@ THREE.Volume = function ( xLength, yLength, zLength, type, arrayBuffer ) {
 	 * @member {number} lowerThreshold The voxels with values under this threshold won't appear in the slices.
 	 *                      If changed, geometryNeedsUpdate is automatically set to true on all the slices associated to this volume
 	 */
-	var lowerThreshold = - Infinity;
-	Object.defineProperty( this, 'lowerThreshold', {
+	var lowerThreshold = -Infinity;
+	Object.defineProperty(this, 'lowerThreshold', {
 		get: function () {
 
 			return lowerThreshold;
 
 		},
-		set: function ( value ) {
+		set: function (value) {
 
 			lowerThreshold = value;
-			this.sliceList.forEach( function ( slice ) {
+			this.sliceList.forEach(function (slice) {
 
 				slice.geometryNeedsUpdate = true;
 
-			} );
+			});
 
 		}
-	} );
+	});
 	/**
 	 * @member {number} upperThreshold The voxels with values over this threshold won't appear in the slices.
 	 *                      If changed, geometryNeedsUpdate is automatically set to true on all the slices associated to this volume
 	 */
 	var upperThreshold = Infinity;
-	Object.defineProperty( this, 'upperThreshold', {
+	Object.defineProperty(this, 'upperThreshold', {
 		get: function () {
 
 			return upperThreshold;
 
 		},
-		set: function ( value ) {
+		set: function (value) {
 
 			upperThreshold = value;
-			this.sliceList.forEach( function ( slice ) {
+			this.sliceList.forEach(function (slice) {
 
 				slice.geometryNeedsUpdate = true;
 
-			} );
+			});
 
 		}
-	} );
+	});
 
 
 	/**
@@ -201,9 +201,9 @@ THREE.Volume.prototype = {
 	 * @param {number} k    Third coordinate
 	 * @returns {number}  value in the data array
 	 */
-	getData: function ( i, j, k ) {
+	getData: function (i, j, k) {
 
-		return this.data[ k * this.xLength * this.yLength + j * this.xLength + i ];
+		return this.data[k * this.xLength * this.yLength + j * this.xLength + i];
 
 	},
 
@@ -215,7 +215,7 @@ THREE.Volume.prototype = {
 	 * @param {number} k    Third coordinate
 	 * @returns {number}  index
 	 */
-	access: function ( i, j, k ) {
+	access: function (i, j, k) {
 
 		return k * this.xLength * this.yLength + j * this.xLength + i;
 
@@ -227,12 +227,12 @@ THREE.Volume.prototype = {
 	 * @param {number} index index of the voxel
 	 * @returns {Array}  [x,y,z]
 	 */
-	reverseAccess: function ( index ) {
+	reverseAccess: function (index) {
 
-		var z = Math.floor( index / ( this.yLength * this.xLength ) );
-		var y = Math.floor( ( index - z * this.yLength * this.xLength ) / this.xLength );
+		var z = Math.floor(index / (this.yLength * this.xLength));
+		var y = Math.floor((index - z * this.yLength * this.xLength) / this.xLength);
 		var x = index - z * this.yLength * this.xLength - y * this.xLength;
-		return [ x, y, z ];
+		return [x, y, z];
 
 	},
 
@@ -246,14 +246,14 @@ THREE.Volume.prototype = {
 	 * @param {Object}   context    You can specify a context in which call the function, default if this Volume
 	 * @returns {THREE.Volume}   this
 	 */
-	map: function ( functionToMap, context ) {
+	map: function (functionToMap, context) {
 
 		var length = this.data.length;
 		context = context || this;
 
-		for ( var i = 0; i < length; i ++ ) {
+		for (var i = 0; i < length; i++) {
 
-			this.data[ i ] = functionToMap.call( context, this.data[ i ], i, this.data );
+			this.data[i] = functionToMap.call(context, this.data[i], i, this.data);
 
 		}
 
@@ -268,12 +268,12 @@ THREE.Volume.prototype = {
 	 * @param {number}            index the index of the slice
 	 * @returns {Object} an object containing all the usefull information on the geometry of the slice
 	 */
-	extractPerpendicularPlane: function ( axis, RASIndex ) {
+	extractPerpendicularPlane: function (axis, RASIndex) {
 
 		var iLength,
 			jLength,
 			sliceAccess,
-			planeMatrix = ( new THREE.Matrix4() ).identity(),
+			planeMatrix = (new THREE.Matrix4()).identity(),
 			volume = this,
 			planeWidth,
 			planeHeight,
@@ -286,93 +286,93 @@ THREE.Volume.prototype = {
 			firstDirection = new THREE.Vector3(),
 			secondDirection = new THREE.Vector3();
 
-		var dimensions = new THREE.Vector3( this.xLength, this.yLength, this.zLength );
+		var dimensions = new THREE.Vector3(this.xLength, this.yLength, this.zLength);
 
 
-		switch ( axis ) {
+		switch (axis) {
 
 			case 'x' :
-				axisInIJK.set( 1, 0, 0 );
-				firstDirection.set( 0, 0, - 1 );
-				secondDirection.set( 0, - 1, 0 );
-				firstSpacing = this.spacing[ 2 ];
-				secondSpacing = this.spacing[ 1 ];
-				IJKIndex = new THREE.Vector3( RASIndex, 0, 0 );
+				axisInIJK.set(1, 0, 0);
+				firstDirection.set(0, 0, -1);
+				secondDirection.set(0, -1, 0);
+				firstSpacing = this.spacing[2];
+				secondSpacing = this.spacing[1];
+				IJKIndex = new THREE.Vector3(RASIndex, 0, 0);
 
-				planeMatrix.multiply( ( new THREE.Matrix4() ).makeRotationY( Math.PI / 2 ) );
-				positionOffset = ( volume.RASDimensions[ 0 ] - 1 ) / 2;
-				planeMatrix.setPosition( new THREE.Vector3( RASIndex - positionOffset, 0, 0 ) );
+				planeMatrix.multiply((new THREE.Matrix4()).makeRotationY(Math.PI / 2));
+				positionOffset = (volume.RASDimensions[0] - 1) / 2;
+				planeMatrix.setPosition(new THREE.Vector3(RASIndex - positionOffset, 0, 0));
 				break;
 			case 'y' :
-				axisInIJK.set( 0, 1, 0 );
-				firstDirection.set( 1, 0, 0 );
-				secondDirection.set( 0, 0, 1 );
-				firstSpacing = this.spacing[ 0 ];
-				secondSpacing = this.spacing[ 2 ];
-				IJKIndex = new THREE.Vector3( 0, RASIndex, 0 );
+				axisInIJK.set(0, 1, 0);
+				firstDirection.set(1, 0, 0);
+				secondDirection.set(0, 0, 1);
+				firstSpacing = this.spacing[0];
+				secondSpacing = this.spacing[2];
+				IJKIndex = new THREE.Vector3(0, RASIndex, 0);
 
-				planeMatrix.multiply( ( new THREE.Matrix4() ).makeRotationX( - Math.PI / 2 ) );
-				positionOffset = ( volume.RASDimensions[ 1 ] - 1 ) / 2;
-				planeMatrix.setPosition( new THREE.Vector3( 0, RASIndex - positionOffset, 0 ) );
+				planeMatrix.multiply((new THREE.Matrix4()).makeRotationX(-Math.PI / 2));
+				positionOffset = (volume.RASDimensions[1] - 1) / 2;
+				planeMatrix.setPosition(new THREE.Vector3(0, RASIndex - positionOffset, 0));
 				break;
 			case 'z' :
 			default :
-				axisInIJK.set( 0, 0, 1 );
-				firstDirection.set( 1, 0, 0 );
-				secondDirection.set( 0, - 1, 0 );
-				firstSpacing = this.spacing[ 0 ];
-				secondSpacing = this.spacing[ 1 ];
-				IJKIndex = new THREE.Vector3( 0, 0, RASIndex );
+				axisInIJK.set(0, 0, 1);
+				firstDirection.set(1, 0, 0);
+				secondDirection.set(0, -1, 0);
+				firstSpacing = this.spacing[0];
+				secondSpacing = this.spacing[1];
+				IJKIndex = new THREE.Vector3(0, 0, RASIndex);
 
-				positionOffset = ( volume.RASDimensions[ 2 ] - 1 ) / 2;
-				planeMatrix.setPosition( new THREE.Vector3( 0, 0, RASIndex - positionOffset ) );
+				positionOffset = (volume.RASDimensions[2] - 1) / 2;
+				planeMatrix.setPosition(new THREE.Vector3(0, 0, RASIndex - positionOffset));
 				break;
 
 		}
 
-		firstDirection.applyMatrix4( volume.inverseMatrix ).normalize();
+		firstDirection.applyMatrix4(volume.inverseMatrix).normalize();
 		firstDirection.argVar = 'i';
-		secondDirection.applyMatrix4( volume.inverseMatrix ).normalize();
+		secondDirection.applyMatrix4(volume.inverseMatrix).normalize();
 		secondDirection.argVar = 'j';
-		axisInIJK.applyMatrix4( volume.inverseMatrix ).normalize();
-		iLength = Math.floor( Math.abs( firstDirection.dot( dimensions ) ) );
-		jLength = Math.floor( Math.abs( secondDirection.dot( dimensions ) ) );
-		planeWidth = Math.abs( iLength * firstSpacing );
-		planeHeight = Math.abs( jLength * secondSpacing );
+		axisInIJK.applyMatrix4(volume.inverseMatrix).normalize();
+		iLength = Math.floor(Math.abs(firstDirection.dot(dimensions)));
+		jLength = Math.floor(Math.abs(secondDirection.dot(dimensions)));
+		planeWidth = Math.abs(iLength * firstSpacing);
+		planeHeight = Math.abs(jLength * secondSpacing);
 
-		IJKIndex = Math.abs( Math.round( IJKIndex.applyMatrix4( volume.inverseMatrix ).dot( axisInIJK ) ) );
-		var base = [ new THREE.Vector3( 1, 0, 0 ), new THREE.Vector3( 0, 1, 0 ), new THREE.Vector3( 0, 0, 1 ) ];
-		var iDirection = [ firstDirection, secondDirection, axisInIJK ].find( function ( x ) {
+		IJKIndex = Math.abs(Math.round(IJKIndex.applyMatrix4(volume.inverseMatrix).dot(axisInIJK)));
+		var base = [new THREE.Vector3(1, 0, 0), new THREE.Vector3(0, 1, 0), new THREE.Vector3(0, 0, 1)];
+		var iDirection = [firstDirection, secondDirection, axisInIJK].find(function (x) {
 
-			return Math.abs( x.dot( base[ 0 ] ) ) > 0.9;
+			return Math.abs(x.dot(base[0])) > 0.9;
 
-		} );
-		var jDirection = [ firstDirection, secondDirection, axisInIJK ].find( function ( x ) {
+		});
+		var jDirection = [firstDirection, secondDirection, axisInIJK].find(function (x) {
 
-			return Math.abs( x.dot( base[ 1 ] ) ) > 0.9;
+			return Math.abs(x.dot(base[1])) > 0.9;
 
-		} );
-		var kDirection = [ firstDirection, secondDirection, axisInIJK ].find( function ( x ) {
+		});
+		var kDirection = [firstDirection, secondDirection, axisInIJK].find(function (x) {
 
-			return Math.abs( x.dot( base[ 2 ] ) ) > 0.9;
+			return Math.abs(x.dot(base[2])) > 0.9;
 
-		} );
+		});
 
-		sliceAccess = function ( i, j ) {
+		sliceAccess = function (i, j) {
 
 			var accessI, accessJ, accessK;
 
-			var si = ( iDirection === axisInIJK ) ? IJKIndex : ( iDirection.argVar === 'i' ? i : j );
-			var sj = ( jDirection === axisInIJK ) ? IJKIndex : ( jDirection.argVar === 'i' ? i : j );
-			var sk = ( kDirection === axisInIJK ) ? IJKIndex : ( kDirection.argVar === 'i' ? i : j );
+			var si = (iDirection === axisInIJK) ? IJKIndex : (iDirection.argVar === 'i' ? i : j);
+			var sj = (jDirection === axisInIJK) ? IJKIndex : (jDirection.argVar === 'i' ? i : j);
+			var sk = (kDirection === axisInIJK) ? IJKIndex : (kDirection.argVar === 'i' ? i : j);
 
 			// invert indices if necessary
 
-			var accessI = ( iDirection.dot( base[ 0 ] ) > 0 ) ? si : ( volume.xLength - 1 ) - si;
-			var accessJ = ( jDirection.dot( base[ 1 ] ) > 0 ) ? sj : ( volume.yLength - 1 ) - sj;
-			var accessK = ( kDirection.dot( base[ 2 ] ) > 0 ) ? sk : ( volume.zLength - 1 ) - sk;
+			var accessI = (iDirection.dot(base[0]) > 0) ? si : (volume.xLength - 1) - si;
+			var accessJ = (jDirection.dot(base[1]) > 0) ? sj : (volume.yLength - 1) - sj;
+			var accessK = (kDirection.dot(base[2]) > 0) ? sk : (volume.zLength - 1) - sk;
 
-			return volume.access( accessI, accessJ, accessK );
+			return volume.access(accessI, accessJ, accessK);
 
 		};
 
@@ -395,10 +395,10 @@ THREE.Volume.prototype = {
 	 * @param {number}            index the index of the slice
 	 * @returns {THREE.VolumeSlice} the extracted slice
 	 */
-	extractSlice: function ( axis, index ) {
+	extractSlice: function (axis, index) {
 
-		var slice = new THREE.VolumeSlice( this, index, axis );
-		this.sliceList.push( slice );
+		var slice = new THREE.VolumeSlice(this, index, axis);
+		this.sliceList.push(slice);
 		return slice;
 
 	},
@@ -411,11 +411,11 @@ THREE.Volume.prototype = {
 	 */
 	repaintAllSlices: function () {
 
-		this.sliceList.forEach( function ( slice ) {
+		this.sliceList.forEach(function (slice) {
 
 			slice.repaint();
 
-		} );
+		});
 
 		return this;
 
@@ -429,20 +429,20 @@ THREE.Volume.prototype = {
 	computeMinMax: function () {
 
 		var min = Infinity;
-		var max = - Infinity;
+		var max = -Infinity;
 
 		// buffer the length
 		var datasize = this.data.length;
 
 		var i = 0;
 
-		for ( i = 0; i < datasize; i ++ ) {
+		for (i = 0; i < datasize; i++) {
 
-			if ( ! isNaN( this.data[ i ] ) ) {
+			if (!isNaN(this.data[i])) {
 
-				var value = this.data[ i ];
-				min = Math.min( min, value );
-				max = Math.max( max, value );
+				var value = this.data[i];
+				min = Math.min(min, value);
+				max = Math.max(max, value);
 
 			}
 
@@ -451,7 +451,7 @@ THREE.Volume.prototype = {
 		this.min = min;
 		this.max = max;
 
-		return [ min, max ];
+		return [min, max];
 
 	}
 

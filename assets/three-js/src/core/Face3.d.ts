@@ -1,5 +1,5 @@
-import { Vector3 } from './../math/Vector3';
-import { Color } from './../math/Color';
+import {Vector3} from './../math/Vector3';
+import {Color} from './../math/Color';
 
 /**
  * Triangle face.
@@ -7,6 +7,39 @@ import { Color } from './../math/Color';
  * @source https://github.com/mrdoob/three.js/blob/master/src/core/Face3.js
  */
 export class Face3 {
+
+	/**
+	 * Vertex A index.
+	 */
+	a: number;
+	/**
+	 * Vertex B index.
+	 */
+	b: number;
+	/**
+	 * Vertex C index.
+	 */
+	c: number;
+	/**
+	 * Face normal.
+	 */
+	normal: Vector3;
+	/**
+	 * Array of 4 vertex normals.
+	 */
+	vertexNormals: Vector3[];
+	/**
+	 * Face color.
+	 */
+	color: Color;
+	/**
+	 * Array of 4 vertex normals.
+	 */
+	vertexColors: Color[];
+	/**
+	 * Material index (points to {@link Geometry.materials}).
+	 */
+	materialIndex: number;
 
 	/**
 	 * @param a Vertex A index.
@@ -24,6 +57,7 @@ export class Face3 {
 		color?: Color,
 		materialIndex?: number
 	);
+
 	constructor(
 		a: number,
 		b: number,
@@ -32,6 +66,7 @@ export class Face3 {
 		vertexColors?: Color[],
 		materialIndex?: number
 	);
+
 	constructor(
 		a: number,
 		b: number,
@@ -40,6 +75,7 @@ export class Face3 {
 		color?: Color,
 		materialIndex?: number
 	);
+
 	constructor(
 		a: number,
 		b: number,
@@ -49,47 +85,8 @@ export class Face3 {
 		materialIndex?: number
 	);
 
-	/**
-	 * Vertex A index.
-	 */
-	a: number;
-
-	/**
-	 * Vertex B index.
-	 */
-	b: number;
-
-	/**
-	 * Vertex C index.
-	 */
-	c: number;
-
-	/**
-	 * Face normal.
-	 */
-	normal: Vector3;
-
-	/**
-	 * Array of 4 vertex normals.
-	 */
-	vertexNormals: Vector3[];
-
-	/**
-	 * Face color.
-	 */
-	color: Color;
-
-	/**
-	 * Array of 4 vertex normals.
-	 */
-	vertexColors: Color[];
-
-	/**
-	 * Material index (points to {@link Geometry.materials}).
-	 */
-	materialIndex: number;
-
 	clone(): this;
-	copy( source: Face3 ): this;
+
+	copy(source: Face3): this;
 
 }

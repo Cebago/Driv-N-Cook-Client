@@ -4,18 +4,18 @@
  * @author Mugen87 / https://github.com/Mugen87
  */
 
-import { Geometry } from '../core/Geometry.js';
-import { Float32BufferAttribute } from '../core/BufferAttribute.js';
-import { BufferGeometry } from '../core/BufferGeometry.js';
-import { Vector3 } from '../math/Vector3.js';
-import { Vector2 } from '../math/Vector2.js';
-import { MathUtils } from '../math/MathUtils.js';
+import {Geometry} from '../core/Geometry.js';
+import {Float32BufferAttribute} from '../core/BufferAttribute.js';
+import {BufferGeometry} from '../core/BufferGeometry.js';
+import {Vector3} from '../math/Vector3.js';
+import {Vector2} from '../math/Vector2.js';
+import {MathUtils} from '../math/MathUtils.js';
 
 // LatheGeometry
 
-function LatheGeometry( points, segments, phiStart, phiLength ) {
+function LatheGeometry(points, segments, phiStart, phiLength) {
 
-	Geometry.call( this );
+	Geometry.call(this);
 
 	this.type = 'LatheGeometry';
 
@@ -26,19 +26,19 @@ function LatheGeometry( points, segments, phiStart, phiLength ) {
 		phiLength: phiLength
 	};
 
-	this.fromBufferGeometry( new LatheBufferGeometry( points, segments, phiStart, phiLength ) );
+	this.fromBufferGeometry(new LatheBufferGeometry(points, segments, phiStart, phiLength));
 	this.mergeVertices();
 
 }
 
-LatheGeometry.prototype = Object.create( Geometry.prototype );
+LatheGeometry.prototype = Object.create(Geometry.prototype);
 LatheGeometry.prototype.constructor = LatheGeometry;
 
 // LatheBufferGeometry
 
-function LatheBufferGeometry( points, segments, phiStart, phiLength ) {
+function LatheBufferGeometry(points, segments, phiStart, phiLength) {
 
-	BufferGeometry.call( this );
+	BufferGeometry.call(this);
 
 	this.type = 'LatheBufferGeometry';
 
@@ -49,13 +49,13 @@ function LatheBufferGeometry( points, segments, phiStart, phiLength ) {
 		phiLength: phiLength
 	};
 
-	segments = Math.floor( segments ) || 12;
+	segments = Math.floor(segments) || 12;
 	phiStart = phiStart || 0;
 	phiLength = phiLength || Math.PI * 2;
 
 	// clamp phiLength so it's in range of [ 0, 2PI ]
 
-	phiLength = MathUtils.clamp( phiLength, 0, Math.PI * 2 );
+	phiLength = MathUtils.clamp(phiLength, 0, Math.PI * 2);
 
 
 	// buffers
@@ -74,29 +74,29 @@ function LatheBufferGeometry( points, segments, phiStart, phiLength ) {
 
 	// generate vertices and uvs
 
-	for ( i = 0; i <= segments; i ++ ) {
+	for (i = 0; i <= segments; i++) {
 
 		var phi = phiStart + i * inverseSegments * phiLength;
 
-		var sin = Math.sin( phi );
-		var cos = Math.cos( phi );
+		var sin = Math.sin(phi);
+		var cos = Math.cos(phi);
 
-		for ( j = 0; j <= ( points.length - 1 ); j ++ ) {
+		for (j = 0; j <= (points.length - 1); j++) {
 
 			// vertex
 
-			vertex.x = points[ j ].x * sin;
-			vertex.y = points[ j ].y;
-			vertex.z = points[ j ].x * cos;
+			vertex.x = points[j].x * sin;
+			vertex.y = points[j].y;
+			vertex.z = points[j].x * cos;
 
-			vertices.push( vertex.x, vertex.y, vertex.z );
+			vertices.push(vertex.x, vertex.y, vertex.z);
 
 			// uv
 
 			uv.x = i / segments;
-			uv.y = j / ( points.length - 1 );
+			uv.y = j / (points.length - 1);
 
-			uvs.push( uv.x, uv.y );
+			uvs.push(uv.x, uv.y);
 
 
 		}
@@ -105,9 +105,9 @@ function LatheBufferGeometry( points, segments, phiStart, phiLength ) {
 
 	// indices
 
-	for ( i = 0; i < segments; i ++ ) {
+	for (i = 0; i < segments; i++) {
 
-		for ( j = 0; j < ( points.length - 1 ); j ++ ) {
+		for (j = 0; j < (points.length - 1); j++) {
 
 			base = j + i * points.length;
 
@@ -118,8 +118,8 @@ function LatheBufferGeometry( points, segments, phiStart, phiLength ) {
 
 			// faces
 
-			indices.push( a, b, d );
-			indices.push( b, c, d );
+			indices.push(a, b, d);
+			indices.push(b, c, d);
 
 		}
 
@@ -127,9 +127,9 @@ function LatheBufferGeometry( points, segments, phiStart, phiLength ) {
 
 	// build geometry
 
-	this.setIndex( indices );
-	this.setAttribute( 'position', new Float32BufferAttribute( vertices, 3 ) );
-	this.setAttribute( 'uv', new Float32BufferAttribute( uvs, 2 ) );
+	this.setIndex(indices);
+	this.setAttribute('position', new Float32BufferAttribute(vertices, 3));
+	this.setAttribute('uv', new Float32BufferAttribute(uvs, 2));
 
 	// generate normals
 
@@ -138,7 +138,7 @@ function LatheBufferGeometry( points, segments, phiStart, phiLength ) {
 	// if the geometry is closed, we need to average the normals along the seam.
 	// because the corresponding vertices are identical (but still have different UVs).
 
-	if ( phiLength === Math.PI * 2 ) {
+	if (phiLength === Math.PI * 2) {
 
 		var normals = this.attributes.normal.array;
 		var n1 = new Vector3();
@@ -149,29 +149,29 @@ function LatheBufferGeometry( points, segments, phiStart, phiLength ) {
 
 		base = segments * points.length * 3;
 
-		for ( i = 0, j = 0; i < points.length; i ++, j += 3 ) {
+		for (i = 0, j = 0; i < points.length; i++, j += 3) {
 
 			// select the normal of the vertex in the first line
 
-			n1.x = normals[ j + 0 ];
-			n1.y = normals[ j + 1 ];
-			n1.z = normals[ j + 2 ];
+			n1.x = normals[j + 0];
+			n1.y = normals[j + 1];
+			n1.z = normals[j + 2];
 
 			// select the normal of the vertex in the last line
 
-			n2.x = normals[ base + j + 0 ];
-			n2.y = normals[ base + j + 1 ];
-			n2.z = normals[ base + j + 2 ];
+			n2.x = normals[base + j + 0];
+			n2.y = normals[base + j + 1];
+			n2.z = normals[base + j + 2];
 
 			// average normals
 
-			n.addVectors( n1, n2 ).normalize();
+			n.addVectors(n1, n2).normalize();
 
 			// assign the new values to both normals
 
-			normals[ j + 0 ] = normals[ base + j + 0 ] = n.x;
-			normals[ j + 1 ] = normals[ base + j + 1 ] = n.y;
-			normals[ j + 2 ] = normals[ base + j + 2 ] = n.z;
+			normals[j + 0] = normals[base + j + 0] = n.x;
+			normals[j + 1] = normals[base + j + 1] = n.y;
+			normals[j + 2] = normals[base + j + 2] = n.z;
 
 		}
 
@@ -179,8 +179,8 @@ function LatheBufferGeometry( points, segments, phiStart, phiLength ) {
 
 }
 
-LatheBufferGeometry.prototype = Object.create( BufferGeometry.prototype );
+LatheBufferGeometry.prototype = Object.create(BufferGeometry.prototype);
 LatheBufferGeometry.prototype.constructor = LatheBufferGeometry;
 
 
-export { LatheGeometry, LatheBufferGeometry };
+export {LatheGeometry, LatheBufferGeometry};

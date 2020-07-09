@@ -1,9 +1,9 @@
 import {
-	Material,
+	BufferGeometry,
+	Loader,
 	LoadingManager,
 	Mapping,
-	Loader,
-	BufferGeometry,
+	Material,
 	Side,
 	Texture,
 	Vector2,
@@ -12,9 +12,9 @@ import {
 
 export interface MaterialCreatorOptions {
 	/**
-   * side: Which side to apply the material
-   * THREE.FrontSide (default), THREE.BackSide, THREE.DoubleSide
-   */
+	 * side: Which side to apply the material
+	 * THREE.FrontSide (default), THREE.BackSide, THREE.DoubleSide
+	 */
 	side?: Side;
 	/*
    * wrap: What type of wrapping to apply for textures
@@ -41,12 +41,15 @@ export interface MaterialCreatorOptions {
 
 export class MTLLoader extends Loader {
 
-	constructor( manager?: LoadingManager );
 	materialOptions: MaterialCreatorOptions;
 
-	load( url: string, onLoad: ( materialCreator: MTLLoader.MaterialCreator ) => void, onProgress?: ( event: ProgressEvent ) => void, onError?: ( event: ErrorEvent ) => void ): void;
-	parse( text: string, path: string ) : MTLLoader.MaterialCreator;
-	setMaterialOptions( value: MaterialCreatorOptions ) : void;
+	constructor(manager?: LoadingManager);
+
+	load(url: string, onLoad: (materialCreator: MTLLoader.MaterialCreator) => void, onProgress?: (event: ProgressEvent) => void, onError?: (event: ErrorEvent) => void): void;
+
+	parse(text: string, path: string): MTLLoader.MaterialCreator;
+
+	setMaterialOptions(value: MaterialCreatorOptions): void;
 
 }
 
@@ -75,29 +78,39 @@ export interface TexParams {
 export namespace MTLLoader {
 	export class MaterialCreator {
 
-		constructor( baseUrl?: string, options?: MaterialCreatorOptions );
+		baseUrl: string;
+		options: MaterialCreatorOptions;
+		materialsInfo: { [key: string]: MaterialInfo };
+		materials: { [key: string]: Material };
+		nameLookup: { [key: string]: number };
+		side: Side;
+		wrap: Wrapping;
+		crossOrigin: string;
+		private materialsArray: Material[];
 
-		baseUrl : string;
-		options : MaterialCreatorOptions;
-		materialsInfo : {[key: string]: MaterialInfo};
-		materials : {[key: string]: Material};
-		private materialsArray : Material[];
-		nameLookup : {[key: string]: number};
-		side : Side;
-		wrap : Wrapping;
-		crossOrigin : string;
+		constructor(baseUrl?: string, options?: MaterialCreatorOptions);
 
-		setCrossOrigin( value: string ) : this;
-		setManager( value: LoadingManager ) : void;
-		setMaterials( materialsInfo: {[key: string]: MaterialInfo} ) : void;
-		convert( materialsInfo: {[key: string]: MaterialInfo} ) : {[key: string]: MaterialInfo};
-		preload() : void;
-		getIndex( materialName: string ) : Material;
-		getAsArray() : Material[];
-		create( materialName: string ) : Material;
-		createMaterial_( materialName: string ) : Material;
-		getTextureParams( value: string, matParams: any ) : TexParams;
-		loadTexture( url: string, mapping?: Mapping, onLoad?: ( bufferGeometry: BufferGeometry ) => void, onProgress?: ( event: ProgressEvent ) => void, onError?: ( event: ErrorEvent ) => void ): Texture;
+		setCrossOrigin(value: string): this;
+
+		setManager(value: LoadingManager): void;
+
+		setMaterials(materialsInfo: { [key: string]: MaterialInfo }): void;
+
+		convert(materialsInfo: { [key: string]: MaterialInfo }): { [key: string]: MaterialInfo };
+
+		preload(): void;
+
+		getIndex(materialName: string): Material;
+
+		getAsArray(): Material[];
+
+		create(materialName: string): Material;
+
+		createMaterial_(materialName: string): Material;
+
+		getTextureParams(value: string, matParams: any): TexParams;
+
+		loadTexture(url: string, mapping?: Mapping, onLoad?: (bufferGeometry: BufferGeometry) => void, onProgress?: (event: ProgressEvent) => void, onError?: (event: ErrorEvent) => void): Texture;
 
 	}
 }

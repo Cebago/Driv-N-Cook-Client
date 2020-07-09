@@ -1,6 +1,6 @@
-import { Material, MaterialParameters } from './Material';
-import { Color } from './../math/Color';
-import { Texture } from './../textures/Texture';
+import {Material, MaterialParameters} from './Material';
+import {Color} from './../math/Color';
+import {Texture} from './../textures/Texture';
 
 export interface PointsMaterialParameters extends MaterialParameters {
 	color?: Color | string | number;
@@ -13,8 +13,6 @@ export interface PointsMaterialParameters extends MaterialParameters {
 
 export class PointsMaterial extends Material {
 
-	constructor( parameters?: PointsMaterialParameters );
-
 	color: Color;
 	map: Texture | null;
 	alphaMap: Texture | null;
@@ -22,6 +20,8 @@ export class PointsMaterial extends Material {
 	sizeAttenuation: boolean;
 	morphTargets: boolean;
 
-	setValues( parameters: PointsMaterialParameters ): void;
+	constructor(parameters?: PointsMaterialParameters);
+
+	setValues(parameters: PointsMaterialParameters): void;
 
 }

@@ -2,9 +2,9 @@
  * @author mrdoob / http://mrdoob.com/
  */
 
-var Strings = function ( config ) {
+var Strings = function (config) {
 
-	var language = config.getKey( 'language' );
+	var language = config.getKey('language');
 
 	var values = {
 
@@ -930,9 +930,9 @@ var Strings = function ( config ) {
 
 	return {
 
-		getKey: function ( key ) {
+		getKey: function (key) {
 
-			return values[ language ][ key ] || '???';
+			return values[language][key] || '???';
 
 		}
 
@@ -940,4 +940,4 @@ var Strings = function ( config ) {
 
 };
 
-export { Strings };
+export {Strings};

@@ -2,7 +2,7 @@
  * @author Mugen87 / https://github.com/Mugen87
  */
 
-import { WebGLLights } from './WebGLLights.js';
+import {WebGLLights} from './WebGLLights.js';
 
 function WebGLRenderState() {
 
@@ -18,21 +18,21 @@ function WebGLRenderState() {
 
 	}
 
-	function pushLight( light ) {
+	function pushLight(light) {
 
-		lightsArray.push( light );
-
-	}
-
-	function pushShadow( shadowLight ) {
-
-		shadowsArray.push( shadowLight );
+		lightsArray.push(light);
 
 	}
 
-	function setupLights( camera ) {
+	function pushShadow(shadowLight) {
 
-		lights.setup( lightsArray, shadowsArray, camera );
+		shadowsArray.push(shadowLight);
+
+	}
+
+	function setupLights(camera) {
+
+		lights.setup(lightsArray, shadowsArray, camera);
 
 	}
 
@@ -58,38 +58,38 @@ function WebGLRenderStates() {
 
 	var renderStates = new WeakMap();
 
-	function onSceneDispose( event ) {
+	function onSceneDispose(event) {
 
 		var scene = event.target;
 
-		scene.removeEventListener( 'dispose', onSceneDispose );
+		scene.removeEventListener('dispose', onSceneDispose);
 
-		renderStates.delete( scene );
+		renderStates.delete(scene);
 
 	}
 
-	function get( scene, camera ) {
+	function get(scene, camera) {
 
 		var renderState;
 
-		if ( renderStates.has( scene ) === false ) {
+		if (renderStates.has(scene) === false) {
 
 			renderState = new WebGLRenderState();
-			renderStates.set( scene, new WeakMap() );
-			renderStates.get( scene ).set( camera, renderState );
+			renderStates.set(scene, new WeakMap());
+			renderStates.get(scene).set(camera, renderState);
 
-			scene.addEventListener( 'dispose', onSceneDispose );
+			scene.addEventListener('dispose', onSceneDispose);
 
 		} else {
 
-			if ( renderStates.get( scene ).has( camera ) === false ) {
+			if (renderStates.get(scene).has(camera) === false) {
 
 				renderState = new WebGLRenderState();
-				renderStates.get( scene ).set( camera, renderState );
+				renderStates.get(scene).set(camera, renderState);
 
 			} else {
 
-				renderState = renderStates.get( scene ).get( camera );
+				renderState = renderStates.get(scene).get(camera);
 
 			}
 
@@ -113,4 +113,4 @@ function WebGLRenderStates() {
 }
 
 
-export { WebGLRenderStates };
+export {WebGLRenderStates};

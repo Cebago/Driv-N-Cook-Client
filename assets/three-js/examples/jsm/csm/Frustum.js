@@ -2,13 +2,13 @@
  * @author vHawk / https://github.com/vHawk/
  */
 
-import { Vector3, Matrix4 } from '../../../build/three.module.js';
+import {Matrix4, Vector3} from '../../../build/three.module.js';
 
 const inverseProjectionMatrix = new Matrix4();
 
 export default class Frustum {
 
-	constructor( data ) {
+	constructor(data) {
 
 		data = data || {};
 
@@ -27,105 +27,105 @@ export default class Frustum {
 			]
 		};
 
-		if ( data.projectionMatrix !== undefined ) {
+		if (data.projectionMatrix !== undefined) {
 
-			this.setFromProjectionMatrix( data.projectionMatrix, data.maxFar || 10000 );
+			this.setFromProjectionMatrix(data.projectionMatrix, data.maxFar || 10000);
 
 		}
 
 	}
 
-	setFromProjectionMatrix( projectionMatrix, maxFar ) {
+	setFromProjectionMatrix(projectionMatrix, maxFar) {
 
-		const isOrthographic = projectionMatrix.elements[ 2 * 4 + 3 ] === 0;
+		const isOrthographic = projectionMatrix.elements[2 * 4 + 3] === 0;
 
-		inverseProjectionMatrix.getInverse( projectionMatrix );
+		inverseProjectionMatrix.getInverse(projectionMatrix);
 
 		// 3 --- 0  vertices.near/far order
 		// |     |
 		// 2 --- 1
 		// clip space spans from [-1, 1]
 
-		this.vertices.near[ 0 ].set( 1, 1, - 1 );
-		this.vertices.near[ 1 ].set( 1, - 1, - 1 );
-		this.vertices.near[ 2 ].set( - 1, - 1, - 1 );
-		this.vertices.near[ 3 ].set( - 1, 1, - 1 );
-		this.vertices.near.forEach( function ( v ) {
+		this.vertices.near[0].set(1, 1, -1);
+		this.vertices.near[1].set(1, -1, -1);
+		this.vertices.near[2].set(-1, -1, -1);
+		this.vertices.near[3].set(-1, 1, -1);
+		this.vertices.near.forEach(function (v) {
 
-			v.applyMatrix4( inverseProjectionMatrix );
+			v.applyMatrix4(inverseProjectionMatrix);
 
-		} );
+		});
 
-		this.vertices.far[ 0 ].set( 1, 1, 1 );
-		this.vertices.far[ 1 ].set( 1, - 1, 1 );
-		this.vertices.far[ 2 ].set( - 1, - 1, 1 );
-		this.vertices.far[ 3 ].set( - 1, 1, 1 );
-		this.vertices.far.forEach( function ( v ) {
+		this.vertices.far[0].set(1, 1, 1);
+		this.vertices.far[1].set(1, -1, 1);
+		this.vertices.far[2].set(-1, -1, 1);
+		this.vertices.far[3].set(-1, 1, 1);
+		this.vertices.far.forEach(function (v) {
 
-			v.applyMatrix4( inverseProjectionMatrix );
+			v.applyMatrix4(inverseProjectionMatrix);
 
-			const absZ = Math.abs( v.z );
-			if ( isOrthographic ) {
+			const absZ = Math.abs(v.z);
+			if (isOrthographic) {
 
-				v.z *= Math.min( maxFar / absZ, 1.0 );
+				v.z *= Math.min(maxFar / absZ, 1.0);
 
 			} else {
 
-				v.multiplyScalar( Math.min( maxFar / absZ, 1.0 ) );
+				v.multiplyScalar(Math.min(maxFar / absZ, 1.0));
 
 			}
 
-		} );
+		});
 
 		return this.vertices;
 
 	}
 
-	split( breaks, target ) {
+	split(breaks, target) {
 
-		while ( breaks.length > target.length ) {
+		while (breaks.length > target.length) {
 
-			target.push( new Frustum() );
+			target.push(new Frustum());
 
 		}
 
 		target.length = breaks.length;
 
-		for ( let i = 0; i < breaks.length; i ++ ) {
+		for (let i = 0; i < breaks.length; i++) {
 
-			const cascade = target[ i ];
+			const cascade = target[i];
 
-			if ( i === 0 ) {
+			if (i === 0) {
 
-				for ( let j = 0; j < 4; j ++ ) {
+				for (let j = 0; j < 4; j++) {
 
-					cascade.vertices.near[ j ].copy( this.vertices.near[ j ] );
+					cascade.vertices.near[j].copy(this.vertices.near[j]);
 
 				}
 
 			} else {
 
-				for ( let j = 0; j < 4; j ++ ) {
+				for (let j = 0; j < 4; j++) {
 
-					cascade.vertices.near[ j ].lerpVectors( this.vertices.near[ j ], this.vertices.far[ j ], breaks[ i - 1 ] );
+					cascade.vertices.near[j].lerpVectors(this.vertices.near[j], this.vertices.far[j], breaks[i - 1]);
 
 				}
 
 			}
 
-			if ( i === breaks - 1 ) {
+			if (i === breaks - 1) {
 
-				for ( let j = 0; j < 4; j ++ ) {
+				for (let j = 0; j < 4; j++) {
 
-					cascade.vertices.far[ j ].copy( this.vertices.far[ j ] );
+					cascade.vertices.far[j].copy(this.vertices.far[j]);
 
 				}
 
 			} else {
 
-				for ( let j = 0; j < 4; j ++ ) {
+				for (let j = 0; j < 4; j++) {
 
-					cascade.vertices.far[ j ].lerpVectors( this.vertices.near[ j ], this.vertices.far[ j ], breaks[ i ] );
+					cascade.vertices.far[j].lerpVectors(this.vertices.near[j], this.vertices.far[j], breaks[i]);
 
 				}
 
@@ -135,17 +135,17 @@ export default class Frustum {
 
 	}
 
-	toSpace( cameraMatrix, target ) {
+	toSpace(cameraMatrix, target) {
 
-		for ( var i = 0; i < 4; i ++ ) {
+		for (var i = 0; i < 4; i++) {
 
-			target.vertices.near[ i ]
-				.copy( this.vertices.near[ i ] )
-				.applyMatrix4( cameraMatrix );
+			target.vertices.near[i]
+				.copy(this.vertices.near[i])
+				.applyMatrix4(cameraMatrix);
 
-			target.vertices.far[ i ]
-				.copy( this.vertices.far[ i ] )
-				.applyMatrix4( cameraMatrix );
+			target.vertices.far[i]
+				.copy(this.vertices.far[i])
+				.applyMatrix4(cameraMatrix);
 
 		}
 

@@ -2,56 +2,53 @@
  * @author sunag / http://www.sunag.com.br/
  */
 
-import {
-	UniformsLib,
-	UniformsUtils
-} from '../../../../../build/three.module.js';
+import {UniformsLib, UniformsUtils} from '../../../../../build/three.module.js';
 
-import { Node } from '../../core/Node.js';
-import { ColorNode } from '../../inputs/ColorNode.js';
+import {Node} from '../../core/Node.js';
+import {ColorNode} from '../../inputs/ColorNode.js';
 
 function SpriteNode() {
 
-	Node.call( this );
+	Node.call(this);
 
-	this.color = new ColorNode( 0xEEEEEE );
+	this.color = new ColorNode(0xEEEEEE);
 	this.spherical = true;
 
 }
 
-SpriteNode.prototype = Object.create( Node.prototype );
+SpriteNode.prototype = Object.create(Node.prototype);
 SpriteNode.prototype.constructor = SpriteNode;
 SpriteNode.prototype.nodeType = "Sprite";
 
-SpriteNode.prototype.build = function ( builder ) {
+SpriteNode.prototype.build = function (builder) {
 
 	var output;
 
-	builder.define( 'SPRITE' );
+	builder.define('SPRITE');
 
 	builder.requires.lights = false;
 	builder.requires.transparent = this.alpha !== undefined;
 
-	if ( builder.isShader( 'vertex' ) ) {
+	if (builder.isShader('vertex')) {
 
-		var position = this.position ? this.position.analyzeAndFlow( builder, 'v3', { cache: 'position' } ) : undefined;
+		var position = this.position ? this.position.analyzeAndFlow(builder, 'v3', {cache: 'position'}) : undefined;
 
-		builder.mergeUniform( UniformsUtils.merge( [
+		builder.mergeUniform(UniformsUtils.merge([
 			UniformsLib.fog
-		] ) );
+		]));
 
-		builder.addParsCode( [
+		builder.addParsCode([
 			"#include <fog_pars_vertex>",
 			"#include <logdepthbuf_pars_vertex>",
 			"#include <clipping_planes_pars_vertex>"
-		].join( "\n" ) );
+		].join("\n"));
 
 		output = [
 			"#include <clipping_planes_fragment>",
 			"#include <begin_vertex>"
 		];
 
-		if ( position ) {
+		if (position) {
 
 			output.push(
 				position.code,
@@ -73,7 +70,7 @@ SpriteNode.prototype.build = function ( builder ) {
 			'modelMtx[3][2] = 0.0;'
 		);
 
-		if ( ! this.spherical ) {
+		if (!this.spherical) {
 
 			output.push(
 				'modelMtx[1][1] = 1.0;'
@@ -89,7 +86,7 @@ SpriteNode.prototype.build = function ( builder ) {
 			'modelViewMtx[0][2] = 0.0;'
 		);
 
-		if ( this.spherical ) {
+		if (this.spherical) {
 
 			output.push(
 				// Second colunm.
@@ -115,33 +112,33 @@ SpriteNode.prototype.build = function ( builder ) {
 
 	} else {
 
-		builder.addParsCode( [
+		builder.addParsCode([
 			"#include <fog_pars_fragment>",
 			"#include <logdepthbuf_pars_fragment>",
 			"#include <clipping_planes_pars_fragment>"
-		].join( "\n" ) );
+		].join("\n"));
 
-		builder.addCode( [
+		builder.addCode([
 			"#include <clipping_planes_fragment>",
 			"#include <logdepthbuf_fragment>"
-		].join( "\n" ) );
+		].join("\n"));
 
 		// analyze all nodes to reuse generate codes
 
-		if ( this.mask ) this.mask.analyze( builder );
+		if (this.mask) this.mask.analyze(builder);
 
-		if ( this.alpha ) this.alpha.analyze( builder );
+		if (this.alpha) this.alpha.analyze(builder);
 
-		this.color.analyze( builder, { slot: 'color' } );
+		this.color.analyze(builder, {slot: 'color'});
 
 		// build code
 
-		var mask = this.mask ? this.mask.flow( builder, 'b' ) : undefined,
-			alpha = this.alpha ? this.alpha.flow( builder, 'f' ) : undefined,
-			color = this.color.flow( builder, 'c', { slot: 'color' } ),
+		var mask = this.mask ? this.mask.flow(builder, 'b') : undefined,
+			alpha = this.alpha ? this.alpha.flow(builder, 'f') : undefined,
+			color = this.color.flow(builder, 'c', {slot: 'color'}),
 			output = [];
 
-		if ( mask ) {
+		if (mask) {
 
 			output.push(
 				mask.code,
@@ -150,7 +147,7 @@ SpriteNode.prototype.build = function ( builder ) {
 
 		}
 
-		if ( alpha ) {
+		if (alpha) {
 
 			output.push(
 				alpha.code,
@@ -180,53 +177,53 @@ SpriteNode.prototype.build = function ( builder ) {
 
 	}
 
-	return output.join( "\n" );
+	return output.join("\n");
 
 };
 
-SpriteNode.prototype.copy = function ( source ) {
+SpriteNode.prototype.copy = function (source) {
 
-	Node.prototype.copy.call( this, source );
+	Node.prototype.copy.call(this, source);
 
 	// vertex
 
-	if ( source.position ) this.position = source.position;
+	if (source.position) this.position = source.position;
 
 	// fragment
 
 	this.color = source.color;
 
-	if ( source.spherical !== undefined ) this.spherical = source.spherical;
+	if (source.spherical !== undefined) this.spherical = source.spherical;
 
-	if ( source.mask ) this.mask = source.mask;
+	if (source.mask) this.mask = source.mask;
 
-	if ( source.alpha ) this.alpha = source.alpha;
+	if (source.alpha) this.alpha = source.alpha;
 
 	return this;
 
 };
 
-SpriteNode.prototype.toJSON = function ( meta ) {
+SpriteNode.prototype.toJSON = function (meta) {
 
-	var data = this.getJSONNode( meta );
+	var data = this.getJSONNode(meta);
 
-	if ( ! data ) {
+	if (!data) {
 
-		data = this.createJSONNode( meta );
+		data = this.createJSONNode(meta);
 
 		// vertex
 
-		if ( this.position ) data.position = this.position.toJSON( meta ).uuid;
+		if (this.position) data.position = this.position.toJSON(meta).uuid;
 
 		// fragment
 
-		data.color = this.color.toJSON( meta ).uuid;
+		data.color = this.color.toJSON(meta).uuid;
 
-		if ( this.spherical === false ) data.spherical = false;
+		if (this.spherical === false) data.spherical = false;
 
-		if ( this.mask ) data.mask = this.mask.toJSON( meta ).uuid;
+		if (this.mask) data.mask = this.mask.toJSON(meta).uuid;
 
-		if ( this.alpha ) data.alpha = this.alpha.toJSON( meta ).uuid;
+		if (this.alpha) data.alpha = this.alpha.toJSON(meta).uuid;
 
 	}
 
@@ -234,4 +231,4 @@ SpriteNode.prototype.toJSON = function ( meta ) {
 
 };
 
-export { SpriteNode };
+export {SpriteNode};

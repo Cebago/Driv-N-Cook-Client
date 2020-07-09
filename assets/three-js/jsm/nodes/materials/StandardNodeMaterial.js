@@ -2,24 +2,24 @@
  * @author sunag / http://www.sunag.com.br/
  */
 
-import { StandardNode } from './nodes/StandardNode.js';
-import { NodeMaterial } from './NodeMaterial.js';
-import { NodeUtils } from '../core/NodeUtils.js';
+import {StandardNode} from './nodes/StandardNode.js';
+import {NodeMaterial} from './NodeMaterial.js';
+import {NodeUtils} from '../core/NodeUtils.js';
 
 function StandardNodeMaterial() {
 
 	var node = new StandardNode();
 
-	NodeMaterial.call( this, node, node );
+	NodeMaterial.call(this, node, node);
 
 	this.type = "StandardNodeMaterial";
 
 }
 
-StandardNodeMaterial.prototype = Object.create( NodeMaterial.prototype );
+StandardNodeMaterial.prototype = Object.create(NodeMaterial.prototype);
 StandardNodeMaterial.prototype.constructor = StandardNodeMaterial;
 
-NodeUtils.addShortcuts( StandardNodeMaterial.prototype, 'fragment', [
+NodeUtils.addShortcuts(StandardNodeMaterial.prototype, 'fragment', [
 	'color',
 	'alpha',
 	'roughness',
@@ -38,6 +38,6 @@ NodeUtils.addShortcuts( StandardNodeMaterial.prototype, 'fragment', [
 	'mask',
 	'position',
 	'sheen'
-] );
+]);
 
-export { StandardNodeMaterial };
+export {StandardNodeMaterial};

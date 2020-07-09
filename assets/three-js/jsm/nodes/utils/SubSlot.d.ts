@@ -1,11 +1,11 @@
-import { TempNode } from '../core/TempNode';
+import {TempNode} from '../core/TempNode';
 
 export class SubSlots extends TempNode {
 
-	constructor( slots?: object );
-
 	slots: Node[];
 
-	copy( source: SubSlots ): this;
+	constructor(slots?: object);
+
+	copy(source: SubSlots): this;
 
 }

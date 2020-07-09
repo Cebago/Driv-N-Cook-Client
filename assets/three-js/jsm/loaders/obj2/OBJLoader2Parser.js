@@ -15,24 +15,24 @@ const OBJLoader2Parser = function () {
 
 	let scope = this;
 	this.callbacks = {
-		onProgress: function ( text ) {
+		onProgress: function (text) {
 
-			scope._onProgress( text );
-
-		},
-		onAssetAvailable: function ( payload ) {
-
-			scope._onAssetAvailable( payload );
+			scope._onProgress(text);
 
 		},
-		onError: function ( errorMessage ) {
+		onAssetAvailable: function (payload) {
 
-			scope._onError( errorMessage );
+			scope._onAssetAvailable(payload);
 
 		},
-		onLoad: function ( object3d, message ) {
+		onError: function (errorMessage) {
 
-			scope._onLoad( object3d, message );
+			scope._onError(errorMessage);
+
+		},
+		onLoad: function (object3d, message) {
+
+			scope._onLoad(object3d, message);
 
 		},
 	};
@@ -57,13 +57,13 @@ const OBJLoader2Parser = function () {
 		mtllibName: '',
 
 		// reset with new mesh
-		faceType: - 1,
+		faceType: -1,
 		subGroups: [],
 		subGroupInUse: null,
 		smoothingGroup: {
 			splitMaterials: false,
-			normalized: - 1,
-			real: - 1
+			normalized: -1,
+			real: -1
 		},
 		counts: {
 			doubleIndicesCount: 0,
@@ -95,11 +95,11 @@ OBJLoader2Parser.prototype = {
 		// faces are stored according combined index of group, material and smoothingGroup (0 or not)
 		this.rawMesh.subGroups = [];
 		this.rawMesh.subGroupInUse = null;
-		this.rawMesh.smoothingGroup.normalized = - 1;
-		this.rawMesh.smoothingGroup.real = - 1;
+		this.rawMesh.smoothingGroup.normalized = -1;
+		this.rawMesh.smoothingGroup.real = -1;
 
 		// this default index is required as it is possible to define faces without 'g' or 'usemtl'
-		this._pushSmoothingGroup( 1 );
+		this._pushSmoothingGroup(1);
 
 		this.rawMesh.counts.doubleIndicesCount = 0;
 		this.rawMesh.counts.faceCount = 0;
@@ -114,7 +114,7 @@ OBJLoader2Parser.prototype = {
 	 * @param {boolean} materialPerSmoothingGroup=false
 	 * @return {OBJLoader2Parser}
 	 */
-	setMaterialPerSmoothingGroup: function ( materialPerSmoothingGroup ) {
+	setMaterialPerSmoothingGroup: function (materialPerSmoothingGroup) {
 
 		this.materialPerSmoothingGroup = materialPerSmoothingGroup === true;
 		return this;
@@ -127,7 +127,7 @@ OBJLoader2Parser.prototype = {
 	 * @param {boolean} useOAsMesh=false
 	 * @return {OBJLoader2Parser}
 	 */
-	setUseOAsMesh: function ( useOAsMesh ) {
+	setUseOAsMesh: function (useOAsMesh) {
 
 		this.useOAsMesh = useOAsMesh === true;
 		return this;
@@ -140,7 +140,7 @@ OBJLoader2Parser.prototype = {
 	 * @param {boolean} useIndices=false
 	 * @return {OBJLoader2Parser}
 	 */
-	setUseIndices: function ( useIndices ) {
+	setUseIndices: function (useIndices) {
 
 		this.useIndices = useIndices === true;
 		return this;
@@ -153,7 +153,7 @@ OBJLoader2Parser.prototype = {
 	 * @param {boolean} disregardNormals=false
 	 * @return {OBJLoader2Parser}
 	 */
-	setDisregardNormals: function ( disregardNormals ) {
+	setDisregardNormals: function (disregardNormals) {
 
 		this.disregardNormals = disregardNormals === true;
 		return this;
@@ -165,9 +165,9 @@ OBJLoader2Parser.prototype = {
 	 *
 	 * @param {Object} materials Object with named materials
 	 */
-	setMaterials: function ( materials ) {
+	setMaterials: function (materials) {
 
- 		this.materials = Object.assign( {}, materials );
+		this.materials = Object.assign({}, materials);
 
 	},
 
@@ -177,9 +177,9 @@ OBJLoader2Parser.prototype = {
 	 * @param onAssetAvailable
 	 * @return {OBJLoader2Parser}
 	 */
-	setCallbackOnAssetAvailable: function ( onAssetAvailable ) {
+	setCallbackOnAssetAvailable: function (onAssetAvailable) {
 
-		if ( onAssetAvailable !== null && onAssetAvailable !== undefined && onAssetAvailable instanceof Function ) {
+		if (onAssetAvailable !== null && onAssetAvailable !== undefined && onAssetAvailable instanceof Function) {
 
 			this.callbacks.onAssetAvailable = onAssetAvailable;
 
@@ -195,9 +195,9 @@ OBJLoader2Parser.prototype = {
 	 * @param {Function} onProgress
 	 * @return {OBJLoader2Parser}
 	 */
-	setCallbackOnProgress: function ( onProgress ) {
+	setCallbackOnProgress: function (onProgress) {
 
-		if ( onProgress !== null && onProgress !== undefined && onProgress instanceof Function ) {
+		if (onProgress !== null && onProgress !== undefined && onProgress instanceof Function) {
 
 			this.callbacks.onProgress = onProgress;
 
@@ -213,9 +213,9 @@ OBJLoader2Parser.prototype = {
 	 * @param {Function} onError
 	 * @return {OBJLoader2Parser}
 	 */
-	setCallbackOnError: function ( onError ) {
+	setCallbackOnError: function (onError) {
 
-		if ( onError !== null && onError !== undefined && onError instanceof Function ) {
+		if (onError !== null && onError !== undefined && onError instanceof Function) {
 
 			this.callbacks.onError = onError;
 
@@ -231,9 +231,9 @@ OBJLoader2Parser.prototype = {
 	 * @param {Function} onLoad
 	 * @return {OBJLoader2Parser}
 	 */
-	setCallbackOnLoad: function ( onLoad ) {
+	setCallbackOnLoad: function (onLoad) {
 
-		if ( onLoad !== null && onLoad !== undefined && onLoad instanceof Function ) {
+		if (onLoad !== null && onLoad !== undefined && onLoad instanceof Function) {
 
 			this.callbacks.onLoad = onLoad;
 
@@ -249,12 +249,12 @@ OBJLoader2Parser.prototype = {
 	 *
 	 * @param {string} text Textual description of the event
 	 */
-	_onProgress: function ( text ) {
+	_onProgress: function (text) {
 
 		let message = text ? text : '';
-		if ( this.logging.enabled && this.logging.debug ) {
+		if (this.logging.enabled && this.logging.debug) {
 
-			console.log( message );
+			console.log(message);
 
 		}
 
@@ -266,27 +266,27 @@ OBJLoader2Parser.prototype = {
 	 *
 	 * @param {String} errorMessage The event containing the error
 	 */
-	_onError: function ( errorMessage ) {
+	_onError: function (errorMessage) {
 
-		if ( this.logging.enabled && this.logging.debug ) {
+		if (this.logging.enabled && this.logging.debug) {
 
-			console.error( errorMessage );
+			console.error(errorMessage);
 
 		}
 
 	},
 
-	_onAssetAvailable: function ( payload ) {
+	_onAssetAvailable: function (payload) {
 
 		let errorMessage = 'OBJLoader2Parser does not provide implementation for onAssetAvailable. Aborting...';
-		this.callbacks.onError( errorMessage );
+		this.callbacks.onError(errorMessage);
 		throw errorMessage;
 
 	},
 
-	_onLoad: function ( object3d, message ) {
+	_onLoad: function (object3d, message) {
 
-		console.log( "You reached parser default onLoad callback: " + message );
+		console.log("You reached parser default onLoad callback: " + message);
 
 	},
 
@@ -298,7 +298,7 @@ OBJLoader2Parser.prototype = {
 	 *
 	 * @return {OBJLoader2Parser}
 	 */
-	setLogging: function ( enabled, debug ) {
+	setLogging: function (enabled, debug) {
 
 		this.logging.enabled = enabled === true;
 		this.logging.debug = debug === true;
@@ -308,11 +308,11 @@ OBJLoader2Parser.prototype = {
 
 	_configure: function () {
 
-		this._pushSmoothingGroup( 1 );
-		if ( this.logging.enabled ) {
+		this._pushSmoothingGroup(1);
+		if (this.logging.enabled) {
 
-			let matKeys = Object.keys( this.materials );
-			let matNames = ( matKeys.length > 0 ) ? '\n\tmaterialNames:\n\t\t- ' + matKeys.join( '\n\t\t- ' ) : '\n\tmaterialNames: None';
+			let matKeys = Object.keys(this.materials);
+			let matNames = (matKeys.length > 0) ? '\n\tmaterialNames:\n\t\t- ' + matKeys.join('\n\t\t- ') : '\n\tmaterialNames: None';
 			let printedConfig = 'OBJLoader.Parser configuration:'
 				+ matNames
 				+ '\n\tmaterialPerSmoothingGroup: ' + this.materialPerSmoothingGroup
@@ -322,7 +322,7 @@ OBJLoader2Parser.prototype = {
 			printedConfig += '\n\tcallbacks.onProgress: ' + this.callbacks.onProgress.name;
 			printedConfig += '\n\tcallbacks.onAssetAvailable: ' + this.callbacks.onAssetAvailable.name;
 			printedConfig += '\n\tcallbacks.onError: ' + this.callbacks.onError.name;
-			console.info( printedConfig );
+			console.info(printedConfig);
 
 		}
 
@@ -333,41 +333,41 @@ OBJLoader2Parser.prototype = {
 	 *
 	 * @param {Uint8Array} arrayBuffer OBJ data as Uint8Array
 	 */
-	execute: function ( arrayBuffer ) {
+	execute: function (arrayBuffer) {
 
-		if ( this.logging.enabled ) console.time( 'OBJLoader2Parser.execute' );
+		if (this.logging.enabled) console.time('OBJLoader2Parser.execute');
 		this._configure();
 
-		let arrayBufferView = new Uint8Array( arrayBuffer );
+		let arrayBufferView = new Uint8Array(arrayBuffer);
 		this.contentRef = arrayBufferView;
 		let length = arrayBufferView.byteLength;
 		this.globalCounts.totalBytes = length;
-		let buffer = new Array( 128 );
+		let buffer = new Array(128);
 
-		for ( let code, word = '', bufferPointer = 0, slashesCount = 0, i = 0; i < length; i ++ ) {
+		for (let code, word = '', bufferPointer = 0, slashesCount = 0, i = 0; i < length; i++) {
 
-			code = arrayBufferView[ i ];
-			switch ( code ) {
+			code = arrayBufferView[i];
+			switch (code) {
 
 				// space
 				case 32:
-					if ( word.length > 0 ) buffer[ bufferPointer ++ ] = word;
+					if (word.length > 0) buffer[bufferPointer++] = word;
 					word = '';
 					break;
 				// slash
 				case 47:
-					if ( word.length > 0 ) buffer[ bufferPointer ++ ] = word;
-					slashesCount ++;
+					if (word.length > 0) buffer[bufferPointer++] = word;
+					slashesCount++;
 					word = '';
 					break;
 
 				// LF
 				case 10:
-					if ( word.length > 0 ) buffer[ bufferPointer ++ ] = word;
+					if (word.length > 0) buffer[bufferPointer++] = word;
 					word = '';
 					this.globalCounts.lineByte = this.globalCounts.currentByte;
 					this.globalCounts.currentByte = i;
-					this._processLine( buffer, bufferPointer, slashesCount );
+					this._processLine(buffer, bufferPointer, slashesCount);
 					bufferPointer = 0;
 					slashesCount = 0;
 					break;
@@ -377,7 +377,7 @@ OBJLoader2Parser.prototype = {
 					break;
 
 				default:
-					word += String.fromCharCode( code );
+					word += String.fromCharCode(code);
 					break;
 
 			}
@@ -385,7 +385,7 @@ OBJLoader2Parser.prototype = {
 		}
 
 		this._finalizeParsing();
-		if ( this.logging.enabled ) console.timeEnd( 'OBJLoader2Parser.execute' );
+		if (this.logging.enabled) console.timeEnd('OBJLoader2Parser.execute');
 
 	},
 
@@ -394,38 +394,38 @@ OBJLoader2Parser.prototype = {
 	 *
 	 * @param {string} text OBJ data as string
 	 */
-	executeLegacy: function ( text ) {
+	executeLegacy: function (text) {
 
-		if ( this.logging.enabled ) console.time( 'OBJLoader2Parser.executeLegacy' );
+		if (this.logging.enabled) console.time('OBJLoader2Parser.executeLegacy');
 		this._configure();
 		this.legacyMode = true;
 		this.contentRef = text;
 		let length = text.length;
 		this.globalCounts.totalBytes = length;
-		let buffer = new Array( 128 );
+		let buffer = new Array(128);
 
-		for ( let char, word = '', bufferPointer = 0, slashesCount = 0, i = 0; i < length; i ++ ) {
+		for (let char, word = '', bufferPointer = 0, slashesCount = 0, i = 0; i < length; i++) {
 
-			char = text[ i ];
-			switch ( char ) {
+			char = text[i];
+			switch (char) {
 
 				case ' ':
-					if ( word.length > 0 ) buffer[ bufferPointer ++ ] = word;
+					if (word.length > 0) buffer[bufferPointer++] = word;
 					word = '';
 					break;
 
 				case '/':
-					if ( word.length > 0 ) buffer[ bufferPointer ++ ] = word;
-					slashesCount ++;
+					if (word.length > 0) buffer[bufferPointer++] = word;
+					slashesCount++;
 					word = '';
 					break;
 
 				case '\n':
-					if ( word.length > 0 ) buffer[ bufferPointer ++ ] = word;
+					if (word.length > 0) buffer[bufferPointer++] = word;
 					word = '';
 					this.globalCounts.lineByte = this.globalCounts.currentByte;
 					this.globalCounts.currentByte = i;
-					this._processLine( buffer, bufferPointer, slashesCount );
+					this._processLine(buffer, bufferPointer, slashesCount);
 					bufferPointer = 0;
 					slashesCount = 0;
 					break;
@@ -441,28 +441,28 @@ OBJLoader2Parser.prototype = {
 		}
 
 		this._finalizeParsing();
-		if ( this.logging.enabled ) console.timeEnd( 'OBJLoader2Parser.executeLegacy' );
+		if (this.logging.enabled) console.timeEnd('OBJLoader2Parser.executeLegacy');
 
 	},
 
-	_processLine: function ( buffer, bufferPointer, slashesCount ) {
+	_processLine: function (buffer, bufferPointer, slashesCount) {
 
-		if ( bufferPointer < 1 ) return;
+		if (bufferPointer < 1) return;
 
-		let reconstructString = function ( content, legacyMode, start, stop ) {
+		let reconstructString = function (content, legacyMode, start, stop) {
 
 			let line = '';
-			if ( stop > start ) {
+			if (stop > start) {
 
 				let i;
-				if ( legacyMode ) {
+				if (legacyMode) {
 
-					for ( i = start; i < stop; i ++ ) line += content[ i ];
+					for (i = start; i < stop; i++) line += content[i];
 
 				} else {
 
 
-					for ( i = start; i < stop; i ++ ) line += String.fromCharCode( content[ i ] );
+					for (i = start; i < stop; i++) line += String.fromCharCode(content[i]);
 
 				}
 
@@ -475,72 +475,72 @@ OBJLoader2Parser.prototype = {
 		};
 
 		let bufferLength, length, i, lineDesignation;
-		lineDesignation = buffer[ 0 ];
-		switch ( lineDesignation ) {
+		lineDesignation = buffer[0];
+		switch (lineDesignation) {
 
 			case 'v':
-				this.vertices.push( parseFloat( buffer[ 1 ] ) );
-				this.vertices.push( parseFloat( buffer[ 2 ] ) );
-				this.vertices.push( parseFloat( buffer[ 3 ] ) );
-				if ( bufferPointer > 4 ) {
+				this.vertices.push(parseFloat(buffer[1]));
+				this.vertices.push(parseFloat(buffer[2]));
+				this.vertices.push(parseFloat(buffer[3]));
+				if (bufferPointer > 4) {
 
-					this.colors.push( parseFloat( buffer[ 4 ] ) );
-					this.colors.push( parseFloat( buffer[ 5 ] ) );
-					this.colors.push( parseFloat( buffer[ 6 ] ) );
+					this.colors.push(parseFloat(buffer[4]));
+					this.colors.push(parseFloat(buffer[5]));
+					this.colors.push(parseFloat(buffer[6]));
 
 				}
 
 				break;
 
 			case 'vt':
-				this.uvs.push( parseFloat( buffer[ 1 ] ) );
-				this.uvs.push( parseFloat( buffer[ 2 ] ) );
+				this.uvs.push(parseFloat(buffer[1]));
+				this.uvs.push(parseFloat(buffer[2]));
 				break;
 
 			case 'vn':
-				this.normals.push( parseFloat( buffer[ 1 ] ) );
-				this.normals.push( parseFloat( buffer[ 2 ] ) );
-				this.normals.push( parseFloat( buffer[ 3 ] ) );
+				this.normals.push(parseFloat(buffer[1]));
+				this.normals.push(parseFloat(buffer[2]));
+				this.normals.push(parseFloat(buffer[3]));
 				break;
 
 			case 'f':
 				bufferLength = bufferPointer - 1;
 
 				// "f vertex ..."
-				if ( slashesCount === 0 ) {
+				if (slashesCount === 0) {
 
-					this._checkFaceType( 0 );
-					for ( i = 2, length = bufferLength; i < length; i ++ ) {
+					this._checkFaceType(0);
+					for (i = 2, length = bufferLength; i < length; i++) {
 
-						this._buildFace( buffer[ 1 ] );
-						this._buildFace( buffer[ i ] );
-						this._buildFace( buffer[ i + 1 ] );
+						this._buildFace(buffer[1]);
+						this._buildFace(buffer[i]);
+						this._buildFace(buffer[i + 1]);
 
 					}
 
 					// "f vertex/uv ..."
 
-				} else if ( bufferLength === slashesCount * 2 ) {
+				} else if (bufferLength === slashesCount * 2) {
 
-					this._checkFaceType( 1 );
-					for ( i = 3, length = bufferLength - 2; i < length; i += 2 ) {
+					this._checkFaceType(1);
+					for (i = 3, length = bufferLength - 2; i < length; i += 2) {
 
-						this._buildFace( buffer[ 1 ], buffer[ 2 ] );
-						this._buildFace( buffer[ i ], buffer[ i + 1 ] );
-						this._buildFace( buffer[ i + 2 ], buffer[ i + 3 ] );
+						this._buildFace(buffer[1], buffer[2]);
+						this._buildFace(buffer[i], buffer[i + 1]);
+						this._buildFace(buffer[i + 2], buffer[i + 3]);
 
 					}
 
 					// "f vertex/uv/normal ..."
 
-				} else if ( bufferLength * 2 === slashesCount * 3 ) {
+				} else if (bufferLength * 2 === slashesCount * 3) {
 
-					this._checkFaceType( 2 );
-					for ( i = 4, length = bufferLength - 3; i < length; i += 3 ) {
+					this._checkFaceType(2);
+					for (i = 4, length = bufferLength - 3; i < length; i += 3) {
 
-						this._buildFace( buffer[ 1 ], buffer[ 2 ], buffer[ 3 ] );
-						this._buildFace( buffer[ i ], buffer[ i + 1 ], buffer[ i + 2 ] );
-						this._buildFace( buffer[ i + 3 ], buffer[ i + 4 ], buffer[ i + 5 ] );
+						this._buildFace(buffer[1], buffer[2], buffer[3]);
+						this._buildFace(buffer[i], buffer[i + 1], buffer[i + 2]);
+						this._buildFace(buffer[i + 3], buffer[i + 4], buffer[i + 5]);
 
 					}
 
@@ -548,12 +548,12 @@ OBJLoader2Parser.prototype = {
 
 				} else {
 
-					this._checkFaceType( 3 );
-					for ( i = 3, length = bufferLength - 2; i < length; i += 2 ) {
+					this._checkFaceType(3);
+					for (i = 3, length = bufferLength - 2; i < length; i += 2) {
 
-						this._buildFace( buffer[ 1 ], undefined, buffer[ 2 ] );
-						this._buildFace( buffer[ i ], undefined, buffer[ i + 1 ] );
-						this._buildFace( buffer[ i + 2 ], undefined, buffer[ i + 3 ] );
+						this._buildFace(buffer[1], undefined, buffer[2]);
+						this._buildFace(buffer[i], undefined, buffer[i + 1]);
+						this._buildFace(buffer[i + 2], undefined, buffer[i + 3]);
 
 					}
 
@@ -564,46 +564,46 @@ OBJLoader2Parser.prototype = {
 			case 'l':
 			case 'p':
 				bufferLength = bufferPointer - 1;
-				if ( bufferLength === slashesCount * 2 ) {
+				if (bufferLength === slashesCount * 2) {
 
-					this._checkFaceType( 4 );
-					for ( i = 1, length = bufferLength + 1; i < length; i += 2 ) this._buildFace( buffer[ i ], buffer[ i + 1 ] );
+					this._checkFaceType(4);
+					for (i = 1, length = bufferLength + 1; i < length; i += 2) this._buildFace(buffer[i], buffer[i + 1]);
 
 				} else {
 
-					this._checkFaceType( ( lineDesignation === 'l' ) ? 5 : 6 );
-					for ( i = 1, length = bufferLength + 1; i < length; i ++ ) this._buildFace( buffer[ i ] );
+					this._checkFaceType((lineDesignation === 'l') ? 5 : 6);
+					for (i = 1, length = bufferLength + 1; i < length; i++) this._buildFace(buffer[i]);
 
 				}
 
 				break;
 
 			case 's':
-				this._pushSmoothingGroup( buffer[ 1 ] );
+				this._pushSmoothingGroup(buffer[1]);
 				break;
 
 			case 'g':
 				// 'g' leads to creation of mesh if valid data (faces declaration was done before), otherwise only groupName gets set
 				this._processCompletedMesh();
-				this.rawMesh.groupName = reconstructString( this.contentRef, this.legacyMode, this.globalCounts.lineByte + 2, this.globalCounts.currentByte );
+				this.rawMesh.groupName = reconstructString(this.contentRef, this.legacyMode, this.globalCounts.lineByte + 2, this.globalCounts.currentByte);
 				break;
 
 			case 'o':
 				// 'o' is meta-information and usually does not result in creation of new meshes, but can be enforced with "useOAsMesh"
-				if ( this.useOAsMesh ) this._processCompletedMesh();
-				this.rawMesh.objectName = reconstructString( this.contentRef, this.legacyMode, this.globalCounts.lineByte + 2, this.globalCounts.currentByte );
+				if (this.useOAsMesh) this._processCompletedMesh();
+				this.rawMesh.objectName = reconstructString(this.contentRef, this.legacyMode, this.globalCounts.lineByte + 2, this.globalCounts.currentByte);
 				break;
 
 			case 'mtllib':
-				this.rawMesh.mtllibName = reconstructString( this.contentRef, this.legacyMode, this.globalCounts.lineByte + 7, this.globalCounts.currentByte );
+				this.rawMesh.mtllibName = reconstructString(this.contentRef, this.legacyMode, this.globalCounts.lineByte + 7, this.globalCounts.currentByte);
 				break;
 
 			case 'usemtl':
-				let mtlName = reconstructString( this.contentRef, this.legacyMode, this.globalCounts.lineByte + 7, this.globalCounts.currentByte );
-				if ( mtlName !== '' && this.rawMesh.activeMtlName !== mtlName ) {
+				let mtlName = reconstructString(this.contentRef, this.legacyMode, this.globalCounts.lineByte + 7, this.globalCounts.currentByte);
+				if (mtlName !== '' && this.rawMesh.activeMtlName !== mtlName) {
 
 					this.rawMesh.activeMtlName = mtlName;
-					this.rawMesh.counts.mtlCount ++;
+					this.rawMesh.counts.mtlCount++;
 					this._checkSubGroup();
 
 				}
@@ -617,22 +617,22 @@ OBJLoader2Parser.prototype = {
 
 	},
 
-	_pushSmoothingGroup: function ( smoothingGroup ) {
+	_pushSmoothingGroup: function (smoothingGroup) {
 
-		let smoothingGroupInt = parseInt( smoothingGroup );
-		if ( isNaN( smoothingGroupInt ) ) {
+		let smoothingGroupInt = parseInt(smoothingGroup);
+		if (isNaN(smoothingGroupInt)) {
 
 			smoothingGroupInt = smoothingGroup === "off" ? 0 : 1;
 
 		}
 
 		let smoothCheck = this.rawMesh.smoothingGroup.normalized;
-		this.rawMesh.smoothingGroup.normalized = this.rawMesh.smoothingGroup.splitMaterials ? smoothingGroupInt : ( smoothingGroupInt === 0 ) ? 0 : 1;
+		this.rawMesh.smoothingGroup.normalized = this.rawMesh.smoothingGroup.splitMaterials ? smoothingGroupInt : (smoothingGroupInt === 0) ? 0 : 1;
 		this.rawMesh.smoothingGroup.real = smoothingGroupInt;
 
-		if ( smoothCheck !== smoothingGroupInt ) {
+		if (smoothCheck !== smoothingGroupInt) {
 
-			this.rawMesh.counts.smoothingGroupCount ++;
+			this.rawMesh.counts.smoothingGroupCount++;
 			this._checkSubGroup();
 
 		}
@@ -649,9 +649,9 @@ OBJLoader2Parser.prototype = {
 	 * faceType = 5: "l vertex ..."
 	 * faceType = 6: "p vertex ..."
 	 */
-	_checkFaceType: function ( faceType ) {
+	_checkFaceType: function (faceType) {
 
-		if ( this.rawMesh.faceType !== faceType ) {
+		if (this.rawMesh.faceType !== faceType) {
 
 			this._processCompletedMesh();
 			this.rawMesh.faceType = faceType;
@@ -664,9 +664,9 @@ OBJLoader2Parser.prototype = {
 	_checkSubGroup: function () {
 
 		let index = this.rawMesh.activeMtlName + '|' + this.rawMesh.smoothingGroup.normalized;
-		this.rawMesh.subGroupInUse = this.rawMesh.subGroups[ index ];
+		this.rawMesh.subGroupInUse = this.rawMesh.subGroups[index];
 
-		if ( this.rawMesh.subGroupInUse === undefined || this.rawMesh.subGroupInUse === null ) {
+		if (this.rawMesh.subGroupInUse === undefined || this.rawMesh.subGroupInUse === null) {
 
 			this.rawMesh.subGroupInUse = {
 				index: index,
@@ -682,78 +682,78 @@ OBJLoader2Parser.prototype = {
 				uvs: [],
 				normals: []
 			};
-			this.rawMesh.subGroups[ index ] = this.rawMesh.subGroupInUse;
+			this.rawMesh.subGroups[index] = this.rawMesh.subGroupInUse;
 
 		}
 
 	},
 
-	_buildFace: function ( faceIndexV, faceIndexU, faceIndexN ) {
+	_buildFace: function (faceIndexV, faceIndexU, faceIndexN) {
 
 		let subGroupInUse = this.rawMesh.subGroupInUse;
 		let scope = this;
 		let updateSubGroupInUse = function () {
 
-			let faceIndexVi = parseInt( faceIndexV );
-			let indexPointerV = 3 * ( faceIndexVi > 0 ? faceIndexVi - 1 : faceIndexVi + scope.vertices.length / 3 );
+			let faceIndexVi = parseInt(faceIndexV);
+			let indexPointerV = 3 * (faceIndexVi > 0 ? faceIndexVi - 1 : faceIndexVi + scope.vertices.length / 3);
 			let indexPointerC = scope.colors.length > 0 ? indexPointerV : null;
 
 			let vertices = subGroupInUse.vertices;
-			vertices.push( scope.vertices[ indexPointerV ++ ] );
-			vertices.push( scope.vertices[ indexPointerV ++ ] );
-			vertices.push( scope.vertices[ indexPointerV ] );
+			vertices.push(scope.vertices[indexPointerV++]);
+			vertices.push(scope.vertices[indexPointerV++]);
+			vertices.push(scope.vertices[indexPointerV]);
 
-			if ( indexPointerC !== null ) {
+			if (indexPointerC !== null) {
 
 				let colors = subGroupInUse.colors;
-				colors.push( scope.colors[ indexPointerC ++ ] );
-				colors.push( scope.colors[ indexPointerC ++ ] );
-				colors.push( scope.colors[ indexPointerC ] );
+				colors.push(scope.colors[indexPointerC++]);
+				colors.push(scope.colors[indexPointerC++]);
+				colors.push(scope.colors[indexPointerC]);
 
 			}
 
-			if ( faceIndexU ) {
+			if (faceIndexU) {
 
-				let faceIndexUi = parseInt( faceIndexU );
-				let indexPointerU = 2 * ( faceIndexUi > 0 ? faceIndexUi - 1 : faceIndexUi + scope.uvs.length / 2 );
+				let faceIndexUi = parseInt(faceIndexU);
+				let indexPointerU = 2 * (faceIndexUi > 0 ? faceIndexUi - 1 : faceIndexUi + scope.uvs.length / 2);
 				let uvs = subGroupInUse.uvs;
-				uvs.push( scope.uvs[ indexPointerU ++ ] );
-				uvs.push( scope.uvs[ indexPointerU ] );
+				uvs.push(scope.uvs[indexPointerU++]);
+				uvs.push(scope.uvs[indexPointerU]);
 
 			}
 
-			if ( faceIndexN && ! scope.disregardNormals ) {
+			if (faceIndexN && !scope.disregardNormals) {
 
-				let faceIndexNi = parseInt( faceIndexN );
-				let indexPointerN = 3 * ( faceIndexNi > 0 ? faceIndexNi - 1 : faceIndexNi + scope.normals.length / 3 );
+				let faceIndexNi = parseInt(faceIndexN);
+				let indexPointerN = 3 * (faceIndexNi > 0 ? faceIndexNi - 1 : faceIndexNi + scope.normals.length / 3);
 				let normals = subGroupInUse.normals;
-				normals.push( scope.normals[ indexPointerN ++ ] );
-				normals.push( scope.normals[ indexPointerN ++ ] );
-				normals.push( scope.normals[ indexPointerN ] );
+				normals.push(scope.normals[indexPointerN++]);
+				normals.push(scope.normals[indexPointerN++]);
+				normals.push(scope.normals[indexPointerN]);
 
 			}
 
 		};
 
-		if ( this.useIndices ) {
+		if (this.useIndices) {
 
-			if ( this.disregardNormals ) faceIndexN = undefined;
-			let mappingName = faceIndexV + ( faceIndexU ? '_' + faceIndexU : '_n' ) + ( faceIndexN ? '_' + faceIndexN : '_n' );
-			let indicesPointer = subGroupInUse.indexMappings[ mappingName ];
-			if ( indicesPointer === undefined || indicesPointer === null ) {
+			if (this.disregardNormals) faceIndexN = undefined;
+			let mappingName = faceIndexV + (faceIndexU ? '_' + faceIndexU : '_n') + (faceIndexN ? '_' + faceIndexN : '_n');
+			let indicesPointer = subGroupInUse.indexMappings[mappingName];
+			if (indicesPointer === undefined || indicesPointer === null) {
 
 				indicesPointer = this.rawMesh.subGroupInUse.vertices.length / 3;
 				updateSubGroupInUse();
-				subGroupInUse.indexMappings[ mappingName ] = indicesPointer;
-				subGroupInUse.indexMappingsCount ++;
+				subGroupInUse.indexMappings[mappingName] = indicesPointer;
+				subGroupInUse.indexMappingsCount++;
 
 			} else {
 
-				this.rawMesh.counts.doubleIndicesCount ++;
+				this.rawMesh.counts.doubleIndicesCount++;
 
 			}
 
-			subGroupInUse.indices.push( indicesPointer );
+			subGroupInUse.indices.push(indicesPointer);
 
 		} else {
 
@@ -761,11 +761,11 @@ OBJLoader2Parser.prototype = {
 
 		}
 
-		this.rawMesh.counts.faceCount ++;
+		this.rawMesh.counts.faceCount++;
 
 	},
 
-	_createRawMeshReport: function ( inputObjectCount ) {
+	_createRawMeshReport: function (inputObjectCount) {
 
 		return 'Input Object number: ' + inputObjectCount +
 			'\n\tObject name: ' + this.rawMesh.objectName +
@@ -794,23 +794,23 @@ OBJLoader2Parser.prototype = {
 		let absoluteNormalCount = 0;
 		let absoluteUvCount = 0;
 		let indices;
-		for ( let name in this.rawMesh.subGroups ) {
+		for (let name in this.rawMesh.subGroups) {
 
-			meshOutputGroup = this.rawMesh.subGroups[ name ];
-			if ( meshOutputGroup.vertices.length > 0 ) {
+			meshOutputGroup = this.rawMesh.subGroups[name];
+			if (meshOutputGroup.vertices.length > 0) {
 
 				indices = meshOutputGroup.indices;
-				if ( indices.length > 0 && absoluteIndexMappingsCount > 0 ) {
+				if (indices.length > 0 && absoluteIndexMappingsCount > 0) {
 
-					for ( let i = 0; i < indices.length; i ++ ) {
+					for (let i = 0; i < indices.length; i++) {
 
-						indices[ i ] = indices[ i ] + absoluteIndexMappingsCount;
+						indices[i] = indices[i] + absoluteIndexMappingsCount;
 
 					}
 
 				}
 
-				meshOutputGroupTemp.push( meshOutputGroup );
+				meshOutputGroupTemp.push(meshOutputGroup);
 				absoluteVertexCount += meshOutputGroup.vertices.length;
 				absoluteIndexMappingsCount += meshOutputGroup.indexMappingsCount;
 				absoluteIndexCount += meshOutputGroup.indices.length;
@@ -824,7 +824,7 @@ OBJLoader2Parser.prototype = {
 
 		// do not continue if no result
 		let result = null;
-		if ( meshOutputGroupTemp.length > 0 ) {
+		if (meshOutputGroupTemp.length > 0) {
 
 			result = {
 				name: this.rawMesh.groupName !== '' ? this.rawMesh.groupName : this.rawMesh.objectName,
@@ -848,21 +848,21 @@ OBJLoader2Parser.prototype = {
 
 		let result = this._finalizeRawMesh();
 		let haveMesh = result !== null;
-		if ( haveMesh ) {
+		if (haveMesh) {
 
-			if ( this.colors.length > 0 && this.colors.length !== this.vertices.length ) {
+			if (this.colors.length > 0 && this.colors.length !== this.vertices.length) {
 
-				this.callbacks.onError( 'Vertex Colors were detected, but vertex count and color count do not match!' );
+				this.callbacks.onError('Vertex Colors were detected, but vertex count and color count do not match!');
 
 			}
 
-			if ( this.logging.enabled && this.logging.debug ) console.debug( this._createRawMeshReport( this.inputObjectCount ) );
-			this.inputObjectCount ++;
+			if (this.logging.enabled && this.logging.debug) console.debug(this._createRawMeshReport(this.inputObjectCount));
+			this.inputObjectCount++;
 
-			this._buildMesh( result );
+			this._buildMesh(result);
 			let progressBytesPercent = this.globalCounts.currentByte / this.globalCounts.totalBytes;
-			this._onProgress( 'Completed [o: ' + this.rawMesh.objectName + ' g:' + this.rawMesh.groupName + '' +
-				'] Total progress: ' + ( progressBytesPercent * 100 ).toFixed( 2 ) + '%' );
+			this._onProgress('Completed [o: ' + this.rawMesh.objectName + ' g:' + this.rawMesh.groupName + '' +
+				'] Total progress: ' + (progressBytesPercent * 100).toFixed(2) + '%');
 			this._resetRawMesh();
 
 		}
@@ -877,24 +877,24 @@ OBJLoader2Parser.prototype = {
 	 *
 	 * @param result
 	 */
-	_buildMesh: function ( result ) {
+	_buildMesh: function (result) {
 
 		let meshOutputGroups = result.subGroups;
 
-		let vertexFA = new Float32Array( result.absoluteVertexCount );
+		let vertexFA = new Float32Array(result.absoluteVertexCount);
 		this.globalCounts.vertices += result.absoluteVertexCount / 3;
 		this.globalCounts.faces += result.faceCount;
 		this.globalCounts.doubleIndicesCount += result.doubleIndicesCount;
-		let indexUA = ( result.absoluteIndexCount > 0 ) ? new Uint32Array( result.absoluteIndexCount ) : null;
-		let colorFA = ( result.absoluteColorCount > 0 ) ? new Float32Array( result.absoluteColorCount ) : null;
-		let normalFA = ( result.absoluteNormalCount > 0 ) ? new Float32Array( result.absoluteNormalCount ) : null;
-		let uvFA = ( result.absoluteUvCount > 0 ) ? new Float32Array( result.absoluteUvCount ) : null;
+		let indexUA = (result.absoluteIndexCount > 0) ? new Uint32Array(result.absoluteIndexCount) : null;
+		let colorFA = (result.absoluteColorCount > 0) ? new Float32Array(result.absoluteColorCount) : null;
+		let normalFA = (result.absoluteNormalCount > 0) ? new Float32Array(result.absoluteNormalCount) : null;
+		let uvFA = (result.absoluteUvCount > 0) ? new Float32Array(result.absoluteUvCount) : null;
 		let haveVertexColors = colorFA !== null;
 
 		let meshOutputGroup;
 		let materialNames = [];
 
-		let createMultiMaterial = ( meshOutputGroups.length > 1 );
+		let createMultiMaterial = (meshOutputGroups.length > 1);
 		let materialIndex = 0;
 		let materialIndexMapping = [];
 		let selectedMaterialIndex;
@@ -911,15 +911,15 @@ OBJLoader2Parser.prototype = {
 
 		let materialOrg, material, materialName, materialNameOrg;
 		// only one specific face type
-		for ( let oodIndex in meshOutputGroups ) {
+		for (let oodIndex in meshOutputGroups) {
 
-			if ( ! meshOutputGroups.hasOwnProperty( oodIndex ) ) continue;
-			meshOutputGroup = meshOutputGroups[ oodIndex ];
+			if (!meshOutputGroups.hasOwnProperty(oodIndex)) continue;
+			meshOutputGroup = meshOutputGroups[oodIndex];
 
 			materialNameOrg = meshOutputGroup.materialName;
-			if ( this.rawMesh.faceType < 4 ) {
+			if (this.rawMesh.faceType < 4) {
 
-				materialName = materialNameOrg + ( haveVertexColors ? '_vertexColor' : '' ) + ( meshOutputGroup.smoothingGroup === 0 ? '_flat' : '' );
+				materialName = materialNameOrg + (haveVertexColors ? '_vertexColor' : '') + (meshOutputGroup.smoothingGroup === 0 ? '_flat' : '');
 
 
 			} else {
@@ -928,25 +928,25 @@ OBJLoader2Parser.prototype = {
 
 			}
 
-			materialOrg = this.materials[ materialNameOrg ];
-			material = this.materials[ materialName ];
+			materialOrg = this.materials[materialNameOrg];
+			material = this.materials[materialName];
 
 			// both original and derived names do not lead to an existing material => need to use a default material
-			if ( ( materialOrg === undefined || materialOrg === null ) && ( material === undefined || material === null ) ) {
+			if ((materialOrg === undefined || materialOrg === null) && (material === undefined || material === null)) {
 
 				materialName = haveVertexColors ? 'defaultVertexColorMaterial' : 'defaultMaterial';
-				material = this.materials[ materialName ];
-				if ( this.logging.enabled ) {
+				material = this.materials[materialName];
+				if (this.logging.enabled) {
 
-					console.info( 'object_group "' + meshOutputGroup.objectName + '_' +
+					console.info('object_group "' + meshOutputGroup.objectName + '_' +
 						meshOutputGroup.groupName + '" was defined with unresolvable material "' +
-						materialNameOrg + '"! Assigning "' + materialName + '".' );
+						materialNameOrg + '"! Assigning "' + materialName + '".');
 
 				}
 
 			}
 
-			if ( material === undefined || material === null ) {
+			if (material === undefined || material === null) {
 
 				let materialCloneInstructions = {
 					materialNameOrg: materialNameOrg,
@@ -963,28 +963,28 @@ OBJLoader2Parser.prototype = {
 						materialCloneInstructions: materialCloneInstructions
 					}
 				};
-				this.callbacks.onAssetAvailable( payload );
+				this.callbacks.onAssetAvailable(payload);
 
 				// only set materials if they don't exist, yet
-				let matCheck = this.materials[ materialName ];
-				if ( matCheck === undefined || matCheck === null ) {
+				let matCheck = this.materials[materialName];
+				if (matCheck === undefined || matCheck === null) {
 
-					this.materials[ materialName ] = materialCloneInstructions;
+					this.materials[materialName] = materialCloneInstructions;
 
 				}
 
 			}
 
-			if ( createMultiMaterial ) {
+			if (createMultiMaterial) {
 
 				// re-use material if already used before. Reduces materials array size and eliminates duplicates
-				selectedMaterialIndex = materialIndexMapping[ materialName ];
-				if ( ! selectedMaterialIndex ) {
+				selectedMaterialIndex = materialIndexMapping[materialName];
+				if (!selectedMaterialIndex) {
 
 					selectedMaterialIndex = materialIndex;
-					materialIndexMapping[ materialName ] = materialIndex;
-					materialNames.push( materialName );
-					materialIndex ++;
+					materialIndexMapping[materialName] = materialIndex;
+					materialNames.push(materialName);
+					materialIndex++;
 
 				}
 
@@ -994,50 +994,50 @@ OBJLoader2Parser.prototype = {
 					count: materialGroupLength,
 					index: selectedMaterialIndex
 				};
-				materialGroups.push( materialGroup );
+				materialGroups.push(materialGroup);
 				materialGroupOffset += materialGroupLength;
 
 			} else {
 
-				materialNames.push( materialName );
+				materialNames.push(materialName);
 
 			}
 
-			vertexFA.set( meshOutputGroup.vertices, vertexFAOffset );
+			vertexFA.set(meshOutputGroup.vertices, vertexFAOffset);
 			vertexFAOffset += meshOutputGroup.vertices.length;
 
-			if ( indexUA ) {
+			if (indexUA) {
 
-				indexUA.set( meshOutputGroup.indices, indexUAOffset );
+				indexUA.set(meshOutputGroup.indices, indexUAOffset);
 				indexUAOffset += meshOutputGroup.indices.length;
 
 			}
 
-			if ( colorFA ) {
+			if (colorFA) {
 
-				colorFA.set( meshOutputGroup.colors, colorFAOffset );
+				colorFA.set(meshOutputGroup.colors, colorFAOffset);
 				colorFAOffset += meshOutputGroup.colors.length;
 
 			}
 
-			if ( normalFA ) {
+			if (normalFA) {
 
-				normalFA.set( meshOutputGroup.normals, normalFAOffset );
+				normalFA.set(meshOutputGroup.normals, normalFAOffset);
 				normalFAOffset += meshOutputGroup.normals.length;
 
 			}
 
-			if ( uvFA ) {
+			if (uvFA) {
 
-				uvFA.set( meshOutputGroup.uvs, uvFAOffset );
+				uvFA.set(meshOutputGroup.uvs, uvFAOffset);
 				uvFAOffset += meshOutputGroup.uvs.length;
 
 			}
 
-			if ( this.logging.enabled && this.logging.debug ) {
+			if (this.logging.enabled && this.logging.debug) {
 
 				let materialIndexLine = '';
-				if ( selectedMaterialIndex ) {
+				if (selectedMaterialIndex) {
 
 					materialIndexLine = '\n\t\tmaterialIndex: ' + selectedMaterialIndex;
 
@@ -1056,13 +1056,13 @@ OBJLoader2Parser.prototype = {
 					'\n\t\t#colors: ' + meshOutputGroup.colors.length / 3 +
 					'\n\t\t#uvs: ' + meshOutputGroup.uvs.length / 2 +
 					'\n\t\t#normals: ' + meshOutputGroup.normals.length / 3;
-				console.debug( createdReport );
+				console.debug(createdReport);
 
 			}
 
 		}
 
-		this.outputObjectCount ++;
+		this.outputObjectCount++;
 		this.callbacks.onAssetAvailable(
 			{
 				cmd: 'assetAvailable',
@@ -1086,31 +1086,31 @@ OBJLoader2Parser.prototype = {
 					uvs: uvFA
 				},
 				// 0: mesh, 1: line, 2: point
-				geometryType: this.rawMesh.faceType < 4 ? 0 : ( this.rawMesh.faceType === 6 ) ? 2 : 1
+				geometryType: this.rawMesh.faceType < 4 ? 0 : (this.rawMesh.faceType === 6) ? 2 : 1
 			},
-			[ vertexFA.buffer ],
-			indexUA !== null ? [ indexUA.buffer ] : null,
-			colorFA !== null ? [ colorFA.buffer ] : null,
-			normalFA !== null ? [ normalFA.buffer ] : null,
-			uvFA !== null ? [ uvFA.buffer ] : null
+			[vertexFA.buffer],
+			indexUA !== null ? [indexUA.buffer] : null,
+			colorFA !== null ? [colorFA.buffer] : null,
+			normalFA !== null ? [normalFA.buffer] : null,
+			uvFA !== null ? [uvFA.buffer] : null
 		);
 
 	},
 
 	_finalizeParsing: function () {
 
-		if ( this.logging.enabled ) console.info( 'Global output object count: ' + this.outputObjectCount );
-		if ( this._processCompletedMesh() && this.logging.enabled ) {
+		if (this.logging.enabled) console.info('Global output object count: ' + this.outputObjectCount);
+		if (this._processCompletedMesh() && this.logging.enabled) {
 
 			let parserFinalReport = 'Overall counts: ' +
 				'\n\tVertices: ' + this.globalCounts.vertices +
 				'\n\tFaces: ' + this.globalCounts.faces +
 				'\n\tMultiple definitions: ' + this.globalCounts.doubleIndicesCount;
-			console.info( parserFinalReport );
+			console.info(parserFinalReport);
 
 		}
 
 	}
 };
 
-export { OBJLoader2Parser };
+export {OBJLoader2Parser};

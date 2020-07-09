@@ -3,10 +3,10 @@
  * @author mrdoob / http://mrdoob.com/
  */
 
-import { ShapePath } from './ShapePath.js';
+import {ShapePath} from './ShapePath.js';
 
 
-function Font( data ) {
+function Font(data) {
 
 	this.type = 'Font';
 
@@ -14,20 +14,20 @@ function Font( data ) {
 
 }
 
-Object.assign( Font.prototype, {
+Object.assign(Font.prototype, {
 
 	isFont: true,
 
-	generateShapes: function ( text, size ) {
+	generateShapes: function (text, size) {
 
-		if ( size === undefined ) size = 100;
+		if (size === undefined) size = 100;
 
 		var shapes = [];
-		var paths = createPaths( text, size, this.data );
+		var paths = createPaths(text, size, this.data);
 
-		for ( var p = 0, pl = paths.length; p < pl; p ++ ) {
+		for (var p = 0, pl = paths.length; p < pl; p++) {
 
-			Array.prototype.push.apply( shapes, paths[ p ].toShapes() );
+			Array.prototype.push.apply(shapes, paths[p].toShapes());
 
 		}
 
@@ -35,32 +35,32 @@ Object.assign( Font.prototype, {
 
 	}
 
-} );
+});
 
-function createPaths( text, size, data ) {
+function createPaths(text, size, data) {
 
-	var chars = Array.from ? Array.from( text ) : String( text ).split( '' ); // workaround for IE11, see #13988
+	var chars = Array.from ? Array.from(text) : String(text).split(''); // workaround for IE11, see #13988
 	var scale = size / data.resolution;
-	var line_height = ( data.boundingBox.yMax - data.boundingBox.yMin + data.underlineThickness ) * scale;
+	var line_height = (data.boundingBox.yMax - data.boundingBox.yMin + data.underlineThickness) * scale;
 
 	var paths = [];
 
 	var offsetX = 0, offsetY = 0;
 
-	for ( var i = 0; i < chars.length; i ++ ) {
+	for (var i = 0; i < chars.length; i++) {
 
-		var char = chars[ i ];
+		var char = chars[i];
 
-		if ( char === '\n' ) {
+		if (char === '\n') {
 
 			offsetX = 0;
 			offsetY -= line_height;
 
 		} else {
 
-			var ret = createPath( char, scale, offsetX, offsetY, data );
+			var ret = createPath(char, scale, offsetX, offsetY, data);
 			offsetX += ret.offsetX;
-			paths.push( ret.path );
+			paths.push(ret.path);
 
 		}
 
@@ -70,13 +70,13 @@ function createPaths( text, size, data ) {
 
 }
 
-function createPath( char, scale, offsetX, offsetY, data ) {
+function createPath(char, scale, offsetX, offsetY, data) {
 
-	var glyph = data.glyphs[ char ] || data.glyphs[ '?' ];
+	var glyph = data.glyphs[char] || data.glyphs['?'];
 
-	if ( ! glyph ) {
+	if (!glyph) {
 
-		console.error( 'THREE.Font: character "' + char + '" does not exists in font family ' + data.familyName + '.' );
+		console.error('THREE.Font: character "' + char + '" does not exists in font family ' + data.familyName + '.');
 
 		return;
 
@@ -86,55 +86,55 @@ function createPath( char, scale, offsetX, offsetY, data ) {
 
 	var x, y, cpx, cpy, cpx1, cpy1, cpx2, cpy2;
 
-	if ( glyph.o ) {
+	if (glyph.o) {
 
-		var outline = glyph._cachedOutline || ( glyph._cachedOutline = glyph.o.split( ' ' ) );
+		var outline = glyph._cachedOutline || (glyph._cachedOutline = glyph.o.split(' '));
 
-		for ( var i = 0, l = outline.length; i < l; ) {
+		for (var i = 0, l = outline.length; i < l;) {
 
-			var action = outline[ i ++ ];
+			var action = outline[i++];
 
-			switch ( action ) {
+			switch (action) {
 
 				case 'm': // moveTo
 
-					x = outline[ i ++ ] * scale + offsetX;
-					y = outline[ i ++ ] * scale + offsetY;
+					x = outline[i++] * scale + offsetX;
+					y = outline[i++] * scale + offsetY;
 
-					path.moveTo( x, y );
+					path.moveTo(x, y);
 
 					break;
 
 				case 'l': // lineTo
 
-					x = outline[ i ++ ] * scale + offsetX;
-					y = outline[ i ++ ] * scale + offsetY;
+					x = outline[i++] * scale + offsetX;
+					y = outline[i++] * scale + offsetY;
 
-					path.lineTo( x, y );
+					path.lineTo(x, y);
 
 					break;
 
 				case 'q': // quadraticCurveTo
 
-					cpx = outline[ i ++ ] * scale + offsetX;
-					cpy = outline[ i ++ ] * scale + offsetY;
-					cpx1 = outline[ i ++ ] * scale + offsetX;
-					cpy1 = outline[ i ++ ] * scale + offsetY;
+					cpx = outline[i++] * scale + offsetX;
+					cpy = outline[i++] * scale + offsetY;
+					cpx1 = outline[i++] * scale + offsetX;
+					cpy1 = outline[i++] * scale + offsetY;
 
-					path.quadraticCurveTo( cpx1, cpy1, cpx, cpy );
+					path.quadraticCurveTo(cpx1, cpy1, cpx, cpy);
 
 					break;
 
 				case 'b': // bezierCurveTo
 
-					cpx = outline[ i ++ ] * scale + offsetX;
-					cpy = outline[ i ++ ] * scale + offsetY;
-					cpx1 = outline[ i ++ ] * scale + offsetX;
-					cpy1 = outline[ i ++ ] * scale + offsetY;
-					cpx2 = outline[ i ++ ] * scale + offsetX;
-					cpy2 = outline[ i ++ ] * scale + offsetY;
+					cpx = outline[i++] * scale + offsetX;
+					cpy = outline[i++] * scale + offsetY;
+					cpx1 = outline[i++] * scale + offsetX;
+					cpy1 = outline[i++] * scale + offsetY;
+					cpx2 = outline[i++] * scale + offsetX;
+					cpy2 = outline[i++] * scale + offsetY;
 
-					path.bezierCurveTo( cpx1, cpy1, cpx2, cpy2, cpx, cpy );
+					path.bezierCurveTo(cpx1, cpy1, cpx2, cpy2, cpx, cpy);
 
 					break;
 
@@ -144,8 +144,8 @@ function createPath( char, scale, offsetX, offsetY, data ) {
 
 	}
 
-	return { offsetX: glyph.ha * scale, path: path };
+	return {offsetX: glyph.ha * scale, path: path};
 
 }
 
-export { Font };
+export {Font};

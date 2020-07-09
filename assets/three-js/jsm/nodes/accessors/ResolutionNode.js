@@ -2,27 +2,27 @@
  * @author sunag / http://www.sunag.com.br/
  */
 
-import { Vector2 } from '../../../../build/three.module.js';
+import {Vector2} from '../../../../build/three.module.js';
 
-import { Vector2Node } from '../inputs/Vector2Node.js';
+import {Vector2Node} from '../inputs/Vector2Node.js';
 
 function ResolutionNode() {
 
-	Vector2Node.call( this );
+	Vector2Node.call(this);
 
 	this.size = new Vector2();
 
 }
 
-ResolutionNode.prototype = Object.create( Vector2Node.prototype );
+ResolutionNode.prototype = Object.create(Vector2Node.prototype);
 ResolutionNode.prototype.constructor = ResolutionNode;
 ResolutionNode.prototype.nodeType = "Resolution";
 
-ResolutionNode.prototype.updateFrame = function ( frame ) {
+ResolutionNode.prototype.updateFrame = function (frame) {
 
-	if ( frame.renderer ) {
+	if (frame.renderer) {
 
-		frame.renderer.getSize( this.size );
+		frame.renderer.getSize(this.size);
 
 		var pixelRatio = frame.renderer.getPixelRatio();
 
@@ -31,15 +31,15 @@ ResolutionNode.prototype.updateFrame = function ( frame ) {
 
 	} else {
 
-		console.warn( "ResolutionNode need a renderer in NodeFrame" );
+		console.warn("ResolutionNode need a renderer in NodeFrame");
 
 	}
 
 };
 
-ResolutionNode.prototype.copy = function ( source ) {
+ResolutionNode.prototype.copy = function (source) {
 
-	Vector2Node.prototype.copy.call( this, source );
+	Vector2Node.prototype.copy.call(this, source);
 
 	this.renderer = source.renderer;
 
@@ -47,13 +47,13 @@ ResolutionNode.prototype.copy = function ( source ) {
 
 };
 
-ResolutionNode.prototype.toJSON = function ( meta ) {
+ResolutionNode.prototype.toJSON = function (meta) {
 
-	var data = this.getJSONNode( meta );
+	var data = this.getJSONNode(meta);
 
-	if ( ! data ) {
+	if (!data) {
 
-		data = this.createJSONNode( meta );
+		data = this.createJSONNode(meta);
 
 		data.renderer = this.renderer.uuid;
 
@@ -63,4 +63,4 @@ ResolutionNode.prototype.toJSON = function ( meta ) {
 
 };
 
-export { ResolutionNode };
+export {ResolutionNode};

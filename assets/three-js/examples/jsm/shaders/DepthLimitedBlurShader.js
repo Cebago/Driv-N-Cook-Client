@@ -2,9 +2,7 @@
  * TODO
  */
 
-import {
-	Vector2
-} from "../../../build/three.module.js";
+import {Vector2} from "../../../build/three.module.js";
 
 var DepthLimitedBlurShader = {
 	defines: {
@@ -13,14 +11,14 @@ var DepthLimitedBlurShader = {
 		"PERSPECTIVE_CAMERA": 1
 	},
 	uniforms: {
-		"tDiffuse": { value: null },
-		"size": { value: new Vector2( 512, 512 ) },
-		"sampleUvOffsets": { value: [ new Vector2( 0, 0 ) ] },
-		"sampleWeights": { value: [ 1.0 ] },
-		"tDepth": { value: null },
-		"cameraNear": { value: 10 },
-		"cameraFar": { value: 1000 },
-		"depthCutoff": { value: 10 },
+		"tDiffuse": {value: null},
+		"size": {value: new Vector2(512, 512)},
+		"sampleUvOffsets": {value: [new Vector2(0, 0)]},
+		"sampleWeights": {value: [1.0]},
+		"tDepth": {value: null},
+		"cameraNear": {value: 10},
+		"cameraFar": {value: 1000},
+		"depthCutoff": {value: 10},
 	},
 	vertexShader: [
 		"#include <common>",
@@ -37,7 +35,7 @@ var DepthLimitedBlurShader = {
 		"	gl_Position = projectionMatrix * modelViewMatrix * vec4( position, 1.0 );",
 		"}"
 
-	].join( "\n" ),
+	].join("\n"),
 	fragmentShader: [
 		"#include <common>",
 		"#include <packing>",
@@ -112,24 +110,24 @@ var DepthLimitedBlurShader = {
 
 		"	gl_FragColor = diffuseSum / weightSum;",
 		"}"
-	].join( "\n" )
+	].join("\n")
 };
 
 var BlurShaderUtils = {
 
-	createSampleWeights: function ( kernelRadius, stdDev ) {
+	createSampleWeights: function (kernelRadius, stdDev) {
 
-		var gaussian = function ( x, stdDev ) {
+		var gaussian = function (x, stdDev) {
 
-			return Math.exp( - ( x * x ) / ( 2.0 * ( stdDev * stdDev ) ) ) / ( Math.sqrt( 2.0 * Math.PI ) * stdDev );
+			return Math.exp(-(x * x) / (2.0 * (stdDev * stdDev))) / (Math.sqrt(2.0 * Math.PI) * stdDev);
 
 		};
 
 		var weights = [];
 
-		for ( var i = 0; i <= kernelRadius; i ++ ) {
+		for (var i = 0; i <= kernelRadius; i++) {
 
-			weights.push( gaussian( i, stdDev ) );
+			weights.push(gaussian(i, stdDev));
 
 		}
 
@@ -137,13 +135,13 @@ var BlurShaderUtils = {
 
 	},
 
-	createSampleOffsets: function ( kernelRadius, uvIncrement ) {
+	createSampleOffsets: function (kernelRadius, uvIncrement) {
 
 		var offsets = [];
 
-		for ( var i = 0; i <= kernelRadius; i ++ ) {
+		for (var i = 0; i <= kernelRadius; i++) {
 
-			offsets.push( uvIncrement.clone().multiplyScalar( i ) );
+			offsets.push(uvIncrement.clone().multiplyScalar(i));
 
 		}
 
@@ -151,15 +149,15 @@ var BlurShaderUtils = {
 
 	},
 
-	configure: function ( material, kernelRadius, stdDev, uvIncrement ) {
+	configure: function (material, kernelRadius, stdDev, uvIncrement) {
 
-		material.defines[ "KERNEL_RADIUS" ] = kernelRadius;
-		material.uniforms[ "sampleUvOffsets" ].value = BlurShaderUtils.createSampleOffsets( kernelRadius, uvIncrement );
-		material.uniforms[ "sampleWeights" ].value = BlurShaderUtils.createSampleWeights( kernelRadius, stdDev );
+		material.defines["KERNEL_RADIUS"] = kernelRadius;
+		material.uniforms["sampleUvOffsets"].value = BlurShaderUtils.createSampleOffsets(kernelRadius, uvIncrement);
+		material.uniforms["sampleWeights"].value = BlurShaderUtils.createSampleWeights(kernelRadius, stdDev);
 		material.needsUpdate = true;
 
 	}
 
 };
 
-export { DepthLimitedBlurShader, BlurShaderUtils };
+export {DepthLimitedBlurShader, BlurShaderUtils};

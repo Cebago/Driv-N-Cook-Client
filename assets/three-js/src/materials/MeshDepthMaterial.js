@@ -1,5 +1,5 @@
-import { Material } from './Material.js';
-import { BasicDepthPacking } from '../constants.js';
+import {Material} from './Material.js';
+import {BasicDepthPacking} from '../constants.js';
 
 /**
  * @author mrdoob / http://mrdoob.com/
@@ -24,9 +24,9 @@ import { BasicDepthPacking } from '../constants.js';
  * }
  */
 
-function MeshDepthMaterial( parameters ) {
+function MeshDepthMaterial(parameters) {
 
-	Material.call( this );
+	Material.call(this);
 
 	this.type = 'MeshDepthMaterial';
 
@@ -48,18 +48,18 @@ function MeshDepthMaterial( parameters ) {
 
 	this.fog = false;
 
-	this.setValues( parameters );
+	this.setValues(parameters);
 
 }
 
-MeshDepthMaterial.prototype = Object.create( Material.prototype );
+MeshDepthMaterial.prototype = Object.create(Material.prototype);
 MeshDepthMaterial.prototype.constructor = MeshDepthMaterial;
 
 MeshDepthMaterial.prototype.isMeshDepthMaterial = true;
 
-MeshDepthMaterial.prototype.copy = function ( source ) {
+MeshDepthMaterial.prototype.copy = function (source) {
 
-	Material.prototype.copy.call( this, source );
+	Material.prototype.copy.call(this, source);
 
 	this.depthPacking = source.depthPacking;
 
@@ -82,4 +82,4 @@ MeshDepthMaterial.prototype.copy = function ( source ) {
 };
 
 
-export { MeshDepthMaterial };
+export {MeshDepthMaterial};

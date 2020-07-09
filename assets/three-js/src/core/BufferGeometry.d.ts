@@ -1,14 +1,14 @@
-import { BufferAttribute } from './BufferAttribute';
-import { Box3 } from './../math/Box3';
-import { Sphere } from './../math/Sphere';
-import { Matrix4 } from './../math/Matrix4';
-import { Vector2 } from './../math/Vector2';
-import { Vector3 } from './../math/Vector3';
-import { Object3D } from './Object3D';
-import { Geometry } from './Geometry';
-import { DirectGeometry } from './DirectGeometry';
-import { EventDispatcher } from './EventDispatcher';
-import { InterleavedBufferAttribute } from './InterleavedBufferAttribute';
+import {BufferAttribute} from './BufferAttribute';
+import {Box3} from './../math/Box3';
+import {Sphere} from './../math/Sphere';
+import {Matrix4} from './../math/Matrix4';
+import {Vector2} from './../math/Vector2';
+import {Vector3} from './../math/Vector3';
+import {Object3D} from './Object3D';
+import {Geometry} from './Geometry';
+import {DirectGeometry} from './DirectGeometry';
+import {EventDispatcher} from './EventDispatcher';
+import {InterleavedBufferAttribute} from './InterleavedBufferAttribute';
 
 /**
  * This is a superefficent class for geometries because it saves all data in buffers.
@@ -19,13 +19,7 @@ import { InterleavedBufferAttribute } from './InterleavedBufferAttribute';
  */
 export class BufferGeometry extends EventDispatcher {
 
-	/**
-	 * This creates a new BufferGeometry. It also sets several properties to an default value.
-	 */
-	constructor();
-
 	static MaxIndex: number;
-
 	/**
 	 * Unique number of this buffergeometry instance
 	 */
@@ -38,49 +32,73 @@ export class BufferGeometry extends EventDispatcher {
 		[name: string]: BufferAttribute | InterleavedBufferAttribute;
 	};
 	morphAttributes: {
-		[name: string]: ( BufferAttribute | InterleavedBufferAttribute )[];
+		[name: string]: (BufferAttribute | InterleavedBufferAttribute)[];
 	};
 	morphTargetsRelative: boolean;
 	groups: { start: number; count: number; materialIndex?: number }[];
 	boundingBox: Box3 | null;
 	boundingSphere: Sphere | null;
 	drawRange: { start: number; count: number };
-	userData: {[key: string]: any};
+	userData: { [key: string]: any };
 	readonly isBufferGeometry: true;
+	/**
+	 * @deprecated Use {@link BufferGeometry#groups .groups} instead.
+	 */
+	drawcalls: any;
+	/**
+	 * @deprecated Use {@link BufferGeometry#groups .groups} instead.
+	 */
+	offsets: any;
+
+	/**
+	 * This creates a new BufferGeometry. It also sets several properties to an default value.
+	 */
+	constructor();
 
 	getIndex(): BufferAttribute | null;
-	setIndex( index: BufferAttribute | number[] | null ): void;
 
-	setAttribute( name: string, attribute: BufferAttribute | InterleavedBufferAttribute ): BufferGeometry;
-	getAttribute( name: string ): BufferAttribute | InterleavedBufferAttribute;
-	deleteAttribute( name: string ): BufferGeometry;
+	setIndex(index: BufferAttribute | number[] | null): void;
 
-	addGroup( start: number, count: number, materialIndex?: number ): void;
+	setAttribute(name: string, attribute: BufferAttribute | InterleavedBufferAttribute): BufferGeometry;
+
+	getAttribute(name: string): BufferAttribute | InterleavedBufferAttribute;
+
+	deleteAttribute(name: string): BufferGeometry;
+
+	addGroup(start: number, count: number, materialIndex?: number): void;
+
 	clearGroups(): void;
 
-	setDrawRange( start: number, count: number ): void;
+	setDrawRange(start: number, count: number): void;
 
 	/**
 	 * Bakes matrix transform directly into vertex coordinates.
 	 */
-	applyMatrix4( matrix: Matrix4 ): BufferGeometry;
+	applyMatrix4(matrix: Matrix4): BufferGeometry;
 
-	rotateX( angle: number ): BufferGeometry;
-	rotateY( angle: number ): BufferGeometry;
-	rotateZ( angle: number ): BufferGeometry;
-	translate( x: number, y: number, z: number ): BufferGeometry;
-	scale( x: number, y: number, z: number ): BufferGeometry;
-	lookAt( v: Vector3 ): void;
+	rotateX(angle: number): BufferGeometry;
+
+	rotateY(angle: number): BufferGeometry;
+
+	rotateZ(angle: number): BufferGeometry;
+
+	translate(x: number, y: number, z: number): BufferGeometry;
+
+	scale(x: number, y: number, z: number): BufferGeometry;
+
+	lookAt(v: Vector3): void;
 
 	center(): BufferGeometry;
 
-	setFromObject( object: Object3D ): BufferGeometry;
-	setFromPoints( points: Vector3[] | Vector2[] ): BufferGeometry;
-	updateFromObject( object: Object3D ): void;
+	setFromObject(object: Object3D): BufferGeometry;
 
-	fromGeometry( geometry: Geometry, settings?: any ): BufferGeometry;
+	setFromPoints(points: Vector3[] | Vector2[]): BufferGeometry;
 
-	fromDirectGeometry( geometry: DirectGeometry ): BufferGeometry;
+	updateFromObject(object: Object3D): void;
+
+	fromGeometry(geometry: Geometry, settings?: any): BufferGeometry;
+
+	fromDirectGeometry(geometry: DirectGeometry): BufferGeometry;
 
 	/**
 	 * Computes bounding box of the geometry, updating Geometry.boundingBox attribute.
@@ -99,14 +117,17 @@ export class BufferGeometry extends EventDispatcher {
 	 */
 	computeVertexNormals(): void;
 
-	merge( geometry: BufferGeometry, offset?: number ): BufferGeometry;
+	merge(geometry: BufferGeometry, offset?: number): BufferGeometry;
+
 	normalizeNormals(): void;
 
 	toNonIndexed(): BufferGeometry;
 
 	toJSON(): any;
+
 	clone(): this;
-	copy( source: BufferGeometry ): this;
+
+	copy(source: BufferGeometry): this;
 
 	/**
 	 * Disposes the object from memory.
@@ -115,24 +136,14 @@ export class BufferGeometry extends EventDispatcher {
 	dispose(): void;
 
 	/**
-	 * @deprecated Use {@link BufferGeometry#groups .groups} instead.
-	 */
-	drawcalls: any;
-
-	/**
-	 * @deprecated Use {@link BufferGeometry#groups .groups} instead.
-	 */
-	offsets: any;
-
-	/**
 	 * @deprecated Use {@link BufferGeometry#setIndex .setIndex()} instead.
 	 */
-	addIndex( index: any ): void;
+	addIndex(index: any): void;
 
 	/**
 	 * @deprecated Use {@link BufferGeometry#addGroup .addGroup()} instead.
 	 */
-	addDrawCall( start: any, count: any, indexOffset?: any ): void;
+	addDrawCall(start: any, count: any, indexOffset?: any): void;
 
 	/**
 	 * @deprecated Use {@link BufferGeometry#clearGroups .clearGroups()} instead.
@@ -150,8 +161,8 @@ export class BufferGeometry extends EventDispatcher {
 	/**
 	 * @deprecated Use {@link BufferGeometry#deleteAttribute .deleteAttribute()} instead.
 	 */
-	removeAttribute( name: string ): BufferGeometry;
+	removeAttribute(name: string): BufferGeometry;
 
-	addAttribute( name: any, array: any, itemSize: any ): any;
+	addAttribute(name: any, array: any, itemSize: any): any;
 
 }

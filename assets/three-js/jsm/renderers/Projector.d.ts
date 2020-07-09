@@ -1,13 +1,4 @@
-import {
-	Object3D,
-	Scene,
-	Camera,
-	Vector2,
-	Vector3,
-	Vector4,
-	Color,
-	Material
-} from '../../../src/Three';
+import {Camera, Color, Material, Object3D, Scene, Vector2, Vector3, Vector4} from '../../../src/Three';
 
 export class RenderableObject {
 
@@ -42,7 +33,7 @@ export class RenderableVertex {
 	positionScreen: Vector4;
 	visible: boolean;
 
-	copy( vertex: RenderableVertex ): void;
+	copy(vertex: RenderableVertex): void;
 
 }
 
@@ -76,6 +67,6 @@ export class Projector {
 
 	constructor();
 
-	projectScene( scene: Scene, camera: Camera, sortObjects: boolean, sortElements: boolean );
+	projectScene(scene: Scene, camera: Camera, sortObjects: boolean, sortElements: boolean);
 
 }

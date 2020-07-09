@@ -2,19 +2,19 @@
  * @author mrdoob / http://mrdoob.com/
  */
 
-function WebGLCapabilities( gl, extensions, parameters ) {
+function WebGLCapabilities(gl, extensions, parameters) {
 
 	var maxAnisotropy;
 
 	function getMaxAnisotropy() {
 
-		if ( maxAnisotropy !== undefined ) return maxAnisotropy;
+		if (maxAnisotropy !== undefined) return maxAnisotropy;
 
-		var extension = extensions.get( 'EXT_texture_filter_anisotropic' );
+		var extension = extensions.get('EXT_texture_filter_anisotropic');
 
-		if ( extension !== null ) {
+		if (extension !== null) {
 
-			maxAnisotropy = gl.getParameter( extension.MAX_TEXTURE_MAX_ANISOTROPY_EXT );
+			maxAnisotropy = gl.getParameter(extension.MAX_TEXTURE_MAX_ANISOTROPY_EXT);
 
 		} else {
 
@@ -26,12 +26,12 @@ function WebGLCapabilities( gl, extensions, parameters ) {
 
 	}
 
-	function getMaxPrecision( precision ) {
+	function getMaxPrecision(precision) {
 
-		if ( precision === 'highp' ) {
+		if (precision === 'highp') {
 
-			if ( gl.getShaderPrecisionFormat( gl.VERTEX_SHADER, gl.HIGH_FLOAT ).precision > 0 &&
-				gl.getShaderPrecisionFormat( gl.FRAGMENT_SHADER, gl.HIGH_FLOAT ).precision > 0 ) {
+			if (gl.getShaderPrecisionFormat(gl.VERTEX_SHADER, gl.HIGH_FLOAT).precision > 0 &&
+				gl.getShaderPrecisionFormat(gl.FRAGMENT_SHADER, gl.HIGH_FLOAT).precision > 0) {
 
 				return 'highp';
 
@@ -41,10 +41,10 @@ function WebGLCapabilities( gl, extensions, parameters ) {
 
 		}
 
-		if ( precision === 'mediump' ) {
+		if (precision === 'mediump') {
 
-			if ( gl.getShaderPrecisionFormat( gl.VERTEX_SHADER, gl.MEDIUM_FLOAT ).precision > 0 &&
-				gl.getShaderPrecisionFormat( gl.FRAGMENT_SHADER, gl.MEDIUM_FLOAT ).precision > 0 ) {
+			if (gl.getShaderPrecisionFormat(gl.VERTEX_SHADER, gl.MEDIUM_FLOAT).precision > 0 &&
+				gl.getShaderPrecisionFormat(gl.FRAGMENT_SHADER, gl.MEDIUM_FLOAT).precision > 0) {
 
 				return 'mediump';
 
@@ -57,37 +57,37 @@ function WebGLCapabilities( gl, extensions, parameters ) {
 	}
 
 	/* eslint-disable no-undef */
-	var isWebGL2 = ( typeof WebGL2RenderingContext !== 'undefined' && gl instanceof WebGL2RenderingContext ) ||
-		( typeof WebGL2ComputeRenderingContext !== 'undefined' && gl instanceof WebGL2ComputeRenderingContext );
+	var isWebGL2 = (typeof WebGL2RenderingContext !== 'undefined' && gl instanceof WebGL2RenderingContext) ||
+		(typeof WebGL2ComputeRenderingContext !== 'undefined' && gl instanceof WebGL2ComputeRenderingContext);
 	/* eslint-enable no-undef */
 
 	var precision = parameters.precision !== undefined ? parameters.precision : 'highp';
-	var maxPrecision = getMaxPrecision( precision );
+	var maxPrecision = getMaxPrecision(precision);
 
-	if ( maxPrecision !== precision ) {
+	if (maxPrecision !== precision) {
 
-		console.warn( 'THREE.WebGLRenderer:', precision, 'not supported, using', maxPrecision, 'instead.' );
+		console.warn('THREE.WebGLRenderer:', precision, 'not supported, using', maxPrecision, 'instead.');
 		precision = maxPrecision;
 
 	}
 
 	var logarithmicDepthBuffer = parameters.logarithmicDepthBuffer === true;
 
-	var maxTextures = gl.getParameter( gl.MAX_TEXTURE_IMAGE_UNITS );
-	var maxVertexTextures = gl.getParameter( gl.MAX_VERTEX_TEXTURE_IMAGE_UNITS );
-	var maxTextureSize = gl.getParameter( gl.MAX_TEXTURE_SIZE );
-	var maxCubemapSize = gl.getParameter( gl.MAX_CUBE_MAP_TEXTURE_SIZE );
+	var maxTextures = gl.getParameter(gl.MAX_TEXTURE_IMAGE_UNITS);
+	var maxVertexTextures = gl.getParameter(gl.MAX_VERTEX_TEXTURE_IMAGE_UNITS);
+	var maxTextureSize = gl.getParameter(gl.MAX_TEXTURE_SIZE);
+	var maxCubemapSize = gl.getParameter(gl.MAX_CUBE_MAP_TEXTURE_SIZE);
 
-	var maxAttributes = gl.getParameter( gl.MAX_VERTEX_ATTRIBS );
-	var maxVertexUniforms = gl.getParameter( gl.MAX_VERTEX_UNIFORM_VECTORS );
-	var maxVaryings = gl.getParameter( gl.MAX_VARYING_VECTORS );
-	var maxFragmentUniforms = gl.getParameter( gl.MAX_FRAGMENT_UNIFORM_VECTORS );
+	var maxAttributes = gl.getParameter(gl.MAX_VERTEX_ATTRIBS);
+	var maxVertexUniforms = gl.getParameter(gl.MAX_VERTEX_UNIFORM_VECTORS);
+	var maxVaryings = gl.getParameter(gl.MAX_VARYING_VECTORS);
+	var maxFragmentUniforms = gl.getParameter(gl.MAX_FRAGMENT_UNIFORM_VECTORS);
 
 	var vertexTextures = maxVertexTextures > 0;
-	var floatFragmentTextures = isWebGL2 || !! extensions.get( 'OES_texture_float' );
+	var floatFragmentTextures = isWebGL2 || !!extensions.get('OES_texture_float');
 	var floatVertexTextures = vertexTextures && floatFragmentTextures;
 
-	var maxSamples = isWebGL2 ? gl.getParameter( gl.MAX_SAMPLES ) : 0;
+	var maxSamples = isWebGL2 ? gl.getParameter(gl.MAX_SAMPLES) : 0;
 
 	return {
 
@@ -120,4 +120,4 @@ function WebGLCapabilities( gl, extensions, parameters ) {
 }
 
 
-export { WebGLCapabilities };
+export {WebGLCapabilities};

@@ -10,21 +10,18 @@
  *	dotted
  */
 
-import {
-	Color,
-	Vector3
-} from "../../../build/three.module.js";
+import {Color, Vector3} from "../../../build/three.module.js";
 
 var ToonShader1 = {
 
 	uniforms: {
 
-		"uDirLightPos": { value: new Vector3() },
-		"uDirLightColor": { value: new Color( 0xeeeeee ) },
+		"uDirLightPos": {value: new Vector3()},
+		"uDirLightColor": {value: new Color(0xeeeeee)},
 
-		"uAmbientLightColor": { value: new Color( 0x050505 ) },
+		"uAmbientLightColor": {value: new Color(0x050505)},
 
-		"uBaseColor": { value: new Color( 0xffffff ) }
+		"uBaseColor": {value: new Color(0xffffff)}
 
 	},
 
@@ -48,7 +45,7 @@ var ToonShader1 = {
 
 		"}"
 
-	].join( "\n" ),
+	].join("\n"),
 
 	fragmentShader: [
 
@@ -87,7 +84,7 @@ var ToonShader1 = {
 
 		"}"
 
-	].join( "\n" )
+	].join("\n")
 
 };
 
@@ -95,16 +92,16 @@ var ToonShader2 = {
 
 	uniforms: {
 
-		"uDirLightPos": { value: new Vector3() },
-		"uDirLightColor": { value: new Color( 0xeeeeee ) },
+		"uDirLightPos": {value: new Vector3()},
+		"uDirLightColor": {value: new Color(0xeeeeee)},
 
-		"uAmbientLightColor": { value: new Color( 0x050505 ) },
+		"uAmbientLightColor": {value: new Color(0x050505)},
 
-		"uBaseColor": { value: new Color( 0xeeeeee ) },
-		"uLineColor1": { value: new Color( 0x808080 ) },
-		"uLineColor2": { value: new Color( 0x000000 ) },
-		"uLineColor3": { value: new Color( 0x000000 ) },
-		"uLineColor4": { value: new Color( 0x000000 ) }
+		"uBaseColor": {value: new Color(0xeeeeee)},
+		"uLineColor1": {value: new Color(0x808080)},
+		"uLineColor2": {value: new Color(0x000000)},
+		"uLineColor3": {value: new Color(0x000000)},
+		"uLineColor4": {value: new Color(0x000000)}
 
 	},
 
@@ -119,7 +116,7 @@ var ToonShader2 = {
 
 		"}"
 
-	].join( "\n" ),
+	].join("\n"),
 
 	fragmentShader: [
 
@@ -157,7 +154,7 @@ var ToonShader2 = {
 
 		"}"
 
-	].join( "\n" )
+	].join("\n")
 
 };
 
@@ -165,16 +162,16 @@ var ToonShaderHatching = {
 
 	uniforms: {
 
-		"uDirLightPos":	{ value: new Vector3() },
-		"uDirLightColor": { value: new Color( 0xeeeeee ) },
+		"uDirLightPos": {value: new Vector3()},
+		"uDirLightColor": {value: new Color(0xeeeeee)},
 
-		"uAmbientLightColor": { value: new Color( 0x050505 ) },
+		"uAmbientLightColor": {value: new Color(0x050505)},
 
-		"uBaseColor": { value: new Color( 0xffffff ) },
-		"uLineColor1": { value: new Color( 0x000000 ) },
-		"uLineColor2": { value: new Color( 0x000000 ) },
-		"uLineColor3": { value: new Color( 0x000000 ) },
-		"uLineColor4": { value: new Color( 0x000000 ) }
+		"uBaseColor": {value: new Color(0xffffff)},
+		"uLineColor1": {value: new Color(0x000000)},
+		"uLineColor2": {value: new Color(0x000000)},
+		"uLineColor3": {value: new Color(0x000000)},
+		"uLineColor4": {value: new Color(0x000000)}
 
 	},
 
@@ -189,7 +186,7 @@ var ToonShaderHatching = {
 
 		"}"
 
-	].join( "\n" ),
+	].join("\n"),
 
 	fragmentShader: [
 
@@ -255,7 +252,7 @@ var ToonShaderHatching = {
 
 		"}"
 
-	].join( "\n" )
+	].join("\n")
 
 };
 
@@ -263,13 +260,13 @@ var ToonShaderDotted = {
 
 	uniforms: {
 
-		"uDirLightPos":	{ value: new Vector3() },
-		"uDirLightColor": { value: new Color( 0xeeeeee ) },
+		"uDirLightPos": {value: new Vector3()},
+		"uDirLightColor": {value: new Color(0xeeeeee)},
 
-		"uAmbientLightColor": { value: new Color( 0x050505 ) },
+		"uAmbientLightColor": {value: new Color(0x050505)},
 
-		"uBaseColor": { value: new Color( 0xffffff ) },
-		"uLineColor1": { value: new Color( 0x000000 ) }
+		"uBaseColor": {value: new Color(0xffffff)},
+		"uLineColor1": {value: new Color(0x000000)}
 
 	},
 
@@ -284,7 +281,7 @@ var ToonShaderDotted = {
 
 		"}"
 
-	].join( "\n" ),
+	].join("\n"),
 
 	fragmentShader: [
 
@@ -330,8 +327,8 @@ var ToonShaderDotted = {
 
 		"}"
 
-	].join( "\n" )
+	].join("\n")
 
 };
 
-export { ToonShader1, ToonShader2, ToonShaderHatching, ToonShaderDotted };
+export {ToonShader1, ToonShader2, ToonShaderHatching, ToonShaderDotted};

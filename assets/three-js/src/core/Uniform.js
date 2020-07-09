@@ -2,12 +2,12 @@
  * @author mrdoob / http://mrdoob.com/
  */
 
-function Uniform( value ) {
+function Uniform(value) {
 
-	if ( typeof value === 'string' ) {
+	if (typeof value === 'string') {
 
-		console.warn( 'THREE.Uniform: Type parameter is no longer needed.' );
-		value = arguments[ 1 ];
+		console.warn('THREE.Uniform: Type parameter is no longer needed.');
+		value = arguments[1];
 
 	}
 
@@ -17,8 +17,8 @@ function Uniform( value ) {
 
 Uniform.prototype.clone = function () {
 
-	return new Uniform( this.value.clone === undefined ? this.value : this.value.clone() );
+	return new Uniform(this.value.clone === undefined ? this.value : this.value.clone());
 
 };
 
-export { Uniform };
+export {Uniform};

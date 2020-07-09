@@ -1,13 +1,9 @@
-import { Texture } from './Texture';
-import {
-	Mapping,
-	Wrapping,
-	TextureFilter,
-	PixelFormat,
-	TextureDataType,
-} from '../constants';
+import {Texture} from './Texture';
+import {Mapping, PixelFormat, TextureDataType, TextureFilter, Wrapping,} from '../constants';
 
 export class VideoTexture extends Texture {
+
+	readonly isVideoTexture: true;
 
 	constructor(
 		video: HTMLVideoElement,
@@ -20,7 +16,5 @@ export class VideoTexture extends Texture {
 		type?: TextureDataType,
 		anisotropy?: number
 	);
-
-	readonly isVideoTexture: true;
 
 }

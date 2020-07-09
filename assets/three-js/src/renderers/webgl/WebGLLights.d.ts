@@ -1,7 +1,5 @@
 export class WebGLLights {
 
-	constructor( gl: WebGLRenderingContext, properties: any, info: any );
-
 	state: {
 		version: number;
 
@@ -35,7 +33,10 @@ export class WebGLLights {
 		hemi: Array<any>;
 	};
 
-	get( light: any ): any;
-	setup( lights: any, shadows: any, camera: any ): void;
+	constructor(gl: WebGLRenderingContext, properties: any, info: any);
+
+	get(light: any): any;
+
+	setup(lights: any, shadows: any, camera: any): void;
 
 }

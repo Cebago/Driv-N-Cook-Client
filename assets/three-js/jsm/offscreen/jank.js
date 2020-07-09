@@ -3,18 +3,18 @@ var result = null;
 
 function initJank() {
 
-	var button = document.getElementById( 'button' );
-	button.addEventListener( 'click', function () {
+	var button = document.getElementById('button');
+	button.addEventListener('click', function () {
 
-		if ( interval === null ) {
+		if (interval === null) {
 
-			interval = setInterval( jank, 1000 / 60 );
+			interval = setInterval(jank, 1000 / 60);
 
 			button.textContent = 'STOP JANK';
 
 		} else {
 
-			clearInterval( interval );
+			clearInterval(interval);
 			interval = null;
 
 			button.textContent = 'START JANK';
@@ -22,9 +22,9 @@ function initJank() {
 
 		}
 
-	} );
+	});
 
-	result = document.getElementById( 'result' );
+	result = document.getElementById('result');
 
 }
 
@@ -32,7 +32,7 @@ function jank() {
 
 	var number = 0;
 
-	for ( var i = 0; i < 10000000; i ++ ) {
+	for (var i = 0; i < 10000000; i++) {
 
 		number += Math.random();
 

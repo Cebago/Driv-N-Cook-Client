@@ -2,23 +2,23 @@
  * @author sunag / http://www.sunag.com.br/
  */
 
-import { TempNode } from './TempNode.js';
+import {TempNode} from './TempNode.js';
 
-function InputNode( type, params ) {
+function InputNode(type, params) {
 
 	params = params || {};
 	params.shared = params.shared !== undefined ? params.shared : false;
 
-	TempNode.call( this, type, params );
+	TempNode.call(this, type, params);
 
 	this.readonly = false;
 
 }
 
-InputNode.prototype = Object.create( TempNode.prototype );
+InputNode.prototype = Object.create(TempNode.prototype);
 InputNode.prototype.constructor = InputNode;
 
-InputNode.prototype.setReadonly = function ( value ) {
+InputNode.prototype.setReadonly = function (value) {
 
 	this.readonly = value;
 
@@ -26,65 +26,65 @@ InputNode.prototype.setReadonly = function ( value ) {
 
 };
 
-InputNode.prototype.getReadonly = function ( /* builder */ ) {
+InputNode.prototype.getReadonly = function ( /* builder */) {
 
 	return this.readonly;
 
 };
 
-InputNode.prototype.copy = function ( source ) {
+InputNode.prototype.copy = function (source) {
 
-	TempNode.prototype.copy.call( this, source );
+	TempNode.prototype.copy.call(this, source);
 
-	if ( source.readonly !== undefined ) this.readonly = source.readonly;
+	if (source.readonly !== undefined) this.readonly = source.readonly;
 
 	return this;
 
 };
 
-InputNode.prototype.createJSONNode = function ( meta ) {
+InputNode.prototype.createJSONNode = function (meta) {
 
-	var data = TempNode.prototype.createJSONNode.call( this, meta );
+	var data = TempNode.prototype.createJSONNode.call(this, meta);
 
-	if ( this.readonly === true ) data.readonly = this.readonly;
+	if (this.readonly === true) data.readonly = this.readonly;
 
 	return data;
 
 };
 
-InputNode.prototype.generate = function ( builder, output, uuid, type, ns, needsUpdate ) {
+InputNode.prototype.generate = function (builder, output, uuid, type, ns, needsUpdate) {
 
-	uuid = builder.getUuid( uuid || this.getUuid() );
-	type = type || this.getType( builder );
+	uuid = builder.getUuid(uuid || this.getUuid());
+	type = type || this.getType(builder);
 
-	var data = builder.getNodeData( uuid ),
-		readonly = this.getReadonly( builder ) && this.generateReadonly !== undefined;
+	var data = builder.getNodeData(uuid),
+		readonly = this.getReadonly(builder) && this.generateReadonly !== undefined;
 
-	if ( readonly ) {
+	if (readonly) {
 
-		return this.generateReadonly( builder, output, uuid, type, ns, needsUpdate );
+		return this.generateReadonly(builder, output, uuid, type, ns, needsUpdate);
 
 	} else {
 
-		if ( builder.isShader( 'vertex' ) ) {
+		if (builder.isShader('vertex')) {
 
-			if ( ! data.vertex ) {
+			if (!data.vertex) {
 
-				data.vertex = builder.createVertexUniform( type, this, ns, needsUpdate, this.getLabel() );
+				data.vertex = builder.createVertexUniform(type, this, ns, needsUpdate, this.getLabel());
 
 			}
 
-			return builder.format( data.vertex.name, type, output );
+			return builder.format(data.vertex.name, type, output);
 
 		} else {
 
-			if ( ! data.fragment ) {
+			if (!data.fragment) {
 
-				data.fragment = builder.createFragmentUniform( type, this, ns, needsUpdate, this.getLabel() );
+				data.fragment = builder.createFragmentUniform(type, this, ns, needsUpdate, this.getLabel());
 
 			}
 
-			return builder.format( data.fragment.name, type, output );
+			return builder.format(data.fragment.name, type, output);
 
 		}
 
@@ -92,4 +92,4 @@ InputNode.prototype.generate = function ( builder, output, uuid, type, ns, needs
 
 };
 
-export { InputNode };
+export {InputNode};

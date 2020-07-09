@@ -2,18 +2,18 @@
  * @author mrdoob / http://mrdoob.com/
  */
 
-function absNumericalSort( a, b ) {
+function absNumericalSort(a, b) {
 
-	return Math.abs( b[ 1 ] ) - Math.abs( a[ 1 ] );
+	return Math.abs(b[1]) - Math.abs(a[1]);
 
 }
 
-function WebGLMorphtargets( gl ) {
+function WebGLMorphtargets(gl) {
 
 	var influencesList = {};
-	var morphInfluences = new Float32Array( 8 );
+	var morphInfluences = new Float32Array(8);
 
-	function update( object, geometry, material, program ) {
+	function update(object, geometry, material, program) {
 
 		var objectInfluences = object.morphTargetInfluences;
 
@@ -22,21 +22,21 @@ function WebGLMorphtargets( gl ) {
 
 		var length = objectInfluences === undefined ? 0 : objectInfluences.length;
 
-		var influences = influencesList[ geometry.id ];
+		var influences = influencesList[geometry.id];
 
-		if ( influences === undefined ) {
+		if (influences === undefined) {
 
 			// initialise list
 
 			influences = [];
 
-			for ( var i = 0; i < length; i ++ ) {
+			for (var i = 0; i < length; i++) {
 
-				influences[ i ] = [ i, 0 ];
+				influences[i] = [i, 0];
 
 			}
 
-			influencesList[ geometry.id ] = influences;
+			influencesList[geometry.id] = influences;
 
 		}
 
@@ -45,14 +45,14 @@ function WebGLMorphtargets( gl ) {
 
 		// Remove current morphAttributes
 
-		for ( var i = 0; i < length; i ++ ) {
+		for (var i = 0; i < length; i++) {
 
-			var influence = influences[ i ];
+			var influence = influences[i];
 
-			if ( influence[ 1 ] !== 0 ) {
+			if (influence[1] !== 0) {
 
-				if ( morphTargets ) geometry.deleteAttribute( 'morphTarget' + i );
-				if ( morphNormals ) geometry.deleteAttribute( 'morphNormal' + i );
+				if (morphTargets) geometry.deleteAttribute('morphTarget' + i);
+				if (morphNormals) geometry.deleteAttribute('morphNormal' + i);
 
 			}
 
@@ -60,36 +60,36 @@ function WebGLMorphtargets( gl ) {
 
 		// Collect influences
 
-		for ( var i = 0; i < length; i ++ ) {
+		for (var i = 0; i < length; i++) {
 
-			var influence = influences[ i ];
+			var influence = influences[i];
 
-			influence[ 0 ] = i;
-			influence[ 1 ] = objectInfluences[ i ];
+			influence[0] = i;
+			influence[1] = objectInfluences[i];
 
 		}
 
-		influences.sort( absNumericalSort );
+		influences.sort(absNumericalSort);
 
 		// Add morphAttributes
 
 		var morphInfluencesSum = 0;
 
-		for ( var i = 0; i < 8; i ++ ) {
+		for (var i = 0; i < 8; i++) {
 
-			var influence = influences[ i ];
+			var influence = influences[i];
 
-			if ( influence ) {
+			if (influence) {
 
-				var index = influence[ 0 ];
-				var value = influence[ 1 ];
+				var index = influence[0];
+				var value = influence[1];
 
-				if ( value ) {
+				if (value) {
 
-					if ( morphTargets ) geometry.setAttribute( 'morphTarget' + i, morphTargets[ index ] );
-					if ( morphNormals ) geometry.setAttribute( 'morphNormal' + i, morphNormals[ index ] );
+					if (morphTargets) geometry.setAttribute('morphTarget' + i, morphTargets[index]);
+					if (morphNormals) geometry.setAttribute('morphNormal' + i, morphNormals[index]);
 
-					morphInfluences[ i ] = value;
+					morphInfluences[i] = value;
 					morphInfluencesSum += value;
 					continue;
 
@@ -97,7 +97,7 @@ function WebGLMorphtargets( gl ) {
 
 			}
 
-			morphInfluences[ i ] = 0;
+			morphInfluences[i] = 0;
 
 		}
 
@@ -106,8 +106,8 @@ function WebGLMorphtargets( gl ) {
 		// When baseinfluence = 1 - sum(influence), the above is equivalent to sum((target - base) * influence)
 		var morphBaseInfluence = geometry.morphTargetsRelative ? 1 : 1 - morphInfluencesSum;
 
-		program.getUniforms().setValue( gl, 'morphTargetBaseInfluence', morphBaseInfluence );
-		program.getUniforms().setValue( gl, 'morphTargetInfluences', morphInfluences );
+		program.getUniforms().setValue(gl, 'morphTargetBaseInfluence', morphBaseInfluence);
+		program.getUniforms().setValue(gl, 'morphTargetInfluences', morphInfluences);
 
 	}
 
@@ -120,4 +120,4 @@ function WebGLMorphtargets( gl ) {
 }
 
 
-export { WebGLMorphtargets };
+export {WebGLMorphtargets};

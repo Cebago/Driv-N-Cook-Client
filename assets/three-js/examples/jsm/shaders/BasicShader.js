@@ -18,7 +18,7 @@ var BasicShader = {
 
 		"}"
 
-	].join( "\n" ),
+	].join("\n"),
 
 	fragmentShader: [
 
@@ -28,8 +28,8 @@ var BasicShader = {
 
 		"}"
 
-	].join( "\n" )
+	].join("\n")
 
 };
 
-export { BasicShader };
+export {BasicShader};

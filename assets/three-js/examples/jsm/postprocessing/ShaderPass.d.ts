@@ -1,15 +1,14 @@
-import {
-	Material
-} from '../../../src/Three';
+import {Material} from '../../../src/Three';
 
-import { Pass } from './Pass';
+import {Pass} from './Pass';
 
 export class ShaderPass extends Pass {
 
-	constructor( shader: object, textureID?: string );
 	textureID: string;
 	uniforms: object;
 	material: Material;
 	fsQuad: object;
+
+	constructor(shader: object, textureID?: string);
 
 }

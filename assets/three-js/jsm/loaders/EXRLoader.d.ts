@@ -1,9 +1,4 @@
-import {
-	LoadingManager,
-	DataTextureLoader,
-	TextureDataType,
-	PixelFormat
-} from '../../../src/Three';
+import {DataTextureLoader, LoadingManager, PixelFormat, TextureDataType} from '../../../src/Three';
 
 export interface EXR {
 	header: object;
@@ -16,10 +11,12 @@ export interface EXR {
 
 export class EXRLoader extends DataTextureLoader {
 
-	constructor( manager?: LoadingManager );
 	type: TextureDataType;
 
-	parse( buffer: ArrayBuffer ) : EXR;
-	setDataType( type: TextureDataType ): this;
+	constructor(manager?: LoadingManager);
+
+	parse(buffer: ArrayBuffer): EXR;
+
+	setDataType(type: TextureDataType): this;
 
 }

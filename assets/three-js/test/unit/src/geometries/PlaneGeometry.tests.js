@@ -4,17 +4,15 @@
  */
 /* global QUnit */
 
-import { runStdGeometryTests } from '../../qunit-utils';
-import {
-	PlaneBufferGeometry
-} from '../../../../src/geometries/PlaneGeometry';
+import {runStdGeometryTests} from '../../qunit-utils';
+import {PlaneBufferGeometry} from '../../../../src/geometries/PlaneGeometry';
 
-export default QUnit.module( 'Geometries', () => {
+export default QUnit.module('Geometries', () => {
 
-	QUnit.module( 'PlaneBufferGeometry', ( hooks ) => {
+	QUnit.module('PlaneBufferGeometry', (hooks) => {
 
 		var geometries = undefined;
-		hooks.beforeEach( function () {
+		hooks.beforeEach(function () {
 
 			const parameters = {
 				width: 10,
@@ -25,35 +23,35 @@ export default QUnit.module( 'Geometries', () => {
 
 			geometries = [
 				new PlaneBufferGeometry(),
-				new PlaneBufferGeometry( parameters.width ),
-				new PlaneBufferGeometry( parameters.width, parameters.height ),
-				new PlaneBufferGeometry( parameters.width, parameters.height, parameters.widthSegments ),
-				new PlaneBufferGeometry( parameters.width, parameters.height, parameters.widthSegments, parameters.heightSegments ),
+				new PlaneBufferGeometry(parameters.width),
+				new PlaneBufferGeometry(parameters.width, parameters.height),
+				new PlaneBufferGeometry(parameters.width, parameters.height, parameters.widthSegments),
+				new PlaneBufferGeometry(parameters.width, parameters.height, parameters.widthSegments, parameters.heightSegments),
 			];
 
-		} );
+		});
 
 		// INHERITANCE
-		QUnit.todo( "Extending", ( assert ) => {
+		QUnit.todo("Extending", (assert) => {
 
-			assert.ok( false, "everything's gonna be alright" );
+			assert.ok(false, "everything's gonna be alright");
 
-		} );
+		});
 
 		// INSTANCING
-		QUnit.todo( "Instancing", ( assert ) => {
+		QUnit.todo("Instancing", (assert) => {
 
-			assert.ok( false, "everything's gonna be alright" );
+			assert.ok(false, "everything's gonna be alright");
 
-		} );
+		});
 
 		// OTHERS
-		QUnit.test( 'Standard geometry tests', ( assert ) => {
+		QUnit.test('Standard geometry tests', (assert) => {
 
-			runStdGeometryTests( assert, geometries );
+			runStdGeometryTests(assert, geometries);
 
-		} );
+		});
 
-	} );
+	});
 
-} );
+});

@@ -12,8 +12,8 @@ var SepiaShader = {
 
 	uniforms: {
 
-		"tDiffuse": { value: null },
-		"amount": { value: 1.0 }
+		"tDiffuse": {value: null},
+		"amount": {value: 1.0}
 
 	},
 
@@ -28,7 +28,7 @@ var SepiaShader = {
 
 		"}"
 
-	].join( "\n" ),
+	].join("\n"),
 
 	fragmentShader: [
 
@@ -51,8 +51,8 @@ var SepiaShader = {
 
 		"}"
 
-	].join( "\n" )
+	].join("\n")
 
 };
 
-export { SepiaShader };
+export {SepiaShader};

@@ -1,6 +1,6 @@
-import { Material } from './Material.js';
-import { MultiplyOperation } from '../constants.js';
-import { Color } from '../math/Color.js';
+import {Material} from './Material.js';
+import {MultiplyOperation} from '../constants.js';
+import {Color} from '../math/Color.js';
 
 /**
  * @author mrdoob / http://mrdoob.com/
@@ -37,13 +37,13 @@ import { Color } from '../math/Color.js';
  * }
  */
 
-function MeshBasicMaterial( parameters ) {
+function MeshBasicMaterial(parameters) {
 
-	Material.call( this );
+	Material.call(this);
 
 	this.type = 'MeshBasicMaterial';
 
-	this.color = new Color( 0xffffff ); // emissive
+	this.color = new Color(0xffffff); // emissive
 
 	this.map = null;
 
@@ -70,20 +70,20 @@ function MeshBasicMaterial( parameters ) {
 	this.skinning = false;
 	this.morphTargets = false;
 
-	this.setValues( parameters );
+	this.setValues(parameters);
 
 }
 
-MeshBasicMaterial.prototype = Object.create( Material.prototype );
+MeshBasicMaterial.prototype = Object.create(Material.prototype);
 MeshBasicMaterial.prototype.constructor = MeshBasicMaterial;
 
 MeshBasicMaterial.prototype.isMeshBasicMaterial = true;
 
-MeshBasicMaterial.prototype.copy = function ( source ) {
+MeshBasicMaterial.prototype.copy = function (source) {
 
-	Material.prototype.copy.call( this, source );
+	Material.prototype.copy.call(this, source);
 
-	this.color.copy( source.color );
+	this.color.copy(source.color);
 
 	this.map = source.map;
 
@@ -115,4 +115,4 @@ MeshBasicMaterial.prototype.copy = function ( source ) {
 };
 
 
-export { MeshBasicMaterial };
+export {MeshBasicMaterial};

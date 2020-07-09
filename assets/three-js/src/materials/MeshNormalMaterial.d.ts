@@ -1,7 +1,7 @@
-import { MaterialParameters, Material } from './Material';
-import { Texture } from './../textures/Texture';
-import { Vector2 } from './../math/Vector2';
-import { NormalMapTypes } from '../constants';
+import {Material, MaterialParameters} from './Material';
+import {Texture} from './../textures/Texture';
+import {Vector2} from './../math/Vector2';
+import {NormalMapTypes} from '../constants';
 
 export interface MeshNormalMaterialParameters extends MaterialParameters {
 
@@ -22,8 +22,6 @@ export interface MeshNormalMaterialParameters extends MaterialParameters {
 
 export class MeshNormalMaterial extends Material {
 
-	constructor( parameters?: MeshNormalMaterialParameters );
-
 	bumpMap: Texture | null;
 	bumpScale: number;
 	normalMap: Texture | null;
@@ -38,6 +36,8 @@ export class MeshNormalMaterial extends Material {
 	morphTargets: boolean;
 	morphNormals: boolean;
 
-	setValues( parameters: MeshNormalMaterialParameters ): void;
+	constructor(parameters?: MeshNormalMaterialParameters);
+
+	setValues(parameters: MeshNormalMaterialParameters): void;
 
 }

@@ -8,21 +8,21 @@
  *		http://evanw.github.com/lightgl.js/tests/shadowmap.html
  */
 
-import { Camera } from '../cameras/Camera.js';
-import { Vector3 } from '../math/Vector3.js';
-import { LineSegments } from '../objects/LineSegments.js';
-import { Color } from '../math/Color.js';
-import { LineBasicMaterial } from '../materials/LineBasicMaterial.js';
-import { BufferGeometry } from '../core/BufferGeometry.js';
-import { Float32BufferAttribute } from '../core/BufferAttribute.js';
+import {Camera} from '../cameras/Camera.js';
+import {Vector3} from '../math/Vector3.js';
+import {LineSegments} from '../objects/LineSegments.js';
+import {Color} from '../math/Color.js';
+import {LineBasicMaterial} from '../materials/LineBasicMaterial.js';
+import {BufferGeometry} from '../core/BufferGeometry.js';
+import {Float32BufferAttribute} from '../core/BufferAttribute.js';
 
 var _vector = new Vector3();
 var _camera = new Camera();
 
-function CameraHelper( camera ) {
+function CameraHelper(camera) {
 
 	var geometry = new BufferGeometry();
-	var material = new LineBasicMaterial( { color: 0xffffff, vertexColors: true, toneMapped: false } );
+	var material = new LineBasicMaterial({color: 0xffffff, vertexColors: true, toneMapped: false});
 
 	var vertices = [];
 	var colors = [];
@@ -31,90 +31,90 @@ function CameraHelper( camera ) {
 
 	// colors
 
-	var colorFrustum = new Color( 0xffaa00 );
-	var colorCone = new Color( 0xff0000 );
-	var colorUp = new Color( 0x00aaff );
-	var colorTarget = new Color( 0xffffff );
-	var colorCross = new Color( 0x333333 );
+	var colorFrustum = new Color(0xffaa00);
+	var colorCone = new Color(0xff0000);
+	var colorUp = new Color(0x00aaff);
+	var colorTarget = new Color(0xffffff);
+	var colorCross = new Color(0x333333);
 
 	// near
 
-	addLine( 'n1', 'n2', colorFrustum );
-	addLine( 'n2', 'n4', colorFrustum );
-	addLine( 'n4', 'n3', colorFrustum );
-	addLine( 'n3', 'n1', colorFrustum );
+	addLine('n1', 'n2', colorFrustum);
+	addLine('n2', 'n4', colorFrustum);
+	addLine('n4', 'n3', colorFrustum);
+	addLine('n3', 'n1', colorFrustum);
 
 	// far
 
-	addLine( 'f1', 'f2', colorFrustum );
-	addLine( 'f2', 'f4', colorFrustum );
-	addLine( 'f4', 'f3', colorFrustum );
-	addLine( 'f3', 'f1', colorFrustum );
+	addLine('f1', 'f2', colorFrustum);
+	addLine('f2', 'f4', colorFrustum);
+	addLine('f4', 'f3', colorFrustum);
+	addLine('f3', 'f1', colorFrustum);
 
 	// sides
 
-	addLine( 'n1', 'f1', colorFrustum );
-	addLine( 'n2', 'f2', colorFrustum );
-	addLine( 'n3', 'f3', colorFrustum );
-	addLine( 'n4', 'f4', colorFrustum );
+	addLine('n1', 'f1', colorFrustum);
+	addLine('n2', 'f2', colorFrustum);
+	addLine('n3', 'f3', colorFrustum);
+	addLine('n4', 'f4', colorFrustum);
 
 	// cone
 
-	addLine( 'p', 'n1', colorCone );
-	addLine( 'p', 'n2', colorCone );
-	addLine( 'p', 'n3', colorCone );
-	addLine( 'p', 'n4', colorCone );
+	addLine('p', 'n1', colorCone);
+	addLine('p', 'n2', colorCone);
+	addLine('p', 'n3', colorCone);
+	addLine('p', 'n4', colorCone);
 
 	// up
 
-	addLine( 'u1', 'u2', colorUp );
-	addLine( 'u2', 'u3', colorUp );
-	addLine( 'u3', 'u1', colorUp );
+	addLine('u1', 'u2', colorUp);
+	addLine('u2', 'u3', colorUp);
+	addLine('u3', 'u1', colorUp);
 
 	// target
 
-	addLine( 'c', 't', colorTarget );
-	addLine( 'p', 'c', colorCross );
+	addLine('c', 't', colorTarget);
+	addLine('p', 'c', colorCross);
 
 	// cross
 
-	addLine( 'cn1', 'cn2', colorCross );
-	addLine( 'cn3', 'cn4', colorCross );
+	addLine('cn1', 'cn2', colorCross);
+	addLine('cn3', 'cn4', colorCross);
 
-	addLine( 'cf1', 'cf2', colorCross );
-	addLine( 'cf3', 'cf4', colorCross );
+	addLine('cf1', 'cf2', colorCross);
+	addLine('cf3', 'cf4', colorCross);
 
-	function addLine( a, b, color ) {
+	function addLine(a, b, color) {
 
-		addPoint( a, color );
-		addPoint( b, color );
+		addPoint(a, color);
+		addPoint(b, color);
 
 	}
 
-	function addPoint( id, color ) {
+	function addPoint(id, color) {
 
-		vertices.push( 0, 0, 0 );
-		colors.push( color.r, color.g, color.b );
+		vertices.push(0, 0, 0);
+		colors.push(color.r, color.g, color.b);
 
-		if ( pointMap[ id ] === undefined ) {
+		if (pointMap[id] === undefined) {
 
-			pointMap[ id ] = [];
+			pointMap[id] = [];
 
 		}
 
-		pointMap[ id ].push( ( vertices.length / 3 ) - 1 );
+		pointMap[id].push((vertices.length / 3) - 1);
 
 	}
 
-	geometry.setAttribute( 'position', new Float32BufferAttribute( vertices, 3 ) );
-	geometry.setAttribute( 'color', new Float32BufferAttribute( colors, 3 ) );
+	geometry.setAttribute('position', new Float32BufferAttribute(vertices, 3));
+	geometry.setAttribute('color', new Float32BufferAttribute(colors, 3));
 
-	LineSegments.call( this, geometry, material );
+	LineSegments.call(this, geometry, material);
 
 	this.type = 'CameraHelper';
 
 	this.camera = camera;
-	if ( this.camera.updateProjectionMatrix ) this.camera.updateProjectionMatrix();
+	if (this.camera.updateProjectionMatrix) this.camera.updateProjectionMatrix();
 
 	this.matrix = camera.matrixWorld;
 	this.matrixAutoUpdate = false;
@@ -125,7 +125,7 @@ function CameraHelper( camera ) {
 
 }
 
-CameraHelper.prototype = Object.create( LineSegments.prototype );
+CameraHelper.prototype = Object.create(LineSegments.prototype);
 CameraHelper.prototype.constructor = CameraHelper;
 
 CameraHelper.prototype.update = function () {
@@ -138,62 +138,62 @@ CameraHelper.prototype.update = function () {
 	// we need just camera projection matrix inverse
 	// world matrix must be identity
 
-	_camera.projectionMatrixInverse.copy( this.camera.projectionMatrixInverse );
+	_camera.projectionMatrixInverse.copy(this.camera.projectionMatrixInverse);
 
 	// center / target
 
-	setPoint( 'c', pointMap, geometry, _camera, 0, 0, - 1 );
-	setPoint( 't', pointMap, geometry, _camera, 0, 0, 1 );
+	setPoint('c', pointMap, geometry, _camera, 0, 0, -1);
+	setPoint('t', pointMap, geometry, _camera, 0, 0, 1);
 
 	// near
 
-	setPoint( 'n1', pointMap, geometry, _camera, - w, - h, - 1 );
-	setPoint( 'n2', pointMap, geometry, _camera, w, - h, - 1 );
-	setPoint( 'n3', pointMap, geometry, _camera, - w, h, - 1 );
-	setPoint( 'n4', pointMap, geometry, _camera, w, h, - 1 );
+	setPoint('n1', pointMap, geometry, _camera, -w, -h, -1);
+	setPoint('n2', pointMap, geometry, _camera, w, -h, -1);
+	setPoint('n3', pointMap, geometry, _camera, -w, h, -1);
+	setPoint('n4', pointMap, geometry, _camera, w, h, -1);
 
 	// far
 
-	setPoint( 'f1', pointMap, geometry, _camera, - w, - h, 1 );
-	setPoint( 'f2', pointMap, geometry, _camera, w, - h, 1 );
-	setPoint( 'f3', pointMap, geometry, _camera, - w, h, 1 );
-	setPoint( 'f4', pointMap, geometry, _camera, w, h, 1 );
+	setPoint('f1', pointMap, geometry, _camera, -w, -h, 1);
+	setPoint('f2', pointMap, geometry, _camera, w, -h, 1);
+	setPoint('f3', pointMap, geometry, _camera, -w, h, 1);
+	setPoint('f4', pointMap, geometry, _camera, w, h, 1);
 
 	// up
 
-	setPoint( 'u1', pointMap, geometry, _camera, w * 0.7, h * 1.1, - 1 );
-	setPoint( 'u2', pointMap, geometry, _camera, - w * 0.7, h * 1.1, - 1 );
-	setPoint( 'u3', pointMap, geometry, _camera, 0, h * 2, - 1 );
+	setPoint('u1', pointMap, geometry, _camera, w * 0.7, h * 1.1, -1);
+	setPoint('u2', pointMap, geometry, _camera, -w * 0.7, h * 1.1, -1);
+	setPoint('u3', pointMap, geometry, _camera, 0, h * 2, -1);
 
 	// cross
 
-	setPoint( 'cf1', pointMap, geometry, _camera, - w, 0, 1 );
-	setPoint( 'cf2', pointMap, geometry, _camera, w, 0, 1 );
-	setPoint( 'cf3', pointMap, geometry, _camera, 0, - h, 1 );
-	setPoint( 'cf4', pointMap, geometry, _camera, 0, h, 1 );
+	setPoint('cf1', pointMap, geometry, _camera, -w, 0, 1);
+	setPoint('cf2', pointMap, geometry, _camera, w, 0, 1);
+	setPoint('cf3', pointMap, geometry, _camera, 0, -h, 1);
+	setPoint('cf4', pointMap, geometry, _camera, 0, h, 1);
 
-	setPoint( 'cn1', pointMap, geometry, _camera, - w, 0, - 1 );
-	setPoint( 'cn2', pointMap, geometry, _camera, w, 0, - 1 );
-	setPoint( 'cn3', pointMap, geometry, _camera, 0, - h, - 1 );
-	setPoint( 'cn4', pointMap, geometry, _camera, 0, h, - 1 );
+	setPoint('cn1', pointMap, geometry, _camera, -w, 0, -1);
+	setPoint('cn2', pointMap, geometry, _camera, w, 0, -1);
+	setPoint('cn3', pointMap, geometry, _camera, 0, -h, -1);
+	setPoint('cn4', pointMap, geometry, _camera, 0, h, -1);
 
-	geometry.getAttribute( 'position' ).needsUpdate = true;
+	geometry.getAttribute('position').needsUpdate = true;
 
 };
 
-function setPoint( point, pointMap, geometry, camera, x, y, z ) {
+function setPoint(point, pointMap, geometry, camera, x, y, z) {
 
-	_vector.set( x, y, z ).unproject( camera );
+	_vector.set(x, y, z).unproject(camera);
 
-	var points = pointMap[ point ];
+	var points = pointMap[point];
 
-	if ( points !== undefined ) {
+	if (points !== undefined) {
 
-		var position = geometry.getAttribute( 'position' );
+		var position = geometry.getAttribute('position');
 
-		for ( var i = 0, l = points.length; i < l; i ++ ) {
+		for (var i = 0, l = points.length; i < l; i++) {
 
-			position.setXYZ( points[ i ], _vector.x, _vector.y, _vector.z );
+			position.setXYZ(points[i], _vector.x, _vector.y, _vector.z);
 
 		}
 
@@ -201,4 +201,4 @@ function setPoint( point, pointMap, geometry, camera, x, y, z ) {
 
 }
 
-export { CameraHelper };
+export {CameraHelper};

@@ -1,7 +1,5 @@
 export class AnimationObjectGroup {
 
-	constructor( ...args: any[] );
-
 	uuid: string;
 	stats: {
 		bindingsPerObject: number;
@@ -12,8 +10,12 @@ export class AnimationObjectGroup {
 	};
 	readonly isAnimationObjectGroup: true;
 
-	add( ...args: any[] ): void;
-	remove( ...args: any[] ): void;
-	uncache( ...args: any[] ): void;
+	constructor(...args: any[]);
+
+	add(...args: any[]): void;
+
+	remove(...args: any[]): void;
+
+	uncache(...args: any[]): void;
 
 }

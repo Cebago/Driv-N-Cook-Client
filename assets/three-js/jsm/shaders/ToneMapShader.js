@@ -10,12 +10,12 @@ var ToneMapShader = {
 
 	uniforms: {
 
-		"tDiffuse": { value: null },
-		"averageLuminance": { value: 1.0 },
-		"luminanceMap": { value: null },
-		"maxLuminance": { value: 16.0 },
-		"minLuminance": { value: 0.01 },
-		"middleGrey": { value: 0.6 }
+		"tDiffuse": {value: null},
+		"averageLuminance": {value: 1.0},
+		"luminanceMap": {value: null},
+		"maxLuminance": {value: 16.0},
+		"minLuminance": {value: 0.01},
+		"middleGrey": {value: 0.6}
 	},
 
 	vertexShader: [
@@ -29,7 +29,7 @@ var ToneMapShader = {
 
 		"}"
 
-	].join( "\n" ),
+	].join("\n"),
 
 	fragmentShader: [
 
@@ -74,8 +74,8 @@ var ToneMapShader = {
 
 		"}"
 
-	].join( "\n" )
+	].join("\n")
 
 };
 
-export { ToneMapShader };
+export {ToneMapShader};

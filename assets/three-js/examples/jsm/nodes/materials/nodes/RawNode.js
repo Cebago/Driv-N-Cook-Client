@@ -2,26 +2,26 @@
  * @author sunag / http://www.sunag.com.br/
  */
 
-import { Node } from '../../core/Node.js';
+import {Node} from '../../core/Node.js';
 
-function RawNode( value ) {
+function RawNode(value) {
 
-	Node.call( this, 'v4' );
+	Node.call(this, 'v4');
 
 	this.value = value;
 
 }
 
-RawNode.prototype = Object.create( Node.prototype );
+RawNode.prototype = Object.create(Node.prototype);
 RawNode.prototype.constructor = RawNode;
 RawNode.prototype.nodeType = "Raw";
 
-RawNode.prototype.generate = function ( builder ) {
+RawNode.prototype.generate = function (builder) {
 
-	var data = this.value.analyzeAndFlow( builder, this.type ),
+	var data = this.value.analyzeAndFlow(builder, this.type),
 		code = data.code + '\n';
 
-	if ( builder.isShader( 'vertex' ) ) {
+	if (builder.isShader('vertex')) {
 
 		code += 'gl_Position = ' + data.result + ';';
 
@@ -35,9 +35,9 @@ RawNode.prototype.generate = function ( builder ) {
 
 };
 
-RawNode.prototype.copy = function ( source ) {
+RawNode.prototype.copy = function (source) {
 
-	Node.prototype.copy.call( this, source );
+	Node.prototype.copy.call(this, source);
 
 	this.value = source.value;
 
@@ -45,15 +45,15 @@ RawNode.prototype.copy = function ( source ) {
 
 };
 
-RawNode.prototype.toJSON = function ( meta ) {
+RawNode.prototype.toJSON = function (meta) {
 
-	var data = this.getJSONNode( meta );
+	var data = this.getJSONNode(meta);
 
-	if ( ! data ) {
+	if (!data) {
 
-		data = this.createJSONNode( meta );
+		data = this.createJSONNode(meta);
 
-		data.value = this.value.toJSON( meta ).uuid;
+		data.value = this.value.toJSON(meta).uuid;
 
 	}
 
@@ -61,4 +61,4 @@ RawNode.prototype.toJSON = function ( meta ) {
 
 };
 
-export { RawNode };
+export {RawNode};

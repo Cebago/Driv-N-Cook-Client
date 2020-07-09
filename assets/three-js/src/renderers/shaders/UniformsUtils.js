@@ -2,32 +2,32 @@
  * Uniform Utilities
  */
 
-export function cloneUniforms( src ) {
+export function cloneUniforms(src) {
 
 	var dst = {};
 
-	for ( var u in src ) {
+	for (var u in src) {
 
-		dst[ u ] = {};
+		dst[u] = {};
 
-		for ( var p in src[ u ] ) {
+		for (var p in src[u]) {
 
-			var property = src[ u ][ p ];
+			var property = src[u][p];
 
-			if ( property && ( property.isColor ||
+			if (property && (property.isColor ||
 				property.isMatrix3 || property.isMatrix4 ||
 				property.isVector2 || property.isVector3 || property.isVector4 ||
-				property.isTexture ) ) {
+				property.isTexture)) {
 
-				dst[ u ][ p ] = property.clone();
+				dst[u][p] = property.clone();
 
-			} else if ( Array.isArray( property ) ) {
+			} else if (Array.isArray(property)) {
 
-				dst[ u ][ p ] = property.slice();
+				dst[u][p] = property.slice();
 
 			} else {
 
-				dst[ u ][ p ] = property;
+				dst[u][p] = property;
 
 			}
 
@@ -39,17 +39,17 @@ export function cloneUniforms( src ) {
 
 }
 
-export function mergeUniforms( uniforms ) {
+export function mergeUniforms(uniforms) {
 
 	var merged = {};
 
-	for ( var u = 0; u < uniforms.length; u ++ ) {
+	for (var u = 0; u < uniforms.length; u++) {
 
-		var tmp = cloneUniforms( uniforms[ u ] );
+		var tmp = cloneUniforms(uniforms[u]);
 
-		for ( var p in tmp ) {
+		for (var p in tmp) {
 
-			merged[ p ] = tmp[ p ];
+			merged[p] = tmp[p];
 
 		}
 
@@ -61,6 +61,6 @@ export function mergeUniforms( uniforms ) {
 
 // Legacy
 
-var UniformsUtils = { clone: cloneUniforms, merge: mergeUniforms };
+var UniformsUtils = {clone: cloneUniforms, merge: mergeUniforms};
 
-export { UniformsUtils };
+export {UniformsUtils};

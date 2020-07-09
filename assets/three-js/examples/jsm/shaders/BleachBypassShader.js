@@ -12,8 +12,8 @@ var BleachBypassShader = {
 
 	uniforms: {
 
-		"tDiffuse": { value: null },
-		"opacity": { value: 1.0 }
+		"tDiffuse": {value: null},
+		"opacity": {value: 1.0}
 
 	},
 
@@ -28,7 +28,7 @@ var BleachBypassShader = {
 
 		"}"
 
-	].join( "\n" ),
+	].join("\n"),
 
 	fragmentShader: [
 
@@ -61,8 +61,8 @@ var BleachBypassShader = {
 
 		"}"
 
-	].join( "\n" )
+	].join("\n")
 
 };
 
-export { BleachBypassShader };
+export {BleachBypassShader};

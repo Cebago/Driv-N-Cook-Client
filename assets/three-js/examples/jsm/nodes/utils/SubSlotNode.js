@@ -2,45 +2,45 @@
  * @author sunag / http://www.sunag.com.br/
  */
 
-import { TempNode } from '../core/TempNode.js';
+import {TempNode} from '../core/TempNode.js';
 
-function SubSlotNode( slots ) {
+function SubSlotNode(slots) {
 
-	TempNode.call( this );
+	TempNode.call(this);
 
 	this.slots = slots || {};
 
 }
 
-SubSlotNode.prototype = Object.create( TempNode.prototype );
+SubSlotNode.prototype = Object.create(TempNode.prototype);
 SubSlotNode.prototype.constructor = SubSlotNode;
 SubSlotNode.prototype.nodeType = "SubSlot";
 
-SubSlotNode.prototype.getType = function ( builder, output ) {
+SubSlotNode.prototype.getType = function (builder, output) {
 
 	return output;
 
 };
 
-SubSlotNode.prototype.generate = function ( builder, output ) {
+SubSlotNode.prototype.generate = function (builder, output) {
 
-	if ( this.slots[ builder.slot ] ) {
+	if (this.slots[builder.slot]) {
 
-		return this.slots[ builder.slot ].build( builder, output );
+		return this.slots[builder.slot].build(builder, output);
 
 	}
 
-	return builder.format( '0.0', 'f', output );
+	return builder.format('0.0', 'f', output);
 
 };
 
-SubSlotNode.prototype.copy = function ( source ) {
+SubSlotNode.prototype.copy = function (source) {
 
-	TempNode.prototype.copy.call( this, source );
+	TempNode.prototype.copy.call(this, source);
 
-	for ( var prop in source.slots ) {
+	for (var prop in source.slots) {
 
-		this.slots[ prop ] = source.slots[ prop ];
+		this.slots[prop] = source.slots[prop];
 
 	}
 
@@ -48,23 +48,23 @@ SubSlotNode.prototype.copy = function ( source ) {
 
 };
 
-SubSlotNode.prototype.toJSON = function ( meta ) {
+SubSlotNode.prototype.toJSON = function (meta) {
 
-	var data = this.getJSONNode( meta );
+	var data = this.getJSONNode(meta);
 
-	if ( ! data ) {
+	if (!data) {
 
-		data = this.createJSONNode( meta );
+		data = this.createJSONNode(meta);
 
 		data.slots = {};
 
-		for ( var prop in this.slots ) {
+		for (var prop in this.slots) {
 
-			var slot = this.slots[ prop ];
+			var slot = this.slots[prop];
 
-			if ( slot ) {
+			if (slot) {
 
-				data.slots[ prop ] = slot.toJSON( meta ).uuid;
+				data.slots[prop] = slot.toJSON(meta).uuid;
 
 			}
 
@@ -76,4 +76,4 @@ SubSlotNode.prototype.toJSON = function ( meta ) {
 
 };
 
-export { SubSlotNode };
+export {SubSlotNode};

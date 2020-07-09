@@ -2,36 +2,36 @@
  * @author mrdoob / http://mrdoob.com/
  */
 
-function WebGLObjects( gl, geometries, attributes, info ) {
+function WebGLObjects(gl, geometries, attributes, info) {
 
 	var updateMap = new WeakMap();
 
-	function update( object ) {
+	function update(object) {
 
 		var frame = info.render.frame;
 
 		var geometry = object.geometry;
-		var buffergeometry = geometries.get( object, geometry );
+		var buffergeometry = geometries.get(object, geometry);
 
 		// Update once per frame
 
-		if ( updateMap.get( buffergeometry ) !== frame ) {
+		if (updateMap.get(buffergeometry) !== frame) {
 
-			if ( geometry.isGeometry ) {
+			if (geometry.isGeometry) {
 
-				buffergeometry.updateFromObject( object );
+				buffergeometry.updateFromObject(object);
 
 			}
 
-			geometries.update( buffergeometry );
+			geometries.update(buffergeometry);
 
-			updateMap.set( buffergeometry, frame );
+			updateMap.set(buffergeometry, frame);
 
 		}
 
-		if ( object.isInstancedMesh ) {
+		if (object.isInstancedMesh) {
 
-			attributes.update( object.instanceMatrix, gl.ARRAY_BUFFER );
+			attributes.update(object.instanceMatrix, gl.ARRAY_BUFFER);
 
 		}
 
@@ -55,4 +55,4 @@ function WebGLObjects( gl, geometries, attributes, info ) {
 }
 
 
-export { WebGLObjects };
+export {WebGLObjects};

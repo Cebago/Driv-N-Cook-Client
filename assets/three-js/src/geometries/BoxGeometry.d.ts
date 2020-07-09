@@ -1,17 +1,8 @@
-import { Geometry } from '../core/Geometry';
-import { BufferGeometry } from '../core/BufferGeometry';
+import {Geometry} from '../core/Geometry';
+import {BufferGeometry} from '../core/BufferGeometry';
 
 // Extras / Geometries /////////////////////////////////////////////////////////////////////
 export class BoxBufferGeometry extends BufferGeometry {
-
-	constructor(
-		width?: number,
-		height?: number,
-		depth?: number,
-		widthSegments?: number,
-		heightSegments?: number,
-		depthSegments?: number
-	);
 
 	parameters: {
 		width: number;
@@ -22,12 +13,30 @@ export class BoxBufferGeometry extends BufferGeometry {
 		depthSegments: number;
 	};
 
+	constructor(
+		width?: number,
+		height?: number,
+		depth?: number,
+		widthSegments?: number,
+		heightSegments?: number,
+		depthSegments?: number
+	);
+
 }
 
 /**
  * BoxGeometry is the quadrilateral primitive geometry class. It is typically used for creating a cube or irregular quadrilateral of the dimensions provided within the (optional) 'width', 'height', & 'depth' constructor arguments.
  */
 export class BoxGeometry extends Geometry {
+
+	parameters: {
+		width: number;
+		height: number;
+		depth: number;
+		widthSegments: number;
+		heightSegments: number;
+		depthSegments: number;
+	};
 
 	/**
 	 * @param width — Width of the sides on the X axis.
@@ -45,14 +54,5 @@ export class BoxGeometry extends Geometry {
 		heightSegments?: number,
 		depthSegments?: number
 	);
-
-	parameters: {
-		width: number;
-		height: number;
-		depth: number;
-		widthSegments: number;
-		heightSegments: number;
-		depthSegments: number;
-	};
 
 }

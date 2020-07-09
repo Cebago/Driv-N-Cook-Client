@@ -16,48 +16,48 @@ import {
 
 var LineSegmentsGeometry = function () {
 
-	InstancedBufferGeometry.call( this );
+	InstancedBufferGeometry.call(this);
 
 	this.type = 'LineSegmentsGeometry';
 
-	var positions = [ - 1, 2, 0, 1, 2, 0, - 1, 1, 0, 1, 1, 0, - 1, 0, 0, 1, 0, 0, - 1, - 1, 0, 1, - 1, 0 ];
-	var uvs = [ - 1, 2, 1, 2, - 1, 1, 1, 1, - 1, - 1, 1, - 1, - 1, - 2, 1, - 2 ];
-	var index = [ 0, 2, 1, 2, 3, 1, 2, 4, 3, 4, 5, 3, 4, 6, 5, 6, 7, 5 ];
+	var positions = [-1, 2, 0, 1, 2, 0, -1, 1, 0, 1, 1, 0, -1, 0, 0, 1, 0, 0, -1, -1, 0, 1, -1, 0];
+	var uvs = [-1, 2, 1, 2, -1, 1, 1, 1, -1, -1, 1, -1, -1, -2, 1, -2];
+	var index = [0, 2, 1, 2, 3, 1, 2, 4, 3, 4, 5, 3, 4, 6, 5, 6, 7, 5];
 
-	this.setIndex( index );
-	this.setAttribute( 'position', new Float32BufferAttribute( positions, 3 ) );
-	this.setAttribute( 'uv', new Float32BufferAttribute( uvs, 2 ) );
+	this.setIndex(index);
+	this.setAttribute('position', new Float32BufferAttribute(positions, 3));
+	this.setAttribute('uv', new Float32BufferAttribute(uvs, 2));
 
 };
 
-LineSegmentsGeometry.prototype = Object.assign( Object.create( InstancedBufferGeometry.prototype ), {
+LineSegmentsGeometry.prototype = Object.assign(Object.create(InstancedBufferGeometry.prototype), {
 
 	constructor: LineSegmentsGeometry,
 
 	isLineSegmentsGeometry: true,
 
-	applyMatrix4: function ( matrix ) {
+	applyMatrix4: function (matrix) {
 
 		var start = this.attributes.instanceStart;
 		var end = this.attributes.instanceEnd;
 
-		if ( start !== undefined ) {
+		if (start !== undefined) {
 
-			start.applyMatrix4( matrix );
+			start.applyMatrix4(matrix);
 
-			end.applyMatrix4( matrix );
+			end.applyMatrix4(matrix);
 
 			start.data.needsUpdate = true;
 
 		}
 
-		if ( this.boundingBox !== null ) {
+		if (this.boundingBox !== null) {
 
 			this.computeBoundingBox();
 
 		}
 
-		if ( this.boundingSphere !== null ) {
+		if (this.boundingSphere !== null) {
 
 			this.computeBoundingSphere();
 
@@ -67,24 +67,24 @@ LineSegmentsGeometry.prototype = Object.assign( Object.create( InstancedBufferGe
 
 	},
 
-	setPositions: function ( array ) {
+	setPositions: function (array) {
 
 		var lineSegments;
 
-		if ( array instanceof Float32Array ) {
+		if (array instanceof Float32Array) {
 
 			lineSegments = array;
 
-		} else if ( Array.isArray( array ) ) {
+		} else if (Array.isArray(array)) {
 
-			lineSegments = new Float32Array( array );
+			lineSegments = new Float32Array(array);
 
 		}
 
-		var instanceBuffer = new InstancedInterleavedBuffer( lineSegments, 6, 1 ); // xyz, xyz
+		var instanceBuffer = new InstancedInterleavedBuffer(lineSegments, 6, 1); // xyz, xyz
 
-		this.setAttribute( 'instanceStart', new InterleavedBufferAttribute( instanceBuffer, 3, 0 ) ); // xyz
-		this.setAttribute( 'instanceEnd', new InterleavedBufferAttribute( instanceBuffer, 3, 3 ) ); // xyz
+		this.setAttribute('instanceStart', new InterleavedBufferAttribute(instanceBuffer, 3, 0)); // xyz
+		this.setAttribute('instanceEnd', new InterleavedBufferAttribute(instanceBuffer, 3, 3)); // xyz
 
 		//
 
@@ -95,48 +95,48 @@ LineSegmentsGeometry.prototype = Object.assign( Object.create( InstancedBufferGe
 
 	},
 
-	setColors: function ( array ) {
+	setColors: function (array) {
 
 		var colors;
 
-		if ( array instanceof Float32Array ) {
+		if (array instanceof Float32Array) {
 
 			colors = array;
 
-		} else if ( Array.isArray( array ) ) {
+		} else if (Array.isArray(array)) {
 
-			colors = new Float32Array( array );
+			colors = new Float32Array(array);
 
 		}
 
-		var instanceColorBuffer = new InstancedInterleavedBuffer( colors, 6, 1 ); // rgb, rgb
+		var instanceColorBuffer = new InstancedInterleavedBuffer(colors, 6, 1); // rgb, rgb
 
-		this.setAttribute( 'instanceColorStart', new InterleavedBufferAttribute( instanceColorBuffer, 3, 0 ) ); // rgb
-		this.setAttribute( 'instanceColorEnd', new InterleavedBufferAttribute( instanceColorBuffer, 3, 3 ) ); // rgb
-
-		return this;
-
-	},
-
-	fromWireframeGeometry: function ( geometry ) {
-
-		this.setPositions( geometry.attributes.position.array );
+		this.setAttribute('instanceColorStart', new InterleavedBufferAttribute(instanceColorBuffer, 3, 0)); // rgb
+		this.setAttribute('instanceColorEnd', new InterleavedBufferAttribute(instanceColorBuffer, 3, 3)); // rgb
 
 		return this;
 
 	},
 
-	fromEdgesGeometry: function ( geometry ) {
+	fromWireframeGeometry: function (geometry) {
 
-		this.setPositions( geometry.attributes.position.array );
+		this.setPositions(geometry.attributes.position.array);
 
 		return this;
 
 	},
 
-	fromMesh: function ( mesh ) {
+	fromEdgesGeometry: function (geometry) {
 
-		this.fromWireframeGeometry( new WireframeGeometry( mesh.geometry ) );
+		this.setPositions(geometry.attributes.position.array);
+
+		return this;
+
+	},
+
+	fromMesh: function (mesh) {
+
+		this.fromWireframeGeometry(new WireframeGeometry(mesh.geometry));
 
 		// set colors, maybe
 
@@ -144,17 +144,17 @@ LineSegmentsGeometry.prototype = Object.assign( Object.create( InstancedBufferGe
 
 	},
 
-	fromLineSegments: function ( lineSegments ) {
+	fromLineSegments: function (lineSegments) {
 
 		var geometry = lineSegments.geometry;
 
-		if ( geometry.isGeometry ) {
+		if (geometry.isGeometry) {
 
-			this.setPositions( geometry.vertices );
+			this.setPositions(geometry.vertices);
 
-		} else if ( geometry.isBufferGeometry ) {
+		} else if (geometry.isBufferGeometry) {
 
-			this.setPositions( geometry.attributes.position.array ); // assumes non-indexed
+			this.setPositions(geometry.attributes.position.array); // assumes non-indexed
 
 		}
 
@@ -170,7 +170,7 @@ LineSegmentsGeometry.prototype = Object.assign( Object.create( InstancedBufferGe
 
 		return function computeBoundingBox() {
 
-			if ( this.boundingBox === null ) {
+			if (this.boundingBox === null) {
 
 				this.boundingBox = new Box3();
 
@@ -179,13 +179,13 @@ LineSegmentsGeometry.prototype = Object.assign( Object.create( InstancedBufferGe
 			var start = this.attributes.instanceStart;
 			var end = this.attributes.instanceEnd;
 
-			if ( start !== undefined && end !== undefined ) {
+			if (start !== undefined && end !== undefined) {
 
-				this.boundingBox.setFromBufferAttribute( start );
+				this.boundingBox.setFromBufferAttribute(start);
 
-				box.setFromBufferAttribute( end );
+				box.setFromBufferAttribute(end);
 
-				this.boundingBox.union( box );
+				this.boundingBox.union(box);
 
 			}
 
@@ -199,13 +199,13 @@ LineSegmentsGeometry.prototype = Object.assign( Object.create( InstancedBufferGe
 
 		return function computeBoundingSphere() {
 
-			if ( this.boundingSphere === null ) {
+			if (this.boundingSphere === null) {
 
 				this.boundingSphere = new Sphere();
 
 			}
 
-			if ( this.boundingBox === null ) {
+			if (this.boundingBox === null) {
 
 				this.computeBoundingBox();
 
@@ -214,29 +214,29 @@ LineSegmentsGeometry.prototype = Object.assign( Object.create( InstancedBufferGe
 			var start = this.attributes.instanceStart;
 			var end = this.attributes.instanceEnd;
 
-			if ( start !== undefined && end !== undefined ) {
+			if (start !== undefined && end !== undefined) {
 
 				var center = this.boundingSphere.center;
 
-				this.boundingBox.getCenter( center );
+				this.boundingBox.getCenter(center);
 
 				var maxRadiusSq = 0;
 
-				for ( var i = 0, il = start.count; i < il; i ++ ) {
+				for (var i = 0, il = start.count; i < il; i++) {
 
-					vector.fromBufferAttribute( start, i );
-					maxRadiusSq = Math.max( maxRadiusSq, center.distanceToSquared( vector ) );
+					vector.fromBufferAttribute(start, i);
+					maxRadiusSq = Math.max(maxRadiusSq, center.distanceToSquared(vector));
 
-					vector.fromBufferAttribute( end, i );
-					maxRadiusSq = Math.max( maxRadiusSq, center.distanceToSquared( vector ) );
+					vector.fromBufferAttribute(end, i);
+					maxRadiusSq = Math.max(maxRadiusSq, center.distanceToSquared(vector));
 
 				}
 
-				this.boundingSphere.radius = Math.sqrt( maxRadiusSq );
+				this.boundingSphere.radius = Math.sqrt(maxRadiusSq);
 
-				if ( isNaN( this.boundingSphere.radius ) ) {
+				if (isNaN(this.boundingSphere.radius)) {
 
-					console.error( 'THREE.LineSegmentsGeometry.computeBoundingSphere(): Computed radius is NaN. The instanced position data is likely to have NaN values.', this );
+					console.error('THREE.LineSegmentsGeometry.computeBoundingSphere(): Computed radius is NaN. The instanced position data is likely to have NaN values.', this);
 
 				}
 
@@ -252,14 +252,14 @@ LineSegmentsGeometry.prototype = Object.assign( Object.create( InstancedBufferGe
 
 	},
 
-	applyMatrix: function ( matrix ) {
+	applyMatrix: function (matrix) {
 
-		console.warn( 'THREE.LineSegmentsGeometry: applyMatrix() has been renamed to applyMatrix4().' );
+		console.warn('THREE.LineSegmentsGeometry: applyMatrix() has been renamed to applyMatrix4().');
 
-		return this.applyMatrix4( matrix );
+		return this.applyMatrix4(matrix);
 
 	}
 
-} );
+});
 
-export { LineSegmentsGeometry };
+export {LineSegmentsGeometry};

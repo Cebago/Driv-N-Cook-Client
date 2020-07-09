@@ -3,49 +3,47 @@
  */
 /* global QUnit */
 
-import {
-	TubeBufferGeometry
-} from '../../../../src/geometries/TubeGeometry';
+import {TubeBufferGeometry} from '../../../../src/geometries/TubeGeometry';
 
-import { LineCurve3 } from '../../../../src/extras/curves/LineCurve3';
-import { Vector3 } from '../../../../src/math/Vector3';
+import {LineCurve3} from '../../../../src/extras/curves/LineCurve3';
+import {Vector3} from '../../../../src/math/Vector3';
 
-export default QUnit.module( 'Geometries', () => {
+export default QUnit.module('Geometries', () => {
 
-	QUnit.module( 'TubeBufferGeometry', ( hooks ) => {
+	QUnit.module('TubeBufferGeometry', (hooks) => {
 
 		var geometries = undefined;
-		hooks.beforeEach( function () {
+		hooks.beforeEach(function () {
 
-			var path = new LineCurve3( new Vector3( 0, 0, 0 ), new Vector3( 0, 1, 0 ) );
+			var path = new LineCurve3(new Vector3(0, 0, 0), new Vector3(0, 1, 0));
 
 			geometries = [
-				new TubeBufferGeometry( path )
+				new TubeBufferGeometry(path)
 			];
 
-		} );
+		});
 
 		// INHERITANCE
-		QUnit.todo( "Extending", ( assert ) => {
+		QUnit.todo("Extending", (assert) => {
 
-			assert.ok( false, "everything's gonna be alright" );
+			assert.ok(false, "everything's gonna be alright");
 
-		} );
+		});
 
 		// INSTANCING
-		QUnit.todo( "Instancing", ( assert ) => {
+		QUnit.todo("Instancing", (assert) => {
 
-			assert.ok( false, "everything's gonna be alright" );
+			assert.ok(false, "everything's gonna be alright");
 
-		} );
+		});
 
 		// OTHERS
-		QUnit.todo( 'Standard geometry tests', ( assert ) => {
+		QUnit.todo('Standard geometry tests', (assert) => {
 
-			assert.ok( false, "everything's gonna be alright" );
+			assert.ok(false, "everything's gonna be alright");
 
-		} );
+		});
 
-	} );
+	});
 
-} );
+});

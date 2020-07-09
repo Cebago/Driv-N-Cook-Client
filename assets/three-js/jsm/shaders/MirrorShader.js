@@ -13,8 +13,8 @@ var MirrorShader = {
 
 	uniforms: {
 
-		"tDiffuse": { value: null },
-		"side": { value: 1 }
+		"tDiffuse": {value: null},
+		"side": {value: 1}
 
 	},
 
@@ -29,7 +29,7 @@ var MirrorShader = {
 
 		"}"
 
-	].join( "\n" ),
+	].join("\n"),
 
 	fragmentShader: [
 
@@ -55,8 +55,8 @@ var MirrorShader = {
 
 		"}"
 
-	].join( "\n" )
+	].join("\n")
 
 };
 
-export { MirrorShader };
+export {MirrorShader};

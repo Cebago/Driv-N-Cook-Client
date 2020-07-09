@@ -1,5 +1,5 @@
-import { Color } from './../math/Color';
-import { MaterialParameters, Material } from './Material';
+import {Color} from './../math/Color';
+import {Material, MaterialParameters} from './Material';
 
 export interface ShadowMaterialParameters extends MaterialParameters {
 	color?: Color | string | number;
@@ -7,8 +7,8 @@ export interface ShadowMaterialParameters extends MaterialParameters {
 
 export class ShadowMaterial extends Material {
 
-	constructor( parameters?: ShadowMaterialParameters );
-
 	color: Color;
+
+	constructor(parameters?: ShadowMaterialParameters);
 
 }

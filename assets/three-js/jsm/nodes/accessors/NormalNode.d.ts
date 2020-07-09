@@ -1,15 +1,14 @@
-import { TempNode } from '../core/TempNode';
+import {TempNode} from '../core/TempNode';
 
 export class NormalNode extends TempNode {
 
-	constructor( scope?: string );
-
+	static LOCAL: string;
+	static WORLD: string;
 	scope: string;
 	nodeType: string;
 
-	copy( source: NormalNode ): this;
+	constructor(scope?: string);
 
-	static LOCAL: string;
-	static WORLD: string;
+	copy(source: NormalNode): this;
 
 }

@@ -2,15 +2,15 @@
  * @author sunag / http://www.sunag.com.br/
  */
 
-import { MathUtils } from '../../../../build/three.module.js';
+import {MathUtils} from '../../../../build/three.module.js';
 
-import { ShaderPass } from '../../postprocessing/ShaderPass.js';
-import { NodeMaterial } from '../materials/NodeMaterial.js';
-import { ScreenNode } from '../inputs/ScreenNode.js';
+import {ShaderPass} from '../../postprocessing/ShaderPass.js';
+import {NodeMaterial} from '../materials/NodeMaterial.js';
+import {ScreenNode} from '../inputs/ScreenNode.js';
 
 function NodePass() {
 
-	ShaderPass.call( this );
+	ShaderPass.call(this);
 
 	this.name = "";
 	this.uuid = MathUtils.generateUUID();
@@ -27,12 +27,12 @@ function NodePass() {
 
 }
 
-NodePass.prototype = Object.create( ShaderPass.prototype );
+NodePass.prototype = Object.create(ShaderPass.prototype);
 NodePass.prototype.constructor = NodePass;
 
 NodePass.prototype.render = function () {
 
-	if ( this.needsUpdate ) {
+	if (this.needsUpdate) {
 
 		this.material.dispose();
 
@@ -44,11 +44,11 @@ NodePass.prototype.render = function () {
 
 	this.uniforms = this.material.uniforms;
 
-	ShaderPass.prototype.render.apply( this, arguments );
+	ShaderPass.prototype.render.apply(this, arguments);
 
 };
 
-NodePass.prototype.copy = function ( source ) {
+NodePass.prototype.copy = function (source) {
 
 	this.input = source.input;
 
@@ -56,11 +56,11 @@ NodePass.prototype.copy = function ( source ) {
 
 };
 
-NodePass.prototype.toJSON = function ( meta ) {
+NodePass.prototype.toJSON = function (meta) {
 
-	var isRootObject = ( meta === undefined || typeof meta === 'string' );
+	var isRootObject = (meta === undefined || typeof meta === 'string');
 
-	if ( isRootObject ) {
+	if (isRootObject) {
 
 		meta = {
 			nodes: {}
@@ -68,22 +68,22 @@ NodePass.prototype.toJSON = function ( meta ) {
 
 	}
 
-	if ( meta && ! meta.passes ) meta.passes = {};
+	if (meta && !meta.passes) meta.passes = {};
 
-	if ( ! meta.passes[ this.uuid ] ) {
+	if (!meta.passes[this.uuid]) {
 
 		var data = {};
 
 		data.uuid = this.uuid;
 		data.type = "NodePass";
 
-		meta.passes[ this.uuid ] = data;
+		meta.passes[this.uuid] = data;
 
-		if ( this.name !== "" ) data.name = this.name;
+		if (this.name !== "") data.name = this.name;
 
-		if ( JSON.stringify( this.userData ) !== '{}' ) data.userData = this.userData;
+		if (JSON.stringify(this.userData) !== '{}') data.userData = this.userData;
 
-		data.input = this.input.toJSON( meta ).uuid;
+		data.input = this.input.toJSON(meta).uuid;
 
 	}
 
@@ -93,4 +93,4 @@ NodePass.prototype.toJSON = function ( meta ) {
 
 };
 
-export { NodePass };
+export {NodePass};

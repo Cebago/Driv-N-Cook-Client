@@ -1,15 +1,10 @@
-import {
-	Clock,
-	WebGLRenderer,
-	WebGLRenderTarget,
-} from '../../../src/Three';
+import {Clock, WebGLRenderer, WebGLRenderTarget,} from '../../../src/Three';
 
-import { Pass } from './Pass';
-import { ShaderPass } from './ShaderPass';
+import {Pass} from './Pass';
+import {ShaderPass} from './ShaderPass';
 
 export class EffectComposer {
 
-	constructor( renderer: WebGLRenderer, renderTarget?: WebGLRenderTarget );
 	renderer: WebGLRenderer;
 	renderTarget1: WebGLRenderTarget;
 	renderTarget2: WebGLRenderTarget;
@@ -20,13 +15,22 @@ export class EffectComposer {
 	clock: Clock;
 	renderToScreen: boolean;
 
+	constructor(renderer: WebGLRenderer, renderTarget?: WebGLRenderTarget);
+
 	swapBuffers(): void;
-	addPass( pass: Pass ): void;
-	insertPass( pass: Pass, index: number ): void;
-	isLastEnabledPass( passIndex: number ): boolean;
-	render( deltaTime?: number ): void;
-	reset( renderTarget?: WebGLRenderTarget ): void;
-	setSize( width: number, height: number ): void;
-	setPixelRatio( pixelRatio: number ): void;
+
+	addPass(pass: Pass): void;
+
+	insertPass(pass: Pass, index: number): void;
+
+	isLastEnabledPass(passIndex: number): boolean;
+
+	render(deltaTime?: number): void;
+
+	reset(renderTarget?: WebGLRenderTarget): void;
+
+	setSize(width: number, height: number): void;
+
+	setPixelRatio(pixelRatio: number): void;
 
 }

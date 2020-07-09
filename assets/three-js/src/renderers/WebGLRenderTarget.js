@@ -1,7 +1,7 @@
-import { EventDispatcher } from '../core/EventDispatcher.js';
-import { Texture } from '../textures/Texture.js';
-import { LinearFilter } from '../constants.js';
-import { Vector4 } from '../math/Vector4.js';
+import {EventDispatcher} from '../core/EventDispatcher.js';
+import {Texture} from '../textures/Texture.js';
+import {LinearFilter} from '../constants.js';
+import {Vector4} from '../math/Vector4.js';
 
 /**
  * @author szimek / https://github.com/szimek/
@@ -14,19 +14,19 @@ import { Vector4 } from '../math/Vector4.js';
  * Texture parameters for an auto-generated target texture
  * depthBuffer/stencilBuffer: Booleans to indicate if we should generate these buffers
 */
-function WebGLRenderTarget( width, height, options ) {
+function WebGLRenderTarget(width, height, options) {
 
 	this.width = width;
 	this.height = height;
 
-	this.scissor = new Vector4( 0, 0, width, height );
+	this.scissor = new Vector4(0, 0, width, height);
 	this.scissorTest = false;
 
-	this.viewport = new Vector4( 0, 0, width, height );
+	this.viewport = new Vector4(0, 0, width, height);
 
 	options = options || {};
 
-	this.texture = new Texture( undefined, options.mapping, options.wrapS, options.wrapT, options.magFilter, options.minFilter, options.format, options.type, options.anisotropy, options.encoding );
+	this.texture = new Texture(undefined, options.mapping, options.wrapS, options.wrapT, options.magFilter, options.minFilter, options.format, options.type, options.anisotropy, options.encoding);
 
 	this.texture.image = {};
 	this.texture.image.width = width;
@@ -41,15 +41,15 @@ function WebGLRenderTarget( width, height, options ) {
 
 }
 
-WebGLRenderTarget.prototype = Object.assign( Object.create( EventDispatcher.prototype ), {
+WebGLRenderTarget.prototype = Object.assign(Object.create(EventDispatcher.prototype), {
 
 	constructor: WebGLRenderTarget,
 
 	isWebGLRenderTarget: true,
 
-	setSize: function ( width, height ) {
+	setSize: function (width, height) {
 
-		if ( this.width !== width || this.height !== height ) {
+		if (this.width !== width || this.height !== height) {
 
 			this.width = width;
 			this.height = height;
@@ -61,23 +61,23 @@ WebGLRenderTarget.prototype = Object.assign( Object.create( EventDispatcher.prot
 
 		}
 
-		this.viewport.set( 0, 0, width, height );
-		this.scissor.set( 0, 0, width, height );
+		this.viewport.set(0, 0, width, height);
+		this.scissor.set(0, 0, width, height);
 
 	},
 
 	clone: function () {
 
-		return new this.constructor().copy( this );
+		return new this.constructor().copy(this);
 
 	},
 
-	copy: function ( source ) {
+	copy: function (source) {
 
 		this.width = source.width;
 		this.height = source.height;
 
-		this.viewport.copy( source.viewport );
+		this.viewport.copy(source.viewport);
 
 		this.texture = source.texture.clone();
 
@@ -91,11 +91,11 @@ WebGLRenderTarget.prototype = Object.assign( Object.create( EventDispatcher.prot
 
 	dispose: function () {
 
-		this.dispatchEvent( { type: 'dispose' } );
+		this.dispatchEvent({type: 'dispose'});
 
 	}
 
-} );
+});
 
 
-export { WebGLRenderTarget };
+export {WebGLRenderTarget};

@@ -2,38 +2,38 @@
  * @author sunag / http://www.sunag.com.br/
  */
 
-import { TempNode } from './TempNode.js';
+import {TempNode} from './TempNode.js';
 
 var declarationRegexp = /^struct\s*([a-z_0-9]+)\s*{\s*((.|\n)*?)}/img,
 	propertiesRegexp = /\s*(\w*?)\s*(\w*?)(\=|\;)/img;
 
-function StructNode( src ) {
+function StructNode(src) {
 
-	TempNode.call( this );
+	TempNode.call(this);
 
-	this.parse( src );
+	this.parse(src);
 
 }
 
-StructNode.prototype = Object.create( TempNode.prototype );
+StructNode.prototype = Object.create(TempNode.prototype);
 StructNode.prototype.constructor = StructNode;
 StructNode.prototype.nodeType = "Struct";
 
-StructNode.prototype.getType = function ( builder ) {
+StructNode.prototype.getType = function (builder) {
 
-	return builder.getTypeByFormat( this.name );
+	return builder.getTypeByFormat(this.name);
 
 };
 
-StructNode.prototype.getInputByName = function ( name ) {
+StructNode.prototype.getInputByName = function (name) {
 
 	var i = this.inputs.length;
 
-	while ( i -- ) {
+	while (i--) {
 
-		if ( this.inputs[ i ].name === name ) {
+		if (this.inputs[i].name === name) {
 
-			return this.inputs[ i ];
+			return this.inputs[i];
 
 		}
 
@@ -41,42 +41,42 @@ StructNode.prototype.getInputByName = function ( name ) {
 
 };
 
-StructNode.prototype.generate = function ( builder, output ) {
+StructNode.prototype.generate = function (builder, output) {
 
-	if ( output === 'source' ) {
+	if (output === 'source') {
 
 		return this.src + ';';
 
 	} else {
 
-		return builder.format( '( ' + this.src + ' )', this.getType( builder ), output );
+		return builder.format('( ' + this.src + ' )', this.getType(builder), output);
 
 	}
 
 };
 
-StructNode.prototype.parse = function ( src ) {
+StructNode.prototype.parse = function (src) {
 
 	this.src = src || '';
 
 	this.inputs = [];
 
-	var declaration = declarationRegexp.exec( this.src );
+	var declaration = declarationRegexp.exec(this.src);
 
-	if ( declaration ) {
+	if (declaration) {
 
-		var properties = declaration[ 2 ], match;
+		var properties = declaration[2], match;
 
-		while ( match = propertiesRegexp.exec( properties ) ) {
+		while (match = propertiesRegexp.exec(properties)) {
 
-			this.inputs.push( {
-				type: match[ 1 ],
-				name: match[ 2 ]
-			} );
+			this.inputs.push({
+				type: match[1],
+				name: match[2]
+			});
 
 		}
 
-		this.name = declaration[ 1 ];
+		this.name = declaration[1];
 
 	} else {
 
@@ -88,13 +88,13 @@ StructNode.prototype.parse = function ( src ) {
 
 };
 
-StructNode.prototype.toJSON = function ( meta ) {
+StructNode.prototype.toJSON = function (meta) {
 
-	var data = this.getJSONNode( meta );
+	var data = this.getJSONNode(meta);
 
-	if ( ! data ) {
+	if (!data) {
 
-		data = this.createJSONNode( meta );
+		data = this.createJSONNode(meta);
 
 		data.src = this.src;
 
@@ -104,4 +104,4 @@ StructNode.prototype.toJSON = function ( meta ) {
 
 };
 
-export { StructNode };
+export {StructNode};

@@ -15,50 +15,50 @@ const CodeSerializer = {
 	 *
 	 * @returns {String}
 	 */
-	serializeClass: function ( targetPrototype, targetPrototypeInstance, basePrototypeName, overrideFunctions ) {
+	serializeClass: function (targetPrototype, targetPrototypeInstance, basePrototypeName, overrideFunctions) {
 
 		let objectPart, constructorString, i, funcInstructions, funcTemp;
 		let fullObjectName = targetPrototypeInstance.constructor.name;
 		let prototypeFunctions = [];
 		let objectProperties = [];
 		let objectFunctions = [];
-		let isExtended = ( basePrototypeName !== null && basePrototypeName !== undefined );
+		let isExtended = (basePrototypeName !== null && basePrototypeName !== undefined);
 
-		if ( ! Array.isArray( overrideFunctions ) ) overrideFunctions = [];
+		if (!Array.isArray(overrideFunctions)) overrideFunctions = [];
 
-		for ( let name in targetPrototype.prototype ) {
+		for (let name in targetPrototype.prototype) {
 
-			objectPart = targetPrototype.prototype[ name ];
-			funcInstructions = new CodeSerializationInstruction( name, fullObjectName + '.prototype.' + name );
-			funcInstructions.setCode( objectPart.toString() );
+			objectPart = targetPrototype.prototype[name];
+			funcInstructions = new CodeSerializationInstruction(name, fullObjectName + '.prototype.' + name);
+			funcInstructions.setCode(objectPart.toString());
 
-			if ( name === 'constructor' ) {
+			if (name === 'constructor') {
 
-				if ( ! funcInstructions.isRemoveCode() ) {
+				if (!funcInstructions.isRemoveCode()) {
 
 					constructorString = fullObjectName + ' = ' + funcInstructions.getCode() + ';\n\n';
 
 				}
 
-			} else if ( typeof objectPart === 'function' ) {
+			} else if (typeof objectPart === 'function') {
 
-				funcTemp = overrideFunctions[ name ];
+				funcTemp = overrideFunctions[name];
 
-				if ( funcTemp instanceof CodeSerializationInstruction && funcTemp.getName() === funcInstructions.getName() ) {
+				if (funcTemp instanceof CodeSerializationInstruction && funcTemp.getName() === funcInstructions.getName()) {
 
 					funcInstructions = funcTemp;
 
 				}
 
-				if ( ! funcInstructions.isRemoveCode() ) {
+				if (!funcInstructions.isRemoveCode()) {
 
-					if ( isExtended ) {
+					if (isExtended) {
 
-						prototypeFunctions.push( funcInstructions.getFullName() + ' = ' + funcInstructions.getCode() + ';\n\n' );
+						prototypeFunctions.push(funcInstructions.getFullName() + ' = ' + funcInstructions.getCode() + ';\n\n');
 
 					} else {
 
-						prototypeFunctions.push( '\t' + funcInstructions.getName() + ': ' + funcInstructions.getCode() + ',\n\n' );
+						prototypeFunctions.push('\t' + funcInstructions.getName() + ': ' + funcInstructions.getCode() + ',\n\n');
 
 					}
 
@@ -68,50 +68,50 @@ const CodeSerializer = {
 
 		}
 
-		for ( let name in targetPrototype ) {
+		for (let name in targetPrototype) {
 
-			objectPart = targetPrototype[ name ];
-			funcInstructions = new CodeSerializationInstruction( name, fullObjectName + '.' + name );
+			objectPart = targetPrototype[name];
+			funcInstructions = new CodeSerializationInstruction(name, fullObjectName + '.' + name);
 
-			if ( typeof objectPart === 'function' ) {
+			if (typeof objectPart === 'function') {
 
-				funcTemp = overrideFunctions[ name ];
-				if ( funcTemp instanceof CodeSerializationInstruction && funcTemp.getName() === funcInstructions.getName() ) {
+				funcTemp = overrideFunctions[name];
+				if (funcTemp instanceof CodeSerializationInstruction && funcTemp.getName() === funcInstructions.getName()) {
 
 					funcInstructions = funcTemp;
 
 				} else {
 
-					funcInstructions.setCode( objectPart.toString() );
+					funcInstructions.setCode(objectPart.toString());
 
 				}
 
-				if ( ! funcInstructions.isRemoveCode() ) {
+				if (!funcInstructions.isRemoveCode()) {
 
-					objectFunctions.push( funcInstructions.getFullName() + ' = ' + funcInstructions.getCode() + ';\n\n' );
+					objectFunctions.push(funcInstructions.getFullName() + ' = ' + funcInstructions.getCode() + ';\n\n');
 
 				}
 
 			} else {
 
-				if ( typeof ( objectPart ) === 'string' || objectPart instanceof String ) {
+				if (typeof (objectPart) === 'string' || objectPart instanceof String) {
 
-					funcInstructions.setCode( '\"' + objectPart.toString() + '\"' );
+					funcInstructions.setCode('\"' + objectPart.toString() + '\"');
 
-				} else if ( typeof objectPart === 'object' ) {
+				} else if (typeof objectPart === 'object') {
 
-					console.log( 'Omitting object "' + funcInstructions.getName() + '" and replace it with empty object.' );
-					funcInstructions.setCode( "{}" );
+					console.log('Omitting object "' + funcInstructions.getName() + '" and replace it with empty object.');
+					funcInstructions.setCode("{}");
 
 				} else {
 
-					funcInstructions.setCode( objectPart );
+					funcInstructions.setCode(objectPart);
 
 				}
 
-				if ( ! funcInstructions.isRemoveCode() ) {
+				if (!funcInstructions.isRemoveCode()) {
 
-					objectProperties.push( funcInstructions.getFullName() + ' = ' + funcInstructions.getCode() + ';\n' );
+					objectProperties.push(funcInstructions.getFullName() + ' = ' + funcInstructions.getCode() + ';\n');
 
 				}
 
@@ -121,7 +121,7 @@ const CodeSerializer = {
 
 		let objectString = constructorString + '\n\n';
 
-		if ( isExtended ) {
+		if (isExtended) {
 
 			objectString += fullObjectName + '.prototype = Object.create( ' + basePrototypeName + '.prototype );\n';
 
@@ -130,36 +130,36 @@ const CodeSerializer = {
 		objectString += fullObjectName + '.prototype.constructor = ' + fullObjectName + ';\n';
 		objectString += '\n\n';
 
-		for ( i = 0; i < objectProperties.length; i ++ ) {
+		for (i = 0; i < objectProperties.length; i++) {
 
-			objectString += objectProperties[ i ];
-
-		}
-
-		objectString += '\n\n';
-
-		for ( i = 0; i < objectFunctions.length; i ++ ) {
-
-			objectString += objectFunctions[ i ];
+			objectString += objectProperties[i];
 
 		}
 
 		objectString += '\n\n';
 
-		if ( isExtended ) {
+		for (i = 0; i < objectFunctions.length; i++) {
 
-			for ( i = 0; i < prototypeFunctions.length; i ++ ) {
+			objectString += objectFunctions[i];
 
-				objectString += prototypeFunctions[ i ];
+		}
+
+		objectString += '\n\n';
+
+		if (isExtended) {
+
+			for (i = 0; i < prototypeFunctions.length; i++) {
+
+				objectString += prototypeFunctions[i];
 
 			}
 
 		} else {
 
 			objectString += fullObjectName + '.prototype = {\n\n';
-			for ( i = 0; i < prototypeFunctions.length; i ++ ) {
+			for (i = 0; i < prototypeFunctions.length; i++) {
 
-				objectString += prototypeFunctions[ i ];
+				objectString += prototypeFunctions[i];
 
 			}
 
@@ -180,7 +180,7 @@ const CodeSerializer = {
  * @param {String} fullName The name plus full object description
  * @constructor
  */
-const CodeSerializationInstruction = function ( name, fullName ) {
+const CodeSerializationInstruction = function (name, fullName) {
 
 	this.name = name;
 	this.fullName = fullName;
@@ -218,7 +218,7 @@ CodeSerializationInstruction.prototype = {
 	 * @param {String} code
 	 * @return {CodeSerializationInstruction}
 	 */
-	setCode: function ( code ) {
+	setCode: function (code) {
 
 		this.code = code;
 		return this;
@@ -240,7 +240,7 @@ CodeSerializationInstruction.prototype = {
 	 * @param {boolean} removeCode
 	 * @return {CodeSerializationInstruction}
 	 */
-	setRemoveCode: function ( removeCode ) {
+	setRemoveCode: function (removeCode) {
 
 		this.removeCode = removeCode;
 		return this;

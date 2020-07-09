@@ -11,8 +11,8 @@ var ACESFilmicToneMappingShader = {
 
 	uniforms: {
 
-		'tDiffuse': { value: null },
-		'exposure': { value: 1.0 }
+		'tDiffuse': {value: null},
+		'exposure': {value: 1.0}
 
 	},
 
@@ -27,7 +27,7 @@ var ACESFilmicToneMappingShader = {
 
 		'}'
 
-	].join( '\n' ),
+	].join('\n'),
 
 	fragmentShader: [
 
@@ -85,8 +85,8 @@ var ACESFilmicToneMappingShader = {
 
 		'}'
 
-	].join( '\n' )
+	].join('\n')
 
 };
 
-export { ACESFilmicToneMappingShader };
+export {ACESFilmicToneMappingShader};

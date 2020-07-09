@@ -1,7 +1,4 @@
-import {
-	BufferGeometry,
-	Geometry
-} from '../../../src/Three';
+import {BufferGeometry, Geometry} from '../../../src/Three';
 
 export interface DRACOExporterOptions {
 	decodeSpeed?: number;
@@ -17,6 +14,6 @@ export class DRACOExporter {
 
 	constructor();
 
-	parse( geometry: BufferGeometry | Geometry, options: DRACOExporterOptions ): Int8Array;
+	parse(geometry: BufferGeometry | Geometry, options: DRACOExporterOptions): Int8Array;
 
 }

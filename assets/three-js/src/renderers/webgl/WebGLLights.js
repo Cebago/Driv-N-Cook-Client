@@ -2,10 +2,10 @@
  * @author mrdoob / http://mrdoob.com/
  */
 
-import { Color } from '../../math/Color.js';
-import { Matrix4 } from '../../math/Matrix4.js';
-import { Vector2 } from '../../math/Vector2.js';
-import { Vector3 } from '../../math/Vector3.js';
+import {Color} from '../../math/Color.js';
+import {Matrix4} from '../../math/Matrix4.js';
+import {Vector2} from '../../math/Vector2.js';
+import {Vector3} from '../../math/Vector3.js';
 
 function UniformsCache() {
 
@@ -13,17 +13,17 @@ function UniformsCache() {
 
 	return {
 
-		get: function ( light ) {
+		get: function (light) {
 
-			if ( lights[ light.id ] !== undefined ) {
+			if (lights[light.id] !== undefined) {
 
-				return lights[ light.id ];
+				return lights[light.id];
 
 			}
 
 			var uniforms;
 
-			switch ( light.type ) {
+			switch (light.type) {
 
 				case 'DirectionalLight':
 					uniforms = {
@@ -72,7 +72,7 @@ function UniformsCache() {
 
 			}
 
-			lights[ light.id ] = uniforms;
+			lights[light.id] = uniforms;
 
 			return uniforms;
 
@@ -88,17 +88,17 @@ function ShadowUniformsCache() {
 
 	return {
 
-		get: function ( light ) {
+		get: function (light) {
 
-			if ( lights[ light.id ] !== undefined ) {
+			if (lights[light.id] !== undefined) {
 
-				return lights[ light.id ];
+				return lights[light.id];
 
 			}
 
 			var uniforms;
 
-			switch ( light.type ) {
+			switch (light.type) {
 
 				case 'DirectionalLight':
 					uniforms = {
@@ -130,7 +130,7 @@ function ShadowUniformsCache() {
 
 			}
 
-			lights[ light.id ] = uniforms;
+			lights[light.id] = uniforms;
 
 			return uniforms;
 
@@ -141,12 +141,11 @@ function ShadowUniformsCache() {
 }
 
 
-
 var nextVersion = 0;
 
-function shadowCastingLightsFirst( lightA, lightB ) {
+function shadowCastingLightsFirst(lightA, lightB) {
 
-	return ( lightB.castShadow ? 1 : 0 ) - ( lightA.castShadow ? 1 : 0 );
+	return (lightB.castShadow ? 1 : 0) - (lightA.castShadow ? 1 : 0);
 
 }
 
@@ -161,18 +160,18 @@ function WebGLLights() {
 		version: 0,
 
 		hash: {
-			directionalLength: - 1,
-			pointLength: - 1,
-			spotLength: - 1,
-			rectAreaLength: - 1,
-			hemiLength: - 1,
+			directionalLength: -1,
+			pointLength: -1,
+			spotLength: -1,
+			rectAreaLength: -1,
+			hemiLength: -1,
 
-			numDirectionalShadows: - 1,
-			numPointShadows: - 1,
-			numSpotShadows: - 1
+			numDirectionalShadows: -1,
+			numPointShadows: -1,
+			numSpotShadows: -1
 		},
 
-		ambient: [ 0, 0, 0 ],
+		ambient: [0, 0, 0],
 		probe: [],
 		directional: [],
 		directionalShadow: [],
@@ -191,17 +190,17 @@ function WebGLLights() {
 
 	};
 
-	for ( var i = 0; i < 9; i ++ ) state.probe.push( new Vector3() );
+	for (var i = 0; i < 9; i++) state.probe.push(new Vector3());
 
 	var vector3 = new Vector3();
 	var matrix4 = new Matrix4();
 	var matrix42 = new Matrix4();
 
-	function setup( lights, shadows, camera ) {
+	function setup(lights, shadows, camera) {
 
 		var r = 0, g = 0, b = 0;
 
-		for ( var i = 0; i < 9; i ++ ) state.probe[ i ].set( 0, 0, 0 );
+		for (var i = 0; i < 9; i++) state.probe[i].set(0, 0, 0);
 
 		var directionalLength = 0;
 		var pointLength = 0;
@@ -215,153 +214,153 @@ function WebGLLights() {
 
 		var viewMatrix = camera.matrixWorldInverse;
 
-		lights.sort( shadowCastingLightsFirst );
+		lights.sort(shadowCastingLightsFirst);
 
-		for ( var i = 0, l = lights.length; i < l; i ++ ) {
+		for (var i = 0, l = lights.length; i < l; i++) {
 
-			var light = lights[ i ];
+			var light = lights[i];
 
 			var color = light.color;
 			var intensity = light.intensity;
 			var distance = light.distance;
 
-			var shadowMap = ( light.shadow && light.shadow.map ) ? light.shadow.map.texture : null;
+			var shadowMap = (light.shadow && light.shadow.map) ? light.shadow.map.texture : null;
 
-			if ( light.isAmbientLight ) {
+			if (light.isAmbientLight) {
 
 				r += color.r * intensity;
 				g += color.g * intensity;
 				b += color.b * intensity;
 
-			} else if ( light.isLightProbe ) {
+			} else if (light.isLightProbe) {
 
-				for ( var j = 0; j < 9; j ++ ) {
+				for (var j = 0; j < 9; j++) {
 
-					state.probe[ j ].addScaledVector( light.sh.coefficients[ j ], intensity );
+					state.probe[j].addScaledVector(light.sh.coefficients[j], intensity);
 
 				}
 
-			} else if ( light.isDirectionalLight ) {
+			} else if (light.isDirectionalLight) {
 
-				var uniforms = cache.get( light );
+				var uniforms = cache.get(light);
 
-				uniforms.color.copy( light.color ).multiplyScalar( light.intensity );
-				uniforms.direction.setFromMatrixPosition( light.matrixWorld );
-				vector3.setFromMatrixPosition( light.target.matrixWorld );
-				uniforms.direction.sub( vector3 );
-				uniforms.direction.transformDirection( viewMatrix );
+				uniforms.color.copy(light.color).multiplyScalar(light.intensity);
+				uniforms.direction.setFromMatrixPosition(light.matrixWorld);
+				vector3.setFromMatrixPosition(light.target.matrixWorld);
+				uniforms.direction.sub(vector3);
+				uniforms.direction.transformDirection(viewMatrix);
 
-				if ( light.castShadow ) {
+				if (light.castShadow) {
 
 					var shadow = light.shadow;
 
-					var shadowUniforms = shadowCache.get( light );
+					var shadowUniforms = shadowCache.get(light);
 
 					shadowUniforms.shadowBias = shadow.bias;
 					shadowUniforms.shadowRadius = shadow.radius;
 					shadowUniforms.shadowMapSize = shadow.mapSize;
 
-					state.directionalShadow[ directionalLength ] = shadowUniforms;
-					state.directionalShadowMap[ directionalLength ] = shadowMap;
-					state.directionalShadowMatrix[ directionalLength ] = light.shadow.matrix;
+					state.directionalShadow[directionalLength] = shadowUniforms;
+					state.directionalShadowMap[directionalLength] = shadowMap;
+					state.directionalShadowMatrix[directionalLength] = light.shadow.matrix;
 
-					numDirectionalShadows ++;
+					numDirectionalShadows++;
 
 				}
 
-				state.directional[ directionalLength ] = uniforms;
+				state.directional[directionalLength] = uniforms;
 
-				directionalLength ++;
+				directionalLength++;
 
-			} else if ( light.isSpotLight ) {
+			} else if (light.isSpotLight) {
 
-				var uniforms = cache.get( light );
+				var uniforms = cache.get(light);
 
-				uniforms.position.setFromMatrixPosition( light.matrixWorld );
-				uniforms.position.applyMatrix4( viewMatrix );
+				uniforms.position.setFromMatrixPosition(light.matrixWorld);
+				uniforms.position.applyMatrix4(viewMatrix);
 
-				uniforms.color.copy( color ).multiplyScalar( intensity );
+				uniforms.color.copy(color).multiplyScalar(intensity);
 				uniforms.distance = distance;
 
-				uniforms.direction.setFromMatrixPosition( light.matrixWorld );
-				vector3.setFromMatrixPosition( light.target.matrixWorld );
-				uniforms.direction.sub( vector3 );
-				uniforms.direction.transformDirection( viewMatrix );
+				uniforms.direction.setFromMatrixPosition(light.matrixWorld);
+				vector3.setFromMatrixPosition(light.target.matrixWorld);
+				uniforms.direction.sub(vector3);
+				uniforms.direction.transformDirection(viewMatrix);
 
-				uniforms.coneCos = Math.cos( light.angle );
-				uniforms.penumbraCos = Math.cos( light.angle * ( 1 - light.penumbra ) );
+				uniforms.coneCos = Math.cos(light.angle);
+				uniforms.penumbraCos = Math.cos(light.angle * (1 - light.penumbra));
 				uniforms.decay = light.decay;
 
-				if ( light.castShadow ) {
+				if (light.castShadow) {
 
 					var shadow = light.shadow;
 
-					var shadowUniforms = shadowCache.get( light );
+					var shadowUniforms = shadowCache.get(light);
 
 					shadowUniforms.shadowBias = shadow.bias;
 					shadowUniforms.shadowRadius = shadow.radius;
 					shadowUniforms.shadowMapSize = shadow.mapSize;
 
-					state.spotShadow[ spotLength ] = shadowUniforms;
-					state.spotShadowMap[ spotLength ] = shadowMap;
-					state.spotShadowMatrix[ spotLength ] = light.shadow.matrix;
+					state.spotShadow[spotLength] = shadowUniforms;
+					state.spotShadowMap[spotLength] = shadowMap;
+					state.spotShadowMatrix[spotLength] = light.shadow.matrix;
 
-					numSpotShadows ++;
+					numSpotShadows++;
 
 				}
 
-				state.spot[ spotLength ] = uniforms;
+				state.spot[spotLength] = uniforms;
 
-				spotLength ++;
+				spotLength++;
 
-			} else if ( light.isRectAreaLight ) {
+			} else if (light.isRectAreaLight) {
 
-				var uniforms = cache.get( light );
+				var uniforms = cache.get(light);
 
 				// (a) intensity is the total visible light emitted
 				//uniforms.color.copy( color ).multiplyScalar( intensity / ( light.width * light.height * Math.PI ) );
 
 				// (b) intensity is the brightness of the light
-				uniforms.color.copy( color ).multiplyScalar( intensity );
+				uniforms.color.copy(color).multiplyScalar(intensity);
 
-				uniforms.position.setFromMatrixPosition( light.matrixWorld );
-				uniforms.position.applyMatrix4( viewMatrix );
+				uniforms.position.setFromMatrixPosition(light.matrixWorld);
+				uniforms.position.applyMatrix4(viewMatrix);
 
 				// extract local rotation of light to derive width/height half vectors
 				matrix42.identity();
-				matrix4.copy( light.matrixWorld );
-				matrix4.premultiply( viewMatrix );
-				matrix42.extractRotation( matrix4 );
+				matrix4.copy(light.matrixWorld);
+				matrix4.premultiply(viewMatrix);
+				matrix42.extractRotation(matrix4);
 
-				uniforms.halfWidth.set( light.width * 0.5, 0.0, 0.0 );
-				uniforms.halfHeight.set( 0.0, light.height * 0.5, 0.0 );
+				uniforms.halfWidth.set(light.width * 0.5, 0.0, 0.0);
+				uniforms.halfHeight.set(0.0, light.height * 0.5, 0.0);
 
-				uniforms.halfWidth.applyMatrix4( matrix42 );
-				uniforms.halfHeight.applyMatrix4( matrix42 );
+				uniforms.halfWidth.applyMatrix4(matrix42);
+				uniforms.halfHeight.applyMatrix4(matrix42);
 
 				// TODO (abelnation): RectAreaLight distance?
 				// uniforms.distance = distance;
 
-				state.rectArea[ rectAreaLength ] = uniforms;
+				state.rectArea[rectAreaLength] = uniforms;
 
-				rectAreaLength ++;
+				rectAreaLength++;
 
-			} else if ( light.isPointLight ) {
+			} else if (light.isPointLight) {
 
-				var uniforms = cache.get( light );
+				var uniforms = cache.get(light);
 
-				uniforms.position.setFromMatrixPosition( light.matrixWorld );
-				uniforms.position.applyMatrix4( viewMatrix );
+				uniforms.position.setFromMatrixPosition(light.matrixWorld);
+				uniforms.position.applyMatrix4(viewMatrix);
 
-				uniforms.color.copy( light.color ).multiplyScalar( light.intensity );
+				uniforms.color.copy(light.color).multiplyScalar(light.intensity);
 				uniforms.distance = light.distance;
 				uniforms.decay = light.decay;
 
-				if ( light.castShadow ) {
+				if (light.castShadow) {
 
 					var shadow = light.shadow;
 
-					var shadowUniforms = shadowCache.get( light );
+					var shadowUniforms = shadowCache.get(light);
 
 					shadowUniforms.shadowBias = shadow.bias;
 					shadowUniforms.shadowRadius = shadow.radius;
@@ -369,51 +368,51 @@ function WebGLLights() {
 					shadowUniforms.shadowCameraNear = shadow.camera.near;
 					shadowUniforms.shadowCameraFar = shadow.camera.far;
 
-					state.pointShadow[ pointLength ] = shadowUniforms;
-					state.pointShadowMap[ pointLength ] = shadowMap;
-					state.pointShadowMatrix[ pointLength ] = light.shadow.matrix;
+					state.pointShadow[pointLength] = shadowUniforms;
+					state.pointShadowMap[pointLength] = shadowMap;
+					state.pointShadowMatrix[pointLength] = light.shadow.matrix;
 
-					numPointShadows ++;
+					numPointShadows++;
 
 				}
 
-				state.point[ pointLength ] = uniforms;
+				state.point[pointLength] = uniforms;
 
-				pointLength ++;
+				pointLength++;
 
-			} else if ( light.isHemisphereLight ) {
+			} else if (light.isHemisphereLight) {
 
-				var uniforms = cache.get( light );
+				var uniforms = cache.get(light);
 
-				uniforms.direction.setFromMatrixPosition( light.matrixWorld );
-				uniforms.direction.transformDirection( viewMatrix );
+				uniforms.direction.setFromMatrixPosition(light.matrixWorld);
+				uniforms.direction.transformDirection(viewMatrix);
 				uniforms.direction.normalize();
 
-				uniforms.skyColor.copy( light.color ).multiplyScalar( intensity );
-				uniforms.groundColor.copy( light.groundColor ).multiplyScalar( intensity );
+				uniforms.skyColor.copy(light.color).multiplyScalar(intensity);
+				uniforms.groundColor.copy(light.groundColor).multiplyScalar(intensity);
 
-				state.hemi[ hemiLength ] = uniforms;
+				state.hemi[hemiLength] = uniforms;
 
-				hemiLength ++;
+				hemiLength++;
 
 			}
 
 		}
 
-		state.ambient[ 0 ] = r;
-		state.ambient[ 1 ] = g;
-		state.ambient[ 2 ] = b;
+		state.ambient[0] = r;
+		state.ambient[1] = g;
+		state.ambient[2] = b;
 
 		var hash = state.hash;
 
-		if ( hash.directionalLength !== directionalLength ||
+		if (hash.directionalLength !== directionalLength ||
 			hash.pointLength !== pointLength ||
 			hash.spotLength !== spotLength ||
 			hash.rectAreaLength !== rectAreaLength ||
 			hash.hemiLength !== hemiLength ||
 			hash.numDirectionalShadows !== numDirectionalShadows ||
 			hash.numPointShadows !== numPointShadows ||
-			hash.numSpotShadows !== numSpotShadows ) {
+			hash.numSpotShadows !== numSpotShadows) {
 
 			state.directional.length = directionalLength;
 			state.spot.length = spotLength;
@@ -441,7 +440,7 @@ function WebGLLights() {
 			hash.numPointShadows = numPointShadows;
 			hash.numSpotShadows = numSpotShadows;
 
-			state.version = nextVersion ++;
+			state.version = nextVersion++;
 
 		}
 
@@ -455,4 +454,4 @@ function WebGLLights() {
 }
 
 
-export { WebGLLights };
+export {WebGLLights};

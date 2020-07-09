@@ -1,4 +1,4 @@
-import { Interpolant } from '../Interpolant';
+import {Interpolant} from '../Interpolant';
 
 export class DiscreteInterpolant extends Interpolant {
 
@@ -9,6 +9,6 @@ export class DiscreteInterpolant extends Interpolant {
 		resultBuffer?: any
 	);
 
-	interpolate_( i1: number, t0: number, t: number, t1: number ): any;
+	interpolate_(i1: number, t0: number, t: number, t1: number): any;
 
 }

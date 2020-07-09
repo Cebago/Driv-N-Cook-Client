@@ -2,27 +2,23 @@
  * @author WestLangley / http://github.com/WestLangley
  */
 
-import {
-	Mesh,
-	ShaderMaterial,
-	SphereBufferGeometry
-} from '../../../build/three.module.js';
+import {Mesh, ShaderMaterial, SphereBufferGeometry} from '../../../build/three.module.js';
 
-function LightProbeHelper( lightProbe, size ) {
+function LightProbeHelper(lightProbe, size) {
 
 	this.lightProbe = lightProbe;
 
 	this.size = size;
 
-	var material = new ShaderMaterial( {
+	var material = new ShaderMaterial({
 
 		type: 'LightProbeHelperMaterial',
 
 		uniforms: {
 
-			sh: { value: this.lightProbe.sh.coefficients }, // by reference
+			sh: {value: this.lightProbe.sh.coefficients}, // by reference
 
-			intensity: { value: this.lightProbe.intensity }
+			intensity: {value: this.lightProbe.intensity}
 
 		},
 
@@ -38,7 +34,7 @@ function LightProbeHelper( lightProbe, size ) {
 
 			'}',
 
-		].join( '\n' ),
+		].join('\n'),
 
 		fragmentShader: [
 
@@ -98,13 +94,13 @@ function LightProbeHelper( lightProbe, size ) {
 
 			'}'
 
-		].join( '\n' )
+		].join('\n')
 
-	} );
+	});
 
-	var geometry = new SphereBufferGeometry( 1, 32, 16 );
+	var geometry = new SphereBufferGeometry(1, 32, 16);
 
-	Mesh.call( this, geometry, material );
+	Mesh.call(this, geometry, material);
 
 	this.type = 'LightProbeHelper';
 
@@ -112,7 +108,7 @@ function LightProbeHelper( lightProbe, size ) {
 
 }
 
-LightProbeHelper.prototype = Object.create( Mesh.prototype );
+LightProbeHelper.prototype = Object.create(Mesh.prototype);
 LightProbeHelper.prototype.constructor = LightProbeHelper;
 
 LightProbeHelper.prototype.dispose = function () {
@@ -124,12 +120,12 @@ LightProbeHelper.prototype.dispose = function () {
 
 LightProbeHelper.prototype.onBeforeRender = function () {
 
-	this.position.copy( this.lightProbe.position );
+	this.position.copy(this.lightProbe.position);
 
-	this.scale.set( 1, 1, 1 ).multiplyScalar( this.size );
+	this.scale.set(1, 1, 1).multiplyScalar(this.size);
 
 	this.material.uniforms.intensity.value = this.lightProbe.intensity;
 
 };
 
-export { LightProbeHelper };
+export {LightProbeHelper};

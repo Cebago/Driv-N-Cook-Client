@@ -1,9 +1,7 @@
-import { Object3D } from './../core/Object3D';
-import { AudioContext } from './AudioContext';
+import {Object3D} from './../core/Object3D';
+import {AudioContext} from './AudioContext';
 
 export class AudioListener extends Object3D {
-
-	constructor();
 
 	type: 'AudioListener';
 	context: AudioContext;
@@ -11,12 +9,20 @@ export class AudioListener extends Object3D {
 	filter: null | any;
 	timeDelta: number;
 
+	constructor();
+
 	getInput(): GainNode;
+
 	removeFilter(): this;
-	setFilter( value: any ): this;
+
+	setFilter(value: any): this;
+
 	getFilter(): any;
-	setMasterVolume( value: number ): this;
+
+	setMasterVolume(value: number): this;
+
 	getMasterVolume(): number;
-	updateMatrixWorld( force?: boolean ): void;
+
+	updateMatrixWorld(force?: boolean): void;
 
 }

@@ -15,8 +15,8 @@ import {
 	Mesh,
 	MeshBasicMaterial,
 	NearestFilter,
-	RGBFormat,
 	RawShaderMaterial,
+	RGBFormat,
 	Vector2,
 	Vector3,
 	Vector4
@@ -24,7 +24,7 @@ import {
 
 var Lensflare = function () {
 
-	Mesh.call( this, Lensflare.Geometry, new MeshBasicMaterial( { opacity: 0, transparent: true } ) );
+	Mesh.call(this, Lensflare.Geometry, new MeshBasicMaterial({opacity: 0, transparent: true}));
 
 	this.type = 'Lensflare';
 	this.frustumCulled = false;
@@ -37,13 +37,13 @@ var Lensflare = function () {
 
 	// textures
 
-	var tempMap = new DataTexture( new Uint8Array( 16 * 16 * 3 ), 16, 16, RGBFormat );
+	var tempMap = new DataTexture(new Uint8Array(16 * 16 * 3), 16, 16, RGBFormat);
 	tempMap.minFilter = NearestFilter;
 	tempMap.magFilter = NearestFilter;
 	tempMap.wrapS = ClampToEdgeWrapping;
 	tempMap.wrapT = ClampToEdgeWrapping;
 
-	var occlusionMap = new DataTexture( new Uint8Array( 16 * 16 * 3 ), 16, 16, RGBFormat );
+	var occlusionMap = new DataTexture(new Uint8Array(16 * 16 * 3), 16, 16, RGBFormat);
 	occlusionMap.minFilter = NearestFilter;
 	occlusionMap.magFilter = NearestFilter;
 	occlusionMap.wrapS = ClampToEdgeWrapping;
@@ -53,10 +53,10 @@ var Lensflare = function () {
 
 	var geometry = Lensflare.Geometry;
 
-	var material1a = new RawShaderMaterial( {
+	var material1a = new RawShaderMaterial({
 		uniforms: {
-			'scale': { value: null },
-			'screenPosition': { value: null }
+			'scale': {value: null},
+			'screenPosition': {value: null}
 		},
 		vertexShader: [
 
@@ -73,7 +73,7 @@ var Lensflare = function () {
 
 			'}'
 
-		].join( '\n' ),
+		].join('\n'),
 		fragmentShader: [
 
 			'precision highp float;',
@@ -84,17 +84,17 @@ var Lensflare = function () {
 
 			'}'
 
-		].join( '\n' ),
+		].join('\n'),
 		depthTest: true,
 		depthWrite: false,
 		transparent: false
-	} );
+	});
 
-	var material1b = new RawShaderMaterial( {
+	var material1b = new RawShaderMaterial({
 		uniforms: {
-			'map': { value: tempMap },
-			'scale': { value: null },
-			'screenPosition': { value: null }
+			'map': {value: tempMap},
+			'scale': {value: null},
+			'screenPosition': {value: null}
 		},
 		vertexShader: [
 
@@ -116,7 +116,7 @@ var Lensflare = function () {
 
 			'}'
 
-		].join( '\n' ),
+		].join('\n'),
 		fragmentShader: [
 
 			'precision highp float;',
@@ -131,15 +131,15 @@ var Lensflare = function () {
 
 			'}'
 
-		].join( '\n' ),
+		].join('\n'),
 		depthTest: false,
 		depthWrite: false,
 		transparent: false
-	} );
+	});
 
 	// the following object is used for occlusionMap generation
 
-	var mesh1 = new Mesh( geometry, material1a );
+	var mesh1 = new Mesh(geometry, material1a);
 
 	//
 
@@ -147,26 +147,26 @@ var Lensflare = function () {
 
 	var shader = LensflareElement.Shader;
 
-	var material2 = new RawShaderMaterial( {
+	var material2 = new RawShaderMaterial({
 		uniforms: {
-			'map': { value: null },
-			'occlusionMap': { value: occlusionMap },
-			'color': { value: new Color( 0xffffff ) },
-			'scale': { value: new Vector2() },
-			'screenPosition': { value: new Vector3() }
+			'map': {value: null},
+			'occlusionMap': {value: occlusionMap},
+			'color': {value: new Color(0xffffff)},
+			'scale': {value: new Vector2()},
+			'screenPosition': {value: new Vector3()}
 		},
 		vertexShader: shader.vertexShader,
 		fragmentShader: shader.fragmentShader,
 		blending: AdditiveBlending,
 		transparent: true,
 		depthWrite: false
-	} );
+	});
 
-	var mesh2 = new Mesh( geometry, material2 );
+	var mesh2 = new Mesh(geometry, material2);
 
-	this.addElement = function ( element ) {
+	this.addElement = function (element) {
 
-		elements.push( element );
+		elements.push(element);
 
 	};
 
@@ -177,86 +177,86 @@ var Lensflare = function () {
 	var validArea = new Box2();
 	var viewport = new Vector4();
 
-	this.onBeforeRender = function ( renderer, scene, camera ) {
+	this.onBeforeRender = function (renderer, scene, camera) {
 
-		renderer.getCurrentViewport( viewport );
+		renderer.getCurrentViewport(viewport);
 
 		var invAspect = viewport.w / viewport.z;
 		var halfViewportWidth = viewport.z / 2.0;
 		var halfViewportHeight = viewport.w / 2.0;
 
 		var size = 16 / viewport.w;
-		scale.set( size * invAspect, size );
+		scale.set(size * invAspect, size);
 
-		validArea.min.set( viewport.x, viewport.y );
-		validArea.max.set( viewport.x + ( viewport.z - 16 ), viewport.y + ( viewport.w - 16 ) );
+		validArea.min.set(viewport.x, viewport.y);
+		validArea.max.set(viewport.x + (viewport.z - 16), viewport.y + (viewport.w - 16));
 
 		// calculate position in screen space
 
-		positionView.setFromMatrixPosition( this.matrixWorld );
-		positionView.applyMatrix4( camera.matrixWorldInverse );
+		positionView.setFromMatrixPosition(this.matrixWorld);
+		positionView.applyMatrix4(camera.matrixWorldInverse);
 
-		if ( positionView.z > 0 ) return; // lensflare is behind the camera
+		if (positionView.z > 0) return; // lensflare is behind the camera
 
-		positionScreen.copy( positionView ).applyMatrix4( camera.projectionMatrix );
+		positionScreen.copy(positionView).applyMatrix4(camera.projectionMatrix);
 
 		// horizontal and vertical coordinate of the lower left corner of the pixels to copy
 
-		screenPositionPixels.x = viewport.x + ( positionScreen.x * halfViewportWidth ) + halfViewportWidth - 8;
-		screenPositionPixels.y = viewport.y + ( positionScreen.y * halfViewportHeight ) + halfViewportHeight - 8;
+		screenPositionPixels.x = viewport.x + (positionScreen.x * halfViewportWidth) + halfViewportWidth - 8;
+		screenPositionPixels.y = viewport.y + (positionScreen.y * halfViewportHeight) + halfViewportHeight - 8;
 
 		// screen cull
 
-		if ( validArea.containsPoint( screenPositionPixels ) ) {
+		if (validArea.containsPoint(screenPositionPixels)) {
 
 			// save current RGB to temp texture
 
-			renderer.copyFramebufferToTexture( screenPositionPixels, tempMap );
+			renderer.copyFramebufferToTexture(screenPositionPixels, tempMap);
 
 			// render pink quad
 
 			var uniforms = material1a.uniforms;
-			uniforms[ "scale" ].value = scale;
-			uniforms[ "screenPosition" ].value = positionScreen;
+			uniforms["scale"].value = scale;
+			uniforms["screenPosition"].value = positionScreen;
 
-			renderer.renderBufferDirect( camera, null, geometry, material1a, mesh1, null );
+			renderer.renderBufferDirect(camera, null, geometry, material1a, mesh1, null);
 
 			// copy result to occlusionMap
 
-			renderer.copyFramebufferToTexture( screenPositionPixels, occlusionMap );
+			renderer.copyFramebufferToTexture(screenPositionPixels, occlusionMap);
 
 			// restore graphics
 
 			var uniforms = material1b.uniforms;
-			uniforms[ "scale" ].value = scale;
-			uniforms[ "screenPosition" ].value = positionScreen;
+			uniforms["scale"].value = scale;
+			uniforms["screenPosition"].value = positionScreen;
 
-			renderer.renderBufferDirect( camera, null, geometry, material1b, mesh1, null );
+			renderer.renderBufferDirect(camera, null, geometry, material1b, mesh1, null);
 
 			// render elements
 
-			var vecX = - positionScreen.x * 2;
-			var vecY = - positionScreen.y * 2;
+			var vecX = -positionScreen.x * 2;
+			var vecY = -positionScreen.y * 2;
 
-			for ( var i = 0, l = elements.length; i < l; i ++ ) {
+			for (var i = 0, l = elements.length; i < l; i++) {
 
-				var element = elements[ i ];
+				var element = elements[i];
 
 				var uniforms = material2.uniforms;
 
-				uniforms[ "color" ].value.copy( element.color );
-				uniforms[ "map" ].value = element.texture;
-				uniforms[ "screenPosition" ].value.x = positionScreen.x + vecX * element.distance;
-				uniforms[ "screenPosition" ].value.y = positionScreen.y + vecY * element.distance;
+				uniforms["color"].value.copy(element.color);
+				uniforms["map"].value = element.texture;
+				uniforms["screenPosition"].value.x = positionScreen.x + vecX * element.distance;
+				uniforms["screenPosition"].value.y = positionScreen.y + vecY * element.distance;
 
 				var size = element.size / viewport.w;
 				var invAspect = viewport.w / viewport.z;
 
-				uniforms[ "scale" ].value.set( size * invAspect, size );
+				uniforms["scale"].value.set(size * invAspect, size);
 
 				material2.uniformsNeedUpdate = true;
 
-				renderer.renderBufferDirect( camera, null, geometry, material2, mesh2, null );
+				renderer.renderBufferDirect(camera, null, geometry, material2, mesh2, null);
 
 			}
 
@@ -273,9 +273,9 @@ var Lensflare = function () {
 		tempMap.dispose();
 		occlusionMap.dispose();
 
-		for ( var i = 0, l = elements.length; i < l; i ++ ) {
+		for (var i = 0, l = elements.length; i < l; i++) {
 
-			elements[ i ].texture.dispose();
+			elements[i].texture.dispose();
 
 		}
 
@@ -283,18 +283,18 @@ var Lensflare = function () {
 
 };
 
-Lensflare.prototype = Object.create( Mesh.prototype );
+Lensflare.prototype = Object.create(Mesh.prototype);
 Lensflare.prototype.constructor = Lensflare;
 Lensflare.prototype.isLensflare = true;
 
 //
 
-var LensflareElement = function ( texture, size, distance, color ) {
+var LensflareElement = function (texture, size, distance, color) {
 
 	this.texture = texture;
 	this.size = size || 1;
 	this.distance = distance || 0;
-	this.color = color || new Color( 0xffffff );
+	this.color = color || new Color(0xffffff);
 
 };
 
@@ -302,11 +302,11 @@ LensflareElement.Shader = {
 
 	uniforms: {
 
-		'map': { value: null },
-		'occlusionMap': { value: null },
-		'color': { value: null },
-		'scale': { value: null },
-		'screenPosition': { value: null }
+		'map': {value: null},
+		'occlusionMap': {value: null},
+		'color': {value: null},
+		'scale': {value: null},
+		'screenPosition': {value: null}
 
 	},
 
@@ -349,7 +349,7 @@ LensflareElement.Shader = {
 
 		'}'
 
-	].join( '\n' ),
+	].join('\n'),
 
 	fragmentShader: [
 
@@ -370,29 +370,29 @@ LensflareElement.Shader = {
 
 		'}'
 
-	].join( '\n' )
+	].join('\n')
 
 };
 
-Lensflare.Geometry = ( function () {
+Lensflare.Geometry = (function () {
 
 	var geometry = new BufferGeometry();
 
-	var float32Array = new Float32Array( [
-		- 1, - 1, 0, 0, 0,
-		1, - 1, 0, 1, 0,
+	var float32Array = new Float32Array([
+		-1, -1, 0, 0, 0,
+		1, -1, 0, 1, 0,
 		1, 1, 0, 1, 1,
-		- 1, 1, 0, 0, 1
-	] );
+		-1, 1, 0, 0, 1
+	]);
 
-	var interleavedBuffer = new InterleavedBuffer( float32Array, 5 );
+	var interleavedBuffer = new InterleavedBuffer(float32Array, 5);
 
-	geometry.setIndex( [ 0, 1, 2,	0, 2, 3 ] );
-	geometry.setAttribute( 'position', new InterleavedBufferAttribute( interleavedBuffer, 3, 0, false ) );
-	geometry.setAttribute( 'uv', new InterleavedBufferAttribute( interleavedBuffer, 2, 3, false ) );
+	geometry.setIndex([0, 1, 2, 0, 2, 3]);
+	geometry.setAttribute('position', new InterleavedBufferAttribute(interleavedBuffer, 3, 0, false));
+	geometry.setAttribute('uv', new InterleavedBufferAttribute(interleavedBuffer, 2, 3, false));
 
 	return geometry;
 
-} )();
+})();
 
-export { Lensflare, LensflareElement };
+export {Lensflare, LensflareElement};

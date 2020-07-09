@@ -1,7 +1,7 @@
-import { MultiplyOperation, TangentSpaceNormalMap } from '../constants.js';
-import { Material } from './Material.js';
-import { Vector2 } from '../math/Vector2.js';
-import { Color } from '../math/Color.js';
+import {MultiplyOperation, TangentSpaceNormalMap} from '../constants.js';
+import {Material} from './Material.js';
+import {Vector2} from '../math/Vector2.js';
+import {Color} from '../math/Color.js';
 
 /**
  * @author mrdoob / http://mrdoob.com/
@@ -54,14 +54,14 @@ import { Color } from '../math/Color.js';
  * }
  */
 
-function MeshPhongMaterial( parameters ) {
+function MeshPhongMaterial(parameters) {
 
-	Material.call( this );
+	Material.call(this);
 
 	this.type = 'MeshPhongMaterial';
 
-	this.color = new Color( 0xffffff ); // diffuse
-	this.specular = new Color( 0x111111 );
+	this.color = new Color(0xffffff); // diffuse
+	this.specular = new Color(0x111111);
 	this.shininess = 30;
 
 	this.map = null;
@@ -72,7 +72,7 @@ function MeshPhongMaterial( parameters ) {
 	this.aoMap = null;
 	this.aoMapIntensity = 1.0;
 
-	this.emissive = new Color( 0x000000 );
+	this.emissive = new Color(0x000000);
 	this.emissiveIntensity = 1.0;
 	this.emissiveMap = null;
 
@@ -81,7 +81,7 @@ function MeshPhongMaterial( parameters ) {
 
 	this.normalMap = null;
 	this.normalMapType = TangentSpaceNormalMap;
-	this.normalScale = new Vector2( 1, 1 );
+	this.normalScale = new Vector2(1, 1);
 
 	this.displacementMap = null;
 	this.displacementScale = 1;
@@ -105,21 +105,21 @@ function MeshPhongMaterial( parameters ) {
 	this.morphTargets = false;
 	this.morphNormals = false;
 
-	this.setValues( parameters );
+	this.setValues(parameters);
 
 }
 
-MeshPhongMaterial.prototype = Object.create( Material.prototype );
+MeshPhongMaterial.prototype = Object.create(Material.prototype);
 MeshPhongMaterial.prototype.constructor = MeshPhongMaterial;
 
 MeshPhongMaterial.prototype.isMeshPhongMaterial = true;
 
-MeshPhongMaterial.prototype.copy = function ( source ) {
+MeshPhongMaterial.prototype.copy = function (source) {
 
-	Material.prototype.copy.call( this, source );
+	Material.prototype.copy.call(this, source);
 
-	this.color.copy( source.color );
-	this.specular.copy( source.specular );
+	this.color.copy(source.color);
+	this.specular.copy(source.specular);
 	this.shininess = source.shininess;
 
 	this.map = source.map;
@@ -130,7 +130,7 @@ MeshPhongMaterial.prototype.copy = function ( source ) {
 	this.aoMap = source.aoMap;
 	this.aoMapIntensity = source.aoMapIntensity;
 
-	this.emissive.copy( source.emissive );
+	this.emissive.copy(source.emissive);
 	this.emissiveMap = source.emissiveMap;
 	this.emissiveIntensity = source.emissiveIntensity;
 
@@ -139,7 +139,7 @@ MeshPhongMaterial.prototype.copy = function ( source ) {
 
 	this.normalMap = source.normalMap;
 	this.normalMapType = source.normalMapType;
-	this.normalScale.copy( source.normalScale );
+	this.normalScale.copy(source.normalScale);
 
 	this.displacementMap = source.displacementMap;
 	this.displacementScale = source.displacementScale;
@@ -168,4 +168,4 @@ MeshPhongMaterial.prototype.copy = function ( source ) {
 };
 
 
-export { MeshPhongMaterial };
+export {MeshPhongMaterial};

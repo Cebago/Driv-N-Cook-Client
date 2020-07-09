@@ -3,7 +3,7 @@
  * Developed as part of a project at University of Applied Sciences and Arts Northwestern Switzerland (www.fhnw.ch)
  */
 
-import { Command } from '../Command.js';
+import {Command} from '../Command.js';
 
 import * as THREE from '../../../build/three.module.js';
 
@@ -14,9 +14,9 @@ import * as THREE from '../../../build/three.module.js';
  * @param optionalOldRotation THREE.Euler
  * @constructor
  */
-var SetRotationCommand = function ( editor, object, newRotation, optionalOldRotation ) {
+var SetRotationCommand = function (editor, object, newRotation, optionalOldRotation) {
 
-	Command.call( this, editor );
+	Command.call(this, editor);
 
 	this.type = 'SetRotationCommand';
 	this.name = 'Set Rotation';
@@ -24,14 +24,14 @@ var SetRotationCommand = function ( editor, object, newRotation, optionalOldRota
 
 	this.object = object;
 
-	if ( object !== undefined && newRotation !== undefined ) {
+	if (object !== undefined && newRotation !== undefined) {
 
 		this.oldRotation = object.rotation.clone();
 		this.newRotation = newRotation.clone();
 
 	}
 
-	if ( optionalOldRotation !== undefined ) {
+	if (optionalOldRotation !== undefined) {
 
 		this.oldRotation = optionalOldRotation.clone();
 
@@ -43,29 +43,29 @@ SetRotationCommand.prototype = {
 
 	execute: function () {
 
-		this.object.rotation.copy( this.newRotation );
-		this.object.updateMatrixWorld( true );
-		this.editor.signals.objectChanged.dispatch( this.object );
+		this.object.rotation.copy(this.newRotation);
+		this.object.updateMatrixWorld(true);
+		this.editor.signals.objectChanged.dispatch(this.object);
 
 	},
 
 	undo: function () {
 
-		this.object.rotation.copy( this.oldRotation );
-		this.object.updateMatrixWorld( true );
-		this.editor.signals.objectChanged.dispatch( this.object );
+		this.object.rotation.copy(this.oldRotation);
+		this.object.updateMatrixWorld(true);
+		this.editor.signals.objectChanged.dispatch(this.object);
 
 	},
 
-	update: function ( command ) {
+	update: function (command) {
 
-		this.newRotation.copy( command.newRotation );
+		this.newRotation.copy(command.newRotation);
 
 	},
 
 	toJSON: function () {
 
-		var output = Command.prototype.toJSON.call( this );
+		var output = Command.prototype.toJSON.call(this);
 
 		output.objectUuid = this.object.uuid;
 		output.oldRotation = this.oldRotation.toArray();
@@ -75,16 +75,16 @@ SetRotationCommand.prototype = {
 
 	},
 
-	fromJSON: function ( json ) {
+	fromJSON: function (json) {
 
-		Command.prototype.fromJSON.call( this, json );
+		Command.prototype.fromJSON.call(this, json);
 
-		this.object = this.editor.objectByUuid( json.objectUuid );
-		this.oldRotation = new THREE.Euler().fromArray( json.oldRotation );
-		this.newRotation = new THREE.Euler().fromArray( json.newRotation );
+		this.object = this.editor.objectByUuid(json.objectUuid);
+		this.oldRotation = new THREE.Euler().fromArray(json.oldRotation);
+		this.newRotation = new THREE.Euler().fromArray(json.newRotation);
 
 	}
 
 };
 
-export { SetRotationCommand };
+export {SetRotationCommand};

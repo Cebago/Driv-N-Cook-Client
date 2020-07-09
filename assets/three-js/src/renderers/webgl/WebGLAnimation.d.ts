@@ -4,8 +4,8 @@ export class WebGLAnimation {
 
 	stop(): void;
 
-	setAnimationLoop( callback: Function ): void;
+	setAnimationLoop(callback: Function): void;
 
-	setContext( value: WebGLRenderingContext | WebGL2RenderingContext ): void;
+	setContext(value: WebGLRenderingContext | WebGL2RenderingContext): void;
 
 }

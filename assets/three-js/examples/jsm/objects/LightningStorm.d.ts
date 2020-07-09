@@ -1,9 +1,6 @@
-import {
-	Material,
-	Vector3
-} from '../../../src/Three';
+import {Material, Vector3} from '../../../src/Three';
 
-import { LightningStrike, RayParameters } from '../geometries/LightningStrike';
+import {LightningStrike, RayParameters} from '../geometries/LightningStrike';
 
 export interface StormParams {
 	size?: number;
@@ -23,15 +20,18 @@ export interface StormParams {
 
 	isEternal?: boolean;
 
-	onRayPosition?: ( source: Vector3, dest: Vector3 ) => void;
-	onLightningDown?: ( lightning: LightningStrike ) => void;
+	onRayPosition?: (source: Vector3, dest: Vector3) => void;
+	onLightningDown?: (lightning: LightningStrike) => void;
 }
 
 export class LightningStorm {
 
-	constructor( stormParams?: StormParams );
-	update( time: number ): void;
-	copy( source: LightningStorm ): LightningStorm;
+	constructor(stormParams?: StormParams);
+
+	update(time: number): void;
+
+	copy(source: LightningStorm): LightningStorm;
+
 	clone(): LightningStorm;
 
 }

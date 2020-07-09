@@ -3,7 +3,7 @@
  * Developed as part of a project at University of Applied Sciences and Arts Northwestern Switzerland (www.fhnw.ch)
  */
 
-import { Command } from '../Command.js';
+import {Command} from '../Command.js';
 
 /**
  * @param editor Editor
@@ -11,9 +11,9 @@ import { Command } from '../Command.js';
  * @param script javascript object
  * @constructor
  */
-var AddScriptCommand = function ( editor, object, script ) {
+var AddScriptCommand = function (editor, object, script) {
 
-	Command.call( this, editor );
+	Command.call(this, editor);
 
 	this.type = 'AddScriptCommand';
 	this.name = 'Add Script';
@@ -27,37 +27,37 @@ AddScriptCommand.prototype = {
 
 	execute: function () {
 
-		if ( this.editor.scripts[ this.object.uuid ] === undefined ) {
+		if (this.editor.scripts[this.object.uuid] === undefined) {
 
-			this.editor.scripts[ this.object.uuid ] = [];
+			this.editor.scripts[this.object.uuid] = [];
 
 		}
 
-		this.editor.scripts[ this.object.uuid ].push( this.script );
+		this.editor.scripts[this.object.uuid].push(this.script);
 
-		this.editor.signals.scriptAdded.dispatch( this.script );
+		this.editor.signals.scriptAdded.dispatch(this.script);
 
 	},
 
 	undo: function () {
 
-		if ( this.editor.scripts[ this.object.uuid ] === undefined ) return;
+		if (this.editor.scripts[this.object.uuid] === undefined) return;
 
-		var index = this.editor.scripts[ this.object.uuid ].indexOf( this.script );
+		var index = this.editor.scripts[this.object.uuid].indexOf(this.script);
 
-		if ( index !== - 1 ) {
+		if (index !== -1) {
 
-			this.editor.scripts[ this.object.uuid ].splice( index, 1 );
+			this.editor.scripts[this.object.uuid].splice(index, 1);
 
 		}
 
-		this.editor.signals.scriptRemoved.dispatch( this.script );
+		this.editor.signals.scriptRemoved.dispatch(this.script);
 
 	},
 
 	toJSON: function () {
 
-		var output = Command.prototype.toJSON.call( this );
+		var output = Command.prototype.toJSON.call(this);
 
 		output.objectUuid = this.object.uuid;
 		output.script = this.script;
@@ -66,15 +66,15 @@ AddScriptCommand.prototype = {
 
 	},
 
-	fromJSON: function ( json ) {
+	fromJSON: function (json) {
 
-		Command.prototype.fromJSON.call( this, json );
+		Command.prototype.fromJSON.call(this, json);
 
 		this.script = json.script;
-		this.object = this.editor.objectByUuid( json.objectUuid );
+		this.object = this.editor.objectByUuid(json.objectUuid);
 
 	}
 
 };
 
-export { AddScriptCommand };
+export {AddScriptCommand};

@@ -1,9 +1,14 @@
-import { PointLight } from './../lights/PointLight';
-import { Color } from './../math/Color';
-import { Matrix4 } from './../math/Matrix4';
-import { Object3D } from './../core/Object3D';
+import {PointLight} from './../lights/PointLight';
+import {Color} from './../math/Color';
+import {Matrix4} from './../math/Matrix4';
+import {Object3D} from './../core/Object3D';
 
 export class PointLightHelper extends Object3D {
+
+	light: PointLight;
+	color: Color | string | number | undefined;
+	matrix: Matrix4;
+	matrixAutoUpdate: boolean;
 
 	constructor(
 		light: PointLight,
@@ -11,12 +16,8 @@ export class PointLightHelper extends Object3D {
 		color?: Color | string | number
 	);
 
-	light: PointLight;
-	color: Color | string | number | undefined;
-	matrix: Matrix4;
-	matrixAutoUpdate: boolean;
-
 	dispose(): void;
+
 	update(): void;
 
 }

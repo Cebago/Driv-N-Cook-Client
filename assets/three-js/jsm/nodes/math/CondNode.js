@@ -2,11 +2,11 @@
  * @author sunag / http://www.sunag.com.br/
  */
 
-import { TempNode } from '../core/TempNode.js';
+import {TempNode} from '../core/TempNode.js';
 
-function CondNode( a, b, op, ifNode, elseNode ) {
+function CondNode(a, b, op, ifNode, elseNode) {
 
-	TempNode.call( this );
+	TempNode.call(this);
 
 	this.a = a;
 	this.b = b;
@@ -25,18 +25,18 @@ CondNode.GREATER_EQUAL = '>=';
 CondNode.LESS = '<';
 CondNode.LESS_EQUAL = '<=';
 
-CondNode.prototype = Object.create( TempNode.prototype );
+CondNode.prototype = Object.create(TempNode.prototype);
 CondNode.prototype.constructor = CondNode;
 CondNode.prototype.nodeType = "Cond";
 
-CondNode.prototype.getType = function ( builder ) {
+CondNode.prototype.getType = function (builder) {
 
-	if ( this.ifNode ) {
+	if (this.ifNode) {
 
-		var ifType = this.ifNode.getType( builder );
-		var elseType = this.elseNode.getType( builder );
+		var ifType = this.ifNode.getType(builder);
+		var elseType = this.elseNode.getType(builder);
 
-		if ( builder.getTypeLength( elseType ) > builder.getTypeLength( ifType ) ) {
+		if (builder.getTypeLength(elseType) > builder.getTypeLength(ifType)) {
 
 			return elseType;
 
@@ -50,32 +50,32 @@ CondNode.prototype.getType = function ( builder ) {
 
 };
 
-CondNode.prototype.getCondType = function ( builder ) {
+CondNode.prototype.getCondType = function (builder) {
 
-	if ( builder.getTypeLength( this.b.getType( builder ) ) > builder.getTypeLength( this.a.getType( builder ) ) ) {
+	if (builder.getTypeLength(this.b.getType(builder)) > builder.getTypeLength(this.a.getType(builder))) {
 
-		return this.b.getType( builder );
+		return this.b.getType(builder);
 
 	}
 
-	return this.a.getType( builder );
+	return this.a.getType(builder);
 
 };
 
-CondNode.prototype.generate = function ( builder, output ) {
+CondNode.prototype.generate = function (builder, output) {
 
-	var type = this.getType( builder ),
-		condType = this.getCondType( builder ),
-		a = this.a.build( builder, condType ),
-		b = this.b.build( builder, condType ),
+	var type = this.getType(builder),
+		condType = this.getCondType(builder),
+		a = this.a.build(builder, condType),
+		b = this.b.build(builder, condType),
 		code;
 
-	if ( this.ifNode ) {
+	if (this.ifNode) {
 
-		var ifCode = this.ifNode.build( builder, type ),
-			elseCode = this.elseNode.build( builder, type );
+		var ifCode = this.ifNode.build(builder, type),
+			elseCode = this.elseNode.build(builder, type);
 
-		code = '( ' + [ a, this.op, b, '?', ifCode, ':', elseCode ].join( ' ' ) + ' )';
+		code = '( ' + [a, this.op, b, '?', ifCode, ':', elseCode].join(' ') + ' )';
 
 	} else {
 
@@ -83,13 +83,13 @@ CondNode.prototype.generate = function ( builder, output ) {
 
 	}
 
-	return builder.format( code, this.getType( builder ), output );
+	return builder.format(code, this.getType(builder), output);
 
 };
 
-CondNode.prototype.copy = function ( source ) {
+CondNode.prototype.copy = function (source) {
 
-	TempNode.prototype.copy.call( this, source );
+	TempNode.prototype.copy.call(this, source);
 
 	this.a = source.a;
 	this.b = source.b;
@@ -103,21 +103,21 @@ CondNode.prototype.copy = function ( source ) {
 
 };
 
-CondNode.prototype.toJSON = function ( meta ) {
+CondNode.prototype.toJSON = function (meta) {
 
-	var data = this.getJSONNode( meta );
+	var data = this.getJSONNode(meta);
 
-	if ( ! data ) {
+	if (!data) {
 
-		data = this.createJSONNode( meta );
+		data = this.createJSONNode(meta);
 
-		data.a = this.a.toJSON( meta ).uuid;
-		data.b = this.b.toJSON( meta ).uuid;
+		data.a = this.a.toJSON(meta).uuid;
+		data.b = this.b.toJSON(meta).uuid;
 
 		data.op = this.op;
 
-		if ( data.ifNode ) data.ifNode = this.ifNode.toJSON( meta ).uuid;
-		if ( data.elseNode ) data.elseNode = this.elseNode.toJSON( meta ).uuid;
+		if (data.ifNode) data.ifNode = this.ifNode.toJSON(meta).uuid;
+		if (data.elseNode) data.elseNode = this.elseNode.toJSON(meta).uuid;
 
 	}
 
@@ -125,4 +125,4 @@ CondNode.prototype.toJSON = function ( meta ) {
 
 };
 
-export { CondNode };
+export {CondNode};

@@ -1,9 +1,4 @@
-import {
-	LoadingManager,
-	CompressedTextureLoader,
-	PixelFormat,
-	CompressedPixelFormat
-} from '../../../src/Three';
+import {CompressedPixelFormat, CompressedTextureLoader, LoadingManager, PixelFormat} from '../../../src/Three';
 
 export interface DDS {
 	mipmaps: object[];
@@ -16,8 +11,8 @@ export interface DDS {
 
 export class DDSLoader extends CompressedTextureLoader {
 
-	constructor( manager?: LoadingManager );
+	constructor(manager?: LoadingManager);
 
-	parse( buffer: ArrayBuffer, loadMipmaps: boolean ) : DDS;
+	parse(buffer: ArrayBuffer, loadMipmaps: boolean): DDS;
 
 }

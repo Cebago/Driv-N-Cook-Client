@@ -1,8 +1,8 @@
-import { Vector4 } from '../math/Vector4.js';
-import { Vector3 } from '../math/Vector3.js';
-import { Vector2 } from '../math/Vector2.js';
-import { Color } from '../math/Color.js';
-import { StaticDrawUsage } from '../constants.js';
+import {Vector4} from '../math/Vector4.js';
+import {Vector3} from '../math/Vector3.js';
+import {Vector2} from '../math/Vector2.js';
+import {Color} from '../math/Color.js';
+import {StaticDrawUsage} from '../constants.js';
 
 /**
  * @author mrdoob / http://mrdoob.com/
@@ -10,11 +10,11 @@ import { StaticDrawUsage } from '../constants.js';
 
 var _vector = new Vector3();
 
-function BufferAttribute( array, itemSize, normalized ) {
+function BufferAttribute(array, itemSize, normalized) {
 
-	if ( Array.isArray( array ) ) {
+	if (Array.isArray(array)) {
 
-		throw new TypeError( 'THREE.BufferAttribute: array should be a Typed Array.' );
+		throw new TypeError('THREE.BufferAttribute: array should be a Typed Array.');
 
 	}
 
@@ -26,29 +26,30 @@ function BufferAttribute( array, itemSize, normalized ) {
 	this.normalized = normalized === true;
 
 	this.usage = StaticDrawUsage;
-	this.updateRange = { offset: 0, count: - 1 };
+	this.updateRange = {offset: 0, count: -1};
 
 	this.version = 0;
 
 }
 
-Object.defineProperty( BufferAttribute.prototype, 'needsUpdate', {
+Object.defineProperty(BufferAttribute.prototype, 'needsUpdate', {
 
-	set: function ( value ) {
+	set: function (value) {
 
-		if ( value === true ) this.version ++;
+		if (value === true) this.version++;
 
 	}
 
-} );
+});
 
-Object.assign( BufferAttribute.prototype, {
+Object.assign(BufferAttribute.prototype, {
 
 	isBufferAttribute: true,
 
-	onUploadCallback: function () {},
+	onUploadCallback: function () {
+	},
 
-	setUsage: function ( value ) {
+	setUsage: function (value) {
 
 		this.usage = value;
 
@@ -56,10 +57,10 @@ Object.assign( BufferAttribute.prototype, {
 
 	},
 
-	copy: function ( source ) {
+	copy: function (source) {
 
 		this.name = source.name;
-		this.array = new source.array.constructor( source.array );
+		this.array = new source.array.constructor(source.array);
 		this.itemSize = source.itemSize;
 		this.count = source.count;
 		this.normalized = source.normalized;
@@ -70,14 +71,14 @@ Object.assign( BufferAttribute.prototype, {
 
 	},
 
-	copyAt: function ( index1, attribute, index2 ) {
+	copyAt: function (index1, attribute, index2) {
 
 		index1 *= this.itemSize;
 		index2 *= attribute.itemSize;
 
-		for ( var i = 0, l = this.itemSize; i < l; i ++ ) {
+		for (var i = 0, l = this.itemSize; i < l; i++) {
 
-			this.array[ index1 + i ] = attribute.array[ index2 + i ];
+			this.array[index1 + i] = attribute.array[index2 + i];
 
 		}
 
@@ -85,32 +86,32 @@ Object.assign( BufferAttribute.prototype, {
 
 	},
 
-	copyArray: function ( array ) {
+	copyArray: function (array) {
 
-		this.array.set( array );
+		this.array.set(array);
 
 		return this;
 
 	},
 
-	copyColorsArray: function ( colors ) {
+	copyColorsArray: function (colors) {
 
 		var array = this.array, offset = 0;
 
-		for ( var i = 0, l = colors.length; i < l; i ++ ) {
+		for (var i = 0, l = colors.length; i < l; i++) {
 
-			var color = colors[ i ];
+			var color = colors[i];
 
-			if ( color === undefined ) {
+			if (color === undefined) {
 
-				console.warn( 'THREE.BufferAttribute.copyColorsArray(): color is undefined', i );
+				console.warn('THREE.BufferAttribute.copyColorsArray(): color is undefined', i);
 				color = new Color();
 
 			}
 
-			array[ offset ++ ] = color.r;
-			array[ offset ++ ] = color.g;
-			array[ offset ++ ] = color.b;
+			array[offset++] = color.r;
+			array[offset++] = color.g;
+			array[offset++] = color.b;
 
 		}
 
@@ -118,23 +119,23 @@ Object.assign( BufferAttribute.prototype, {
 
 	},
 
-	copyVector2sArray: function ( vectors ) {
+	copyVector2sArray: function (vectors) {
 
 		var array = this.array, offset = 0;
 
-		for ( var i = 0, l = vectors.length; i < l; i ++ ) {
+		for (var i = 0, l = vectors.length; i < l; i++) {
 
-			var vector = vectors[ i ];
+			var vector = vectors[i];
 
-			if ( vector === undefined ) {
+			if (vector === undefined) {
 
-				console.warn( 'THREE.BufferAttribute.copyVector2sArray(): vector is undefined', i );
+				console.warn('THREE.BufferAttribute.copyVector2sArray(): vector is undefined', i);
 				vector = new Vector2();
 
 			}
 
-			array[ offset ++ ] = vector.x;
-			array[ offset ++ ] = vector.y;
+			array[offset++] = vector.x;
+			array[offset++] = vector.y;
 
 		}
 
@@ -142,24 +143,24 @@ Object.assign( BufferAttribute.prototype, {
 
 	},
 
-	copyVector3sArray: function ( vectors ) {
+	copyVector3sArray: function (vectors) {
 
 		var array = this.array, offset = 0;
 
-		for ( var i = 0, l = vectors.length; i < l; i ++ ) {
+		for (var i = 0, l = vectors.length; i < l; i++) {
 
-			var vector = vectors[ i ];
+			var vector = vectors[i];
 
-			if ( vector === undefined ) {
+			if (vector === undefined) {
 
-				console.warn( 'THREE.BufferAttribute.copyVector3sArray(): vector is undefined', i );
+				console.warn('THREE.BufferAttribute.copyVector3sArray(): vector is undefined', i);
 				vector = new Vector3();
 
 			}
 
-			array[ offset ++ ] = vector.x;
-			array[ offset ++ ] = vector.y;
-			array[ offset ++ ] = vector.z;
+			array[offset++] = vector.x;
+			array[offset++] = vector.y;
+			array[offset++] = vector.z;
 
 		}
 
@@ -167,25 +168,25 @@ Object.assign( BufferAttribute.prototype, {
 
 	},
 
-	copyVector4sArray: function ( vectors ) {
+	copyVector4sArray: function (vectors) {
 
 		var array = this.array, offset = 0;
 
-		for ( var i = 0, l = vectors.length; i < l; i ++ ) {
+		for (var i = 0, l = vectors.length; i < l; i++) {
 
-			var vector = vectors[ i ];
+			var vector = vectors[i];
 
-			if ( vector === undefined ) {
+			if (vector === undefined) {
 
-				console.warn( 'THREE.BufferAttribute.copyVector4sArray(): vector is undefined', i );
+				console.warn('THREE.BufferAttribute.copyVector4sArray(): vector is undefined', i);
 				vector = new Vector4();
 
 			}
 
-			array[ offset ++ ] = vector.x;
-			array[ offset ++ ] = vector.y;
-			array[ offset ++ ] = vector.z;
-			array[ offset ++ ] = vector.w;
+			array[offset++] = vector.x;
+			array[offset++] = vector.y;
+			array[offset++] = vector.z;
+			array[offset++] = vector.w;
 
 		}
 
@@ -193,35 +194,17 @@ Object.assign( BufferAttribute.prototype, {
 
 	},
 
-	applyMatrix3: function ( m ) {
+	applyMatrix3: function (m) {
 
-		for ( var i = 0, l = this.count; i < l; i ++ ) {
+		for (var i = 0, l = this.count; i < l; i++) {
 
-			_vector.x = this.getX( i );
-			_vector.y = this.getY( i );
-			_vector.z = this.getZ( i );
+			_vector.x = this.getX(i);
+			_vector.y = this.getY(i);
+			_vector.z = this.getZ(i);
 
-			_vector.applyMatrix3( m );
+			_vector.applyMatrix3(m);
 
-			this.setXYZ( i, _vector.x, _vector.y, _vector.z );
-
-		}
-
-		return this;
-
-	},
-
-	applyMatrix4: function ( m ) {
-
-		for ( var i = 0, l = this.count; i < l; i ++ ) {
-
-			_vector.x = this.getX( i );
-			_vector.y = this.getY( i );
-			_vector.z = this.getZ( i );
-
-			_vector.applyMatrix4( m );
-
-			this.setXYZ( i, _vector.x, _vector.y, _vector.z );
+			this.setXYZ(i, _vector.x, _vector.y, _vector.z);
 
 		}
 
@@ -229,35 +212,17 @@ Object.assign( BufferAttribute.prototype, {
 
 	},
 
-	applyNormalMatrix: function ( m ) {
+	applyMatrix4: function (m) {
 
-		for ( var i = 0, l = this.count; i < l; i ++ ) {
+		for (var i = 0, l = this.count; i < l; i++) {
 
-			_vector.x = this.getX( i );
-			_vector.y = this.getY( i );
-			_vector.z = this.getZ( i );
+			_vector.x = this.getX(i);
+			_vector.y = this.getY(i);
+			_vector.z = this.getZ(i);
 
-			_vector.applyNormalMatrix( m );
+			_vector.applyMatrix4(m);
 
-			this.setXYZ( i, _vector.x, _vector.y, _vector.z );
-
-		}
-
-		return this;
-
-	},
-
-	transformDirection: function ( m ) {
-
-		for ( var i = 0, l = this.count; i < l; i ++ ) {
-
-			_vector.x = this.getX( i );
-			_vector.y = this.getY( i );
-			_vector.z = this.getZ( i );
-
-			_vector.transformDirection( m );
-
-			this.setXYZ( i, _vector.x, _vector.y, _vector.z );
+			this.setXYZ(i, _vector.x, _vector.y, _vector.z);
 
 		}
 
@@ -265,109 +230,145 @@ Object.assign( BufferAttribute.prototype, {
 
 	},
 
-	set: function ( value, offset ) {
+	applyNormalMatrix: function (m) {
 
-		if ( offset === undefined ) offset = 0;
+		for (var i = 0, l = this.count; i < l; i++) {
 
-		this.array.set( value, offset );
+			_vector.x = this.getX(i);
+			_vector.y = this.getY(i);
+			_vector.z = this.getZ(i);
 
-		return this;
+			_vector.applyNormalMatrix(m);
 
-	},
+			this.setXYZ(i, _vector.x, _vector.y, _vector.z);
 
-	getX: function ( index ) {
-
-		return this.array[ index * this.itemSize ];
-
-	},
-
-	setX: function ( index, x ) {
-
-		this.array[ index * this.itemSize ] = x;
+		}
 
 		return this;
 
 	},
 
-	getY: function ( index ) {
+	transformDirection: function (m) {
 
-		return this.array[ index * this.itemSize + 1 ];
+		for (var i = 0, l = this.count; i < l; i++) {
 
-	},
+			_vector.x = this.getX(i);
+			_vector.y = this.getY(i);
+			_vector.z = this.getZ(i);
 
-	setY: function ( index, y ) {
+			_vector.transformDirection(m);
 
-		this.array[ index * this.itemSize + 1 ] = y;
+			this.setXYZ(i, _vector.x, _vector.y, _vector.z);
 
-		return this;
-
-	},
-
-	getZ: function ( index ) {
-
-		return this.array[ index * this.itemSize + 2 ];
-
-	},
-
-	setZ: function ( index, z ) {
-
-		this.array[ index * this.itemSize + 2 ] = z;
+		}
 
 		return this;
 
 	},
 
-	getW: function ( index ) {
+	set: function (value, offset) {
 
-		return this.array[ index * this.itemSize + 3 ];
+		if (offset === undefined) offset = 0;
 
-	},
-
-	setW: function ( index, w ) {
-
-		this.array[ index * this.itemSize + 3 ] = w;
+		this.array.set(value, offset);
 
 		return this;
 
 	},
 
-	setXY: function ( index, x, y ) {
+	getX: function (index) {
+
+		return this.array[index * this.itemSize];
+
+	},
+
+	setX: function (index, x) {
+
+		this.array[index * this.itemSize] = x;
+
+		return this;
+
+	},
+
+	getY: function (index) {
+
+		return this.array[index * this.itemSize + 1];
+
+	},
+
+	setY: function (index, y) {
+
+		this.array[index * this.itemSize + 1] = y;
+
+		return this;
+
+	},
+
+	getZ: function (index) {
+
+		return this.array[index * this.itemSize + 2];
+
+	},
+
+	setZ: function (index, z) {
+
+		this.array[index * this.itemSize + 2] = z;
+
+		return this;
+
+	},
+
+	getW: function (index) {
+
+		return this.array[index * this.itemSize + 3];
+
+	},
+
+	setW: function (index, w) {
+
+		this.array[index * this.itemSize + 3] = w;
+
+		return this;
+
+	},
+
+	setXY: function (index, x, y) {
 
 		index *= this.itemSize;
 
-		this.array[ index + 0 ] = x;
-		this.array[ index + 1 ] = y;
+		this.array[index + 0] = x;
+		this.array[index + 1] = y;
 
 		return this;
 
 	},
 
-	setXYZ: function ( index, x, y, z ) {
+	setXYZ: function (index, x, y, z) {
 
 		index *= this.itemSize;
 
-		this.array[ index + 0 ] = x;
-		this.array[ index + 1 ] = y;
-		this.array[ index + 2 ] = z;
+		this.array[index + 0] = x;
+		this.array[index + 1] = y;
+		this.array[index + 2] = z;
 
 		return this;
 
 	},
 
-	setXYZW: function ( index, x, y, z, w ) {
+	setXYZW: function (index, x, y, z, w) {
 
 		index *= this.itemSize;
 
-		this.array[ index + 0 ] = x;
-		this.array[ index + 1 ] = y;
-		this.array[ index + 2 ] = z;
-		this.array[ index + 3 ] = w;
+		this.array[index + 0] = x;
+		this.array[index + 1] = y;
+		this.array[index + 2] = z;
+		this.array[index + 3] = w;
 
 		return this;
 
 	},
 
-	onUpload: function ( callback ) {
+	onUpload: function (callback) {
 
 		this.onUploadCallback = callback;
 
@@ -377,7 +378,7 @@ Object.assign( BufferAttribute.prototype, {
 
 	clone: function () {
 
-		return new this.constructor( this.array, this.itemSize ).copy( this );
+		return new this.constructor(this.array, this.itemSize).copy(this);
 
 	},
 
@@ -386,103 +387,103 @@ Object.assign( BufferAttribute.prototype, {
 		return {
 			itemSize: this.itemSize,
 			type: this.array.constructor.name,
-			array: Array.prototype.slice.call( this.array ),
+			array: Array.prototype.slice.call(this.array),
 			normalized: this.normalized
 		};
 
 	}
 
-} );
+});
 
 //
 
-function Int8BufferAttribute( array, itemSize, normalized ) {
+function Int8BufferAttribute(array, itemSize, normalized) {
 
-	BufferAttribute.call( this, new Int8Array( array ), itemSize, normalized );
+	BufferAttribute.call(this, new Int8Array(array), itemSize, normalized);
 
 }
 
-Int8BufferAttribute.prototype = Object.create( BufferAttribute.prototype );
+Int8BufferAttribute.prototype = Object.create(BufferAttribute.prototype);
 Int8BufferAttribute.prototype.constructor = Int8BufferAttribute;
 
 
-function Uint8BufferAttribute( array, itemSize, normalized ) {
+function Uint8BufferAttribute(array, itemSize, normalized) {
 
-	BufferAttribute.call( this, new Uint8Array( array ), itemSize, normalized );
+	BufferAttribute.call(this, new Uint8Array(array), itemSize, normalized);
 
 }
 
-Uint8BufferAttribute.prototype = Object.create( BufferAttribute.prototype );
+Uint8BufferAttribute.prototype = Object.create(BufferAttribute.prototype);
 Uint8BufferAttribute.prototype.constructor = Uint8BufferAttribute;
 
 
-function Uint8ClampedBufferAttribute( array, itemSize, normalized ) {
+function Uint8ClampedBufferAttribute(array, itemSize, normalized) {
 
-	BufferAttribute.call( this, new Uint8ClampedArray( array ), itemSize, normalized );
+	BufferAttribute.call(this, new Uint8ClampedArray(array), itemSize, normalized);
 
 }
 
-Uint8ClampedBufferAttribute.prototype = Object.create( BufferAttribute.prototype );
+Uint8ClampedBufferAttribute.prototype = Object.create(BufferAttribute.prototype);
 Uint8ClampedBufferAttribute.prototype.constructor = Uint8ClampedBufferAttribute;
 
 
-function Int16BufferAttribute( array, itemSize, normalized ) {
+function Int16BufferAttribute(array, itemSize, normalized) {
 
-	BufferAttribute.call( this, new Int16Array( array ), itemSize, normalized );
+	BufferAttribute.call(this, new Int16Array(array), itemSize, normalized);
 
 }
 
-Int16BufferAttribute.prototype = Object.create( BufferAttribute.prototype );
+Int16BufferAttribute.prototype = Object.create(BufferAttribute.prototype);
 Int16BufferAttribute.prototype.constructor = Int16BufferAttribute;
 
 
-function Uint16BufferAttribute( array, itemSize, normalized ) {
+function Uint16BufferAttribute(array, itemSize, normalized) {
 
-	BufferAttribute.call( this, new Uint16Array( array ), itemSize, normalized );
+	BufferAttribute.call(this, new Uint16Array(array), itemSize, normalized);
 
 }
 
-Uint16BufferAttribute.prototype = Object.create( BufferAttribute.prototype );
+Uint16BufferAttribute.prototype = Object.create(BufferAttribute.prototype);
 Uint16BufferAttribute.prototype.constructor = Uint16BufferAttribute;
 
 
-function Int32BufferAttribute( array, itemSize, normalized ) {
+function Int32BufferAttribute(array, itemSize, normalized) {
 
-	BufferAttribute.call( this, new Int32Array( array ), itemSize, normalized );
+	BufferAttribute.call(this, new Int32Array(array), itemSize, normalized);
 
 }
 
-Int32BufferAttribute.prototype = Object.create( BufferAttribute.prototype );
+Int32BufferAttribute.prototype = Object.create(BufferAttribute.prototype);
 Int32BufferAttribute.prototype.constructor = Int32BufferAttribute;
 
 
-function Uint32BufferAttribute( array, itemSize, normalized ) {
+function Uint32BufferAttribute(array, itemSize, normalized) {
 
-	BufferAttribute.call( this, new Uint32Array( array ), itemSize, normalized );
+	BufferAttribute.call(this, new Uint32Array(array), itemSize, normalized);
 
 }
 
-Uint32BufferAttribute.prototype = Object.create( BufferAttribute.prototype );
+Uint32BufferAttribute.prototype = Object.create(BufferAttribute.prototype);
 Uint32BufferAttribute.prototype.constructor = Uint32BufferAttribute;
 
 
-function Float32BufferAttribute( array, itemSize, normalized ) {
+function Float32BufferAttribute(array, itemSize, normalized) {
 
-	BufferAttribute.call( this, new Float32Array( array ), itemSize, normalized );
+	BufferAttribute.call(this, new Float32Array(array), itemSize, normalized);
 
 }
 
-Float32BufferAttribute.prototype = Object.create( BufferAttribute.prototype );
+Float32BufferAttribute.prototype = Object.create(BufferAttribute.prototype);
 Float32BufferAttribute.prototype.constructor = Float32BufferAttribute;
 
 
-function Float64BufferAttribute( array, itemSize, normalized ) {
+function Float64BufferAttribute(array, itemSize, normalized) {
 
-	BufferAttribute.call( this, new Float64Array( array ), itemSize, normalized );
+	BufferAttribute.call(this, new Float64Array(array), itemSize, normalized);
 
 }
 
-Float64BufferAttribute.prototype = Object.create( BufferAttribute.prototype );
+Float64BufferAttribute.prototype = Object.create(BufferAttribute.prototype);
 Float64BufferAttribute.prototype.constructor = Float64BufferAttribute;
 
 //

@@ -4,17 +4,15 @@
  */
 /* global QUnit */
 
-import { runStdGeometryTests } from '../../qunit-utils';
-import {
-	RingBufferGeometry
-} from '../../../../src/geometries/RingGeometry';
+import {runStdGeometryTests} from '../../qunit-utils';
+import {RingBufferGeometry} from '../../../../src/geometries/RingGeometry';
 
-export default QUnit.module( 'Geometries', () => {
+export default QUnit.module('Geometries', () => {
 
-	QUnit.module( 'RingBufferGeometry', ( hooks ) => {
+	QUnit.module('RingBufferGeometry', (hooks) => {
 
 		var geometries = undefined;
-		hooks.beforeEach( function () {
+		hooks.beforeEach(function () {
 
 			const parameters = {
 				innerRadius: 10,
@@ -27,37 +25,37 @@ export default QUnit.module( 'Geometries', () => {
 
 			geometries = [
 				new RingBufferGeometry(),
-				new RingBufferGeometry( parameters.innerRadius ),
-				new RingBufferGeometry( parameters.innerRadius, parameters.outerRadius ),
-				new RingBufferGeometry( parameters.innerRadius, parameters.outerRadius, parameters.thetaSegments ),
-				new RingBufferGeometry( parameters.innerRadius, parameters.outerRadius, parameters.thetaSegments, parameters.phiSegments ),
-				new RingBufferGeometry( parameters.innerRadius, parameters.outerRadius, parameters.thetaSegments, parameters.phiSegments, parameters.thetaStart ),
-				new RingBufferGeometry( parameters.innerRadius, parameters.outerRadius, parameters.thetaSegments, parameters.phiSegments, parameters.thetaStart, parameters.thetaLength ),
+				new RingBufferGeometry(parameters.innerRadius),
+				new RingBufferGeometry(parameters.innerRadius, parameters.outerRadius),
+				new RingBufferGeometry(parameters.innerRadius, parameters.outerRadius, parameters.thetaSegments),
+				new RingBufferGeometry(parameters.innerRadius, parameters.outerRadius, parameters.thetaSegments, parameters.phiSegments),
+				new RingBufferGeometry(parameters.innerRadius, parameters.outerRadius, parameters.thetaSegments, parameters.phiSegments, parameters.thetaStart),
+				new RingBufferGeometry(parameters.innerRadius, parameters.outerRadius, parameters.thetaSegments, parameters.phiSegments, parameters.thetaStart, parameters.thetaLength),
 			];
 
-		} );
+		});
 
 		// INHERITANCE
-		QUnit.todo( "Extending", ( assert ) => {
+		QUnit.todo("Extending", (assert) => {
 
-			assert.ok( false, "everything's gonna be alright" );
+			assert.ok(false, "everything's gonna be alright");
 
-		} );
+		});
 
 		// INSTANCING
-		QUnit.todo( "Instancing", ( assert ) => {
+		QUnit.todo("Instancing", (assert) => {
 
-			assert.ok( false, "everything's gonna be alright" );
+			assert.ok(false, "everything's gonna be alright");
 
-		} );
+		});
 
 		// OTHERS
-		QUnit.test( 'Standard geometry tests', ( assert ) => {
+		QUnit.test('Standard geometry tests', (assert) => {
 
-			runStdGeometryTests( assert, geometries );
+			runStdGeometryTests(assert, geometries);
 
-		} );
+		});
 
-	} );
+	});
 
-} );
+});

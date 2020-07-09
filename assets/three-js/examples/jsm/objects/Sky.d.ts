@@ -1,16 +1,11 @@
-import {
-	BoxBufferGeometry,
-	Mesh,
-	ShaderMaterial
-} from '../../../src/Three';
+import {BoxBufferGeometry, Mesh, ShaderMaterial} from '../../../src/Three';
 
 export class Sky extends Mesh {
 
-	constructor();
-
+	static SkyShader: object;
 	geometry: BoxBufferGeometry;
 	material: ShaderMaterial;
 
-	static SkyShader: object;
+	constructor();
 
 }

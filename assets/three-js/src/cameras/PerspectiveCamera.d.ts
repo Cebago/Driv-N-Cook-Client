@@ -1,4 +1,4 @@
-import { Camera } from './Camera';
+import {Camera} from './Camera';
 
 /**
  * Camera with perspective projection.
@@ -7,40 +7,25 @@ import { Camera } from './Camera';
  */
 export class PerspectiveCamera extends Camera {
 
-	/**
-	 * @param fov Camera frustum vertical field of view. Default value is 50.
-	 * @param aspect Camera frustum aspect ratio. Default value is 1.
-	 * @param near Camera frustum near plane. Default value is 0.1.
-	 * @param far Camera frustum far plane. Default value is 2000.
-	 */
-	constructor( fov?: number, aspect?: number, near?: number, far?: number );
-
 	type: 'PerspectiveCamera';
-
 	readonly isPerspectiveCamera: true;
-
 	zoom: number;
-
 	/**
 	 * Camera frustum vertical field of view, from bottom to top of view, in degrees.
 	 */
 	fov: number;
-
 	/**
 	 * Camera frustum aspect ratio, window width divided by window height.
 	 */
 	aspect: number;
-
 	/**
 	 * Camera frustum near plane.
 	 */
 	near: number;
-
 	/**
 	 * Camera frustum far plane.
 	 */
 	far: number;
-
 	focus: number;
 	view: null | {
 		enabled: boolean;
@@ -54,10 +39,22 @@ export class PerspectiveCamera extends Camera {
 	filmGauge: number;
 	filmOffset: number;
 
-	setFocalLength( focalLength: number ): void;
+	/**
+	 * @param fov Camera frustum vertical field of view. Default value is 50.
+	 * @param aspect Camera frustum aspect ratio. Default value is 1.
+	 * @param near Camera frustum near plane. Default value is 0.1.
+	 * @param far Camera frustum far plane. Default value is 2000.
+	 */
+	constructor(fov?: number, aspect?: number, near?: number, far?: number);
+
+	setFocalLength(focalLength: number): void;
+
 	getFocalLength(): number;
+
 	getEffectiveFOV(): number;
+
 	getFilmWidth(): number;
+
 	getFilmHeight(): number;
 
 	/**
@@ -105,17 +102,19 @@ export class PerspectiveCamera extends Camera {
 		width: number,
 		height: number
 	): void;
+
 	clearViewOffset(): void;
 
 	/**
 	 * Updates the camera projection matrix. Must be called after change of parameters.
 	 */
 	updateProjectionMatrix(): void;
-	toJSON( meta?: any ): any;
+
+	toJSON(meta?: any): any;
 
 	/**
 	 * @deprecated Use {@link PerspectiveCamera#setFocalLength .setFocalLength()} and {@link PerspectiveCamera#filmGauge .filmGauge} instead.
 	 */
-	setLens( focalLength: number, frameHeight?: number ): void;
+	setLens(focalLength: number, frameHeight?: number): void;
 
 }

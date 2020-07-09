@@ -5,9 +5,7 @@
  * http://en.wikipedia.org/wiki/Luminosity
  */
 
-import {
-	Color
-} from "../../../build/three.module.js";
+import {Color} from "../../../build/three.module.js";
 
 var LuminosityHighPassShader = {
 
@@ -15,11 +13,11 @@ var LuminosityHighPassShader = {
 
 	uniforms: {
 
-		"tDiffuse": { value: null },
-		"luminosityThreshold": { value: 1.0 },
-		"smoothWidth": { value: 1.0 },
-		"defaultColor": { value: new Color( 0x000000 ) },
-		"defaultOpacity": { value: 0.0 }
+		"tDiffuse": {value: null},
+		"luminosityThreshold": {value: 1.0},
+		"smoothWidth": {value: 1.0},
+		"defaultColor": {value: new Color(0x000000)},
+		"defaultOpacity": {value: 0.0}
 
 	},
 
@@ -35,7 +33,7 @@ var LuminosityHighPassShader = {
 
 		"}"
 
-	].join( "\n" ),
+	].join("\n"),
 
 	fragmentShader: [
 
@@ -63,8 +61,8 @@ var LuminosityHighPassShader = {
 
 		"}"
 
-	].join( "\n" )
+	].join("\n")
 
 };
 
-export { LuminosityHighPassShader };
+export {LuminosityHighPassShader};

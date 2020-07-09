@@ -1,5 +1,5 @@
-import { KeyframeTrack } from './../KeyframeTrack';
-import { InterpolationModes } from '../../constants';
+import {KeyframeTrack} from './../KeyframeTrack';
+import {InterpolationModes} from '../../constants';
 
 export class StringKeyframeTrack extends KeyframeTrack {
 

@@ -1,15 +1,12 @@
-import { Camera, EventDispatcher, Vector3 } from '../../../src/Three';
+import {Camera, EventDispatcher, Vector3} from '../../../src/Three';
 
 export class TrackballControls extends EventDispatcher {
 
-	constructor( object: Camera, domElement?: HTMLElement );
-
 	object: Camera;
 	domElement: HTMLElement;
-
 	// API
 	enabled: boolean;
-	screen: {left: number; top: number; width: number; height: number};
+	screen: { left: number; top: number; width: number; height: number };
 	rotateSpeed: number;
 	zoomSpeed: number;
 	panSpeed: number;
@@ -22,11 +19,12 @@ export class TrackballControls extends EventDispatcher {
 	minDistance: number;
 	maxDistance: number;
 	keys: number[];
-
 	target: Vector3;
 	position0: Vector3;
 	target0: Vector3;
 	up0: Vector3;
+
+	constructor(object: Camera, domElement?: HTMLElement);
 
 	update(): void;
 

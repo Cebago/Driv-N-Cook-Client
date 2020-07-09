@@ -2,23 +2,23 @@
  * @author mrdoob / http://mrdoob.com/
  */
 
-import { PerspectiveCamera } from './PerspectiveCamera.js';
+import {PerspectiveCamera} from './PerspectiveCamera.js';
 
-function ArrayCamera( array ) {
+function ArrayCamera(array) {
 
-	PerspectiveCamera.call( this );
+	PerspectiveCamera.call(this);
 
 	this.cameras = array || [];
 
 }
 
-ArrayCamera.prototype = Object.assign( Object.create( PerspectiveCamera.prototype ), {
+ArrayCamera.prototype = Object.assign(Object.create(PerspectiveCamera.prototype), {
 
 	constructor: ArrayCamera,
 
 	isArrayCamera: true
 
-} );
+});
 
 
-export { ArrayCamera };
+export {ArrayCamera};

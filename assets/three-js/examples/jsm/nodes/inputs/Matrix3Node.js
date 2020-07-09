@@ -2,27 +2,27 @@
  * @author sunag / http://www.sunag.com.br/
  */
 
-import { Matrix3 } from '../../../../build/three.module.js';
+import {Matrix3} from '../../../../build/three.module.js';
 
-import { InputNode } from '../core/InputNode.js';
+import {InputNode} from '../core/InputNode.js';
 
-function Matrix3Node( matrix ) {
+function Matrix3Node(matrix) {
 
-	InputNode.call( this, 'm3' );
+	InputNode.call(this, 'm3');
 
 	this.value = matrix || new Matrix3();
 
 }
 
-Matrix3Node.prototype = Object.create( InputNode.prototype );
+Matrix3Node.prototype = Object.create(InputNode.prototype);
 Matrix3Node.prototype.constructor = Matrix3Node;
 Matrix3Node.prototype.nodeType = "Matrix3";
 
-Object.defineProperties( Matrix3Node.prototype, {
+Object.defineProperties(Matrix3Node.prototype, {
 
 	elements: {
 
-		set: function ( val ) {
+		set: function (val) {
 
 			this.value.elements = val;
 
@@ -36,32 +36,32 @@ Object.defineProperties( Matrix3Node.prototype, {
 
 	}
 
-} );
+});
 
-Matrix3Node.prototype.generateReadonly = function ( builder, output, uuid, type/*, ns, needsUpdate */ ) {
+Matrix3Node.prototype.generateReadonly = function (builder, output, uuid, type/*, ns, needsUpdate */) {
 
-	return builder.format( "mat3( " + this.value.elements.join( ", " ) + " )", type, output );
+	return builder.format("mat3( " + this.value.elements.join(", ") + " )", type, output);
 
 };
 
 
-Matrix3Node.prototype.copy = function ( source ) {
+Matrix3Node.prototype.copy = function (source) {
 
-	InputNode.prototype.copy.call( this, source );
+	InputNode.prototype.copy.call(this, source);
 
-	this.value.fromArray( source.elements );
+	this.value.fromArray(source.elements);
 
 	return this;
 
 };
 
-Matrix3Node.prototype.toJSON = function ( meta ) {
+Matrix3Node.prototype.toJSON = function (meta) {
 
-	var data = this.getJSONNode( meta );
+	var data = this.getJSONNode(meta);
 
-	if ( ! data ) {
+	if (!data) {
 
-		data = this.createJSONNode( meta );
+		data = this.createJSONNode(meta);
 
 		data.elements = this.value.elements.concat();
 
@@ -71,4 +71,4 @@ Matrix3Node.prototype.toJSON = function ( meta ) {
 
 };
 
-export { Matrix3Node };
+export {Matrix3Node};

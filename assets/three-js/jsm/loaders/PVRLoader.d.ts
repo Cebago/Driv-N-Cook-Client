@@ -1,8 +1,4 @@
-import {
-	LoadingManager,
-	CompressedTextureLoader,
-	CompressedPixelFormat
-} from '../../../src/Three';
+import {CompressedPixelFormat, CompressedTextureLoader, LoadingManager} from '../../../src/Three';
 
 export interface PVR {
 	mipmaps: object[];
@@ -15,8 +11,8 @@ export interface PVR {
 
 export class PVRLoader extends CompressedTextureLoader {
 
-	constructor( manager?: LoadingManager );
+	constructor(manager?: LoadingManager);
 
-	parse( buffer: ArrayBuffer, loadMipmaps: boolean ): PVR;
+	parse(buffer: ArrayBuffer, loadMipmaps: boolean): PVR;
 
 }

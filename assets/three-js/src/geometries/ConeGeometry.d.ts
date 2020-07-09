@@ -1,5 +1,4 @@
-import { CylinderGeometry } from './CylinderGeometry';
-import { CylinderBufferGeometry } from './CylinderGeometry';
+import {CylinderBufferGeometry, CylinderGeometry} from './CylinderGeometry';
 
 export class ConeBufferGeometry extends CylinderBufferGeometry {
 

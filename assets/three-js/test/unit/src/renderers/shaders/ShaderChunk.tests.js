@@ -3,22 +3,20 @@
  */
 /* global QUnit */
 
-import { ShaderChunk } from '../../../../../src/renderers/shaders/ShaderChunk';
+export default QUnit.module('Renderers', () => {
 
-export default QUnit.module( 'Renderers', () => {
+	QUnit.module('Shaders', () => {
 
-	QUnit.module( 'Shaders', () => {
+		QUnit.module('ShaderChunk', () => {
 
-		QUnit.module( 'ShaderChunk', () => {
+			QUnit.todo('write me !', (assert) => {
 
-			QUnit.todo( 'write me !', ( assert ) => {
+				assert.ok(false, "everything's gonna be alright");
 
-				assert.ok( false, "everything's gonna be alright" );
+			});
 
-			} );
+		});
 
-		} );
+	});
 
-	} );
-
-} );
+});

@@ -2,27 +2,27 @@
  * @author sunag / http://www.sunag.com.br/
  */
 
-import { Matrix4 } from '../../../../build/three.module.js';
+import {Matrix4} from '../../../../build/three.module.js';
 
-import { InputNode } from '../core/InputNode.js';
+import {InputNode} from '../core/InputNode.js';
 
-function Matrix4Node( matrix ) {
+function Matrix4Node(matrix) {
 
-	InputNode.call( this, 'm4' );
+	InputNode.call(this, 'm4');
 
 	this.value = matrix || new Matrix4();
 
 }
 
-Matrix4Node.prototype = Object.create( InputNode.prototype );
+Matrix4Node.prototype = Object.create(InputNode.prototype);
 Matrix4Node.prototype.constructor = Matrix4Node;
 Matrix4Node.prototype.nodeType = "Matrix4";
 
-Object.defineProperties( Matrix4Node.prototype, {
+Object.defineProperties(Matrix4Node.prototype, {
 
 	elements: {
 
-		set: function ( val ) {
+		set: function (val) {
 
 			this.value.elements = val;
 
@@ -36,31 +36,31 @@ Object.defineProperties( Matrix4Node.prototype, {
 
 	}
 
-} );
+});
 
-Matrix4Node.prototype.generateReadonly = function ( builder, output, uuid, type /*, ns, needsUpdate */ ) {
+Matrix4Node.prototype.generateReadonly = function (builder, output, uuid, type /*, ns, needsUpdate */) {
 
-	return builder.format( "mat4( " + this.value.elements.join( ", " ) + " )", type, output );
+	return builder.format("mat4( " + this.value.elements.join(", ") + " )", type, output);
 
 };
 
-Matrix4Node.prototype.copy = function ( source ) {
+Matrix4Node.prototype.copy = function (source) {
 
-	InputNode.prototype.copy.call( this, source );
+	InputNode.prototype.copy.call(this, source);
 
-	this.scope.value.fromArray( source.elements );
+	this.scope.value.fromArray(source.elements);
 
 	return this;
 
 };
 
-Matrix4Node.prototype.toJSON = function ( meta ) {
+Matrix4Node.prototype.toJSON = function (meta) {
 
-	var data = this.getJSONNode( meta );
+	var data = this.getJSONNode(meta);
 
-	if ( ! data ) {
+	if (!data) {
 
-		data = this.createJSONNode( meta );
+		data = this.createJSONNode(meta);
 
 		data.elements = this.value.elements.concat();
 
@@ -70,4 +70,4 @@ Matrix4Node.prototype.toJSON = function ( meta ) {
 
 };
 
-export { Matrix4Node };
+export {Matrix4Node};

@@ -2,7 +2,7 @@
  * @author sunag / http://www.sunag.com.br/
  */
 
-function NodeUniform( params ) {
+function NodeUniform(params) {
 
 	params = params || {};
 
@@ -13,7 +13,7 @@ function NodeUniform( params ) {
 
 }
 
-Object.defineProperties( NodeUniform.prototype, {
+Object.defineProperties(NodeUniform.prototype, {
 
 	value: {
 
@@ -23,7 +23,7 @@ Object.defineProperties( NodeUniform.prototype, {
 
 		},
 
-		set: function ( val ) {
+		set: function (val) {
 
 			this.node.value = val;
 
@@ -31,6 +31,6 @@ Object.defineProperties( NodeUniform.prototype, {
 
 	}
 
-} );
+});
 
-export { NodeUniform };
+export {NodeUniform};

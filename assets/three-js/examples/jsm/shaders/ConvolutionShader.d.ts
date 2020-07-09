@@ -1,6 +1,4 @@
-import {
-	Uniform
-} from '../../../src/Three';
+import {Uniform} from '../../../src/Three';
 
 export const ConvolutionShader: {
 	defines: {
@@ -15,5 +13,5 @@ export const ConvolutionShader: {
 	vertexShader: string;
 	fragmentShader: string;
 
-	buildKernel( sigma: number ): number[];
+	buildKernel(sigma: number): number[];
 };

@@ -1,11 +1,5 @@
-import { Texture } from './Texture';
-import {
-	Mapping,
-	Wrapping,
-	TextureFilter,
-	PixelFormat,
-	TextureDataType,
-} from '../constants';
+import {Texture} from './Texture';
+import {Mapping, PixelFormat, TextureDataType, TextureFilter, Wrapping,} from '../constants';
 
 export class CanvasTexture extends Texture {
 

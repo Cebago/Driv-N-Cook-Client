@@ -2,12 +2,12 @@
  * @author sunag / http://www.sunag.com.br/
  */
 
-import { TempNode } from '../core/TempNode.js';
-import { NodeLib } from '../core/NodeLib.js';
+import {TempNode} from '../core/TempNode.js';
+import {NodeLib} from '../core/NodeLib.js';
 
-function NormalNode( scope ) {
+function NormalNode(scope) {
 
-	TempNode.call( this, 'v3' );
+	TempNode.call(this, 'v3');
 
 	this.scope = scope || NormalNode.VIEW;
 
@@ -17,7 +17,7 @@ NormalNode.LOCAL = 'local';
 NormalNode.WORLD = 'world';
 NormalNode.VIEW = 'view';
 
-NormalNode.prototype = Object.create( TempNode.prototype );
+NormalNode.prototype = Object.create(TempNode.prototype);
 NormalNode.prototype.constructor = NormalNode;
 NormalNode.prototype.nodeType = "Normal";
 
@@ -29,36 +29,36 @@ NormalNode.prototype.getShared = function () {
 
 };
 
-NormalNode.prototype.build = function ( builder, output, uuid, ns ) {
+NormalNode.prototype.build = function (builder, output, uuid, ns) {
 
-	var contextNormal = builder.context[ this.scope + 'Normal' ];
+	var contextNormal = builder.context[this.scope + 'Normal'];
 
-	if ( contextNormal ) {
+	if (contextNormal) {
 
-		return contextNormal.build( builder, output, uuid, ns );
+		return contextNormal.build(builder, output, uuid, ns);
 
 	}
 
-	return TempNode.prototype.build.call( this, builder, output, uuid );
+	return TempNode.prototype.build.call(this, builder, output, uuid);
 
 };
 
-NormalNode.prototype.generate = function ( builder, output ) {
+NormalNode.prototype.generate = function (builder, output) {
 
 	var result;
 
-	switch ( this.scope ) {
+	switch (this.scope) {
 
 		case NormalNode.VIEW:
 
-			if ( builder.isShader( 'vertex' ) ) result = 'transformedNormal';
+			if (builder.isShader('vertex')) result = 'transformedNormal';
 			else result = 'geometryNormal';
 
 			break;
 
 		case NormalNode.LOCAL:
 
-			if ( builder.isShader( 'vertex' ) ) {
+			if (builder.isShader('vertex')) {
 
 				result = 'objectNormal';
 
@@ -74,7 +74,7 @@ NormalNode.prototype.generate = function ( builder, output ) {
 
 		case NormalNode.WORLD:
 
-			if ( builder.isShader( 'vertex' ) ) {
+			if (builder.isShader('vertex')) {
 
 				result = 'inverseTransformDirection( transformedNormal, viewMatrix ).xyz';
 
@@ -90,13 +90,13 @@ NormalNode.prototype.generate = function ( builder, output ) {
 
 	}
 
-	return builder.format( result, this.getType( builder ), output );
+	return builder.format(result, this.getType(builder), output);
 
 };
 
-NormalNode.prototype.copy = function ( source ) {
+NormalNode.prototype.copy = function (source) {
 
-	TempNode.prototype.copy.call( this, source );
+	TempNode.prototype.copy.call(this, source);
 
 	this.scope = source.scope;
 
@@ -104,13 +104,13 @@ NormalNode.prototype.copy = function ( source ) {
 
 };
 
-NormalNode.prototype.toJSON = function ( meta ) {
+NormalNode.prototype.toJSON = function (meta) {
 
-	var data = this.getJSONNode( meta );
+	var data = this.getJSONNode(meta);
 
-	if ( ! data ) {
+	if (!data) {
 
-		data = this.createJSONNode( meta );
+		data = this.createJSONNode(meta);
 
 		data.scope = this.scope;
 
@@ -120,22 +120,22 @@ NormalNode.prototype.toJSON = function ( meta ) {
 
 };
 
-NodeLib.addKeyword( 'viewNormal', function () {
+NodeLib.addKeyword('viewNormal', function () {
 
-	return new NormalNode( NormalNode.VIEW );
+	return new NormalNode(NormalNode.VIEW);
 
-} );
+});
 
-NodeLib.addKeyword( 'localNormal', function () {
+NodeLib.addKeyword('localNormal', function () {
 
-	return new NormalNode( NormalNode.NORMAL );
+	return new NormalNode(NormalNode.NORMAL);
 
-} );
+});
 
-NodeLib.addKeyword( 'worldNormal', function () {
+NodeLib.addKeyword('worldNormal', function () {
 
-	return new NormalNode( NormalNode.WORLD );
+	return new NormalNode(NormalNode.WORLD);
 
-} );
+});
 
-export { NormalNode };
+export {NormalNode};

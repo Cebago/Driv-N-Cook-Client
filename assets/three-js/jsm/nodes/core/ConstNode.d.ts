@@ -1,18 +1,7 @@
-import { TempNode } from './TempNode';
-import { NodeBuilder } from './NodeBuilder';
+import {TempNode} from './TempNode';
+import {NodeBuilder} from './NodeBuilder';
 
 export class ConstNode extends TempNode {
-
-	constructor( src: string, useDefine?: boolean );
-
-	src: string;
-	useDefine: boolean;
-	nodeType: string;
-
-	getType( builder: NodeBuilder ): string;
-	parse( src: string, useDefine?: boolean ): void;
-	build( builder: NodeBuilder, output: string ): string;
-	copy( source: ConstNode ): this;
 
 	static PI: string;
 	static PI2: string;
@@ -20,5 +9,18 @@ export class ConstNode extends TempNode {
 	static RECIPROCAL_PI2: string;
 	static LOG2: string;
 	static EPSILON: string;
+	src: string;
+	useDefine: boolean;
+	nodeType: string;
+
+	constructor(src: string, useDefine?: boolean);
+
+	getType(builder: NodeBuilder): string;
+
+	parse(src: string, useDefine?: boolean): void;
+
+	build(builder: NodeBuilder, output: string): string;
+
+	copy(source: ConstNode): this;
 
 }

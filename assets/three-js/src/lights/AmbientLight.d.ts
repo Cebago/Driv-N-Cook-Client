@@ -1,5 +1,5 @@
-import { Color } from './../math/Color';
-import { Light } from './Light';
+import {Color} from './../math/Color';
+import {Light} from './Light';
 
 /**
  * This light's color gets applied to all the objects in the scene globally.
@@ -8,13 +8,13 @@ import { Light } from './Light';
  */
 export class AmbientLight extends Light {
 
+	castShadow: boolean;
+	readonly isAmbientLight: true;
+
 	/**
 	 * This creates a Ambientlight with a color.
 	 * @param color Numeric value of the RGB component of the color or a Color instance.
 	 */
-	constructor( color?: Color | string | number, intensity?: number );
-
-	castShadow: boolean;
-	readonly isAmbientLight: true;
+	constructor(color?: Color | string | number, intensity?: number);
 
 }

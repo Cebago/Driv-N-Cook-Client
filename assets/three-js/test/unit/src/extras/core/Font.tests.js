@@ -3,36 +3,34 @@
  */
 /* global QUnit */
 
-import { Font } from '../../../../../src/extras/core/Font';
+export default QUnit.module('Extras', () => {
 
-export default QUnit.module( 'Extras', () => {
+	QUnit.module('Core', () => {
 
-	QUnit.module( 'Core', () => {
-
-		QUnit.module( 'Font', () => {
+		QUnit.module('Font', () => {
 
 			// INSTANCING
-			QUnit.todo( "Instancing", ( assert ) => {
+			QUnit.todo("Instancing", (assert) => {
 
-				assert.ok( false, "everything's gonna be alright" );
+				assert.ok(false, "everything's gonna be alright");
 
-			} );
+			});
 
 			// PUBLIC STUFF
-			QUnit.todo( "isFont", ( assert ) => {
+			QUnit.todo("isFont", (assert) => {
 
-				assert.ok( false, "everything's gonna be alright" );
+				assert.ok(false, "everything's gonna be alright");
 
-			} );
+			});
 
-			QUnit.todo( "generateShapes", ( assert ) => {
+			QUnit.todo("generateShapes", (assert) => {
 
-				assert.ok( false, "everything's gonna be alright" );
+				assert.ok(false, "everything's gonna be alright");
 
-			} );
+			});
 
-		} );
+		});
 
-	} );
+	});
 
-} );
+});

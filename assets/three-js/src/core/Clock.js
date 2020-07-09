@@ -2,9 +2,9 @@
  * @author alteredq / http://alteredqualia.com/
  */
 
-function Clock( autoStart ) {
+function Clock(autoStart) {
 
-	this.autoStart = ( autoStart !== undefined ) ? autoStart : true;
+	this.autoStart = (autoStart !== undefined) ? autoStart : true;
 
 	this.startTime = 0;
 	this.oldTime = 0;
@@ -14,11 +14,11 @@ function Clock( autoStart ) {
 
 }
 
-Object.assign( Clock.prototype, {
+Object.assign(Clock.prototype, {
 
 	start: function () {
 
-		this.startTime = ( typeof performance === 'undefined' ? Date : performance ).now(); // see #10732
+		this.startTime = (typeof performance === 'undefined' ? Date : performance).now(); // see #10732
 
 		this.oldTime = this.startTime;
 		this.elapsedTime = 0;
@@ -45,18 +45,18 @@ Object.assign( Clock.prototype, {
 
 		var diff = 0;
 
-		if ( this.autoStart && ! this.running ) {
+		if (this.autoStart && !this.running) {
 
 			this.start();
 			return 0;
 
 		}
 
-		if ( this.running ) {
+		if (this.running) {
 
-			var newTime = ( typeof performance === 'undefined' ? Date : performance ).now();
+			var newTime = (typeof performance === 'undefined' ? Date : performance).now();
 
-			diff = ( newTime - this.oldTime ) / 1000;
+			diff = (newTime - this.oldTime) / 1000;
 			this.oldTime = newTime;
 
 			this.elapsedTime += diff;
@@ -67,7 +67,7 @@ Object.assign( Clock.prototype, {
 
 	}
 
-} );
+});
 
 
-export { Clock };
+export {Clock};

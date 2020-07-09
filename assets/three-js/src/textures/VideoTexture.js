@@ -2,12 +2,12 @@
  * @author mrdoob / http://mrdoob.com/
  */
 
-import { RGBFormat, LinearFilter } from '../constants.js';
-import { Texture } from './Texture.js';
+import {LinearFilter, RGBFormat} from '../constants.js';
+import {Texture} from './Texture.js';
 
-function VideoTexture( video, mapping, wrapS, wrapT, magFilter, minFilter, format, type, anisotropy ) {
+function VideoTexture(video, mapping, wrapS, wrapT, magFilter, minFilter, format, type, anisotropy) {
 
-	Texture.call( this, video, mapping, wrapS, wrapT, magFilter, minFilter, format, type, anisotropy );
+	Texture.call(this, video, mapping, wrapS, wrapT, magFilter, minFilter, format, type, anisotropy);
 
 	this.format = format !== undefined ? format : RGBFormat;
 
@@ -18,7 +18,7 @@ function VideoTexture( video, mapping, wrapS, wrapT, magFilter, minFilter, forma
 
 }
 
-VideoTexture.prototype = Object.assign( Object.create( Texture.prototype ), {
+VideoTexture.prototype = Object.assign(Object.create(Texture.prototype), {
 
 	constructor: VideoTexture,
 
@@ -28,7 +28,7 @@ VideoTexture.prototype = Object.assign( Object.create( Texture.prototype ), {
 
 		var video = this.image;
 
-		if ( video.readyState >= video.HAVE_CURRENT_DATA ) {
+		if (video.readyState >= video.HAVE_CURRENT_DATA) {
 
 			this.needsUpdate = true;
 
@@ -36,7 +36,7 @@ VideoTexture.prototype = Object.assign( Object.create( Texture.prototype ), {
 
 	}
 
-} );
+});
 
 
-export { VideoTexture };
+export {VideoTexture};

@@ -7,10 +7,7 @@
  * https://github.com/McNopper/OpenGL/blob/master/Example28/shader/ssao.frag.glsl
  */
 
-import {
-	Matrix4,
-	Vector2
-} from "../../../build/three.module.js";
+import {Matrix4, Vector2} from "../../../build/three.module.js";
 
 var SSAOShader = {
 
@@ -21,19 +18,19 @@ var SSAOShader = {
 
 	uniforms: {
 
-		"tDiffuse": { value: null },
-		"tNormal": { value: null },
-		"tDepth": { value: null },
-		"tNoise": { value: null },
-		"kernel": { value: null },
-		"cameraNear": { value: null },
-		"cameraFar": { value: null },
-		"resolution": { value: new Vector2() },
-		"cameraProjectionMatrix": { value: new Matrix4() },
-		"cameraInverseProjectionMatrix": { value: new Matrix4() },
-		"kernelRadius": { value: 8 },
-		"minDistance": { value: 0.005 },
-		"maxDistance": { value: 0.05 },
+		"tDiffuse": {value: null},
+		"tNormal": {value: null},
+		"tDepth": {value: null},
+		"tNoise": {value: null},
+		"kernel": {value: null},
+		"cameraNear": {value: null},
+		"cameraFar": {value: null},
+		"resolution": {value: new Vector2()},
+		"cameraProjectionMatrix": {value: new Matrix4()},
+		"cameraInverseProjectionMatrix": {value: new Matrix4()},
+		"kernelRadius": {value: 8},
+		"minDistance": {value: 0.005},
+		"maxDistance": {value: 0.05},
 
 	},
 
@@ -49,7 +46,7 @@ var SSAOShader = {
 
 		"}"
 
-	].join( "\n" ),
+	].join("\n"),
 
 	fragmentShader: [
 
@@ -176,7 +173,7 @@ var SSAOShader = {
 
 		"}"
 
-	].join( "\n" )
+	].join("\n")
 
 };
 
@@ -188,9 +185,9 @@ var SSAODepthShader = {
 
 	uniforms: {
 
-		"tDepth": { value: null },
-		"cameraNear": { value: null },
-		"cameraFar": { value: null },
+		"tDepth": {value: null},
+		"cameraNear": {value: null},
+		"cameraFar": {value: null},
 
 	},
 
@@ -205,7 +202,7 @@ var SSAODepthShader = {
 
 		"}"
 
-	].join( "\n" ),
+	].join("\n"),
 
 	fragmentShader: [
 
@@ -241,7 +238,7 @@ var SSAODepthShader = {
 
 		"}"
 
-	].join( "\n" )
+	].join("\n")
 
 };
 
@@ -249,8 +246,8 @@ var SSAOBlurShader = {
 
 	uniforms: {
 
-		"tDiffuse": { value: null },
-		"resolution": { value: new Vector2() }
+		"tDiffuse": {value: null},
+		"resolution": {value: new Vector2()}
 
 	},
 
@@ -265,7 +262,7 @@ var SSAOBlurShader = {
 
 		"}"
 
-	].join( "\n" ),
+	].join("\n"),
 
 	fragmentShader: [
 
@@ -295,8 +292,8 @@ var SSAOBlurShader = {
 
 		"}"
 
-	].join( "\n" )
+	].join("\n")
 
 };
 
-export { SSAOShader, SSAODepthShader, SSAOBlurShader };
+export {SSAOShader, SSAODepthShader, SSAOBlurShader};

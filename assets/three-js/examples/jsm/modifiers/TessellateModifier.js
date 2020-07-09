@@ -5,17 +5,15 @@
  * @author alteredq / http://alteredqualia.com/
  */
 
-import {
-	Face3
-} from "../../../build/three.module.js";
+import {Face3} from "../../../build/three.module.js";
 
-var TessellateModifier = function ( maxEdgeLength ) {
+var TessellateModifier = function (maxEdgeLength) {
 
 	this.maxEdgeLength = maxEdgeLength;
 
 };
 
-TessellateModifier.prototype.modify = function ( geometry ) {
+TessellateModifier.prototype.modify = function (geometry) {
 
 	var edge;
 
@@ -23,41 +21,41 @@ TessellateModifier.prototype.modify = function ( geometry ) {
 	var faceVertexUvs = [];
 	var maxEdgeLengthSquared = this.maxEdgeLength * this.maxEdgeLength;
 
-	for ( var i = 0, il = geometry.faceVertexUvs.length; i < il; i ++ ) {
+	for (var i = 0, il = geometry.faceVertexUvs.length; i < il; i++) {
 
-		faceVertexUvs[ i ] = [];
+		faceVertexUvs[i] = [];
 
 	}
 
-	for ( var i = 0, il = geometry.faces.length; i < il; i ++ ) {
+	for (var i = 0, il = geometry.faces.length; i < il; i++) {
 
-		var face = geometry.faces[ i ];
+		var face = geometry.faces[i];
 
-		if ( face instanceof Face3 ) {
+		if (face instanceof Face3) {
 
 			var a = face.a;
 			var b = face.b;
 			var c = face.c;
 
-			var va = geometry.vertices[ a ];
-			var vb = geometry.vertices[ b ];
-			var vc = geometry.vertices[ c ];
+			var va = geometry.vertices[a];
+			var vb = geometry.vertices[b];
+			var vc = geometry.vertices[c];
 
-			var dab = va.distanceToSquared( vb );
-			var dbc = vb.distanceToSquared( vc );
-			var dac = va.distanceToSquared( vc );
+			var dab = va.distanceToSquared(vb);
+			var dbc = vb.distanceToSquared(vc);
+			var dac = va.distanceToSquared(vc);
 
-			if ( dab > maxEdgeLengthSquared || dbc > maxEdgeLengthSquared || dac > maxEdgeLengthSquared ) {
+			if (dab > maxEdgeLengthSquared || dbc > maxEdgeLengthSquared || dac > maxEdgeLengthSquared) {
 
 				var m = geometry.vertices.length;
 
 				var triA = face.clone();
 				var triB = face.clone();
 
-				if ( dab >= dbc && dab >= dac ) {
+				if (dab >= dbc && dab >= dac) {
 
 					var vm = va.clone();
-					vm.lerp( vb, 0.5 );
+					vm.lerp(vb, 0.5);
 
 					triA.a = a;
 					triA.b = m;
@@ -67,32 +65,32 @@ TessellateModifier.prototype.modify = function ( geometry ) {
 					triB.b = b;
 					triB.c = c;
 
-					if ( face.vertexNormals.length === 3 ) {
+					if (face.vertexNormals.length === 3) {
 
-						var vnm = face.vertexNormals[ 0 ].clone();
-						vnm.lerp( face.vertexNormals[ 1 ], 0.5 );
+						var vnm = face.vertexNormals[0].clone();
+						vnm.lerp(face.vertexNormals[1], 0.5);
 
-						triA.vertexNormals[ 1 ].copy( vnm );
-						triB.vertexNormals[ 0 ].copy( vnm );
+						triA.vertexNormals[1].copy(vnm);
+						triB.vertexNormals[0].copy(vnm);
 
 					}
 
-					if ( face.vertexColors.length === 3 ) {
+					if (face.vertexColors.length === 3) {
 
-						var vcm = face.vertexColors[ 0 ].clone();
-						vcm.lerp( face.vertexColors[ 1 ], 0.5 );
+						var vcm = face.vertexColors[0].clone();
+						vcm.lerp(face.vertexColors[1], 0.5);
 
-						triA.vertexColors[ 1 ].copy( vcm );
-						triB.vertexColors[ 0 ].copy( vcm );
+						triA.vertexColors[1].copy(vcm);
+						triB.vertexColors[0].copy(vcm);
 
 					}
 
 					edge = 0;
 
-				} else if ( dbc >= dab && dbc >= dac ) {
+				} else if (dbc >= dab && dbc >= dac) {
 
 					var vm = vb.clone();
-					vm.lerp( vc, 0.5 );
+					vm.lerp(vc, 0.5);
 
 					triA.a = a;
 					triA.b = b;
@@ -102,29 +100,29 @@ TessellateModifier.prototype.modify = function ( geometry ) {
 					triB.b = c;
 					triB.c = a;
 
-					if ( face.vertexNormals.length === 3 ) {
+					if (face.vertexNormals.length === 3) {
 
-						var vnm = face.vertexNormals[ 1 ].clone();
-						vnm.lerp( face.vertexNormals[ 2 ], 0.5 );
+						var vnm = face.vertexNormals[1].clone();
+						vnm.lerp(face.vertexNormals[2], 0.5);
 
-						triA.vertexNormals[ 2 ].copy( vnm );
+						triA.vertexNormals[2].copy(vnm);
 
-						triB.vertexNormals[ 0 ].copy( vnm );
-						triB.vertexNormals[ 1 ].copy( face.vertexNormals[ 2 ] );
-						triB.vertexNormals[ 2 ].copy( face.vertexNormals[ 0 ] );
+						triB.vertexNormals[0].copy(vnm);
+						triB.vertexNormals[1].copy(face.vertexNormals[2]);
+						triB.vertexNormals[2].copy(face.vertexNormals[0]);
 
 					}
 
-					if ( face.vertexColors.length === 3 ) {
+					if (face.vertexColors.length === 3) {
 
-						var vcm = face.vertexColors[ 1 ].clone();
-						vcm.lerp( face.vertexColors[ 2 ], 0.5 );
+						var vcm = face.vertexColors[1].clone();
+						vcm.lerp(face.vertexColors[2], 0.5);
 
-						triA.vertexColors[ 2 ].copy( vcm );
+						triA.vertexColors[2].copy(vcm);
 
-						triB.vertexColors[ 0 ].copy( vcm );
-						triB.vertexColors[ 1 ].copy( face.vertexColors[ 2 ] );
-						triB.vertexColors[ 2 ].copy( face.vertexColors[ 0 ] );
+						triB.vertexColors[0].copy(vcm);
+						triB.vertexColors[1].copy(face.vertexColors[2]);
+						triB.vertexColors[2].copy(face.vertexColors[0]);
 
 					}
 
@@ -133,7 +131,7 @@ TessellateModifier.prototype.modify = function ( geometry ) {
 				} else {
 
 					var vm = va.clone();
-					vm.lerp( vc, 0.5 );
+					vm.lerp(vc, 0.5);
 
 					triA.a = a;
 					triA.b = b;
@@ -143,23 +141,23 @@ TessellateModifier.prototype.modify = function ( geometry ) {
 					triB.b = b;
 					triB.c = c;
 
-					if ( face.vertexNormals.length === 3 ) {
+					if (face.vertexNormals.length === 3) {
 
-						var vnm = face.vertexNormals[ 0 ].clone();
-						vnm.lerp( face.vertexNormals[ 2 ], 0.5 );
+						var vnm = face.vertexNormals[0].clone();
+						vnm.lerp(face.vertexNormals[2], 0.5);
 
-						triA.vertexNormals[ 2 ].copy( vnm );
-						triB.vertexNormals[ 0 ].copy( vnm );
+						triA.vertexNormals[2].copy(vnm);
+						triB.vertexNormals[0].copy(vnm);
 
 					}
 
-					if ( face.vertexColors.length === 3 ) {
+					if (face.vertexColors.length === 3) {
 
-						var vcm = face.vertexColors[ 0 ].clone();
-						vcm.lerp( face.vertexColors[ 2 ], 0.5 );
+						var vcm = face.vertexColors[0].clone();
+						vcm.lerp(face.vertexColors[2], 0.5);
 
-						triA.vertexColors[ 2 ].copy( vcm );
-						triB.vertexColors[ 0 ].copy( vcm );
+						triA.vertexColors[2].copy(vcm);
+						triB.vertexColors[0].copy(vcm);
 
 					}
 
@@ -167,52 +165,52 @@ TessellateModifier.prototype.modify = function ( geometry ) {
 
 				}
 
-				faces.push( triA, triB );
-				geometry.vertices.push( vm );
+				faces.push(triA, triB);
+				geometry.vertices.push(vm);
 
-				for ( var j = 0, jl = geometry.faceVertexUvs.length; j < jl; j ++ ) {
+				for (var j = 0, jl = geometry.faceVertexUvs.length; j < jl; j++) {
 
-					if ( geometry.faceVertexUvs[ j ].length ) {
+					if (geometry.faceVertexUvs[j].length) {
 
-						var uvs = geometry.faceVertexUvs[ j ][ i ];
+						var uvs = geometry.faceVertexUvs[j][i];
 
-						var uvA = uvs[ 0 ];
-						var uvB = uvs[ 1 ];
-						var uvC = uvs[ 2 ];
+						var uvA = uvs[0];
+						var uvB = uvs[1];
+						var uvC = uvs[2];
 
 						// AB
 
-						if ( edge === 0 ) {
+						if (edge === 0) {
 
 							var uvM = uvA.clone();
-							uvM.lerp( uvB, 0.5 );
+							uvM.lerp(uvB, 0.5);
 
-							var uvsTriA = [ uvA.clone(), uvM.clone(), uvC.clone() ];
-							var uvsTriB = [ uvM.clone(), uvB.clone(), uvC.clone() ];
+							var uvsTriA = [uvA.clone(), uvM.clone(), uvC.clone()];
+							var uvsTriB = [uvM.clone(), uvB.clone(), uvC.clone()];
 
 							// BC
 
-						} else if ( edge === 1 ) {
+						} else if (edge === 1) {
 
 							var uvM = uvB.clone();
-							uvM.lerp( uvC, 0.5 );
+							uvM.lerp(uvC, 0.5);
 
-							var uvsTriA = [ uvA.clone(), uvB.clone(), uvM.clone() ];
-							var uvsTriB = [ uvM.clone(), uvC.clone(), uvA.clone() ];
+							var uvsTriA = [uvA.clone(), uvB.clone(), uvM.clone()];
+							var uvsTriB = [uvM.clone(), uvC.clone(), uvA.clone()];
 
 							// AC
 
 						} else {
 
 							var uvM = uvA.clone();
-							uvM.lerp( uvC, 0.5 );
+							uvM.lerp(uvC, 0.5);
 
-							var uvsTriA = [ uvA.clone(), uvB.clone(), uvM.clone() ];
-							var uvsTriB = [ uvM.clone(), uvB.clone(), uvC.clone() ];
+							var uvsTriA = [uvA.clone(), uvB.clone(), uvM.clone()];
+							var uvsTriB = [uvM.clone(), uvB.clone(), uvC.clone()];
 
 						}
 
-						faceVertexUvs[ j ].push( uvsTriA, uvsTriB );
+						faceVertexUvs[j].push(uvsTriA, uvsTriB);
 
 					}
 
@@ -220,11 +218,11 @@ TessellateModifier.prototype.modify = function ( geometry ) {
 
 			} else {
 
-				faces.push( face );
+				faces.push(face);
 
-				for ( var j = 0, jl = geometry.faceVertexUvs.length; j < jl; j ++ ) {
+				for (var j = 0, jl = geometry.faceVertexUvs.length; j < jl; j++) {
 
-					faceVertexUvs[ j ].push( geometry.faceVertexUvs[ j ][ i ] );
+					faceVertexUvs[j].push(geometry.faceVertexUvs[j][i]);
 
 				}
 
@@ -239,4 +237,4 @@ TessellateModifier.prototype.modify = function ( geometry ) {
 
 };
 
-export { TessellateModifier };
+export {TessellateModifier};

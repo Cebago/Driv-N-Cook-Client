@@ -19,17 +19,20 @@ export enum TOUCH {
 
 // GL STATE CONSTANTS
 export enum CullFace {}
+
 export const CullFaceNone: CullFace;
 export const CullFaceBack: CullFace;
 export const CullFaceFront: CullFace;
 export const CullFaceFrontBack: CullFace;
 
 export enum FrontFaceDirection {}
+
 export const FrontFaceDirectionCW: FrontFaceDirection;
 export const FrontFaceDirectionCCW: FrontFaceDirection;
 
 // Shadowing Type
 export enum ShadowMapType {}
+
 export const BasicShadowMap: ShadowMapType;
 export const PCFShadowMap: ShadowMapType;
 export const PCFSoftShadowMap: ShadowMapType;
@@ -39,17 +42,20 @@ export const VSMShadowMap: ShadowMapType;
 
 // side
 export enum Side {}
+
 export const FrontSide: Side;
 export const BackSide: Side;
 export const DoubleSide: Side;
 
 // shading
 export enum Shading {}
+
 export const FlatShading: Shading;
 export const SmoothShading: Shading;
 
 // blending modes
 export enum Blending {}
+
 export const NoBlending: Blending;
 export const NormalBlending: Blending;
 export const AdditiveBlending: Blending;
@@ -61,6 +67,7 @@ export const CustomBlending: Blending;
 // (numbers start from 100 not to clash with other
 // mappings to OpenGL constants defined in Texture.js)
 export enum BlendingEquation {}
+
 export const AddEquation: BlendingEquation;
 export const SubtractEquation: BlendingEquation;
 export const ReverseSubtractEquation: BlendingEquation;
@@ -69,6 +76,7 @@ export const MaxEquation: BlendingEquation;
 
 // custom blending destination factors
 export enum BlendingDstFactor {}
+
 export const ZeroFactor: BlendingDstFactor;
 export const OneFactor: BlendingDstFactor;
 export const SrcColorFactor: BlendingDstFactor;
@@ -82,10 +90,12 @@ export const OneMinusDstColorFactor: BlendingDstFactor;
 
 // custom blending src factors
 export enum BlendingSrcFactor {}
+
 export const SrcAlphaSaturateFactor: BlendingSrcFactor;
 
 // depth modes
 export enum DepthModes {}
+
 export const NeverDepth: DepthModes;
 export const AlwaysDepth: DepthModes;
 export const LessDepth: DepthModes;
@@ -98,12 +108,14 @@ export const NotEqualDepth: DepthModes;
 // TEXTURE CONSTANTS
 // Operations
 export enum Combine {}
+
 export const MultiplyOperation: Combine;
 export const MixOperation: Combine;
 export const AddOperation: Combine;
 
 // Tone Mapping modes
 export enum ToneMapping {}
+
 export const NoToneMapping: ToneMapping;
 export const LinearToneMapping: ToneMapping;
 export const ReinhardToneMapping: ToneMapping;
@@ -113,6 +125,7 @@ export const ACESFilmicToneMapping: ToneMapping;
 
 // Mapping modes
 export enum Mapping {}
+
 export const UVMapping: Mapping;
 export const CubeReflectionMapping: Mapping;
 export const CubeRefractionMapping: Mapping;
@@ -124,12 +137,14 @@ export const CubeUVRefractionMapping: Mapping;
 
 // Wrapping modes
 export enum Wrapping {}
+
 export const RepeatWrapping: Wrapping;
 export const ClampToEdgeWrapping: Wrapping;
 export const MirroredRepeatWrapping: Wrapping;
 
 // Filters
 export enum TextureFilter {}
+
 export const NearestFilter: TextureFilter;
 export const NearestMipmapNearestFilter: TextureFilter;
 export const NearestMipMapNearestFilter: TextureFilter;
@@ -143,6 +158,7 @@ export const LinearMipMapLinearFilter: TextureFilter;
 
 // Data types
 export enum TextureDataType {}
+
 export const UnsignedByteType: TextureDataType;
 export const ByteType: TextureDataType;
 export const ShortType: TextureDataType;
@@ -158,6 +174,7 @@ export const UnsignedInt248Type: TextureDataType;
 
 // Pixel formats
 export enum PixelFormat {}
+
 export const AlphaFormat: PixelFormat;
 export const RGBFormat: PixelFormat;
 export const RGBAFormat: PixelFormat;
@@ -239,6 +256,7 @@ export type PixelFormatGPU =
 // Compressed texture formats
 // DDS / ST3C Compressed texture formats
 export enum CompressedPixelFormat {}
+
 export const RGB_S3TC_DXT1_Format: CompressedPixelFormat;
 export const RGBA_S3TC_DXT1_Format: CompressedPixelFormat;
 export const RGBA_S3TC_DXT3_Format: CompressedPixelFormat;
@@ -290,35 +308,41 @@ export const RGBA_BPTC_Format: CompressedPixelFormat;
 
 // Loop styles for AnimationAction
 export enum AnimationActionLoopStyles {}
+
 export const LoopOnce: AnimationActionLoopStyles;
 export const LoopRepeat: AnimationActionLoopStyles;
 export const LoopPingPong: AnimationActionLoopStyles;
 
 // Interpolation
 export enum InterpolationModes {}
+
 export const InterpolateDiscrete: InterpolationModes;
 export const InterpolateLinear: InterpolationModes;
 export const InterpolateSmooth: InterpolationModes;
 
 // Interpolant ending modes
 export enum InterpolationEndingModes {}
+
 export const ZeroCurvatureEnding: InterpolationEndingModes;
 export const ZeroSlopeEnding: InterpolationEndingModes;
 export const WrapAroundEnding: InterpolationEndingModes;
 
 // Animation blending modes
 export enum AnimationBlendMode { }
+
 export const NormalAnimationBlendMode: AnimationBlendMode;
 export const AdditiveAnimationBlendMode: AnimationBlendMode;
 
 // Triangle Draw modes
 export enum TrianglesDrawModes {}
+
 export const TrianglesDrawMode: TrianglesDrawModes;
 export const TriangleStripDrawMode: TrianglesDrawModes;
 export const TriangleFanDrawMode: TrianglesDrawModes;
 
 // Texture Encodings
 export enum TextureEncoding {}
+
 export const LinearEncoding: TextureEncoding;
 export const sRGBEncoding: TextureEncoding;
 export const GammaEncoding: TextureEncoding;
@@ -330,16 +354,19 @@ export const RGBDEncoding: TextureEncoding;
 
 // Depth packing strategies
 export enum DepthPackingStrategies {}
+
 export const BasicDepthPacking: DepthPackingStrategies;
 export const RGBADepthPacking: DepthPackingStrategies;
 
 // Normal Map types
 export enum NormalMapTypes {}
+
 export const TangentSpaceNormalMap: NormalMapTypes;
 export const ObjectSpaceNormalMap: NormalMapTypes;
 
 // Stencil Op types
 export enum StencilOp {}
+
 export const ZeroStencilOp: StencilOp;
 export const KeepStencilOp: StencilOp;
 export const ReplaceStencilOp: StencilOp;
@@ -351,6 +378,7 @@ export const InvertStencilOp: StencilOp;
 
 // Stencil Func types
 export enum StencilFunc {}
+
 export const NeverStencilFunc: StencilFunc;
 export const LessStencilFunc: StencilFunc;
 export const EqualStencilFunc: StencilFunc;
@@ -362,6 +390,7 @@ export const AlwaysStencilFunc: StencilFunc;
 
 // usage types
 export enum Usage {}
+
 export const StaticDrawUsage: Usage;
 export const DynamicDrawUsage: Usage;
 export const StreamDrawUsage: Usage;

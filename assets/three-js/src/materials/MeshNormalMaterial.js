@@ -1,6 +1,6 @@
-import { TangentSpaceNormalMap } from '../constants.js';
-import { Material } from './Material.js';
-import { Vector2 } from '../math/Vector2.js';
+import {TangentSpaceNormalMap} from '../constants.js';
+import {Material} from './Material.js';
+import {Vector2} from '../math/Vector2.js';
 
 /**
  * @author mrdoob / http://mrdoob.com/
@@ -29,9 +29,9 @@ import { Vector2 } from '../math/Vector2.js';
  * }
  */
 
-function MeshNormalMaterial( parameters ) {
+function MeshNormalMaterial(parameters) {
 
-	Material.call( this );
+	Material.call(this);
 
 	this.type = 'MeshNormalMaterial';
 
@@ -40,7 +40,7 @@ function MeshNormalMaterial( parameters ) {
 
 	this.normalMap = null;
 	this.normalMapType = TangentSpaceNormalMap;
-	this.normalScale = new Vector2( 1, 1 );
+	this.normalScale = new Vector2(1, 1);
 
 	this.displacementMap = null;
 	this.displacementScale = 1;
@@ -55,25 +55,25 @@ function MeshNormalMaterial( parameters ) {
 	this.morphTargets = false;
 	this.morphNormals = false;
 
-	this.setValues( parameters );
+	this.setValues(parameters);
 
 }
 
-MeshNormalMaterial.prototype = Object.create( Material.prototype );
+MeshNormalMaterial.prototype = Object.create(Material.prototype);
 MeshNormalMaterial.prototype.constructor = MeshNormalMaterial;
 
 MeshNormalMaterial.prototype.isMeshNormalMaterial = true;
 
-MeshNormalMaterial.prototype.copy = function ( source ) {
+MeshNormalMaterial.prototype.copy = function (source) {
 
-	Material.prototype.copy.call( this, source );
+	Material.prototype.copy.call(this, source);
 
 	this.bumpMap = source.bumpMap;
 	this.bumpScale = source.bumpScale;
 
 	this.normalMap = source.normalMap;
 	this.normalMapType = source.normalMapType;
-	this.normalScale.copy( source.normalScale );
+	this.normalScale.copy(source.normalScale);
 
 	this.displacementMap = source.displacementMap;
 	this.displacementScale = source.displacementScale;
@@ -91,4 +91,4 @@ MeshNormalMaterial.prototype.copy = function ( source ) {
 };
 
 
-export { MeshNormalMaterial };
+export {MeshNormalMaterial};

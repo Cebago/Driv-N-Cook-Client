@@ -7,16 +7,14 @@
  * aspect: vec2 of (1/width, 1/height)
  */
 
-import {
-	Vector2
-} from "../../../build/three.module.js";
+import {Vector2} from "../../../build/three.module.js";
 
 var FreiChenShader = {
 
 	uniforms: {
 
-		"tDiffuse": { value: null },
-		"aspect": { value: new Vector2( 512, 512 ) }
+		"tDiffuse": {value: null},
+		"aspect": {value: new Vector2(512, 512)}
 	},
 
 	vertexShader: [
@@ -30,7 +28,7 @@ var FreiChenShader = {
 
 		"}"
 
-	].join( "\n" ),
+	].join("\n"),
 
 	fragmentShader: [
 
@@ -93,7 +91,7 @@ var FreiChenShader = {
 		"	gl_FragColor = vec4(vec3(sqrt(M/S)), 1.0);",
 		"}"
 
-	].join( "\n" )
+	].join("\n")
 };
 
-export { FreiChenShader };
+export {FreiChenShader};

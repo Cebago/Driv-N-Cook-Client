@@ -2,7 +2,8 @@
 
 require_once __DIR__ . "/Fidelity.php";
 
-class User implements JsonSerializable {
+class User implements JsonSerializable
+{
     private int $idUser;
     private string $firstname;
     private string $lastname;

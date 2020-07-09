@@ -12,19 +12,19 @@
 var HalftoneShader = {
 
 	uniforms: {
-		"tDiffuse": { value: null },
-		"shape": { value: 1 },
-		"radius": { value: 4 },
-		"rotateR": { value: Math.PI / 12 * 1 },
-		"rotateG": { value: Math.PI / 12 * 2 },
-		"rotateB": { value: Math.PI / 12 * 3 },
-		"scatter": { value: 0 },
-		"width": { value: 1 },
-		"height": { value: 1 },
-		"blending": { value: 1 },
-		"blendingMode": { value: 1 },
-		"greyscale": { value: false },
-		"disable": { value: false }
+		"tDiffuse": {value: null},
+		"shape": {value: 1},
+		"radius": {value: 4},
+		"rotateR": {value: Math.PI / 12 * 1},
+		"rotateG": {value: Math.PI / 12 * 2},
+		"rotateB": {value: Math.PI / 12 * 3},
+		"scatter": {value: 0},
+		"width": {value: 1},
+		"height": {value: 1},
+		"blending": {value: 1},
+		"blendingMode": {value: 1},
+		"greyscale": {value: false},
+		"disable": {value: false}
 	},
 
 	vertexShader: [
@@ -38,7 +38,7 @@ var HalftoneShader = {
 
 		"}"
 
-	].join( "\n" ),
+	].join("\n"),
 
 	fragmentShader: [
 
@@ -87,7 +87,7 @@ var HalftoneShader = {
 		"float rand( vec2 seed ){",
 
 		// get pseudo-random number
-	    "return fract( sin( dot( seed.xy, vec2( 12.9898, 78.233 ) ) ) * 43758.5453 );",
+		"return fract( sin( dot( seed.xy, vec2( 12.9898, 78.233 ) ) ) * 43758.5453 );",
 
 		"}",
 
@@ -311,8 +311,8 @@ var HalftoneShader = {
 
 		"}"
 
-	].join( "\n" )
+	].join("\n")
 
 };
 
-export { HalftoneShader };
+export {HalftoneShader};

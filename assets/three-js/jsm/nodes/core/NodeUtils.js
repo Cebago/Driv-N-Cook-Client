@@ -4,25 +4,25 @@
 
 var NodeUtils = {
 
-	elements: [ 'x', 'y', 'z', 'w' ],
+	elements: ['x', 'y', 'z', 'w'],
 
 	addShortcuts: function () {
 
-		function applyShortcut( proxy, property, subProperty ) {
+		function applyShortcut(proxy, property, subProperty) {
 
-			if ( subProperty ) {
+			if (subProperty) {
 
 				return {
 
 					get: function () {
 
-						return this[ proxy ][ property ][ subProperty ];
+						return this[proxy][property][subProperty];
 
 					},
 
-					set: function ( val ) {
+					set: function (val) {
 
-						this[ proxy ][ property ][ subProperty ] = val;
+						this[proxy][property][subProperty] = val;
 
 					}
 
@@ -34,13 +34,13 @@ var NodeUtils = {
 
 					get: function () {
 
-						return this[ proxy ][ property ];
+						return this[proxy][property];
 
 					},
 
-					set: function ( val ) {
+					set: function (val) {
 
-						this[ proxy ][ property ] = val;
+						this[proxy][property] = val;
 
 					}
 
@@ -50,21 +50,21 @@ var NodeUtils = {
 
 		}
 
-		return function addShortcuts( proto, proxy, list ) {
+		return function addShortcuts(proto, proxy, list) {
 
 			var shortcuts = {};
 
-			for ( var i = 0; i < list.length; ++ i ) {
+			for (var i = 0; i < list.length; ++i) {
 
-				var data = list[ i ].split( "." ),
-					property = data[ 0 ],
-					subProperty = data[ 1 ];
+				var data = list[i].split("."),
+					property = data[0],
+					subProperty = data[1];
 
-				shortcuts[ property ] = applyShortcut( proxy, property, subProperty );
+				shortcuts[property] = applyShortcut(proxy, property, subProperty);
 
 			}
 
-			Object.defineProperties( proto, shortcuts );
+			Object.defineProperties(proto, shortcuts);
 
 		};
 
@@ -72,4 +72,4 @@ var NodeUtils = {
 
 };
 
-export { NodeUtils };
+export {NodeUtils};

@@ -1,17 +1,19 @@
-import { Vector2 } from '../../../../src/Three';
+import {Vector2} from '../../../../src/Three';
 
-import { TempNode } from '../core/TempNode';
-import { NodeFrame } from '../core/NodeFrame';
-import { UVNode } from '../accessors/UVNode';
-import { Vector2Node } from '../inputs/Vector2Node';
-import { FloatNode } from '../inputs/FloatNode';
-import { FunctionNode } from '../core/FunctionNode';
-import { TextureNode } from '../inputs/TextureNode';
+import {TempNode} from '../core/TempNode';
+import {NodeFrame} from '../core/NodeFrame';
+import {UVNode} from '../accessors/UVNode';
+import {Vector2Node} from '../inputs/Vector2Node';
+import {FloatNode} from '../inputs/FloatNode';
+import {FunctionNode} from '../core/FunctionNode';
+import {TextureNode} from '../inputs/TextureNode';
 
 export class BlurNode extends TempNode {
 
-	constructor( value: TextureNode, uv?: UVNode, radius?: number, size?: Vector2 );
-
+	static Nodes: {
+		blurX: FunctionNode;
+		blurY: FunctionNode;
+	}
 	value: TextureNode;
 	uv: UVNode;
 	radius: Vector2Node;
@@ -22,12 +24,10 @@ export class BlurNode extends TempNode {
 	vertical: FloatNode;
 	nodeType: string;
 
-	updateFrame( frame: NodeFrame ): void;
-	copy( source: BlurNode ): this;
+	constructor(value: TextureNode, uv?: UVNode, radius?: number, size?: Vector2);
 
-	static Nodes: {
-		blurX: FunctionNode;
-		blurY: FunctionNode;
-	}
+	updateFrame(frame: NodeFrame): void;
+
+	copy(source: BlurNode): this;
 
 }

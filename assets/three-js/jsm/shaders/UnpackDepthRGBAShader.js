@@ -11,8 +11,8 @@ var UnpackDepthRGBAShader = {
 
 	uniforms: {
 
-		"tDiffuse": { value: null },
-		"opacity": { value: 1.0 }
+		"tDiffuse": {value: null},
+		"opacity": {value: 1.0}
 
 	},
 
@@ -27,7 +27,7 @@ var UnpackDepthRGBAShader = {
 
 		"}"
 
-	].join( "\n" ),
+	].join("\n"),
 
 	fragmentShader: [
 
@@ -46,8 +46,8 @@ var UnpackDepthRGBAShader = {
 
 		"}"
 
-	].join( "\n" )
+	].join("\n")
 
 };
 
-export { UnpackDepthRGBAShader };
+export {UnpackDepthRGBAShader};

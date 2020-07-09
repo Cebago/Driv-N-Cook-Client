@@ -3,39 +3,37 @@
  */
 /* global QUnit */
 
-import { HemisphereLightHelper } from '../../../../src/helpers/HemisphereLightHelper';
+export default QUnit.module('Helpers', () => {
 
-export default QUnit.module( 'Helpers', () => {
-
-	QUnit.module( 'HemisphereLightHelper', () => {
+	QUnit.module('HemisphereLightHelper', () => {
 
 		// INHERITANCE
-		QUnit.todo( "Extending", ( assert ) => {
+		QUnit.todo("Extending", (assert) => {
 
-			assert.ok( false, "everything's gonna be alright" );
+			assert.ok(false, "everything's gonna be alright");
 
-		} );
+		});
 
 		// INSTANCING
-		QUnit.todo( "Instancing", ( assert ) => {
+		QUnit.todo("Instancing", (assert) => {
 
-			assert.ok( false, "everything's gonna be alright" );
+			assert.ok(false, "everything's gonna be alright");
 
-		} );
+		});
 
 		// PUBLIC STUFF
-		QUnit.todo( "dispose", ( assert ) => {
+		QUnit.todo("dispose", (assert) => {
 
-			assert.ok( false, "everything's gonna be alright" );
+			assert.ok(false, "everything's gonna be alright");
 
-		} );
+		});
 
-		QUnit.todo( "update", ( assert ) => {
+		QUnit.todo("update", (assert) => {
 
-			assert.ok( false, "everything's gonna be alright" );
+			assert.ok(false, "everything's gonna be alright");
 
-		} );
+		});
 
-	} );
+	});
 
-} );
+});

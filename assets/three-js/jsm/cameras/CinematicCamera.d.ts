@@ -1,13 +1,6 @@
-import {
-	PerspectiveCamera,
-	ShaderMaterial,
-	Scene,
-	WebGLRenderer
-} from '../../../src/Three';
+import {PerspectiveCamera, Scene, ShaderMaterial, WebGLRenderer} from '../../../src/Three';
 
 export class CinematicCamera extends PerspectiveCamera {
-
-	constructor( fov: number, aspect: number, near: number, far: number );
 
 	postprocessing: {
 		enabled: boolean;
@@ -23,11 +16,18 @@ export class CinematicCamera extends PerspectiveCamera {
 	hyperFocal: number;
 	filmGauge: number;
 
-	linearize( depth: number ): number;
-	smoothstep( near: number, far: number, depth: number ): number;
-	saturate( x: number ): number;
-	focusAt( focusDistance: number ): void;
+	constructor(fov: number, aspect: number, near: number, far: number);
+
+	linearize(depth: number): number;
+
+	smoothstep(near: number, far: number, depth: number): number;
+
+	saturate(x: number): number;
+
+	focusAt(focusDistance: number): void;
+
 	initPostProcessing(): void;
-	renderCinematic( scene: Scene, renderer: WebGLRenderer ): void;
+
+	renderCinematic(scene: Scene, renderer: WebGLRenderer): void;
 
 }

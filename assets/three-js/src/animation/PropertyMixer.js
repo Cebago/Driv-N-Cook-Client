@@ -1,4 +1,4 @@
-import { Quaternion } from '../math/Quaternion.js';
+import {Quaternion} from '../math/Quaternion.js';
 
 /**
  *
@@ -10,7 +10,7 @@ import { Quaternion } from '../math/Quaternion.js';
  * @author tschw
  */
 
-function PropertyMixer( binding, typeName, valueSize ) {
+function PropertyMixer(binding, typeName, valueSize) {
 
 	this.binding = binding;
 	this.valueSize = valueSize;
@@ -35,14 +35,14 @@ function PropertyMixer( binding, typeName, valueSize ) {
 	// 'work' is optional and is only present for quaternion types. It is used
 	// to store intermediate quaternion multiplication results
 
-	switch ( typeName ) {
+	switch (typeName) {
 
 		case 'quaternion':
 			mixFunction = this._slerp;
 			mixFunctionAdditive = this._slerpAdditive;
 			setIdentity = this._setAdditiveIdentityQuaternion;
 
-			this.buffer = new Float64Array( valueSize * 6 );
+			this.buffer = new Float64Array(valueSize * 6);
 			this._workIndex = 5;
 			break;
 
@@ -56,7 +56,7 @@ function PropertyMixer( binding, typeName, valueSize ) {
 
 			setIdentity = this._setAdditiveIdentityOther;
 
-			this.buffer = new Array( valueSize * 5 );
+			this.buffer = new Array(valueSize * 5);
 			break;
 
 		default:
@@ -64,7 +64,7 @@ function PropertyMixer( binding, typeName, valueSize ) {
 			mixFunctionAdditive = this._lerpAdditive;
 			setIdentity = this._setAdditiveIdentityNumeric;
 
-			this.buffer = new Float64Array( valueSize * 5 );
+			this.buffer = new Float64Array(valueSize * 5);
 
 	}
 
@@ -82,10 +82,10 @@ function PropertyMixer( binding, typeName, valueSize ) {
 
 }
 
-Object.assign( PropertyMixer.prototype, {
+Object.assign(PropertyMixer.prototype, {
 
 	// accumulate data in the 'incoming' region into 'accu<i>'
-	accumulate: function ( accuIndex, weight ) {
+	accumulate: function (accuIndex, weight) {
 
 		// note: happily accumulating nothing when weight = 0, the caller knows
 		// the weight and shouldn't have made the call in the first place
@@ -96,13 +96,13 @@ Object.assign( PropertyMixer.prototype, {
 
 			currentWeight = this.cumulativeWeight;
 
-		if ( currentWeight === 0 ) {
+		if (currentWeight === 0) {
 
 			// accuN := incoming * weight
 
-			for ( var i = 0; i !== stride; ++ i ) {
+			for (var i = 0; i !== stride; ++i) {
 
-				buffer[ offset + i ] = buffer[ i ];
+				buffer[offset + i] = buffer[i];
 
 			}
 
@@ -114,7 +114,7 @@ Object.assign( PropertyMixer.prototype, {
 
 			currentWeight += weight;
 			var mix = weight / currentWeight;
-			this._mixBufferRegion( buffer, offset, 0, mix, stride );
+			this._mixBufferRegion(buffer, offset, 0, mix, stride);
 
 		}
 
@@ -123,13 +123,13 @@ Object.assign( PropertyMixer.prototype, {
 	},
 
 	// accumulate data in the 'incoming' region into 'add'
-	accumulateAdditive: function ( weight ) {
+	accumulateAdditive: function (weight) {
 
 		var buffer = this.buffer,
 			stride = this.valueSize,
 			offset = stride * this._addIndex;
 
-		if ( this.cumulativeWeightAdditive === 0 ) {
+		if (this.cumulativeWeightAdditive === 0) {
 
 			// add = identity
 
@@ -139,13 +139,13 @@ Object.assign( PropertyMixer.prototype, {
 
 		// add := add + incoming * weight
 
-		this._mixBufferRegionAdditive( buffer, offset, 0, weight, stride );
+		this._mixBufferRegionAdditive(buffer, offset, 0, weight, stride);
 		this.cumulativeWeightAdditive += weight;
 
 	},
 
 	// apply the state of 'accu<i>' to the binding when accus differ
-	apply: function ( accuIndex ) {
+	apply: function (accuIndex) {
 
 		var stride = this.valueSize,
 			buffer = this.buffer,
@@ -159,32 +159,32 @@ Object.assign( PropertyMixer.prototype, {
 		this.cumulativeWeight = 0;
 		this.cumulativeWeightAdditive = 0;
 
-		if ( weight < 1 ) {
+		if (weight < 1) {
 
 			// accuN := accuN + original * ( 1 - cumulativeWeight )
 
 			var originalValueOffset = stride * this._origIndex;
 
 			this._mixBufferRegion(
-				buffer, offset, originalValueOffset, 1 - weight, stride );
+				buffer, offset, originalValueOffset, 1 - weight, stride);
 
 		}
 
-		if ( weightAdditive > 0 ) {
+		if (weightAdditive > 0) {
 
 			// accuN := accuN + additive accuN
 
-			this._mixBufferRegionAdditive( buffer, offset, this._addIndex * stride, 1, stride );
+			this._mixBufferRegionAdditive(buffer, offset, this._addIndex * stride, 1, stride);
 
 		}
 
-		for ( var i = stride, e = stride + stride; i !== e; ++ i ) {
+		for (var i = stride, e = stride + stride; i !== e; ++i) {
 
-			if ( buffer[ i ] !== buffer[ i + stride ] ) {
+			if (buffer[i] !== buffer[i + stride]) {
 
 				// value has changed -> update scene graph
 
-				binding.setValue( buffer, offset );
+				binding.setValue(buffer, offset);
 				break;
 
 			}
@@ -203,12 +203,12 @@ Object.assign( PropertyMixer.prototype, {
 
 			originalValueOffset = stride * this._origIndex;
 
-		binding.getValue( buffer, originalValueOffset );
+		binding.getValue(buffer, originalValueOffset);
 
 		// accu[0..1] := orig -- initially detect changes against the original
-		for ( var i = stride, e = originalValueOffset; i !== e; ++ i ) {
+		for (var i = stride, e = originalValueOffset; i !== e; ++i) {
 
-			buffer[ i ] = buffer[ originalValueOffset + ( i % stride ) ];
+			buffer[i] = buffer[originalValueOffset + (i % stride)];
 
 		}
 
@@ -224,7 +224,7 @@ Object.assign( PropertyMixer.prototype, {
 	restoreOriginalState: function () {
 
 		var originalValueOffset = this.valueSize * 3;
-		this.binding.setValue( this.buffer, originalValueOffset );
+		this.binding.setValue(this.buffer, originalValueOffset);
 
 	},
 
@@ -232,14 +232,14 @@ Object.assign( PropertyMixer.prototype, {
 
 		var startIndex = this._addIndex * this.valueSize;
 
-		this.buffer.fill( 0, startIndex, startIndex + this.valueSize );
+		this.buffer.fill(0, startIndex, startIndex + this.valueSize);
 
 	},
 
 	_setAdditiveIdentityQuaternion: function () {
 
 		this._setAdditiveIdentityNumeric();
-		this.buffer[ this._addIndex * 4 + 3 ] = 1;
+		this.buffer[this._addIndex * 4 + 3] = 1;
 
 	},
 
@@ -248,20 +248,20 @@ Object.assign( PropertyMixer.prototype, {
 		var startIndex = this._origIndex * this.valueSize;
 		var targetIndex = this._addIndex * this.valueSize;
 
-		this.buffer.copyWithin( targetIndex, startIndex, this.valueSize );
+		this.buffer.copyWithin(targetIndex, startIndex, this.valueSize);
 
 	},
 
 
 	// mix functions
 
-	_select: function ( buffer, dstOffset, srcOffset, t, stride ) {
+	_select: function (buffer, dstOffset, srcOffset, t, stride) {
 
-		if ( t >= 0.5 ) {
+		if (t >= 0.5) {
 
-			for ( var i = 0; i !== stride; ++ i ) {
+			for (var i = 0; i !== stride; ++i) {
 
-				buffer[ dstOffset + i ] = buffer[ srcOffset + i ];
+				buffer[dstOffset + i] = buffer[srcOffset + i];
 
 			}
 
@@ -269,51 +269,51 @@ Object.assign( PropertyMixer.prototype, {
 
 	},
 
-	_slerp: function ( buffer, dstOffset, srcOffset, t ) {
+	_slerp: function (buffer, dstOffset, srcOffset, t) {
 
-		Quaternion.slerpFlat( buffer, dstOffset, buffer, dstOffset, buffer, srcOffset, t );
+		Quaternion.slerpFlat(buffer, dstOffset, buffer, dstOffset, buffer, srcOffset, t);
 
 	},
 
-	_slerpAdditive: function ( buffer, dstOffset, srcOffset, t, stride ) {
+	_slerpAdditive: function (buffer, dstOffset, srcOffset, t, stride) {
 
 		var workOffset = this._workIndex * stride;
 
 		// Store result in intermediate buffer offset
-		Quaternion.multiplyQuaternionsFlat( buffer, workOffset, buffer, dstOffset, buffer, srcOffset );
+		Quaternion.multiplyQuaternionsFlat(buffer, workOffset, buffer, dstOffset, buffer, srcOffset);
 
 		// Slerp to the intermediate result
-		Quaternion.slerpFlat( buffer, dstOffset, buffer, dstOffset, buffer, workOffset, t );
+		Quaternion.slerpFlat(buffer, dstOffset, buffer, dstOffset, buffer, workOffset, t);
 
 	},
 
-	_lerp: function ( buffer, dstOffset, srcOffset, t, stride ) {
+	_lerp: function (buffer, dstOffset, srcOffset, t, stride) {
 
 		var s = 1 - t;
 
-		for ( var i = 0; i !== stride; ++ i ) {
+		for (var i = 0; i !== stride; ++i) {
 
 			var j = dstOffset + i;
 
-			buffer[ j ] = buffer[ j ] * s + buffer[ srcOffset + i ] * t;
+			buffer[j] = buffer[j] * s + buffer[srcOffset + i] * t;
 
 		}
 
 	},
 
-	_lerpAdditive: function ( buffer, dstOffset, srcOffset, t, stride ) {
+	_lerpAdditive: function (buffer, dstOffset, srcOffset, t, stride) {
 
-		for ( var i = 0; i !== stride; ++ i ) {
+		for (var i = 0; i !== stride; ++i) {
 
 			var j = dstOffset + i;
 
-			buffer[ j ] = buffer[ j ] + buffer[ srcOffset + i ] * t;
+			buffer[j] = buffer[j] + buffer[srcOffset + i] * t;
 
 		}
 
 	}
 
-} );
+});
 
 
-export { PropertyMixer };
+export {PropertyMixer};

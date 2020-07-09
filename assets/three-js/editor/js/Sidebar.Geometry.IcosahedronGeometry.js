@@ -4,11 +4,11 @@
 
 import * as THREE from '../../build/three.module.js';
 
-import { UIRow, UIText, UIInteger, UINumber } from './libs/ui.js';
+import {UIInteger, UINumber, UIRow, UIText} from './libs/ui.js';
 
-import { SetGeometryCommand } from './commands/SetGeometryCommand.js';
+import {SetGeometryCommand} from './commands/SetGeometryCommand.js';
 
-var SidebarGeometryIcosahedronGeometry = function ( editor, object ) {
+var SidebarGeometryIcosahedronGeometry = function (editor, object) {
 
 	var strings = editor.strings;
 
@@ -22,33 +22,33 @@ var SidebarGeometryIcosahedronGeometry = function ( editor, object ) {
 	// radius
 
 	var radiusRow = new UIRow();
-	var radius = new UINumber( parameters.radius ).onChange( update );
+	var radius = new UINumber(parameters.radius).onChange(update);
 
-	radiusRow.add( new UIText( strings.getKey( 'sidebar/geometry/icosahedron_geometry/radius' ) ).setWidth( '90px' ) );
-	radiusRow.add( radius );
+	radiusRow.add(new UIText(strings.getKey('sidebar/geometry/icosahedron_geometry/radius')).setWidth('90px'));
+	radiusRow.add(radius);
 
-	container.add( radiusRow );
+	container.add(radiusRow);
 
 	// detail
 
 	var detailRow = new UIRow();
-	var detail = new UIInteger( parameters.detail ).setRange( 0, Infinity ).onChange( update );
+	var detail = new UIInteger(parameters.detail).setRange(0, Infinity).onChange(update);
 
-	detailRow.add( new UIText( strings.getKey( 'sidebar/geometry/icosahedron_geometry/detail' ) ).setWidth( '90px' ) );
-	detailRow.add( detail );
+	detailRow.add(new UIText(strings.getKey('sidebar/geometry/icosahedron_geometry/detail')).setWidth('90px'));
+	detailRow.add(detail);
 
-	container.add( detailRow );
+	container.add(detailRow);
 
 	//
 
 	function update() {
 
-		editor.execute( new SetGeometryCommand( editor, object, new THREE.IcosahedronBufferGeometry(
+		editor.execute(new SetGeometryCommand(editor, object, new THREE.IcosahedronBufferGeometry(
 			radius.getValue(),
 			detail.getValue()
-		) ) );
+		)));
 
-		signals.objectChanged.dispatch( object );
+		signals.objectChanged.dispatch(object);
 
 	}
 
@@ -56,4 +56,4 @@ var SidebarGeometryIcosahedronGeometry = function ( editor, object ) {
 
 };
 
-export { SidebarGeometryIcosahedronGeometry };
+export {SidebarGeometryIcosahedronGeometry};

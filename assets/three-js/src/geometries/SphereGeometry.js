@@ -4,16 +4,16 @@
  * @author Mugen87 / https://github.com/Mugen87
  */
 
-import { Geometry } from '../core/Geometry.js';
-import { BufferGeometry } from '../core/BufferGeometry.js';
-import { Float32BufferAttribute } from '../core/BufferAttribute.js';
-import { Vector3 } from '../math/Vector3.js';
+import {Geometry} from '../core/Geometry.js';
+import {BufferGeometry} from '../core/BufferGeometry.js';
+import {Float32BufferAttribute} from '../core/BufferAttribute.js';
+import {Vector3} from '../math/Vector3.js';
 
 // SphereGeometry
 
-function SphereGeometry( radius, widthSegments, heightSegments, phiStart, phiLength, thetaStart, thetaLength ) {
+function SphereGeometry(radius, widthSegments, heightSegments, phiStart, phiLength, thetaStart, thetaLength) {
 
-	Geometry.call( this );
+	Geometry.call(this);
 
 	this.type = 'SphereGeometry';
 
@@ -27,19 +27,19 @@ function SphereGeometry( radius, widthSegments, heightSegments, phiStart, phiLen
 		thetaLength: thetaLength
 	};
 
-	this.fromBufferGeometry( new SphereBufferGeometry( radius, widthSegments, heightSegments, phiStart, phiLength, thetaStart, thetaLength ) );
+	this.fromBufferGeometry(new SphereBufferGeometry(radius, widthSegments, heightSegments, phiStart, phiLength, thetaStart, thetaLength));
 	this.mergeVertices();
 
 }
 
-SphereGeometry.prototype = Object.create( Geometry.prototype );
+SphereGeometry.prototype = Object.create(Geometry.prototype);
 SphereGeometry.prototype.constructor = SphereGeometry;
 
 // SphereBufferGeometry
 
-function SphereBufferGeometry( radius, widthSegments, heightSegments, phiStart, phiLength, thetaStart, thetaLength ) {
+function SphereBufferGeometry(radius, widthSegments, heightSegments, phiStart, phiLength, thetaStart, thetaLength) {
 
-	BufferGeometry.call( this );
+	BufferGeometry.call(this);
 
 	this.type = 'SphereBufferGeometry';
 
@@ -55,8 +55,8 @@ function SphereBufferGeometry( radius, widthSegments, heightSegments, phiStart, 
 
 	radius = radius || 1;
 
-	widthSegments = Math.max( 3, Math.floor( widthSegments ) || 8 );
-	heightSegments = Math.max( 2, Math.floor( heightSegments ) || 6 );
+	widthSegments = Math.max(3, Math.floor(widthSegments) || 8);
+	heightSegments = Math.max(2, Math.floor(heightSegments) || 6);
 
 	phiStart = phiStart !== undefined ? phiStart : 0;
 	phiLength = phiLength !== undefined ? phiLength : Math.PI * 2;
@@ -64,7 +64,7 @@ function SphereBufferGeometry( radius, widthSegments, heightSegments, phiStart, 
 	thetaStart = thetaStart !== undefined ? thetaStart : 0;
 	thetaLength = thetaLength !== undefined ? thetaLength : Math.PI;
 
-	var thetaEnd = Math.min( thetaStart + thetaLength, Math.PI );
+	var thetaEnd = Math.min(thetaStart + thetaLength, Math.PI);
 
 	var ix, iy;
 
@@ -83,7 +83,7 @@ function SphereBufferGeometry( radius, widthSegments, heightSegments, phiStart, 
 
 	// generate vertices, normals and uvs
 
-	for ( iy = 0; iy <= heightSegments; iy ++ ) {
+	for (iy = 0; iy <= heightSegments; iy++) {
 
 		var verticesRow = [];
 
@@ -93,58 +93,58 @@ function SphereBufferGeometry( radius, widthSegments, heightSegments, phiStart, 
 
 		var uOffset = 0;
 
-		if ( iy == 0 && thetaStart == 0 ) {
+		if (iy == 0 && thetaStart == 0) {
 
 			uOffset = 0.5 / widthSegments;
 
-		} else if ( iy == heightSegments && thetaEnd == Math.PI ) {
+		} else if (iy == heightSegments && thetaEnd == Math.PI) {
 
-			uOffset = - 0.5 / widthSegments;
+			uOffset = -0.5 / widthSegments;
 
 		}
 
-		for ( ix = 0; ix <= widthSegments; ix ++ ) {
+		for (ix = 0; ix <= widthSegments; ix++) {
 
 			var u = ix / widthSegments;
 
 			// vertex
 
-			vertex.x = - radius * Math.cos( phiStart + u * phiLength ) * Math.sin( thetaStart + v * thetaLength );
-			vertex.y = radius * Math.cos( thetaStart + v * thetaLength );
-			vertex.z = radius * Math.sin( phiStart + u * phiLength ) * Math.sin( thetaStart + v * thetaLength );
+			vertex.x = -radius * Math.cos(phiStart + u * phiLength) * Math.sin(thetaStart + v * thetaLength);
+			vertex.y = radius * Math.cos(thetaStart + v * thetaLength);
+			vertex.z = radius * Math.sin(phiStart + u * phiLength) * Math.sin(thetaStart + v * thetaLength);
 
-			vertices.push( vertex.x, vertex.y, vertex.z );
+			vertices.push(vertex.x, vertex.y, vertex.z);
 
 			// normal
 
-			normal.copy( vertex ).normalize();
-			normals.push( normal.x, normal.y, normal.z );
+			normal.copy(vertex).normalize();
+			normals.push(normal.x, normal.y, normal.z);
 
 			// uv
 
-			uvs.push( u + uOffset, 1 - v );
+			uvs.push(u + uOffset, 1 - v);
 
-			verticesRow.push( index ++ );
+			verticesRow.push(index++);
 
 		}
 
-		grid.push( verticesRow );
+		grid.push(verticesRow);
 
 	}
 
 	// indices
 
-	for ( iy = 0; iy < heightSegments; iy ++ ) {
+	for (iy = 0; iy < heightSegments; iy++) {
 
-		for ( ix = 0; ix < widthSegments; ix ++ ) {
+		for (ix = 0; ix < widthSegments; ix++) {
 
-			var a = grid[ iy ][ ix + 1 ];
-			var b = grid[ iy ][ ix ];
-			var c = grid[ iy + 1 ][ ix ];
-			var d = grid[ iy + 1 ][ ix + 1 ];
+			var a = grid[iy][ix + 1];
+			var b = grid[iy][ix];
+			var c = grid[iy + 1][ix];
+			var d = grid[iy + 1][ix + 1];
 
-			if ( iy !== 0 || thetaStart > 0 ) indices.push( a, b, d );
-			if ( iy !== heightSegments - 1 || thetaEnd < Math.PI ) indices.push( b, c, d );
+			if (iy !== 0 || thetaStart > 0) indices.push(a, b, d);
+			if (iy !== heightSegments - 1 || thetaEnd < Math.PI) indices.push(b, c, d);
 
 		}
 
@@ -152,15 +152,15 @@ function SphereBufferGeometry( radius, widthSegments, heightSegments, phiStart, 
 
 	// build geometry
 
-	this.setIndex( indices );
-	this.setAttribute( 'position', new Float32BufferAttribute( vertices, 3 ) );
-	this.setAttribute( 'normal', new Float32BufferAttribute( normals, 3 ) );
-	this.setAttribute( 'uv', new Float32BufferAttribute( uvs, 2 ) );
+	this.setIndex(indices);
+	this.setAttribute('position', new Float32BufferAttribute(vertices, 3));
+	this.setAttribute('normal', new Float32BufferAttribute(normals, 3));
+	this.setAttribute('uv', new Float32BufferAttribute(uvs, 2));
 
 }
 
-SphereBufferGeometry.prototype = Object.create( BufferGeometry.prototype );
+SphereBufferGeometry.prototype = Object.create(BufferGeometry.prototype);
 SphereBufferGeometry.prototype.constructor = SphereBufferGeometry;
 
 
-export { SphereGeometry, SphereBufferGeometry };
+export {SphereGeometry, SphereBufferGeometry};

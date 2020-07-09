@@ -1,6 +1,6 @@
-import { WebGLRenderTargetOptions, WebGLRenderTarget } from './WebGLRenderTarget';
-import { WebGLRenderer } from './WebGLRenderer';
-import { Texture } from './../textures/Texture';
+import {WebGLRenderTarget, WebGLRenderTargetOptions} from './WebGLRenderTarget';
+import {WebGLRenderer} from './WebGLRenderer';
+import {Texture} from './../textures/Texture';
 
 export class WebGLCubeRenderTarget extends WebGLRenderTarget {
 
@@ -9,6 +9,6 @@ export class WebGLCubeRenderTarget extends WebGLRenderTarget {
 		options?: WebGLRenderTargetOptions
 	);
 
-	fromEquirectangularTexture( renderer: WebGLRenderer, texture: Texture ): this;
+	fromEquirectangularTexture(renderer: WebGLRenderer, texture: Texture): this;
 
 }

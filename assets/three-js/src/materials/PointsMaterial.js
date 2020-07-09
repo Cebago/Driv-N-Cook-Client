@@ -1,5 +1,5 @@
-import { Material } from './Material.js';
-import { Color } from '../math/Color.js';
+import {Material} from './Material.js';
+import {Color} from '../math/Color.js';
 
 /**
  * @author mrdoob / http://mrdoob.com/
@@ -18,13 +18,13 @@ import { Color } from '../math/Color.js';
  * }
  */
 
-function PointsMaterial( parameters ) {
+function PointsMaterial(parameters) {
 
-	Material.call( this );
+	Material.call(this);
 
 	this.type = 'PointsMaterial';
 
-	this.color = new Color( 0xffffff );
+	this.color = new Color(0xffffff);
 
 	this.map = null;
 
@@ -35,20 +35,20 @@ function PointsMaterial( parameters ) {
 
 	this.morphTargets = false;
 
-	this.setValues( parameters );
+	this.setValues(parameters);
 
 }
 
-PointsMaterial.prototype = Object.create( Material.prototype );
+PointsMaterial.prototype = Object.create(Material.prototype);
 PointsMaterial.prototype.constructor = PointsMaterial;
 
 PointsMaterial.prototype.isPointsMaterial = true;
 
-PointsMaterial.prototype.copy = function ( source ) {
+PointsMaterial.prototype.copy = function (source) {
 
-	Material.prototype.copy.call( this, source );
+	Material.prototype.copy.call(this, source);
 
-	this.color.copy( source.color );
+	this.color.copy(source.color);
 
 	this.map = source.map;
 
@@ -64,4 +64,4 @@ PointsMaterial.prototype.copy = function ( source ) {
 };
 
 
-export { PointsMaterial };
+export {PointsMaterial};

@@ -8,13 +8,13 @@ function WebGLAnimation() {
 	var isAnimating = false;
 	var animationLoop = null;
 
-	function onAnimationFrame( time, frame ) {
+	function onAnimationFrame(time, frame) {
 
-		if ( isAnimating === false ) return;
+		if (isAnimating === false) return;
 
-		animationLoop( time, frame );
+		animationLoop(time, frame);
 
-		context.requestAnimationFrame( onAnimationFrame );
+		context.requestAnimationFrame(onAnimationFrame);
 
 	}
 
@@ -22,10 +22,10 @@ function WebGLAnimation() {
 
 		start: function () {
 
-			if ( isAnimating === true ) return;
-			if ( animationLoop === null ) return;
+			if (isAnimating === true) return;
+			if (animationLoop === null) return;
 
-			context.requestAnimationFrame( onAnimationFrame );
+			context.requestAnimationFrame(onAnimationFrame);
 
 			isAnimating = true;
 
@@ -37,13 +37,13 @@ function WebGLAnimation() {
 
 		},
 
-		setAnimationLoop: function ( callback ) {
+		setAnimationLoop: function (callback) {
 
 			animationLoop = callback;
 
 		},
 
-		setContext: function ( value ) {
+		setContext: function (value) {
 
 			context = value;
 
@@ -53,4 +53,4 @@ function WebGLAnimation() {
 
 }
 
-export { WebGLAnimation };
+export {WebGLAnimation};

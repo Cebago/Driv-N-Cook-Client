@@ -3,10 +3,10 @@
  * Developed as part of a project at University of Applied Sciences and Arts Northwestern Switzerland (www.fhnw.ch)
  */
 
-import { UIPanel, UIBreak, UIText } from './libs/ui.js';
-import { UIBoolean, UIOutliner } from './libs/ui.three.js';
+import {UIBreak, UIPanel, UIText} from './libs/ui.js';
+import {UIBoolean, UIOutliner} from './libs/ui.three.js';
 
-var SidebarHistory = function ( editor ) {
+var SidebarHistory = function (editor) {
 
 	var strings = editor.strings;
 
@@ -18,25 +18,25 @@ var SidebarHistory = function ( editor ) {
 
 	var container = new UIPanel();
 
-	container.add( new UIText( strings.getKey( 'sidebar/history' ).toUpperCase() ) );
+	container.add(new UIText(strings.getKey('sidebar/history').toUpperCase()));
 
 	//
 
-	var persistent = new UIBoolean( config.getKey( 'settings/history' ), strings.getKey( 'sidebar/history/persistent' ) );
-	persistent.setPosition( 'absolute' ).setRight( '8px' );
-	persistent.onChange( function () {
+	var persistent = new UIBoolean(config.getKey('settings/history'), strings.getKey('sidebar/history/persistent'));
+	persistent.setPosition('absolute').setRight('8px');
+	persistent.onChange(function () {
 
 		var value = this.getValue();
 
-		config.setKey( 'settings/history', value );
+		config.setKey('settings/history', value);
 
-		if ( value ) {
+		if (value) {
 
-			alert( 'The history will be preserved across sessions.\nThis can have an impact on performance when working with textures.' );
+			alert('The history will be preserved across sessions.\nThis can have an impact on performance when working with textures.');
 
-			var lastUndoCmd = history.undos[ history.undos.length - 1 ];
-			var lastUndoId = ( lastUndoCmd !== undefined ) ? lastUndoCmd.id : 0;
-			editor.history.enableSerialization( lastUndoId );
+			var lastUndoCmd = history.undos[history.undos.length - 1];
+			var lastUndoId = (lastUndoCmd !== undefined) ? lastUndoCmd.id : 0;
+			editor.history.enableSerialization(lastUndoId);
 
 		} else {
 
@@ -44,24 +44,24 @@ var SidebarHistory = function ( editor ) {
 
 		}
 
-	} );
-	container.add( persistent );
+	});
+	container.add(persistent);
 
-	container.add( new UIBreak(), new UIBreak() );
+	container.add(new UIBreak(), new UIBreak());
 
 	var ignoreObjectSelectedSignal = false;
 
-	var outliner = new UIOutliner( editor );
-	outliner.onChange( function () {
+	var outliner = new UIOutliner(editor);
+	outliner.onChange(function () {
 
 		ignoreObjectSelectedSignal = true;
 
-		editor.history.goToState( parseInt( outliner.getValue() ) );
+		editor.history.goToState(parseInt(outliner.getValue()));
 
 		ignoreObjectSelectedSignal = false;
 
-	} );
-	container.add( outliner );
+	});
+	container.add(outliner);
 
 	//
 
@@ -69,48 +69,48 @@ var SidebarHistory = function ( editor ) {
 
 		var options = [];
 
-		function buildOption( object ) {
+		function buildOption(object) {
 
-			var option = document.createElement( 'div' );
+			var option = document.createElement('div');
 			option.value = object.id;
 
 			return option;
 
 		}
 
-		( function addObjects( objects ) {
+		(function addObjects(objects) {
 
-			for ( var i = 0, l = objects.length; i < l; i ++ ) {
+			for (var i = 0, l = objects.length; i < l; i++) {
 
-				var object = objects[ i ];
+				var object = objects[i];
 
-				var option = buildOption( object );
+				var option = buildOption(object);
 				option.innerHTML = '&nbsp;' + object.name;
 
-				options.push( option );
+				options.push(option);
 
 			}
 
-		} )( history.undos );
+		})(history.undos);
 
 
-		( function addObjects( objects ) {
+		(function addObjects(objects) {
 
-			for ( var i = objects.length - 1; i >= 0; i -- ) {
+			for (var i = objects.length - 1; i >= 0; i--) {
 
-				var object = objects[ i ];
+				var object = objects[i];
 
-				var option = buildOption( object );
+				var option = buildOption(object);
 				option.innerHTML = '&nbsp;' + object.name;
 				option.style.opacity = 0.3;
 
-				options.push( option );
+				options.push(option);
 
 			}
 
-		} )( history.redos );
+		})(history.redos);
 
-		outliner.setOptions( options );
+		outliner.setOptions(options);
 
 	};
 
@@ -118,20 +118,20 @@ var SidebarHistory = function ( editor ) {
 
 	// events
 
-	signals.editorCleared.add( refreshUI );
+	signals.editorCleared.add(refreshUI);
 
-	signals.historyChanged.add( refreshUI );
-	signals.historyChanged.add( function ( cmd ) {
+	signals.historyChanged.add(refreshUI);
+	signals.historyChanged.add(function (cmd) {
 
-		if ( ignoreObjectSelectedSignal === true ) return;
+		if (ignoreObjectSelectedSignal === true) return;
 
-		outliner.setValue( cmd !== undefined ? cmd.id : null );
+		outliner.setValue(cmd !== undefined ? cmd.id : null);
 
-	} );
+	});
 
 
 	return container;
 
 };
 
-export { SidebarHistory };
+export {SidebarHistory};

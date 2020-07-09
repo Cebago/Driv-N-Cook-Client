@@ -1,15 +1,10 @@
-import {
-	Color,
-	Vector2
-} from '../../../../../src/Three';
+import {Color, Vector2} from '../../../../../src/Three';
 
-import { NodeBuilder } from '../../core/NodeBuilder';
-import { StandardNode } from './StandardNode';
-import { PropertyNode } from '../../inputs/PropertyNode';
+import {NodeBuilder} from '../../core/NodeBuilder';
+import {StandardNode} from './StandardNode';
+import {PropertyNode} from '../../inputs/PropertyNode';
 
 export class MeshStandardNode extends StandardNode {
-
-	constructor();
 
 	properties: {
 		color: Color;
@@ -17,7 +12,6 @@ export class MeshStandardNode extends StandardNode {
 		metalness: number;
 		normalScale: Vector2;
 	}
-
 	inputs: {
 		color: PropertyNode
 		roughness: PropertyNode
@@ -25,6 +19,8 @@ export class MeshStandardNode extends StandardNode {
 		normalScale: PropertyNode
 	}
 
-	build( builder: NodeBuilder ): string;
+	constructor();
+
+	build(builder: NodeBuilder): string;
 
 }

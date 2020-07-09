@@ -1,7 +1,7 @@
-import { LinearFilter, LinearMipmapLinearFilter, ClampToEdgeWrapping } from '../constants.js';
-import { FileLoader } from './FileLoader.js';
-import { DataTexture } from '../textures/DataTexture.js';
-import { Loader } from './Loader.js';
+import {ClampToEdgeWrapping, LinearFilter, LinearMipmapLinearFilter} from '../constants.js';
+import {FileLoader} from './FileLoader.js';
+import {DataTexture} from '../textures/DataTexture.js';
+import {Loader} from './Loader.js';
 
 /**
  * @author Nikos M. / https://github.com/foo123/
@@ -11,36 +11,36 @@ import { Loader } from './Loader.js';
  * Sub classes have to implement the parse() method which will be used in load().
  */
 
-function DataTextureLoader( manager ) {
+function DataTextureLoader(manager) {
 
-	Loader.call( this, manager );
+	Loader.call(this, manager);
 
 }
 
-DataTextureLoader.prototype = Object.assign( Object.create( Loader.prototype ), {
+DataTextureLoader.prototype = Object.assign(Object.create(Loader.prototype), {
 
 	constructor: DataTextureLoader,
 
-	load: function ( url, onLoad, onProgress, onError ) {
+	load: function (url, onLoad, onProgress, onError) {
 
 		var scope = this;
 
 		var texture = new DataTexture();
 
-		var loader = new FileLoader( this.manager );
-		loader.setResponseType( 'arraybuffer' );
-		loader.setPath( this.path );
-		loader.load( url, function ( buffer ) {
+		var loader = new FileLoader(this.manager);
+		loader.setResponseType('arraybuffer');
+		loader.setPath(this.path);
+		loader.load(url, function (buffer) {
 
-			var texData = scope.parse( buffer );
+			var texData = scope.parse(buffer);
 
-			if ( ! texData ) return;
+			if (!texData) return;
 
-			if ( texData.image !== undefined ) {
+			if (texData.image !== undefined) {
 
 				texture.image = texData.image;
 
-			} else if ( texData.data !== undefined ) {
+			} else if (texData.data !== undefined) {
 
 				texture.image.width = texData.width;
 				texture.image.height = texData.height;
@@ -56,26 +56,26 @@ DataTextureLoader.prototype = Object.assign( Object.create( Loader.prototype ), 
 
 			texture.anisotropy = texData.anisotropy !== undefined ? texData.anisotropy : 1;
 
-			if ( texData.format !== undefined ) {
+			if (texData.format !== undefined) {
 
 				texture.format = texData.format;
 
 			}
 
-			if ( texData.type !== undefined ) {
+			if (texData.type !== undefined) {
 
 				texture.type = texData.type;
 
 			}
 
-			if ( texData.mipmaps !== undefined ) {
+			if (texData.mipmaps !== undefined) {
 
 				texture.mipmaps = texData.mipmaps;
 				texture.minFilter = LinearMipmapLinearFilter; // presumably...
 
 			}
 
-			if ( texData.mipmapCount === 1 ) {
+			if (texData.mipmapCount === 1) {
 
 				texture.minFilter = LinearFilter;
 
@@ -83,16 +83,16 @@ DataTextureLoader.prototype = Object.assign( Object.create( Loader.prototype ), 
 
 			texture.needsUpdate = true;
 
-			if ( onLoad ) onLoad( texture, texData );
+			if (onLoad) onLoad(texture, texData);
 
-		}, onProgress, onError );
+		}, onProgress, onError);
 
 
 		return texture;
 
 	}
 
-} );
+});
 
 
-export { DataTextureLoader };
+export {DataTextureLoader};

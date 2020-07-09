@@ -1,9 +1,4 @@
-import {
-	LoadingManager,
-	DataTextureLoader,
-	TextureDataType,
-	PixelFormat
-} from '../../../src/Three';
+import {DataTextureLoader, LoadingManager, PixelFormat, TextureDataType} from '../../../src/Three';
 
 export interface RGBE {
 	width: number;
@@ -18,10 +13,12 @@ export interface RGBE {
 
 export class RGBELoader extends DataTextureLoader {
 
-	constructor( manager?: LoadingManager );
 	type: TextureDataType;
 
-	parse( buffer: ArrayBuffer ): RGBE;
-	setDataType( type: TextureDataType ): this;
+	constructor(manager?: LoadingManager);
+
+	parse(buffer: ArrayBuffer): RGBE;
+
+	setDataType(type: TextureDataType): this;
 
 }

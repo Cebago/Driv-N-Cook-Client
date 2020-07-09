@@ -11,7 +11,7 @@ var LuminosityShader = {
 
 	uniforms: {
 
-		"tDiffuse": { value: null }
+		"tDiffuse": {value: null}
 
 	},
 
@@ -27,7 +27,7 @@ var LuminosityShader = {
 
 		"}"
 
-	].join( "\n" ),
+	].join("\n"),
 
 	fragmentShader: [
 
@@ -47,8 +47,8 @@ var LuminosityShader = {
 
 		"}"
 
-	].join( "\n" )
+	].join("\n")
 
 };
 
-export { LuminosityShader };
+export {LuminosityShader};

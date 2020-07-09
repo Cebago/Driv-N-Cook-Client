@@ -1,9 +1,10 @@
-import { IUniform } from '../renderers/shaders/UniformsLib';
-import { MaterialParameters, Material } from './Material';
+import {IUniform} from '../renderers/shaders/UniformsLib';
+import {Material, MaterialParameters} from './Material';
 
 /**
  * @deprecated Use {@link PointsMaterial THREE.PointsMaterial} instead
  */
+
 /**
  * @deprecated Use {@link PointsMaterial THREE.PointsMaterial} instead
  */
@@ -33,8 +34,6 @@ export interface ShaderMaterialParameters extends MaterialParameters {
 
 export class ShaderMaterial extends Material {
 
-	constructor( parameters?: ShaderMaterialParameters );
-
 	uniforms: { [uniform: string]: IUniform };
 	vertexShader: string;
 	fragmentShader: string;
@@ -60,7 +59,10 @@ export class ShaderMaterial extends Material {
 	index0AttributeName: string | undefined;
 	uniformsNeedUpdate: boolean;
 
-	setValues( parameters: ShaderMaterialParameters ): void;
-	toJSON( meta: any ): any;
+	constructor(parameters?: ShaderMaterialParameters);
+
+	setValues(parameters: ShaderMaterialParameters): void;
+
+	toJSON(meta: any): any;
 
 }

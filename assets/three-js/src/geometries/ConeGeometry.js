@@ -2,14 +2,13 @@
  * @author abelnation / http://github.com/abelnation
  */
 
-import { CylinderGeometry } from './CylinderGeometry.js';
-import { CylinderBufferGeometry } from './CylinderGeometry.js';
+import {CylinderBufferGeometry, CylinderGeometry} from './CylinderGeometry.js';
 
 // ConeGeometry
 
-function ConeGeometry( radius, height, radialSegments, heightSegments, openEnded, thetaStart, thetaLength ) {
+function ConeGeometry(radius, height, radialSegments, heightSegments, openEnded, thetaStart, thetaLength) {
 
-	CylinderGeometry.call( this, 0, radius, height, radialSegments, heightSegments, openEnded, thetaStart, thetaLength );
+	CylinderGeometry.call(this, 0, radius, height, radialSegments, heightSegments, openEnded, thetaStart, thetaLength);
 
 	this.type = 'ConeGeometry';
 
@@ -25,14 +24,14 @@ function ConeGeometry( radius, height, radialSegments, heightSegments, openEnded
 
 }
 
-ConeGeometry.prototype = Object.create( CylinderGeometry.prototype );
+ConeGeometry.prototype = Object.create(CylinderGeometry.prototype);
 ConeGeometry.prototype.constructor = ConeGeometry;
 
 // ConeBufferGeometry
 
-function ConeBufferGeometry( radius, height, radialSegments, heightSegments, openEnded, thetaStart, thetaLength ) {
+function ConeBufferGeometry(radius, height, radialSegments, heightSegments, openEnded, thetaStart, thetaLength) {
 
-	CylinderBufferGeometry.call( this, 0, radius, height, radialSegments, heightSegments, openEnded, thetaStart, thetaLength );
+	CylinderBufferGeometry.call(this, 0, radius, height, radialSegments, heightSegments, openEnded, thetaStart, thetaLength);
 
 	this.type = 'ConeBufferGeometry';
 
@@ -48,8 +47,8 @@ function ConeBufferGeometry( radius, height, radialSegments, heightSegments, ope
 
 }
 
-ConeBufferGeometry.prototype = Object.create( CylinderBufferGeometry.prototype );
+ConeBufferGeometry.prototype = Object.create(CylinderBufferGeometry.prototype);
 ConeBufferGeometry.prototype.constructor = ConeBufferGeometry;
 
 
-export { ConeGeometry, ConeBufferGeometry };
+export {ConeGeometry, ConeBufferGeometry};

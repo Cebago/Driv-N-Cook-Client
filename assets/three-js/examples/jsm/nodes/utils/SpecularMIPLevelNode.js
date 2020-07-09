@@ -2,13 +2,13 @@
  * @author sunag / http://www.sunag.com.br/
  */
 
-import { TempNode } from '../core/TempNode.js';
-import { FunctionNode } from '../core/FunctionNode.js';
-import { MaxMIPLevelNode } from './MaxMIPLevelNode.js';
+import {TempNode} from '../core/TempNode.js';
+import {FunctionNode} from '../core/FunctionNode.js';
+import {MaxMIPLevelNode} from './MaxMIPLevelNode.js';
 
-function SpecularMIPLevelNode( roughness, texture ) {
+function SpecularMIPLevelNode(roughness, texture) {
 
-	TempNode.call( this, 'f' );
+	TempNode.call(this, 'f');
 
 	this.roughness = roughness;
 	this.texture = texture;
@@ -17,9 +17,9 @@ function SpecularMIPLevelNode( roughness, texture ) {
 
 }
 
-SpecularMIPLevelNode.Nodes = ( function () {
+SpecularMIPLevelNode.Nodes = (function () {
 
-	var getSpecularMIPLevel = new FunctionNode( [
+	var getSpecularMIPLevel = new FunctionNode([
 		// taken from here: http://casual-effects.blogspot.ca/2011/08/plausible-environment-lighting-in-two.html
 		"float getSpecularMIPLevel( const in float roughness, const in float maxMIPLevelScalar ) {",
 
@@ -30,19 +30,19 @@ SpecularMIPLevelNode.Nodes = ( function () {
 		"	return clamp( desiredMIPLevel, 0.0, maxMIPLevelScalar );",
 
 		"}"
-	].join( "\n" ) );
+	].join("\n"));
 
 	return {
 		getSpecularMIPLevel: getSpecularMIPLevel
 	};
 
-} )();
+})();
 
-SpecularMIPLevelNode.prototype = Object.create( TempNode.prototype );
+SpecularMIPLevelNode.prototype = Object.create(TempNode.prototype);
 SpecularMIPLevelNode.prototype.constructor = SpecularMIPLevelNode;
 SpecularMIPLevelNode.prototype.nodeType = "SpecularMIPLevel";
 
-SpecularMIPLevelNode.prototype.setTexture = function ( texture ) {
+SpecularMIPLevelNode.prototype.setTexture = function (texture) {
 
 	this.texture = texture;
 
@@ -50,30 +50,30 @@ SpecularMIPLevelNode.prototype.setTexture = function ( texture ) {
 
 };
 
-SpecularMIPLevelNode.prototype.generate = function ( builder, output ) {
+SpecularMIPLevelNode.prototype.generate = function (builder, output) {
 
-	if ( builder.isShader( 'fragment' ) ) {
+	if (builder.isShader('fragment')) {
 
 		this.maxMIPLevel = this.maxMIPLevel || new MaxMIPLevelNode();
 		this.maxMIPLevel.texture = this.texture;
 
-		var getSpecularMIPLevel = builder.include( SpecularMIPLevelNode.Nodes.getSpecularMIPLevel );
+		var getSpecularMIPLevel = builder.include(SpecularMIPLevelNode.Nodes.getSpecularMIPLevel);
 
-		return builder.format( getSpecularMIPLevel + '( ' + this.roughness.build( builder, 'f' ) + ', ' + this.maxMIPLevel.build( builder, 'f' ) + ' )', this.type, output );
+		return builder.format(getSpecularMIPLevel + '( ' + this.roughness.build(builder, 'f') + ', ' + this.maxMIPLevel.build(builder, 'f') + ' )', this.type, output);
 
 	} else {
 
-		console.warn( "THREE.SpecularMIPLevelNode is not compatible with " + builder.shader + " shader." );
+		console.warn("THREE.SpecularMIPLevelNode is not compatible with " + builder.shader + " shader.");
 
-		return builder.format( '0.0', this.type, output );
+		return builder.format('0.0', this.type, output);
 
 	}
 
 };
 
-SpecularMIPLevelNode.prototype.copy = function ( source ) {
+SpecularMIPLevelNode.prototype.copy = function (source) {
 
-	TempNode.prototype.copy.call( this, source );
+	TempNode.prototype.copy.call(this, source);
 
 	this.texture = source.texture;
 	this.roughness = source.roughness;
@@ -82,13 +82,13 @@ SpecularMIPLevelNode.prototype.copy = function ( source ) {
 
 };
 
-SpecularMIPLevelNode.prototype.toJSON = function ( meta ) {
+SpecularMIPLevelNode.prototype.toJSON = function (meta) {
 
-	var data = this.getJSONNode( meta );
+	var data = this.getJSONNode(meta);
 
-	if ( ! data ) {
+	if (!data) {
 
-		data = this.createJSONNode( meta );
+		data = this.createJSONNode(meta);
 
 		data.texture = this.texture;
 		data.roughness = this.roughness;
@@ -99,4 +99,4 @@ SpecularMIPLevelNode.prototype.toJSON = function ( meta ) {
 
 };
 
-export { SpecularMIPLevelNode };
+export {SpecularMIPLevelNode};

@@ -2,9 +2,9 @@
  * @author alteredq / http://alteredqualia.com/
  */
 
-THREE.MorphBlendMesh = function ( geometry, material ) {
+THREE.MorphBlendMesh = function (geometry, material) {
 
-	THREE.Mesh.call( this, geometry, material );
+	THREE.Mesh.call(this, geometry, material);
 
 	this.animationsMap = {};
 	this.animationsList = [];
@@ -12,7 +12,7 @@ THREE.MorphBlendMesh = function ( geometry, material ) {
 	// prepare default animation
 	// (all frames played together in 1 second)
 
-	var numFrames = Object.keys( this.morphTargetDictionary ).length;
+	var numFrames = Object.keys(this.morphTargetDictionary).length;
 
 	var name = '__default';
 
@@ -21,16 +21,16 @@ THREE.MorphBlendMesh = function ( geometry, material ) {
 
 	var fps = numFrames / 1;
 
-	this.createAnimation( name, startFrame, endFrame, fps );
-	this.setAnimationWeight( name, 1 );
+	this.createAnimation(name, startFrame, endFrame, fps);
+	this.setAnimationWeight(name, 1);
 
 };
 
-THREE.MorphBlendMesh.prototype = Object.assign( Object.create( THREE.Mesh.prototype ), {
+THREE.MorphBlendMesh.prototype = Object.assign(Object.create(THREE.Mesh.prototype), {
 
 	constructor: THREE.MorphBlendMesh,
 
-	createAnimation: function ( name, start, end, fps ) {
+	createAnimation: function (name, start, end, fps) {
 
 		var animation = {
 
@@ -40,7 +40,7 @@ THREE.MorphBlendMesh.prototype = Object.assign( Object.create( THREE.Mesh.protot
 			length: end - start + 1,
 
 			fps: fps,
-			duration: ( end - start ) / fps,
+			duration: (end - start) / fps,
 
 			lastFrame: 0,
 			currentFrame: 0,
@@ -56,12 +56,12 @@ THREE.MorphBlendMesh.prototype = Object.assign( Object.create( THREE.Mesh.protot
 
 		};
 
-		this.animationsMap[ name ] = animation;
-		this.animationsList.push( animation );
+		this.animationsMap[name] = animation;
+		this.animationsList.push(animation);
 
 	},
 
-	autoCreateAnimations: function ( fps ) {
+	autoCreateAnimations: function (fps) {
 
 		var pattern = /([a-z]+)_?(\d+)/i;
 
@@ -69,33 +69,33 @@ THREE.MorphBlendMesh.prototype = Object.assign( Object.create( THREE.Mesh.protot
 
 		var i = 0;
 
-		for ( var key in this.morphTargetDictionary ) {
+		for (var key in this.morphTargetDictionary) {
 
-			var chunks = key.match( pattern );
+			var chunks = key.match(pattern);
 
-			if ( chunks && chunks.length > 1 ) {
+			if (chunks && chunks.length > 1) {
 
-				var name = chunks[ 1 ];
+				var name = chunks[1];
 
-				if ( ! frameRanges[ name ] ) frameRanges[ name ] = { start: Infinity, end: - Infinity };
+				if (!frameRanges[name]) frameRanges[name] = {start: Infinity, end: -Infinity};
 
-				var range = frameRanges[ name ];
+				var range = frameRanges[name];
 
-				if ( i < range.start ) range.start = i;
-				if ( i > range.end ) range.end = i;
+				if (i < range.start) range.start = i;
+				if (i > range.end) range.end = i;
 
-				if ( ! firstAnimation ) firstAnimation = name;
+				if (!firstAnimation) firstAnimation = name;
 
 			}
 
-			i ++;
+			i++;
 
 		}
 
-		for ( var name in frameRanges ) {
+		for (var name in frameRanges) {
 
-			var range = frameRanges[ name ];
-			this.createAnimation( name, range.start, range.end, fps );
+			var range = frameRanges[name];
+			this.createAnimation(name, range.start, range.end, fps);
 
 		}
 
@@ -103,11 +103,11 @@ THREE.MorphBlendMesh.prototype = Object.assign( Object.create( THREE.Mesh.protot
 
 	},
 
-	setAnimationDirectionForward: function ( name ) {
+	setAnimationDirectionForward: function (name) {
 
-		var animation = this.animationsMap[ name ];
+		var animation = this.animationsMap[name];
 
-		if ( animation ) {
+		if (animation) {
 
 			animation.direction = 1;
 			animation.directionBackwards = false;
@@ -116,50 +116,50 @@ THREE.MorphBlendMesh.prototype = Object.assign( Object.create( THREE.Mesh.protot
 
 	},
 
-	setAnimationDirectionBackward: function ( name ) {
+	setAnimationDirectionBackward: function (name) {
 
-		var animation = this.animationsMap[ name ];
+		var animation = this.animationsMap[name];
 
-		if ( animation ) {
+		if (animation) {
 
-			animation.direction = - 1;
+			animation.direction = -1;
 			animation.directionBackwards = true;
 
 		}
 
 	},
 
-	setAnimationFPS: function ( name, fps ) {
+	setAnimationFPS: function (name, fps) {
 
-		var animation = this.animationsMap[ name ];
+		var animation = this.animationsMap[name];
 
-		if ( animation ) {
+		if (animation) {
 
 			animation.fps = fps;
-			animation.duration = ( animation.end - animation.start ) / animation.fps;
+			animation.duration = (animation.end - animation.start) / animation.fps;
 
 		}
 
 	},
 
-	setAnimationDuration: function ( name, duration ) {
+	setAnimationDuration: function (name, duration) {
 
-		var animation = this.animationsMap[ name ];
+		var animation = this.animationsMap[name];
 
-		if ( animation ) {
+		if (animation) {
 
 			animation.duration = duration;
-			animation.fps = ( animation.end - animation.start ) / animation.duration;
+			animation.fps = (animation.end - animation.start) / animation.duration;
 
 		}
 
 	},
 
-	setAnimationWeight: function ( name, weight ) {
+	setAnimationWeight: function (name, weight) {
 
-		var animation = this.animationsMap[ name ];
+		var animation = this.animationsMap[name];
 
-		if ( animation ) {
+		if (animation) {
 
 			animation.weight = weight;
 
@@ -167,11 +167,11 @@ THREE.MorphBlendMesh.prototype = Object.assign( Object.create( THREE.Mesh.protot
 
 	},
 
-	setAnimationTime: function ( name, time ) {
+	setAnimationTime: function (name, time) {
 
-		var animation = this.animationsMap[ name ];
+		var animation = this.animationsMap[name];
 
-		if ( animation ) {
+		if (animation) {
 
 			animation.time = time;
 
@@ -179,13 +179,13 @@ THREE.MorphBlendMesh.prototype = Object.assign( Object.create( THREE.Mesh.protot
 
 	},
 
-	getAnimationTime: function ( name ) {
+	getAnimationTime: function (name) {
 
 		var time = 0;
 
-		var animation = this.animationsMap[ name ];
+		var animation = this.animationsMap[name];
 
-		if ( animation ) {
+		if (animation) {
 
 			time = animation.time;
 
@@ -195,13 +195,13 @@ THREE.MorphBlendMesh.prototype = Object.assign( Object.create( THREE.Mesh.protot
 
 	},
 
-	getAnimationDuration: function ( name ) {
+	getAnimationDuration: function (name) {
 
-		var duration = - 1;
+		var duration = -1;
 
-		var animation = this.animationsMap[ name ];
+		var animation = this.animationsMap[name];
 
-		if ( animation ) {
+		if (animation) {
 
 			duration = animation.duration;
 
@@ -211,28 +211,28 @@ THREE.MorphBlendMesh.prototype = Object.assign( Object.create( THREE.Mesh.protot
 
 	},
 
-	playAnimation: function ( name ) {
+	playAnimation: function (name) {
 
-		var animation = this.animationsMap[ name ];
+		var animation = this.animationsMap[name];
 
-		if ( animation ) {
+		if (animation) {
 
 			animation.time = 0;
 			animation.active = true;
 
 		} else {
 
-			console.warn( "THREE.MorphBlendMesh: animation[" + name + "] undefined in .playAnimation()" );
+			console.warn("THREE.MorphBlendMesh: animation[" + name + "] undefined in .playAnimation()");
 
 		}
 
 	},
 
-	stopAnimation: function ( name ) {
+	stopAnimation: function (name) {
 
-		var animation = this.animationsMap[ name ];
+		var animation = this.animationsMap[name];
 
-		if ( animation ) {
+		if (animation) {
 
 			animation.active = false;
 
@@ -240,32 +240,32 @@ THREE.MorphBlendMesh.prototype = Object.assign( Object.create( THREE.Mesh.protot
 
 	},
 
-	update: function ( delta ) {
+	update: function (delta) {
 
-		for ( var i = 0, il = this.animationsList.length; i < il; i ++ ) {
+		for (var i = 0, il = this.animationsList.length; i < il; i++) {
 
-			var animation = this.animationsList[ i ];
+			var animation = this.animationsList[i];
 
-			if ( ! animation.active ) continue;
+			if (!animation.active) continue;
 
 			var frameTime = animation.duration / animation.length;
 
 			animation.time += animation.direction * delta;
 
-			if ( animation.mirroredLoop ) {
+			if (animation.mirroredLoop) {
 
-				if ( animation.time > animation.duration || animation.time < 0 ) {
+				if (animation.time > animation.duration || animation.time < 0) {
 
-					animation.direction *= - 1;
+					animation.direction *= -1;
 
-					if ( animation.time > animation.duration ) {
+					if (animation.time > animation.duration) {
 
 						animation.time = animation.duration;
 						animation.directionBackwards = true;
 
 					}
 
-					if ( animation.time < 0 ) {
+					if (animation.time < 0) {
 
 						animation.time = 0;
 						animation.directionBackwards = false;
@@ -278,37 +278,37 @@ THREE.MorphBlendMesh.prototype = Object.assign( Object.create( THREE.Mesh.protot
 
 				animation.time = animation.time % animation.duration;
 
-				if ( animation.time < 0 ) animation.time += animation.duration;
+				if (animation.time < 0) animation.time += animation.duration;
 
 			}
 
-			var keyframe = animation.start + THREE.MathUtils.clamp( Math.floor( animation.time / frameTime ), 0, animation.length - 1 );
+			var keyframe = animation.start + THREE.MathUtils.clamp(Math.floor(animation.time / frameTime), 0, animation.length - 1);
 			var weight = animation.weight;
 
-			if ( keyframe !== animation.currentFrame ) {
+			if (keyframe !== animation.currentFrame) {
 
-				this.morphTargetInfluences[ animation.lastFrame ] = 0;
-				this.morphTargetInfluences[ animation.currentFrame ] = 1 * weight;
+				this.morphTargetInfluences[animation.lastFrame] = 0;
+				this.morphTargetInfluences[animation.currentFrame] = 1 * weight;
 
-				this.morphTargetInfluences[ keyframe ] = 0;
+				this.morphTargetInfluences[keyframe] = 0;
 
 				animation.lastFrame = animation.currentFrame;
 				animation.currentFrame = keyframe;
 
 			}
 
-			var mix = ( animation.time % frameTime ) / frameTime;
+			var mix = (animation.time % frameTime) / frameTime;
 
-			if ( animation.directionBackwards ) mix = 1 - mix;
+			if (animation.directionBackwards) mix = 1 - mix;
 
-			if ( animation.currentFrame !== animation.lastFrame ) {
+			if (animation.currentFrame !== animation.lastFrame) {
 
-				this.morphTargetInfluences[ animation.currentFrame ] = mix * weight;
-				this.morphTargetInfluences[ animation.lastFrame ] = ( 1 - mix ) * weight;
+				this.morphTargetInfluences[animation.currentFrame] = mix * weight;
+				this.morphTargetInfluences[animation.lastFrame] = (1 - mix) * weight;
 
 			} else {
 
-				this.morphTargetInfluences[ animation.currentFrame ] = weight;
+				this.morphTargetInfluences[animation.currentFrame] = weight;
 
 			}
 
@@ -316,4 +316,4 @@ THREE.MorphBlendMesh.prototype = Object.assign( Object.create( THREE.Mesh.protot
 
 	}
 
-} );
+});

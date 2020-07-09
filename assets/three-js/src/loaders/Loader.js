@@ -1,12 +1,12 @@
-import { DefaultLoadingManager } from './LoadingManager.js';
+import {DefaultLoadingManager} from './LoadingManager.js';
 
 /**
  * @author alteredq / http://alteredqualia.com/
  */
 
-function Loader( manager ) {
+function Loader(manager) {
 
-	this.manager = ( manager !== undefined ) ? manager : DefaultLoadingManager;
+	this.manager = (manager !== undefined) ? manager : DefaultLoadingManager;
 
 	this.crossOrigin = 'anonymous';
 	this.path = '';
@@ -14,45 +14,47 @@ function Loader( manager ) {
 
 }
 
-Object.assign( Loader.prototype, {
+Object.assign(Loader.prototype, {
 
-	load: function ( /* url, onLoad, onProgress, onError */ ) {},
+	load: function ( /* url, onLoad, onProgress, onError */) {
+	},
 
-	loadAsync: function ( url, onProgress ) {
+	loadAsync: function (url, onProgress) {
 
 		var scope = this;
 
-		return new Promise( function ( resolve, reject ) {
+		return new Promise(function (resolve, reject) {
 
-			scope.load( url, resolve, onProgress, reject );
+			scope.load(url, resolve, onProgress, reject);
 
-		} );
+		});
 
 	},
 
-	parse: function ( /* data */ ) {},
+	parse: function ( /* data */) {
+	},
 
-	setCrossOrigin: function ( crossOrigin ) {
+	setCrossOrigin: function (crossOrigin) {
 
 		this.crossOrigin = crossOrigin;
 		return this;
 
 	},
 
-	setPath: function ( path ) {
+	setPath: function (path) {
 
 		this.path = path;
 		return this;
 
 	},
 
-	setResourcePath: function ( resourcePath ) {
+	setResourcePath: function (resourcePath) {
 
 		this.resourcePath = resourcePath;
 		return this;
 
 	}
 
-} );
+});
 
-export { Loader };
+export {Loader};

@@ -8,9 +8,9 @@ var AudioContext = {
 
 	getContext: function () {
 
-		if ( _context === undefined ) {
+		if (_context === undefined) {
 
-			_context = new ( window.AudioContext || window.webkitAudioContext )();
+			_context = new (window.AudioContext || window.webkitAudioContext)();
 
 		}
 
@@ -18,7 +18,7 @@ var AudioContext = {
 
 	},
 
-	setContext: function ( value ) {
+	setContext: function (value) {
 
 		_context = value;
 
@@ -26,4 +26,4 @@ var AudioContext = {
 
 };
 
-export { AudioContext };
+export {AudioContext};

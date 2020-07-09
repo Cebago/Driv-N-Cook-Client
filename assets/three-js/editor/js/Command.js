@@ -9,9 +9,9 @@
  * @constructor
  */
 
-var Command = function ( editor ) {
+var Command = function (editor) {
 
-	this.id = - 1;
+	this.id = -1;
 	this.inMemory = false;
 	this.updatable = false;
 	this.type = '';
@@ -30,7 +30,7 @@ Command.prototype.toJSON = function () {
 
 };
 
-Command.prototype.fromJSON = function ( json ) {
+Command.prototype.fromJSON = function (json) {
 
 	this.inMemory = true;
 	this.type = json.type;
@@ -39,4 +39,4 @@ Command.prototype.fromJSON = function ( json ) {
 
 };
 
-export { Command };
+export {Command};

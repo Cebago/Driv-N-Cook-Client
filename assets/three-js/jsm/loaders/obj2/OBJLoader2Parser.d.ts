@@ -1,6 +1,5 @@
 export class OBJLoader2Parser {
 
-	constructor();
 	callbacks: {
 		onProgress: Function;
 		onAssetAvailable: Function;
@@ -14,12 +13,10 @@ export class OBJLoader2Parser {
 	useOAsMesh: boolean;
 	useIndices: boolean;
 	disregardNormals: boolean;
-
 	vertices: number[];
 	colors: number[];
 	normals: number[];
 	uvs: number[];
-
 	rawMesh: {
 		objectName: string;
 		groupName: string;
@@ -40,7 +37,6 @@ export class OBJLoader2Parser {
 			smoothingGroupCount: number;
 		}
 	};
-
 	inputObjectCount: number;
 	outputObjectCount: number;
 	globalCounts: {
@@ -51,24 +47,35 @@ export class OBJLoader2Parser {
 		currentByte: number;
 		totalBytes: number;
 	};
-
 	logging: {
 		enabled: boolean;
 		debug: boolean;
 	};
 
-	setMaterialPerSmoothingGroup( materialPerSmoothingGroup: boolean ): this;
-	setUseOAsMesh( useOAsMesh: boolean ): this;
-	setUseIndices( useIndices: boolean ): this;
-	setDisregardNormals( disregardNormals: boolean ): this;
+	constructor();
 
-	setCallbackOnAssetAvailable( onAssetAvailable: Function ): this;
-	setCallbackOnProgress( onProgress: Function ): this;
-	setCallbackOnError( onError: Function ): this;
-	setCallbackOnLoad( onLoad: Function ): this;
-	setLogging( enabled: boolean, debug: boolean ): this;
-	setMaterials( materials: Object ): void;
-	execute( arrayBuffer: Uint8Array ): void;
-	executeLegacy( text: string ): void;
+	setMaterialPerSmoothingGroup(materialPerSmoothingGroup: boolean): this;
+
+	setUseOAsMesh(useOAsMesh: boolean): this;
+
+	setUseIndices(useIndices: boolean): this;
+
+	setDisregardNormals(disregardNormals: boolean): this;
+
+	setCallbackOnAssetAvailable(onAssetAvailable: Function): this;
+
+	setCallbackOnProgress(onProgress: Function): this;
+
+	setCallbackOnError(onError: Function): this;
+
+	setCallbackOnLoad(onLoad: Function): this;
+
+	setLogging(enabled: boolean, debug: boolean): this;
+
+	setMaterials(materials: Object): void;
+
+	execute(arrayBuffer: Uint8Array): void;
+
+	executeLegacy(text: string): void;
 
 }

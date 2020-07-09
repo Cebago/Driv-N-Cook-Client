@@ -23,7 +23,7 @@
 */
 
 THREE.OceanShaders = {};
-THREE.OceanShaders[ "ocean_sim_vertex" ] = {
+THREE.OceanShaders["ocean_sim_vertex"] = {
 	vertexShader: [
 		"varying vec2 vUV;",
 
@@ -31,13 +31,13 @@ THREE.OceanShaders[ "ocean_sim_vertex" ] = {
 		"	vUV = position.xy * 0.5 + 0.5;",
 		"	gl_Position = vec4(position, 1.0 );",
 		"}"
-	].join( "\n" )
+	].join("\n")
 };
-THREE.OceanShaders[ "ocean_subtransform" ] = {
+THREE.OceanShaders["ocean_subtransform"] = {
 	uniforms: {
-		"u_input": { value: null },
-		"u_transformSize": { value: 512.0 },
-		"u_subtransformSize": { value: 250.0 }
+		"u_input": {value: null},
+		"u_transformSize": {value: 512.0},
+		"u_subtransformSize": {value: 250.0}
 	},
 	fragmentShader: [
 		//GPU FFT using a Stockham formulation
@@ -81,19 +81,19 @@ THREE.OceanShaders[ "ocean_subtransform" ] = {
 
 		"	gl_FragColor = vec4(outputA, outputB);",
 		"}"
-	].join( "\n" )
+	].join("\n")
 };
-THREE.OceanShaders[ "ocean_initial_spectrum" ] = {
+THREE.OceanShaders["ocean_initial_spectrum"] = {
 	uniforms: {
-		"u_wind": { value: new THREE.Vector2( 10.0, 10.0 ) },
-		"u_resolution": { value: 512.0 },
-		"u_size": { value: 250.0 }
+		"u_wind": {value: new THREE.Vector2(10.0, 10.0)},
+		"u_resolution": {value: 512.0},
+		"u_size": {value: 250.0}
 	},
 	vertexShader: [
 		"void main (void) {",
 		"	gl_Position = vec4(position, 1.0);",
 		"}"
-	].join( "\n" ),
+	].join("\n"),
 	fragmentShader: [
 		"precision highp float;",
 		"#include <common>",
@@ -164,14 +164,14 @@ THREE.OceanShaders[ "ocean_initial_spectrum" ] = {
 		"	}",
 		"	gl_FragColor = vec4(h, 0.0, 0.0, 0.0);",
 		"}"
-	].join( "\n" )
+	].join("\n")
 };
-THREE.OceanShaders[ "ocean_phase" ] = {
+THREE.OceanShaders["ocean_phase"] = {
 	uniforms: {
-		"u_phases": { value: null },
-		"u_deltaTime": { value: null },
-		"u_resolution": { value: null },
-		"u_size": { value: null }
+		"u_phases": {value: null},
+		"u_deltaTime": {value: null},
+		"u_resolution": {value: null},
+		"u_size": {value: null}
 	},
 	fragmentShader: [
 		"precision highp float;",
@@ -204,15 +204,15 @@ THREE.OceanShaders[ "ocean_phase" ] = {
 
 		"	gl_FragColor = vec4(phase, 0.0, 0.0, 0.0);",
 		"}"
-	].join( "\n" )
+	].join("\n")
 };
-THREE.OceanShaders[ "ocean_spectrum" ] = {
+THREE.OceanShaders["ocean_spectrum"] = {
 	uniforms: {
-		"u_size": { value: null },
-		"u_resolution": { value: null },
-		"u_choppiness": { value: null },
-		"u_phases": { value: null },
-		"u_initialSpectrum": { value: null }
+		"u_size": {value: null},
+		"u_resolution": {value: null},
+		"u_choppiness": {value: null},
+		"u_phases": {value: null},
+		"u_initialSpectrum": {value: null}
 	},
 	fragmentShader: [
 		"precision highp float;",
@@ -268,13 +268,13 @@ THREE.OceanShaders[ "ocean_spectrum" ] = {
 
 		"	gl_FragColor = vec4(hX + multiplyByI(h), hZ);",
 		"}"
-	].join( "\n" )
+	].join("\n")
 };
-THREE.OceanShaders[ "ocean_normals" ] = {
+THREE.OceanShaders["ocean_normals"] = {
 	uniforms: {
-		"u_displacementMap": { value: null },
-		"u_resolution": { value: null },
-		"u_size": { value: null }
+		"u_displacementMap": {value: null},
+		"u_resolution": {value: null},
+		"u_size": {value: null}
 	},
 	fragmentShader: [
 		"precision highp float;",
@@ -302,21 +302,21 @@ THREE.OceanShaders[ "ocean_normals" ] = {
 
 		"	gl_FragColor = vec4(normalize(topRight + topLeft + bottomLeft + bottomRight), 1.0);",
 		"}"
-	].join( "\n" )
+	].join("\n")
 };
-THREE.OceanShaders[ "ocean_main" ] = {
+THREE.OceanShaders["ocean_main"] = {
 	uniforms: {
-		"u_displacementMap": { value: null },
-		"u_normalMap": { value: null },
-		"u_geometrySize": { value: null },
-		"u_size": { value: null },
-		"u_projectionMatrix": { value: null },
-		"u_viewMatrix": { value: null },
-		"u_cameraPosition": { value: null },
-		"u_skyColor": { value: null },
-		"u_oceanColor": { value: null },
-		"u_sunDirection": { value: null },
-		"u_exposure": { value: null }
+		"u_displacementMap": {value: null},
+		"u_normalMap": {value: null},
+		"u_geometrySize": {value: null},
+		"u_size": {value: null},
+		"u_projectionMatrix": {value: null},
+		"u_viewMatrix": {value: null},
+		"u_cameraPosition": {value: null},
+		"u_skyColor": {value: null},
+		"u_oceanColor": {value: null},
+		"u_sunDirection": {value: null},
+		"u_exposure": {value: null}
 	},
 	vertexShader: [
 		"precision highp float;",
@@ -336,7 +336,7 @@ THREE.OceanShaders[ "ocean_main" ] = {
 		"	vUV = uv;",
 		"	gl_Position = u_projectionMatrix * u_viewMatrix * vec4(newPos, 1.0);",
 		"}"
-	].join( "\n" ),
+	].join("\n"),
 	fragmentShader: [
 		"precision highp float;",
 
@@ -369,5 +369,5 @@ THREE.OceanShaders[ "ocean_main" ] = {
 
 		"	gl_FragColor = vec4(hdr(color, u_exposure), 1.0);",
 		"}"
-	].join( "\n" )
+	].join("\n")
 };

@@ -2,19 +2,19 @@ function glsl() {
 
 	return {
 
-		transform( code, id ) {
+		transform(code, id) {
 
-			if ( /\.glsl$/.test( id ) === false ) return;
+			if (/\.glsl$/.test(id) === false) return;
 
 			var transformedCode = 'export default ' + JSON.stringify(
 				code
-					.replace( /[ \t]*\/\/.*\n/g, '' )
-					.replace( /[ \t]*\/\*[\s\S]*?\*\//g, '' )
-					.replace( /\n{2,}/g, '\n' )
+					.replace(/[ \t]*\/\/.*\n/g, '')
+					.replace(/[ \t]*\/\*[\s\S]*?\*\//g, '')
+					.replace(/\n{2,}/g, '\n')
 			) + ';';
 			return {
 				code: transformedCode,
-				map: { mappings: '' }
+				map: {mappings: ''}
 			};
 
 		}

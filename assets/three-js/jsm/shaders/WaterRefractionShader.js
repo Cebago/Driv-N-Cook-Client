@@ -48,7 +48,7 @@ var WaterRefractionShader = {
 
 		"}"
 
-	].join( "\n" ),
+	].join("\n"),
 
 	fragmentShader: [
 
@@ -94,7 +94,7 @@ var WaterRefractionShader = {
 
 		"}"
 
-	].join( "\n" )
+	].join("\n")
 };
 
-export { WaterRefractionShader };
+export {WaterRefractionShader};

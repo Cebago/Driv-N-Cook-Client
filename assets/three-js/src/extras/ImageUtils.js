@@ -8,34 +8,34 @@ var _canvas;
 
 var ImageUtils = {
 
-	getDataURL: function ( image ) {
+	getDataURL: function (image) {
 
 		var canvas;
 
-		if ( typeof HTMLCanvasElement == 'undefined' ) {
+		if (typeof HTMLCanvasElement == 'undefined') {
 
 			return image.src;
 
-		} else if ( image instanceof HTMLCanvasElement ) {
+		} else if (image instanceof HTMLCanvasElement) {
 
 			canvas = image;
 
 		} else {
 
-			if ( _canvas === undefined ) _canvas = document.createElementNS( 'http://www.w3.org/1999/xhtml', 'canvas' );
+			if (_canvas === undefined) _canvas = document.createElementNS('http://www.w3.org/1999/xhtml', 'canvas');
 
 			_canvas.width = image.width;
 			_canvas.height = image.height;
 
-			var context = _canvas.getContext( '2d' );
+			var context = _canvas.getContext('2d');
 
-			if ( image instanceof ImageData ) {
+			if (image instanceof ImageData) {
 
-				context.putImageData( image, 0, 0 );
+				context.putImageData(image, 0, 0);
 
 			} else {
 
-				context.drawImage( image, 0, 0, image.width, image.height );
+				context.drawImage(image, 0, 0, image.width, image.height);
 
 			}
 
@@ -43,13 +43,13 @@ var ImageUtils = {
 
 		}
 
-		if ( canvas.width > 2048 || canvas.height > 2048 ) {
+		if (canvas.width > 2048 || canvas.height > 2048) {
 
-			return canvas.toDataURL( 'image/jpeg', 0.6 );
+			return canvas.toDataURL('image/jpeg', 0.6);
 
 		} else {
 
-			return canvas.toDataURL( 'image/png' );
+			return canvas.toDataURL('image/png');
 
 		}
 
@@ -57,4 +57,4 @@ var ImageUtils = {
 
 };
 
-export { ImageUtils };
+export {ImageUtils};

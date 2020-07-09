@@ -14,8 +14,8 @@ THREE.TriangleBlurShader = {
 
 	uniforms: {
 
-		"texture": { value: null },
-		"delta": { value: new THREE.Vector2( 1, 1 ) }
+		"texture": {value: null},
+		"delta": {value: new THREE.Vector2(1, 1)}
 
 	},
 
@@ -30,7 +30,7 @@ THREE.TriangleBlurShader = {
 
 		"}"
 
-	].join( "\n" ),
+	].join("\n"),
 
 	fragmentShader: [
 
@@ -67,6 +67,6 @@ THREE.TriangleBlurShader = {
 
 		"}"
 
-	].join( "\n" )
+	].join("\n")
 
 };

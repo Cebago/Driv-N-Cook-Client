@@ -12,9 +12,9 @@ var VignetteShader = {
 
 	uniforms: {
 
-		"tDiffuse": { value: null },
-		"offset": { value: 1.0 },
-		"darkness": { value: 1.0 }
+		"tDiffuse": {value: null},
+		"offset": {value: 1.0},
+		"darkness": {value: 1.0}
 
 	},
 
@@ -29,7 +29,7 @@ var VignetteShader = {
 
 		"}"
 
-	].join( "\n" ),
+	].join("\n"),
 
 	fragmentShader: [
 
@@ -60,8 +60,8 @@ var VignetteShader = {
 
 		"}"
 
-	].join( "\n" )
+	].join("\n")
 
 };
 
-export { VignetteShader };
+export {VignetteShader};

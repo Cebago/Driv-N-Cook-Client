@@ -1,7 +1,8 @@
 <?php
 
 
-class Fidelity implements  JsonSerializable{
+class Fidelity implements JsonSerializable
+{
     private int $idFidelity;
     private int $points;
 

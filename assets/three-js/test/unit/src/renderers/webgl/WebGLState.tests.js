@@ -3,162 +3,160 @@
  */
 /* global QUnit */
 
-import { WebGLState } from '../../../../../src/renderers/webgl/WebGLState';
+export default QUnit.module('Renderers', () => {
 
-export default QUnit.module( 'Renderers', () => {
+	QUnit.module('WebGL', () => {
 
-	QUnit.module( 'WebGL', () => {
-
-		QUnit.module( 'WebGLState', () => {
+		QUnit.module('WebGLState', () => {
 
 			// INSTANCING
-			QUnit.todo( "Instancing", ( assert ) => {
+			QUnit.todo("Instancing", (assert) => {
 
-				assert.ok( false, "everything's gonna be alright" );
+				assert.ok(false, "everything's gonna be alright");
 
-			} );
+			});
 
 			// PUBLIC STUFF
-			QUnit.todo( "buffers", ( assert ) => {
+			QUnit.todo("buffers", (assert) => {
 
-				assert.ok( false, "everything's gonna be alright" );
+				assert.ok(false, "everything's gonna be alright");
 
-			} );
+			});
 
-			QUnit.todo( "initAttributes", ( assert ) => {
+			QUnit.todo("initAttributes", (assert) => {
 
-				assert.ok( false, "everything's gonna be alright" );
+				assert.ok(false, "everything's gonna be alright");
 
-			} );
+			});
 
-			QUnit.todo( "enableAttribute", ( assert ) => {
+			QUnit.todo("enableAttribute", (assert) => {
 
-				assert.ok( false, "everything's gonna be alright" );
+				assert.ok(false, "everything's gonna be alright");
 
-			} );
+			});
 
-			QUnit.todo( "enableAttributeAndDivisor", ( assert ) => {
+			QUnit.todo("enableAttributeAndDivisor", (assert) => {
 
-				assert.ok( false, "everything's gonna be alright" );
+				assert.ok(false, "everything's gonna be alright");
 
-			} );
+			});
 
-			QUnit.todo( "disableUnusedAttributes", ( assert ) => {
+			QUnit.todo("disableUnusedAttributes", (assert) => {
 
-				assert.ok( false, "everything's gonna be alright" );
+				assert.ok(false, "everything's gonna be alright");
 
-			} );
+			});
 
-			QUnit.todo( "enable", ( assert ) => {
+			QUnit.todo("enable", (assert) => {
 
-				assert.ok( false, "everything's gonna be alright" );
+				assert.ok(false, "everything's gonna be alright");
 
-			} );
+			});
 
-			QUnit.todo( "disable", ( assert ) => {
+			QUnit.todo("disable", (assert) => {
 
-				assert.ok( false, "everything's gonna be alright" );
+				assert.ok(false, "everything's gonna be alright");
 
-			} );
+			});
 
-			QUnit.todo( "getCompressedTextureFormats", ( assert ) => {
+			QUnit.todo("getCompressedTextureFormats", (assert) => {
 
-				assert.ok( false, "everything's gonna be alright" );
+				assert.ok(false, "everything's gonna be alright");
 
-			} );
+			});
 
-			QUnit.todo( "useProgram", ( assert ) => {
+			QUnit.todo("useProgram", (assert) => {
 
-				assert.ok( false, "everything's gonna be alright" );
+				assert.ok(false, "everything's gonna be alright");
 
-			} );
+			});
 
-			QUnit.todo( "setBlending", ( assert ) => {
+			QUnit.todo("setBlending", (assert) => {
 
-				assert.ok( false, "everything's gonna be alright" );
+				assert.ok(false, "everything's gonna be alright");
 
-			} );
+			});
 
-			QUnit.todo( "setMaterial", ( assert ) => {
+			QUnit.todo("setMaterial", (assert) => {
 
-				assert.ok( false, "everything's gonna be alright" );
+				assert.ok(false, "everything's gonna be alright");
 
-			} );
+			});
 
-			QUnit.todo( "setFlipSided", ( assert ) => {
+			QUnit.todo("setFlipSided", (assert) => {
 
-				assert.ok( false, "everything's gonna be alright" );
+				assert.ok(false, "everything's gonna be alright");
 
-			} );
+			});
 
-			QUnit.todo( "setCullFace", ( assert ) => {
+			QUnit.todo("setCullFace", (assert) => {
 
-				assert.ok( false, "everything's gonna be alright" );
+				assert.ok(false, "everything's gonna be alright");
 
-			} );
+			});
 
-			QUnit.todo( "setLineWidth", ( assert ) => {
+			QUnit.todo("setLineWidth", (assert) => {
 
-				assert.ok( false, "everything's gonna be alright" );
+				assert.ok(false, "everything's gonna be alright");
 
-			} );
+			});
 
-			QUnit.todo( "setPolygonOffset", ( assert ) => {
+			QUnit.todo("setPolygonOffset", (assert) => {
 
-				assert.ok( false, "everything's gonna be alright" );
+				assert.ok(false, "everything's gonna be alright");
 
-			} );
+			});
 
-			QUnit.todo( "setScissorTest", ( assert ) => {
+			QUnit.todo("setScissorTest", (assert) => {
 
-				assert.ok( false, "everything's gonna be alright" );
+				assert.ok(false, "everything's gonna be alright");
 
-			} );
+			});
 
-			QUnit.todo( "activeTexture", ( assert ) => {
+			QUnit.todo("activeTexture", (assert) => {
 
-				assert.ok( false, "everything's gonna be alright" );
+				assert.ok(false, "everything's gonna be alright");
 
-			} );
+			});
 
-			QUnit.todo( "bindTexture", ( assert ) => {
+			QUnit.todo("bindTexture", (assert) => {
 
-				assert.ok( false, "everything's gonna be alright" );
+				assert.ok(false, "everything's gonna be alright");
 
-			} );
+			});
 
-			QUnit.todo( "compressedTexImage2D", ( assert ) => {
+			QUnit.todo("compressedTexImage2D", (assert) => {
 
-				assert.ok( false, "everything's gonna be alright" );
+				assert.ok(false, "everything's gonna be alright");
 
-			} );
+			});
 
-			QUnit.todo( "texImage2D", ( assert ) => {
+			QUnit.todo("texImage2D", (assert) => {
 
-				assert.ok( false, "everything's gonna be alright" );
+				assert.ok(false, "everything's gonna be alright");
 
-			} );
+			});
 
-			QUnit.todo( "scissor", ( assert ) => {
+			QUnit.todo("scissor", (assert) => {
 
-				assert.ok( false, "everything's gonna be alright" );
+				assert.ok(false, "everything's gonna be alright");
 
-			} );
+			});
 
-			QUnit.todo( "viewport", ( assert ) => {
+			QUnit.todo("viewport", (assert) => {
 
-				assert.ok( false, "everything's gonna be alright" );
+				assert.ok(false, "everything's gonna be alright");
 
-			} );
+			});
 
-			QUnit.todo( "reset", ( assert ) => {
+			QUnit.todo("reset", (assert) => {
 
-				assert.ok( false, "everything's gonna be alright" );
+				assert.ok(false, "everything's gonna be alright");
 
-			} );
+			});
 
-		} );
+		});
 
-	} );
+	});
 
-} );
+});

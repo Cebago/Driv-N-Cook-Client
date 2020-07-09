@@ -1,10 +1,10 @@
-import { Curve } from '../core/Curve.js';
-import { Vector2 } from '../../math/Vector2.js';
+import {Curve} from '../core/Curve.js';
+import {Vector2} from '../../math/Vector2.js';
 
 
-function EllipseCurve( aX, aY, xRadius, yRadius, aStartAngle, aEndAngle, aClockwise, aRotation ) {
+function EllipseCurve(aX, aY, xRadius, yRadius, aStartAngle, aEndAngle, aClockwise, aRotation) {
 
-	Curve.call( this );
+	Curve.call(this);
 
 	this.type = 'EllipseCurve';
 
@@ -23,26 +23,26 @@ function EllipseCurve( aX, aY, xRadius, yRadius, aStartAngle, aEndAngle, aClockw
 
 }
 
-EllipseCurve.prototype = Object.create( Curve.prototype );
+EllipseCurve.prototype = Object.create(Curve.prototype);
 EllipseCurve.prototype.constructor = EllipseCurve;
 
 EllipseCurve.prototype.isEllipseCurve = true;
 
-EllipseCurve.prototype.getPoint = function ( t, optionalTarget ) {
+EllipseCurve.prototype.getPoint = function (t, optionalTarget) {
 
 	var point = optionalTarget || new Vector2();
 
 	var twoPi = Math.PI * 2;
 	var deltaAngle = this.aEndAngle - this.aStartAngle;
-	var samePoints = Math.abs( deltaAngle ) < Number.EPSILON;
+	var samePoints = Math.abs(deltaAngle) < Number.EPSILON;
 
 	// ensures that deltaAngle is 0 .. 2 PI
-	while ( deltaAngle < 0 ) deltaAngle += twoPi;
-	while ( deltaAngle > twoPi ) deltaAngle -= twoPi;
+	while (deltaAngle < 0) deltaAngle += twoPi;
+	while (deltaAngle > twoPi) deltaAngle -= twoPi;
 
-	if ( deltaAngle < Number.EPSILON ) {
+	if (deltaAngle < Number.EPSILON) {
 
-		if ( samePoints ) {
+		if (samePoints) {
 
 			deltaAngle = 0;
 
@@ -54,11 +54,11 @@ EllipseCurve.prototype.getPoint = function ( t, optionalTarget ) {
 
 	}
 
-	if ( this.aClockwise === true && ! samePoints ) {
+	if (this.aClockwise === true && !samePoints) {
 
-		if ( deltaAngle === twoPi ) {
+		if (deltaAngle === twoPi) {
 
-			deltaAngle = - twoPi;
+			deltaAngle = -twoPi;
 
 		} else {
 
@@ -69,13 +69,13 @@ EllipseCurve.prototype.getPoint = function ( t, optionalTarget ) {
 	}
 
 	var angle = this.aStartAngle + t * deltaAngle;
-	var x = this.aX + this.xRadius * Math.cos( angle );
-	var y = this.aY + this.yRadius * Math.sin( angle );
+	var x = this.aX + this.xRadius * Math.cos(angle);
+	var y = this.aY + this.yRadius * Math.sin(angle);
 
-	if ( this.aRotation !== 0 ) {
+	if (this.aRotation !== 0) {
 
-		var cos = Math.cos( this.aRotation );
-		var sin = Math.sin( this.aRotation );
+		var cos = Math.cos(this.aRotation);
+		var sin = Math.sin(this.aRotation);
 
 		var tx = x - this.aX;
 		var ty = y - this.aY;
@@ -86,13 +86,13 @@ EllipseCurve.prototype.getPoint = function ( t, optionalTarget ) {
 
 	}
 
-	return point.set( x, y );
+	return point.set(x, y);
 
 };
 
-EllipseCurve.prototype.copy = function ( source ) {
+EllipseCurve.prototype.copy = function (source) {
 
-	Curve.prototype.copy.call( this, source );
+	Curve.prototype.copy.call(this, source);
 
 	this.aX = source.aX;
 	this.aY = source.aY;
@@ -114,7 +114,7 @@ EllipseCurve.prototype.copy = function ( source ) {
 
 EllipseCurve.prototype.toJSON = function () {
 
-	var data = Curve.prototype.toJSON.call( this );
+	var data = Curve.prototype.toJSON.call(this);
 
 	data.aX = this.aX;
 	data.aY = this.aY;
@@ -133,9 +133,9 @@ EllipseCurve.prototype.toJSON = function () {
 
 };
 
-EllipseCurve.prototype.fromJSON = function ( json ) {
+EllipseCurve.prototype.fromJSON = function (json) {
 
-	Curve.prototype.fromJSON.call( this, json );
+	Curve.prototype.fromJSON.call(this, json);
 
 	this.aX = json.aX;
 	this.aY = json.aY;
@@ -155,4 +155,4 @@ EllipseCurve.prototype.fromJSON = function ( json ) {
 };
 
 
-export { EllipseCurve };
+export {EllipseCurve};

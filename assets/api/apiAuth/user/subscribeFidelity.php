@@ -19,7 +19,7 @@ if (isset($json['token'])) {
     if ($user === null) {
         http_response_code(401);
     }
-    
+
 
 } else {
     http_response_code(400);

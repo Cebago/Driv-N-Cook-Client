@@ -9,7 +9,7 @@ THREE.GammaCorrectionShader = {
 
 	uniforms: {
 
-		"tDiffuse": { value: null }
+		"tDiffuse": {value: null}
 
 	},
 
@@ -24,7 +24,7 @@ THREE.GammaCorrectionShader = {
 
 		"}"
 
-	].join( "\n" ),
+	].join("\n"),
 
 	fragmentShader: [
 
@@ -40,6 +40,6 @@ THREE.GammaCorrectionShader = {
 
 		"}"
 
-	].join( "\n" )
+	].join("\n")
 
 };

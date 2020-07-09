@@ -1,9 +1,18 @@
-import { Scene } from './../../scenes/Scene';
-import { Camera } from './../../cameras/Camera';
-import { WebGLRenderer } from '../WebGLRenderer';
-import { ShadowMapType } from '../../constants';
+import {Scene} from './../../scenes/Scene';
+import {Camera} from './../../cameras/Camera';
+import {WebGLRenderer} from '../WebGLRenderer';
+import {ShadowMapType} from '../../constants';
 
 export class WebGLShadowMap {
+
+	enabled: boolean;
+	autoUpdate: boolean;
+	needsUpdate: boolean;
+	type: ShadowMapType;
+	/**
+	 * @deprecated Use {@link WebGLShadowMap#renderReverseSided .shadowMap.renderReverseSided} instead.
+	 */
+	cullFace: any;
 
 	constructor(
 		_renderer: WebGLRenderer,
@@ -11,16 +20,6 @@ export class WebGLShadowMap {
 		maxTextureSize: number
 	);
 
-	enabled: boolean;
-	autoUpdate: boolean;
-	needsUpdate: boolean;
-	type: ShadowMapType;
-
-	render( scene: Scene, camera: Camera ): void;
-
-	/**
-	 * @deprecated Use {@link WebGLShadowMap#renderReverseSided .shadowMap.renderReverseSided} instead.
-	 */
-	cullFace: any;
+	render(scene: Scene, camera: Camera): void;
 
 }

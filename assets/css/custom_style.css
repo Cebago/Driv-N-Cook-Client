@@ -1,6 +1,12 @@
 .mapModal {
-    height: 600px;  /* The height is 400 pixels */
-    width: 70%;  /* The width is the width of the web page */
+    height: 600px; /* The height is 400 pixels */
+    width: 70%; /* The width is the width of the web page */
     margin: 20px auto auto auto;
+}
 
+.eventText {
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
 }

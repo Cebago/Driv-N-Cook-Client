@@ -7,62 +7,62 @@ var NodeLib = {
 	nodes: {},
 	keywords: {},
 
-	add: function ( node ) {
+	add: function (node) {
 
-		this.nodes[ node.name ] = node;
+		this.nodes[node.name] = node;
 
 	},
 
-	addKeyword: function ( name, callback, cache ) {
+	addKeyword: function (name, callback, cache) {
 
 		cache = cache !== undefined ? cache : true;
 
-		this.keywords[ name ] = { callback: callback, cache: cache };
+		this.keywords[name] = {callback: callback, cache: cache};
 
 	},
 
-	remove: function ( node ) {
+	remove: function (node) {
 
-		delete this.nodes[ node.name ];
-
-	},
-
-	removeKeyword: function ( name ) {
-
-		delete this.keywords[ name ];
+		delete this.nodes[node.name];
 
 	},
 
-	get: function ( name ) {
+	removeKeyword: function (name) {
 
-		return this.nodes[ name ];
-
-	},
-
-	getKeyword: function ( name, builder ) {
-
-		return this.keywords[ name ].callback.call( this, builder );
+		delete this.keywords[name];
 
 	},
 
-	getKeywordData: function ( name ) {
+	get: function (name) {
 
-		return this.keywords[ name ];
-
-	},
-
-	contains: function ( name ) {
-
-		return this.nodes[ name ] !== undefined;
+		return this.nodes[name];
 
 	},
 
-	containsKeyword: function ( name ) {
+	getKeyword: function (name, builder) {
 
-		return this.keywords[ name ] !== undefined;
+		return this.keywords[name].callback.call(this, builder);
+
+	},
+
+	getKeywordData: function (name) {
+
+		return this.keywords[name];
+
+	},
+
+	contains: function (name) {
+
+		return this.nodes[name] !== undefined;
+
+	},
+
+	containsKeyword: function (name) {
+
+		return this.keywords[name] !== undefined;
 
 	}
 
 };
 
-export { NodeLib };
+export {NodeLib};

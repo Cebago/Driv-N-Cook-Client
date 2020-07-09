@@ -3,20 +3,20 @@
  * Developed as part of a project at University of Applied Sciences and Arts Northwestern Switzerland (www.fhnw.ch)
  */
 
-import { Command } from '../Command.js';
+import {Command} from '../Command.js';
 
-var SetMaterialVectorCommand = function ( editor, object, attributeName, newValue, materialSlot ) {
+var SetMaterialVectorCommand = function (editor, object, attributeName, newValue, materialSlot) {
 
-	Command.call( this, editor );
+	Command.call(this, editor);
 
 	this.type = 'SetMaterialColorCommand';
 	this.name = 'Set Material.' + attributeName;
 	this.updatable = true;
 
 	this.object = object;
-	this.material = this.editor.getObjectMaterial( object, materialSlot );
+	this.material = this.editor.getObjectMaterial(object, materialSlot);
 
-	this.oldValue = ( this.material !== undefined ) ? this.material[ attributeName ].toArray() : undefined;
+	this.oldValue = (this.material !== undefined) ? this.material[attributeName].toArray() : undefined;
 	this.newValue = newValue;
 
 	this.attributeName = attributeName;
@@ -27,21 +27,21 @@ SetMaterialVectorCommand.prototype = {
 
 	execute: function () {
 
-		this.material[ this.attributeName ].fromArray( this.newValue );
+		this.material[this.attributeName].fromArray(this.newValue);
 
-		this.editor.signals.materialChanged.dispatch( this.material );
+		this.editor.signals.materialChanged.dispatch(this.material);
 
 	},
 
 	undo: function () {
 
-		this.material[ this.attributeName ].fromArray( this.oldValue );
+		this.material[this.attributeName].fromArray(this.oldValue);
 
-		this.editor.signals.materialChanged.dispatch( this.material );
+		this.editor.signals.materialChanged.dispatch(this.material);
 
 	},
 
-	update: function ( cmd ) {
+	update: function (cmd) {
 
 		this.newValue = cmd.newValue;
 
@@ -49,7 +49,7 @@ SetMaterialVectorCommand.prototype = {
 
 	toJSON: function () {
 
-		var output = Command.prototype.toJSON.call( this );
+		var output = Command.prototype.toJSON.call(this);
 
 		output.objectUuid = this.object.uuid;
 		output.attributeName = this.attributeName;
@@ -60,11 +60,11 @@ SetMaterialVectorCommand.prototype = {
 
 	},
 
-	fromJSON: function ( json ) {
+	fromJSON: function (json) {
 
-		Command.prototype.fromJSON.call( this, json );
+		Command.prototype.fromJSON.call(this, json);
 
-		this.object = this.editor.objectByUuid( json.objectUuid );
+		this.object = this.editor.objectByUuid(json.objectUuid);
 		this.attributeName = json.attributeName;
 		this.oldValue = json.oldValue;
 		this.newValue = json.newValue;
@@ -73,4 +73,4 @@ SetMaterialVectorCommand.prototype = {
 
 };
 
-export { SetMaterialVectorCommand };
+export {SetMaterialVectorCommand};

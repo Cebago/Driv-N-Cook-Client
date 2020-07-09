@@ -3,21 +3,21 @@
  * @author mrdoob / http://mrdoob.com/
  */
 
-import { Mesh } from '../objects/Mesh.js';
-import { MeshBasicMaterial } from '../materials/MeshBasicMaterial.js';
-import { SphereBufferGeometry } from '../geometries/SphereGeometry.js';
+import {Mesh} from '../objects/Mesh.js';
+import {MeshBasicMaterial} from '../materials/MeshBasicMaterial.js';
+import {SphereBufferGeometry} from '../geometries/SphereGeometry.js';
 
-function PointLightHelper( light, sphereSize, color ) {
+function PointLightHelper(light, sphereSize, color) {
 
 	this.light = light;
 	this.light.updateMatrixWorld();
 
 	this.color = color;
 
-	var geometry = new SphereBufferGeometry( sphereSize, 4, 2 );
-	var material = new MeshBasicMaterial( { wireframe: true, fog: false, toneMapped: false } );
+	var geometry = new SphereBufferGeometry(sphereSize, 4, 2);
+	var material = new MeshBasicMaterial({wireframe: true, fog: false, toneMapped: false});
 
-	Mesh.call( this, geometry, material );
+	Mesh.call(this, geometry, material);
 
 	this.type = 'PointLightHelper';
 
@@ -51,7 +51,7 @@ function PointLightHelper( light, sphereSize, color ) {
 
 }
 
-PointLightHelper.prototype = Object.create( Mesh.prototype );
+PointLightHelper.prototype = Object.create(Mesh.prototype);
 PointLightHelper.prototype.constructor = PointLightHelper;
 
 PointLightHelper.prototype.dispose = function () {
@@ -63,13 +63,13 @@ PointLightHelper.prototype.dispose = function () {
 
 PointLightHelper.prototype.update = function () {
 
-	if ( this.color !== undefined ) {
+	if (this.color !== undefined) {
 
-		this.material.color.set( this.color );
+		this.material.color.set(this.color);
 
 	} else {
 
-		this.material.color.copy( this.light.color );
+		this.material.color.copy(this.light.color);
 
 	}
 
@@ -91,4 +91,4 @@ PointLightHelper.prototype.update = function () {
 };
 
 
-export { PointLightHelper };
+export {PointLightHelper};

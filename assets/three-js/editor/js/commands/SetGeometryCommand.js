@@ -3,7 +3,7 @@
  * Developed as part of a project at University of Applied Sciences and Arts Northwestern Switzerland (www.fhnw.ch)
  */
 
-import { Command } from '../Command.js';
+import {Command} from '../Command.js';
 
 import * as THREE from '../../../build/three.module.js';
 
@@ -14,16 +14,16 @@ import * as THREE from '../../../build/three.module.js';
  * @constructor
  */
 
-var SetGeometryCommand = function ( editor, object, newGeometry ) {
+var SetGeometryCommand = function (editor, object, newGeometry) {
 
-	Command.call( this, editor );
+	Command.call(this, editor);
 
 	this.type = 'SetGeometryCommand';
 	this.name = 'Set Geometry';
 	this.updatable = true;
 
 	this.object = object;
-	this.oldGeometry = ( object !== undefined ) ? object.geometry : undefined;
+	this.oldGeometry = (object !== undefined) ? object.geometry : undefined;
 	this.newGeometry = newGeometry;
 
 };
@@ -36,7 +36,7 @@ SetGeometryCommand.prototype = {
 		this.object.geometry = this.newGeometry;
 		this.object.geometry.computeBoundingSphere();
 
-		this.editor.signals.geometryChanged.dispatch( this.object );
+		this.editor.signals.geometryChanged.dispatch(this.object);
 		this.editor.signals.sceneGraphChanged.dispatch();
 
 	},
@@ -47,12 +47,12 @@ SetGeometryCommand.prototype = {
 		this.object.geometry = this.oldGeometry;
 		this.object.geometry.computeBoundingSphere();
 
-		this.editor.signals.geometryChanged.dispatch( this.object );
+		this.editor.signals.geometryChanged.dispatch(this.object);
 		this.editor.signals.sceneGraphChanged.dispatch();
 
 	},
 
-	update: function ( cmd ) {
+	update: function (cmd) {
 
 		this.newGeometry = cmd.newGeometry;
 
@@ -60,7 +60,7 @@ SetGeometryCommand.prototype = {
 
 	toJSON: function () {
 
-		var output = Command.prototype.toJSON.call( this );
+		var output = Command.prototype.toJSON.call(this);
 
 		output.objectUuid = this.object.uuid;
 		output.oldGeometry = this.object.geometry.toJSON();
@@ -70,19 +70,19 @@ SetGeometryCommand.prototype = {
 
 	},
 
-	fromJSON: function ( json ) {
+	fromJSON: function (json) {
 
-		Command.prototype.fromJSON.call( this, json );
+		Command.prototype.fromJSON.call(this, json);
 
-		this.object = this.editor.objectByUuid( json.objectUuid );
+		this.object = this.editor.objectByUuid(json.objectUuid);
 
-		this.oldGeometry = parseGeometry( json.oldGeometry );
-		this.newGeometry = parseGeometry( json.newGeometry );
+		this.oldGeometry = parseGeometry(json.oldGeometry);
+		this.newGeometry = parseGeometry(json.newGeometry);
 
-		function parseGeometry( data ) {
+		function parseGeometry(data) {
 
 			var loader = new THREE.ObjectLoader();
-			return loader.parseGeometries( [ data ] )[ data.uuid ];
+			return loader.parseGeometries([data])[data.uuid];
 
 		}
 
@@ -90,4 +90,4 @@ SetGeometryCommand.prototype = {
 
 };
 
-export { SetGeometryCommand };
+export {SetGeometryCommand};

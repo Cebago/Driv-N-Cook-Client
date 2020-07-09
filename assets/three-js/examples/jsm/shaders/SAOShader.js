@@ -2,10 +2,7 @@
  * TODO
  */
 
-import {
-	Matrix4,
-	Vector2
-} from "../../../build/three.module.js";
+import {Matrix4, Vector2} from "../../../build/three.module.js";
 
 var SAOShader = {
 	defines: {
@@ -18,23 +15,23 @@ var SAOShader = {
 	},
 	uniforms: {
 
-		"tDepth": { value: null },
-		"tDiffuse": { value: null },
-		"tNormal": { value: null },
-		"size": { value: new Vector2( 512, 512 ) },
+		"tDepth": {value: null},
+		"tDiffuse": {value: null},
+		"tNormal": {value: null},
+		"size": {value: new Vector2(512, 512)},
 
-		"cameraNear": { value: 1 },
-		"cameraFar": { value: 100 },
-		"cameraProjectionMatrix": { value: new Matrix4() },
-		"cameraInverseProjectionMatrix": { value: new Matrix4() },
+		"cameraNear": {value: 1},
+		"cameraFar": {value: 100},
+		"cameraProjectionMatrix": {value: new Matrix4()},
+		"cameraInverseProjectionMatrix": {value: new Matrix4()},
 
-		"scale": { value: 1.0 },
-		"intensity": { value: 0.1 },
-		"bias": { value: 0.5 },
+		"scale": {value: 1.0},
+		"intensity": {value: 0.1},
+		"bias": {value: 0.5},
 
-		"minResolution": { value: 0.0 },
-		"kernelRadius": { value: 100.0 },
-		"randomSeed": { value: 0.0 }
+		"minResolution": {value: 0.0},
+		"kernelRadius": {value: 100.0},
+		"randomSeed": {value: 0.0}
 	},
 	vertexShader: [
 		"varying vec2 vUv;",
@@ -44,7 +41,7 @@ var SAOShader = {
 		"	gl_Position = projectionMatrix * modelViewMatrix * vec4( position, 1.0 );",
 		"}"
 
-	].join( "\n" ),
+	].join("\n"),
 	fragmentShader: [
 		"#include <common>",
 
@@ -182,7 +179,7 @@ var SAOShader = {
 		"	gl_FragColor = getDefaultColor( vUv );",
 		"	gl_FragColor.xyz *=  1.0 - ambientOcclusion;",
 		"}"
-	].join( "\n" )
+	].join("\n")
 };
 
-export { SAOShader };
+export {SAOShader};

@@ -14,11 +14,11 @@ var ParallaxShader = {
 	},
 
 	uniforms: {
-		"bumpMap": { value: null },
-		"map": { value: null },
-		"parallaxScale": { value: null },
-		"parallaxMinLayers": { value: null },
-		"parallaxMaxLayers": { value: null }
+		"bumpMap": {value: null},
+		"map": {value: null},
+		"parallaxScale": {value: null},
+		"parallaxMinLayers": {value: null},
+		"parallaxMaxLayers": {value: null}
 	},
 
 	vertexShader: [
@@ -36,7 +36,7 @@ var ParallaxShader = {
 
 		"}"
 
-	].join( "\n" ),
+	].join("\n"),
 
 	fragmentShader: [
 		"uniform sampler2D bumpMap;",
@@ -155,7 +155,7 @@ var ParallaxShader = {
 
 		"vec2 perturbUv( vec3 surfPosition, vec3 surfNormal, vec3 viewPosition ) {",
 
- 		"	vec2 texDx = dFdx( vUv );",
+		"	vec2 texDx = dFdx( vUv );",
 		"	vec2 texDy = dFdy( vUv );",
 
 		"	vec3 vSigmaX = dFdx( surfPosition );",
@@ -179,8 +179,8 @@ var ParallaxShader = {
 
 		"}"
 
-	].join( "\n" )
+	].join("\n")
 
 };
 
-export { ParallaxShader };
+export {ParallaxShader};

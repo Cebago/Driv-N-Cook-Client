@@ -14,14 +14,14 @@
  *
  */
 
-THREE.TimelinerController = function TimelinerController( scene, trackInfo, onUpdate ) {
+THREE.TimelinerController = function TimelinerController(scene, trackInfo, onUpdate) {
 
 	this._scene = scene;
 	this._trackInfo = trackInfo;
 
 	this._onUpdate = onUpdate;
 
-	this._mixer = new THREE.AnimationMixer( scene );
+	this._mixer = new THREE.AnimationMixer(scene);
 	this._clip = null;
 	this._action = null;
 
@@ -40,29 +40,29 @@ THREE.TimelinerController.prototype = {
 		var tracks = [],
 			trackInfo = this._trackInfo;
 
-		for ( var i = 0, n = trackInfo.length; i !== n; ++ i ) {
+		for (var i = 0, n = trackInfo.length; i !== n; ++i) {
 
-			var spec = trackInfo[ i ];
+			var spec = trackInfo[i];
 
-			tracks.push( this._addTrack( spec.type, spec.propertyPath, spec.initialValue, spec.interpolation ) );
+			tracks.push(this._addTrack(spec.type, spec.propertyPath, spec.initialValue, spec.interpolation));
 
 		}
 
-		this._clip = new THREE.AnimationClip( 'editclip', 0, tracks );
-		this._action = this._mixer.clipAction( this._clip ).play();
+		this._clip = new THREE.AnimationClip('editclip', 0, tracks);
+		this._action = this._mixer.clipAction(this._clip).play();
 
 	},
 
-	setDisplayTime: function ( time ) {
+	setDisplayTime: function (time) {
 
 		this._action.time = time;
-		this._mixer.update( 0 );
+		this._mixer.update(0);
 
 		this._onUpdate();
 
 	},
 
-	setDuration: function ( duration ) {
+	setDuration: function (duration) {
 
 		this._clip.duration = duration;
 
@@ -74,61 +74,61 @@ THREE.TimelinerController.prototype = {
 
 	},
 
-	getChannelKeyTimes: function ( channelName ) {
+	getChannelKeyTimes: function (channelName) {
 
-		return this._tracks[ channelName ].times;
+		return this._tracks[channelName].times;
 
 	},
 
-	setKeyframe: function ( channelName, time ) {
+	setKeyframe: function (channelName, time) {
 
-		var track = this._tracks[ channelName ],
+		var track = this._tracks[channelName],
 			times = track.times,
-			index = Timeliner.binarySearch( times, time ),
+			index = Timeliner.binarySearch(times, time),
 			values = track.values,
 			stride = track.getValueSize(),
 			offset = index * stride;
 
-		if ( index < 0 ) {
+		if (index < 0) {
 
 			// insert new keyframe
 
-			index = ~ index;
+			index = ~index;
 			offset = index * stride;
 
 			var nTimes = times.length + 1,
 				nValues = values.length + stride;
 
-			for ( var i = nTimes - 1; i !== index; -- i ) {
+			for (var i = nTimes - 1; i !== index; --i) {
 
-				times[ i ] = times[ i - 1 ];
+				times[i] = times[i - 1];
 
 			}
 
-			for ( var i = nValues - 1, e = offset + stride - 1; i !== e; -- i ) {
+			for (var i = nValues - 1, e = offset + stride - 1; i !== e; --i) {
 
-				values[ i ] = values[ i - stride ];
+				values[i] = values[i - stride];
 
 			}
 
 		}
 
-		times[ index ] = time;
-		this._propRefs[ channelName ].getValue( values, offset );
+		times[index] = time;
+		this._propRefs[channelName].getValue(values, offset);
 
 	},
 
-	delKeyframe: function ( channelName, time ) {
+	delKeyframe: function (channelName, time) {
 
-		var track = this._tracks[ channelName ],
+		var track = this._tracks[channelName],
 			times = track.times,
-			index = Timeliner.binarySearch( times, time );
+			index = Timeliner.binarySearch(times, time);
 
 		// we disallow to remove the keyframe when it is the last one we have,
 		// since the animation system is designed to always produce a defined
 		// state
 
-		if ( times.length > 1 && index >= 0 ) {
+		if (times.length > 1 && index >= 0) {
 
 			var nTimes = times.length - 1,
 				values = track.values,
@@ -137,17 +137,17 @@ THREE.TimelinerController.prototype = {
 
 			// note: no track.getValueSize when array sizes are out of sync
 
-			for ( var i = index; i !== nTimes; ++ i ) {
+			for (var i = index; i !== nTimes; ++i) {
 
-				times[ i ] = times[ i + 1 ];
+				times[i] = times[i + 1];
 
 			}
 
 			times.pop();
 
-			for ( var offset = index * stride; offset !== nValues; ++ offset ) {
+			for (var offset = index * stride; offset !== nValues; ++offset) {
 
-				values[ offset ] = values[ offset + stride ];
+				values[offset] = values[offset + stride];
 
 			}
 
@@ -157,21 +157,21 @@ THREE.TimelinerController.prototype = {
 
 	},
 
-	moveKeyframe: function ( channelName, time, delta, moveRemaining ) {
+	moveKeyframe: function (channelName, time, delta, moveRemaining) {
 
-		var track = this._tracks[ channelName ],
+		var track = this._tracks[channelName],
 			times = track.times,
-			index = Timeliner.binarySearch( times, time );
+			index = Timeliner.binarySearch(times, time);
 
-		if ( index >= 0 ) {
+		if (index >= 0) {
 
 			var endAt = moveRemaining ? times.length : index + 1,
-				needsSort = times[ index - 1 ] <= time ||
-					! moveRemaining && time >= times[ index + 1 ];
+				needsSort = times[index - 1] <= time ||
+					!moveRemaining && time >= times[index + 1];
 
-			while ( index !== endAt ) times[ index ++ ] += delta;
+			while (index !== endAt) times[index++] += delta;
 
-			if ( needsSort ) this._sort( track );
+			if (needsSort) this._sort(track);
 
 		}
 
@@ -189,12 +189,12 @@ THREE.TimelinerController.prototype = {
 
 			channels = result.channels;
 
-		for ( var i = 0, n = names.length; i !== n; ++ i ) {
+		for (var i = 0, n = names.length; i !== n; ++i) {
 
-			var name = names[ i ],
-				track = tracks[ name ];
+			var name = names[i],
+				track = tracks[name];
 
-			channels[ name ] = {
+			channels[name] = {
 
 				times: track.times,
 				values: track.values
@@ -207,65 +207,65 @@ THREE.TimelinerController.prototype = {
 
 	},
 
-	deserialize: function ( structs ) {
+	deserialize: function (structs) {
 
 		var names = this._channelNames,
 			tracks = this._tracks,
 
 			channels = structs.channels;
 
-		this.setDuration( structs.duration );
+		this.setDuration(structs.duration);
 
-		for ( var i = 0, n = names.length; i !== n; ++ i ) {
+		for (var i = 0, n = names.length; i !== n; ++i) {
 
-			var name = names[ i ],
-				track = tracks[ name ],
-				data = channels[ name ];
+			var name = names[i],
+				track = tracks[name],
+				data = channels[name];
 
-			this._setArray( track.times, data.times );
-			this._setArray( track.values, data.values );
+			this._setArray(track.times, data.times);
+			this._setArray(track.values, data.values);
 
 		}
 
 		// update display
-		this.setDisplayTime( this._mixer.time );
+		this.setDisplayTime(this._mixer.time);
 
 	},
 
-	_sort: function ( track ) {
+	_sort: function (track) {
 
-		var times = track.times, order = THREE.AnimationUtils.getKeyframeOrder( times );
+		var times = track.times, order = THREE.AnimationUtils.getKeyframeOrder(times);
 
-		this._setArray( times, THREE.AnimationUtils.sortedArray( times, 1, order ) );
+		this._setArray(times, THREE.AnimationUtils.sortedArray(times, 1, order));
 
 		var values = track.values,
 			stride = track.getValueSize();
 
-		this._setArray( values, THREE.AnimationUtils.sortedArray( values, stride, order ) );
+		this._setArray(values, THREE.AnimationUtils.sortedArray(values, stride, order));
 
 	},
 
-	_setArray: function ( dst, src ) {
+	_setArray: function (dst, src) {
 
 		dst.length = 0;
-		dst.push.apply( dst, src );
+		dst.push.apply(dst, src);
 
 	},
 
-	_addTrack: function ( type, prop, initialValue, interpolation ) {
+	_addTrack: function (type, prop, initialValue, interpolation) {
 
-		var track = new type( prop, [ 0 ], initialValue, interpolation );
+		var track = new type(prop, [0], initialValue, interpolation);
 
 		// data must be in JS arrays so it can be resized
-		track.times = Array.prototype.slice.call( track.times );
-		track.values = Array.prototype.slice.call( track.values );
+		track.times = Array.prototype.slice.call(track.times);
+		track.values = Array.prototype.slice.call(track.values);
 
-		this._channelNames.push( prop );
-		this._tracks[ prop ] = track;
+		this._channelNames.push(prop);
+		this._tracks[prop] = track;
 
 		// for recording the state:
-		this._propRefs[ prop ] =
-				new THREE.PropertyBinding( this._scene, prop );
+		this._propRefs[prop] =
+			new THREE.PropertyBinding(this._scene, prop);
 
 		return track;
 

@@ -14,25 +14,20 @@
  *		- currently doesn't handle "Sharp Edges"
  */
 
-import {
-	Face3,
-	Geometry,
-	Vector2,
-	Vector3
-} from "../../../build/three.module.js";
+import {Face3, Geometry, Vector2, Vector3} from "../../../build/three.module.js";
 
-var SubdivisionModifier = function ( subdivisions ) {
+var SubdivisionModifier = function (subdivisions) {
 
-	this.subdivisions = ( subdivisions === undefined ) ? 1 : subdivisions;
+	this.subdivisions = (subdivisions === undefined) ? 1 : subdivisions;
 
 };
 
 // Applies the "modify" pattern
-SubdivisionModifier.prototype.modify = function ( geometry ) {
+SubdivisionModifier.prototype.modify = function (geometry) {
 
-	if ( geometry.isBufferGeometry ) {
+	if (geometry.isBufferGeometry) {
 
-		geometry = new Geometry().fromBufferGeometry( geometry );
+		geometry = new Geometry().fromBufferGeometry(geometry);
 
 	} else {
 
@@ -44,9 +39,9 @@ SubdivisionModifier.prototype.modify = function ( geometry ) {
 
 	var repeats = this.subdivisions;
 
-	while ( repeats -- > 0 ) {
+	while (repeats-- > 0) {
 
-		this.smooth( geometry );
+		this.smooth(geometry);
 
 	}
 
@@ -57,41 +52,41 @@ SubdivisionModifier.prototype.modify = function ( geometry ) {
 
 };
 
-( function () {
+(function () {
 
 	// Some constants
-	var ABC = [ 'a', 'b', 'c' ];
+	var ABC = ['a', 'b', 'c'];
 
 
-	function getEdge( a, b, map ) {
+	function getEdge(a, b, map) {
 
-		var vertexIndexA = Math.min( a, b );
-		var vertexIndexB = Math.max( a, b );
+		var vertexIndexA = Math.min(a, b);
+		var vertexIndexB = Math.max(a, b);
 
 		var key = vertexIndexA + "_" + vertexIndexB;
 
-		return map[ key ];
+		return map[key];
 
 	}
 
 
-	function processEdge( a, b, vertices, map, face, metaVertices ) {
+	function processEdge(a, b, vertices, map, face, metaVertices) {
 
-		var vertexIndexA = Math.min( a, b );
-		var vertexIndexB = Math.max( a, b );
+		var vertexIndexA = Math.min(a, b);
+		var vertexIndexB = Math.max(a, b);
 
 		var key = vertexIndexA + "_" + vertexIndexB;
 
 		var edge;
 
-		if ( key in map ) {
+		if (key in map) {
 
-			edge = map[ key ];
+			edge = map[key];
 
 		} else {
 
-			var vertexA = vertices[ vertexIndexA ];
-			var vertexB = vertices[ vertexIndexB ];
+			var vertexA = vertices[vertexIndexA];
+			var vertexB = vertices[vertexIndexB];
 
 			edge = {
 
@@ -104,62 +99,62 @@ SubdivisionModifier.prototype.modify = function ( geometry ) {
 
 			};
 
-			map[ key ] = edge;
+			map[key] = edge;
 
 		}
 
-		edge.faces.push( face );
+		edge.faces.push(face);
 
-		metaVertices[ a ].edges.push( edge );
-		metaVertices[ b ].edges.push( edge );
+		metaVertices[a].edges.push(edge);
+		metaVertices[b].edges.push(edge);
 
 
 	}
 
-	function generateLookups( vertices, faces, metaVertices, edges ) {
+	function generateLookups(vertices, faces, metaVertices, edges) {
 
 		var i, il, face;
 
-		for ( i = 0, il = vertices.length; i < il; i ++ ) {
+		for (i = 0, il = vertices.length; i < il; i++) {
 
-			metaVertices[ i ] = { edges: [] };
-
-		}
-
-		for ( i = 0, il = faces.length; i < il; i ++ ) {
-
-			face = faces[ i ];
-
-			processEdge( face.a, face.b, vertices, edges, face, metaVertices );
-			processEdge( face.b, face.c, vertices, edges, face, metaVertices );
-			processEdge( face.c, face.a, vertices, edges, face, metaVertices );
+			metaVertices[i] = {edges: []};
 
 		}
 
-	}
+		for (i = 0, il = faces.length; i < il; i++) {
 
-	function newFace( newFaces, a, b, c, materialIndex ) {
+			face = faces[i];
 
-		newFaces.push( new Face3( a, b, c, undefined, undefined, materialIndex ) );
+			processEdge(face.a, face.b, vertices, edges, face, metaVertices);
+			processEdge(face.b, face.c, vertices, edges, face, metaVertices);
+			processEdge(face.c, face.a, vertices, edges, face, metaVertices);
 
-	}
-
-	function midpoint( a, b ) {
-
-		return ( Math.abs( b - a ) / 2 ) + Math.min( a, b );
+		}
 
 	}
 
-	function newUv( newUvs, a, b, c ) {
+	function newFace(newFaces, a, b, c, materialIndex) {
 
-		newUvs.push( [ a.clone(), b.clone(), c.clone() ] );
+		newFaces.push(new Face3(a, b, c, undefined, undefined, materialIndex));
+
+	}
+
+	function midpoint(a, b) {
+
+		return (Math.abs(b - a) / 2) + Math.min(a, b);
+
+	}
+
+	function newUv(newUvs, a, b, c) {
+
+		newUvs.push([a.clone(), b.clone(), c.clone()]);
 
 	}
 
 	/////////////////////////////
 
 	// Performs one iteration of Subdivision
-	SubdivisionModifier.prototype.smooth = function ( geometry ) {
+	SubdivisionModifier.prototype.smooth = function (geometry) {
 
 		var tmp = new Vector3();
 
@@ -176,13 +171,13 @@ SubdivisionModifier.prototype.modify = function ( geometry ) {
 		oldFaces = geometry.faces; // { a: oldVertex1, b: oldVertex2, c: oldVertex3 }
 		oldUvs = geometry.faceVertexUvs;
 
-		var hasUvs = oldUvs[ 0 ] !== undefined && oldUvs[ 0 ].length > 0;
+		var hasUvs = oldUvs[0] !== undefined && oldUvs[0].length > 0;
 
-		if ( hasUvs ) {
+		if (hasUvs) {
 
-			for ( var j = 0; j < oldUvs.length; j ++ ) {
+			for (var j = 0; j < oldUvs.length; j++) {
 
-				newUVs.push( [] );
+				newUVs.push([]);
 
 			}
 
@@ -194,10 +189,10 @@ SubdivisionModifier.prototype.modify = function ( geometry ) {
 		 *
 		 *******************************************************/
 
-		metaVertices = new Array( oldVertices.length );
+		metaVertices = new Array(oldVertices.length);
 		sourceEdges = {}; // Edge => { oldVertex1, oldVertex2, faces[]  }
 
-		generateLookups( oldVertices, oldFaces, metaVertices, sourceEdges );
+		generateLookups(oldVertices, oldFaces, metaVertices, sourceEdges);
 
 
 		/******************************************************
@@ -212,9 +207,9 @@ SubdivisionModifier.prototype.modify = function ( geometry ) {
 		var other, currentEdge, newEdge, face;
 		var edgeVertexWeight, adjacentVertexWeight, connectedFaces;
 
-		for ( i in sourceEdges ) {
+		for (i in sourceEdges) {
 
-			currentEdge = sourceEdges[ i ];
+			currentEdge = sourceEdges[i];
 			newEdge = new Vector3();
 
 			edgeVertexWeight = 3 / 8;
@@ -223,13 +218,13 @@ SubdivisionModifier.prototype.modify = function ( geometry ) {
 			connectedFaces = currentEdge.faces.length;
 
 			// check how many linked faces. 2 should be correct.
-			if ( connectedFaces != 2 ) {
+			if (connectedFaces != 2) {
 
 				// if length is not 2, handle condition
 				edgeVertexWeight = 0.5;
 				adjacentVertexWeight = 0;
 
-				if ( connectedFaces != 1 ) {
+				if (connectedFaces != 1) {
 
 					// console.warn( 'Subdivision Modifier: Number of connected faces != 2, is: ', connectedFaces, currentEdge );
 
@@ -237,30 +232,30 @@ SubdivisionModifier.prototype.modify = function ( geometry ) {
 
 			}
 
-			newEdge.addVectors( currentEdge.a, currentEdge.b ).multiplyScalar( edgeVertexWeight );
+			newEdge.addVectors(currentEdge.a, currentEdge.b).multiplyScalar(edgeVertexWeight);
 
-			tmp.set( 0, 0, 0 );
+			tmp.set(0, 0, 0);
 
-			for ( j = 0; j < connectedFaces; j ++ ) {
+			for (j = 0; j < connectedFaces; j++) {
 
-				face = currentEdge.faces[ j ];
+				face = currentEdge.faces[j];
 
-				for ( k = 0; k < 3; k ++ ) {
+				for (k = 0; k < 3; k++) {
 
-					other = oldVertices[ face[ ABC[ k ] ] ];
-					if ( other !== currentEdge.a && other !== currentEdge.b ) break;
+					other = oldVertices[face[ABC[k]]];
+					if (other !== currentEdge.a && other !== currentEdge.b) break;
 
 				}
 
-				tmp.add( other );
+				tmp.add(other);
 
 			}
 
-			tmp.multiplyScalar( adjacentVertexWeight );
-			newEdge.add( tmp );
+			tmp.multiplyScalar(adjacentVertexWeight);
+			newEdge.add(tmp);
 
 			currentEdge.newEdge = newEdgeVertices.length;
-			newEdgeVertices.push( newEdge );
+			newEdgeVertices.push(newEdge);
 
 			// console.log(currentEdge, newEdge);
 
@@ -277,21 +272,21 @@ SubdivisionModifier.prototype.modify = function ( geometry ) {
 		var connectingEdge, connectingEdges, oldVertex, newSourceVertex;
 		newSourceVertices = [];
 
-		for ( i = 0, il = oldVertices.length; i < il; i ++ ) {
+		for (i = 0, il = oldVertices.length; i < il; i++) {
 
-			oldVertex = oldVertices[ i ];
+			oldVertex = oldVertices[i];
 
 			// find all connecting edges (using lookupTable)
-			connectingEdges = metaVertices[ i ].edges;
+			connectingEdges = metaVertices[i].edges;
 			n = connectingEdges.length;
 
-			if ( n == 3 ) {
+			if (n == 3) {
 
 				beta = 3 / 16;
 
-			} else if ( n > 3 ) {
+			} else if (n > 3) {
 
-				beta = 3 / ( 8 * n ); // Warren's modified formula
+				beta = 3 / (8 * n); // Warren's modified formula
 
 			}
 
@@ -301,12 +296,12 @@ SubdivisionModifier.prototype.modify = function ( geometry ) {
 			sourceVertexWeight = 1 - n * beta;
 			connectingVertexWeight = beta;
 
-			if ( n <= 2 ) {
+			if (n <= 2) {
 
 				// crease and boundary rules
 				// console.warn('crease and boundary rules');
 
-				if ( n == 2 ) {
+				if (n == 2) {
 
 					// console.warn( '2 connecting edges', connectingEdges );
 					sourceVertexWeight = 3 / 4;
@@ -315,11 +310,11 @@ SubdivisionModifier.prototype.modify = function ( geometry ) {
 					// sourceVertexWeight = 1;
 					// connectingVertexWeight = 0;
 
-				} else if ( n == 1 ) {
+				} else if (n == 1) {
 
 					// console.warn( 'only 1 connecting edge' );
 
-				} else if ( n == 0 ) {
+				} else if (n == 0) {
 
 					// console.warn( '0 connecting edges' );
 
@@ -327,22 +322,22 @@ SubdivisionModifier.prototype.modify = function ( geometry ) {
 
 			}
 
-			newSourceVertex = oldVertex.clone().multiplyScalar( sourceVertexWeight );
+			newSourceVertex = oldVertex.clone().multiplyScalar(sourceVertexWeight);
 
-			tmp.set( 0, 0, 0 );
+			tmp.set(0, 0, 0);
 
-			for ( j = 0; j < n; j ++ ) {
+			for (j = 0; j < n; j++) {
 
-				connectingEdge = connectingEdges[ j ];
+				connectingEdge = connectingEdges[j];
 				other = connectingEdge.a !== oldVertex ? connectingEdge.a : connectingEdge.b;
-				tmp.add( other );
+				tmp.add(other);
 
 			}
 
-			tmp.multiplyScalar( connectingVertexWeight );
-			newSourceVertex.add( tmp );
+			tmp.multiplyScalar(connectingVertexWeight);
+			newSourceVertex.add(tmp);
 
-			newSourceVertices.push( newSourceVertex );
+			newSourceVertices.push(newSourceVertex);
 
 		}
 
@@ -355,7 +350,7 @@ SubdivisionModifier.prototype.modify = function ( geometry ) {
 		 *
 		 *******************************************************/
 
-		newVertices = newSourceVertices.concat( newEdgeVertices );
+		newVertices = newSourceVertices.concat(newEdgeVertices);
 		var sl = newSourceVertices.length, edge1, edge2, edge3;
 		newFaces = [];
 
@@ -364,44 +359,44 @@ SubdivisionModifier.prototype.modify = function ( geometry ) {
 		var x4 = new Vector2();
 		var x5 = new Vector2();
 
-		for ( i = 0, il = oldFaces.length; i < il; i ++ ) {
+		for (i = 0, il = oldFaces.length; i < il; i++) {
 
-			face = oldFaces[ i ];
+			face = oldFaces[i];
 
 			// find the 3 new edges vertex of each old face
 
-			edge1 = getEdge( face.a, face.b, sourceEdges ).newEdge + sl;
-			edge2 = getEdge( face.b, face.c, sourceEdges ).newEdge + sl;
-			edge3 = getEdge( face.c, face.a, sourceEdges ).newEdge + sl;
+			edge1 = getEdge(face.a, face.b, sourceEdges).newEdge + sl;
+			edge2 = getEdge(face.b, face.c, sourceEdges).newEdge + sl;
+			edge3 = getEdge(face.c, face.a, sourceEdges).newEdge + sl;
 
 			// create 4 faces.
 
-			newFace( newFaces, edge1, edge2, edge3, face.materialIndex );
-			newFace( newFaces, face.a, edge1, edge3, face.materialIndex );
-			newFace( newFaces, face.b, edge2, edge1, face.materialIndex );
-			newFace( newFaces, face.c, edge3, edge2, face.materialIndex );
+			newFace(newFaces, edge1, edge2, edge3, face.materialIndex);
+			newFace(newFaces, face.a, edge1, edge3, face.materialIndex);
+			newFace(newFaces, face.b, edge2, edge1, face.materialIndex);
+			newFace(newFaces, face.c, edge3, edge2, face.materialIndex);
 
 			// create 4 new uv's
 
-			if ( hasUvs ) {
+			if (hasUvs) {
 
-				for ( var j = 0; j < oldUvs.length; j ++ ) {
+				for (var j = 0; j < oldUvs.length; j++) {
 
-					uv = oldUvs[ j ][ i ];
+					uv = oldUvs[j][i];
 
-					x0 = uv[ 0 ];
-					x1 = uv[ 1 ];
-					x2 = uv[ 2 ];
+					x0 = uv[0];
+					x1 = uv[1];
+					x2 = uv[2];
 
-					x3.set( midpoint( x0.x, x1.x ), midpoint( x0.y, x1.y ) );
-					x4.set( midpoint( x1.x, x2.x ), midpoint( x1.y, x2.y ) );
-					x5.set( midpoint( x0.x, x2.x ), midpoint( x0.y, x2.y ) );
+					x3.set(midpoint(x0.x, x1.x), midpoint(x0.y, x1.y));
+					x4.set(midpoint(x1.x, x2.x), midpoint(x1.y, x2.y));
+					x5.set(midpoint(x0.x, x2.x), midpoint(x0.y, x2.y));
 
-					newUv( newUVs[ j ], x3, x4, x5 );
-					newUv( newUVs[ j ], x0, x3, x5 );
+					newUv(newUVs[j], x3, x4, x5);
+					newUv(newUVs[j], x0, x3, x5);
 
-					newUv( newUVs[ j ], x1, x4, x3 );
-					newUv( newUVs[ j ], x2, x5, x4 );
+					newUv(newUVs[j], x1, x4, x3);
+					newUv(newUVs[j], x2, x5, x4);
 
 				}
 
@@ -412,12 +407,12 @@ SubdivisionModifier.prototype.modify = function ( geometry ) {
 		// Overwrite old arrays
 		geometry.vertices = newVertices;
 		geometry.faces = newFaces;
-		if ( hasUvs ) geometry.faceVertexUvs = newUVs;
+		if (hasUvs) geometry.faceVertexUvs = newUVs;
 
 		// console.log('done');
 
 	};
 
-} )();
+})();
 
-export { SubdivisionModifier };
+export {SubdivisionModifier};

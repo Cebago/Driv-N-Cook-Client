@@ -2,16 +2,16 @@
  * @author sunag / http://www.sunag.com.br/
  */
 
-import { FunctionNode } from './FunctionNode.js';
+import {FunctionNode} from './FunctionNode.js';
 
-function ExpressionNode( src, type, keywords, extensions, includes ) {
+function ExpressionNode(src, type, keywords, extensions, includes) {
 
-	FunctionNode.call( this, src, includes, extensions, keywords, type );
+	FunctionNode.call(this, src, includes, extensions, keywords, type);
 
 }
 
-ExpressionNode.prototype = Object.create( FunctionNode.prototype );
+ExpressionNode.prototype = Object.create(FunctionNode.prototype);
 ExpressionNode.prototype.constructor = ExpressionNode;
 ExpressionNode.prototype.nodeType = "Expression";
 
-export { ExpressionNode };
+export {ExpressionNode};

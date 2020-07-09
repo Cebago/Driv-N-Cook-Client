@@ -5,7 +5,7 @@
 	<base href="../../../"/>
 	<script src="list.js"></script>
 	<script src="page.js"></script>
-	<link type="text/css" rel="stylesheet" href="page.css"/>
+	<link href="page.css" rel="stylesheet" type="text/css"/>
 </head>
 <body>
 <h1>材质([name])</h1>
@@ -105,42 +105,46 @@
 
 <h3>[property:Boolean stencilWrite]</h3>
 <p>
-Whether rendering this material has any effect on the stencil buffer. Default is *false*.
+	Whether rendering this material has any effect on the stencil buffer. Default is *false*.
 </p>
 
 <h3>[property:Integer stencilWriteMask]</h3>
 <p>
-The bit mask to use when writing to the stencil buffer. Default is *0xFF*.
+	The bit mask to use when writing to the stencil buffer. Default is *0xFF*.
 </p>
 
 <h3>[property:Integer stencilFunc]</h3>
 <p>
-The stencil comparison function to use. Default is [page:Materials AlwaysStencilFunc]. See stencil function [page:Materials constants] for all possible values.
+	The stencil comparison function to use. Default is [page:Materials AlwaysStencilFunc]. See stencil function
+	[page:Materials constants] for all possible values.
 </p>
 
 <h3>[property:Integer stencilRef]</h3>
 <p>
-The value to use when performing stencil comparisons or stencil operations. Default is *0*.
+	The value to use when performing stencil comparisons or stencil operations. Default is *0*.
 </p>
 
 <h3>[property:Integer stencilFuncMask]</h3>
 <p>
-The bit mask to use when comparing against the stencil buffer. Default is *0xFF*.
+	The bit mask to use when comparing against the stencil buffer. Default is *0xFF*.
 </p>
 
 <h3>[property:Integer stencilFail]</h3>
 <p>
-Which stencil operation to perform when the comparison function returns false. Default is [page:Materials KeepStencilOp]. See the stencil operations [page:Materials constants] for all possible values.
+	Which stencil operation to perform when the comparison function returns false. Default is [page:Materials
+	KeepStencilOp]. See the stencil operations [page:Materials constants] for all possible values.
 </p>
 
 <h3>[property:Integer stencilZFail]</h3>
 <p>
-Which stencil operation to perform when the comparison function returns true but the depth test fails. Default is [page:Materials KeepStencilOp]. See the stencil operations [page:Materials constants] for all possible values.
+	Which stencil operation to perform when the comparison function returns true but the depth test fails. Default is
+	[page:Materials KeepStencilOp]. See the stencil operations [page:Materials constants] for all possible values.
 </p>
 
 <h3>[property:Integer stencilZPass]</h3>
 <p>
-Which stencil operation to perform when the comparison function returns true and the depth test passes. Default is [page:Materials KeepStencilOp]. See the stencil operations [page:Materials constants] for all possible values.
+	Which stencil operation to perform when the comparison function returns true and the depth test passes. Default is
+	[page:Materials KeepStencilOp]. See the stencil operations [page:Materials constants] for all possible values.
 </p>
 
 <h3>[property:Boolean flatShading]</h3>
@@ -192,7 +196,7 @@ Which stencil operation to perform when the comparison function returns true and
 
 <h3>[property:Integer shadowSide]</h3>
 <p> 定义投影的面。设置时，可以是[page:Materials THREE.FrontSide], [page:Materials THREE.BackSide], 或[page:Materials]。默认值为 *null*。
-	 <br/>
+	<br/>
 	如果为*null*， 则面投射阴影确定如下： <br/>
 
 <table>
@@ -229,7 +233,8 @@ Which stencil operation to perform when the comparison function returns true and
 
 <h3>[property:Boolean toneMapped]</h3>
 <p>
-Defines whether this material is tone mapped according to the renderer's [page:WebGLRenderer.toneMapping toneMapping] setting. Default is *true*.
+	Defines whether this material is tone mapped according to the renderer's [page:WebGLRenderer.toneMapping
+	toneMapping] setting. Default is *true*.
 </p>
 
 <h3>[property:Boolean transparent]</h3>
@@ -250,12 +255,12 @@ Defines whether this material is tone mapped according to the renderer's [page:W
 
 <h3>[property:Integer version]</h3>
 <p>
-This starts at *0* and counts how many times [property:Boolean needsUpdate] is set to *true*.
+	This starts at *0* and counts how many times [property:Boolean needsUpdate] is set to *true*.
 </p>
 
 <h3>[property:Boolean vertexColors]</h3>
 <p>
-Defines whether vertex coloring is used. Default is *false*.
+	Defines whether vertex coloring is used. Default is *false*.
 </p>
 
 <h3>[property:Boolean visible]</h3>
@@ -284,7 +289,8 @@ Defines whether vertex coloring is used. Default is *false*.
 <p> 在编译shader程序之前立即执行的可选回调。此函数使用shader源码作为参数。用于修改内置材质。
 </p>
 <p>
-Unlike properties, the callback is not supported by [page:Material.clone .clone](), [page:Material.copy .copy]() and [page:Material.toJSON .toJSON]().
+	Unlike properties, the callback is not supported by [page:Material.clone .clone](), [page:Material.copy .copy]() and
+	[page:Material.toJSON .toJSON]().
 </p>
 
 <h3>[method:null setValues]( [param:object values] )</h3>
@@ -295,13 +301,14 @@ Unlike properties, the callback is not supported by [page:Material.clone .clone]
 <h3>[method:Object toJSON]( [param:object meta] )</h3>
 <p>
 	meta -- 包含有元数据的对象，例如该对象的纹理或图片。
-	将material对象转换为 three.js [link:https://github.com/mrdoob/three.js/wiki/JSON-Object-Scene-format-4 JSON Object/Scene format]（three.js JSON 物体/场景格式）。
+	将material对象转换为 three.js [link:https://github.com/mrdoob/three.js/wiki/JSON-Object-Scene-format-4 JSON Object/Scene
+	format]（three.js JSON 物体/场景格式）。
 </p>
 
 <h2>源码(Source)</h2>
 
 <p>
-			[link:https://github.com/mrdoob/three.js/blob/master/src/[path].js src/[path].js]
-		</p>
+	[link:https://github.com/mrdoob/three.js/blob/master/src/[path].js src/[path].js]
+</p>
 </body>
 </html>

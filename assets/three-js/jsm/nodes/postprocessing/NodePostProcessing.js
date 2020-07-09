@@ -13,12 +13,12 @@ import {
 	WebGLRenderTarget
 } from '../../../../build/three.module.js';
 
-import { NodeMaterial } from '../materials/NodeMaterial.js';
-import { ScreenNode } from '../inputs/ScreenNode.js';
+import {NodeMaterial} from '../materials/NodeMaterial.js';
+import {ScreenNode} from '../inputs/ScreenNode.js';
 
-function NodePostProcessing( renderer, renderTarget ) {
+function NodePostProcessing(renderer, renderTarget) {
 
-	if ( renderTarget === undefined ) {
+	if (renderTarget === undefined) {
 
 		var parameters = {
 			minFilter: LinearFilter,
@@ -27,8 +27,8 @@ function NodePostProcessing( renderer, renderTarget ) {
 			stencilBuffer: false
 		};
 
-		var size = renderer.getDrawingBufferSize( new Vector2() );
-		renderTarget = new WebGLRenderTarget( size.width, size.height, parameters );
+		var size = renderer.getDrawingBufferSize(new Vector2());
+		renderTarget = new WebGLRenderTarget(size.width, size.height, parameters);
 
 	}
 
@@ -38,12 +38,12 @@ function NodePostProcessing( renderer, renderTarget ) {
 	this.output = new ScreenNode();
 	this.material = new NodeMaterial();
 
-	this.camera = new OrthographicCamera( - 1, 1, 1, - 1, 0, 1 );
+	this.camera = new OrthographicCamera(-1, 1, 1, -1, 0, 1);
 	this.scene = new Scene();
 
-	this.quad = new Mesh( new PlaneBufferGeometry( 2, 2 ), this.material );
+	this.quad = new Mesh(new PlaneBufferGeometry(2, 2), this.material);
 	this.quad.frustumCulled = false; // Avoid getting clipped
-	this.scene.add( this.quad );
+	this.scene.add(this.quad);
 
 	this.needsUpdate = true;
 
@@ -53,16 +53,16 @@ NodePostProcessing.prototype = {
 
 	constructor: NodePostProcessing,
 
-	render: function ( scene, camera, frame ) {
+	render: function (scene, camera, frame) {
 
-		if ( this.needsUpdate ) {
+		if (this.needsUpdate) {
 
 			this.material.dispose();
 
 			this.material.fragment.value = this.output;
 			this.material.build();
 
-			if ( this.material.uniforms.renderTexture ) {
+			if (this.material.uniforms.renderTexture) {
 
 				this.material.uniforms.renderTexture.value = this.renderTarget.texture;
 
@@ -72,40 +72,40 @@ NodePostProcessing.prototype = {
 
 		}
 
-		frame.setRenderer( this.renderer )
-			.setRenderTexture( this.renderTarget.texture );
+		frame.setRenderer(this.renderer)
+			.setRenderTexture(this.renderTarget.texture);
 
-		this.renderer.setRenderTarget( this.renderTarget );
-		this.renderer.render( scene, camera );
+		this.renderer.setRenderTarget(this.renderTarget);
+		this.renderer.render(scene, camera);
 
-		frame.updateNode( this.material );
+		frame.updateNode(this.material);
 
-		this.renderer.setRenderTarget( null );
-		this.renderer.render( this.scene, this.camera );
-
-	},
-
-	setPixelRatio: function ( value ) {
-
-		this.renderer.setPixelRatio( value );
-
-		var size = this.renderer.getSize( new Vector2() );
-
-		this.setSize( size.width, size.height );
+		this.renderer.setRenderTarget(null);
+		this.renderer.render(this.scene, this.camera);
 
 	},
 
-	setSize: function ( width, height ) {
+	setPixelRatio: function (value) {
+
+		this.renderer.setPixelRatio(value);
+
+		var size = this.renderer.getSize(new Vector2());
+
+		this.setSize(size.width, size.height);
+
+	},
+
+	setSize: function (width, height) {
 
 		var pixelRatio = this.renderer.getPixelRatio();
 
-		this.renderTarget.setSize( width * pixelRatio, height * pixelRatio );
+		this.renderTarget.setSize(width * pixelRatio, height * pixelRatio);
 
-		this.renderer.setSize( width, height );
+		this.renderer.setSize(width, height);
 
 	},
 
-	copy: function ( source ) {
+	copy: function (source) {
 
 		this.output = source.output;
 
@@ -113,11 +113,11 @@ NodePostProcessing.prototype = {
 
 	},
 
-	toJSON: function ( meta ) {
+	toJSON: function (meta) {
 
-		var isRootObject = ( meta === undefined || typeof meta === 'string' );
+		var isRootObject = (meta === undefined || typeof meta === 'string');
 
-		if ( isRootObject ) {
+		if (isRootObject) {
 
 			meta = {
 				nodes: {}
@@ -125,22 +125,22 @@ NodePostProcessing.prototype = {
 
 		}
 
-		if ( meta && ! meta.post ) meta.post = {};
+		if (meta && !meta.post) meta.post = {};
 
-		if ( ! meta.post[ this.uuid ] ) {
+		if (!meta.post[this.uuid]) {
 
 			var data = {};
 
 			data.uuid = this.uuid;
 			data.type = "NodePostProcessing";
 
-			meta.post[ this.uuid ] = data;
+			meta.post[this.uuid] = data;
 
-			if ( this.name !== "" ) data.name = this.name;
+			if (this.name !== "") data.name = this.name;
 
-			if ( JSON.stringify( this.userData ) !== '{}' ) data.userData = this.userData;
+			if (JSON.stringify(this.userData) !== '{}') data.userData = this.userData;
 
-			data.output = this.output.toJSON( meta ).uuid;
+			data.output = this.output.toJSON(meta).uuid;
 
 		}
 
@@ -152,4 +152,4 @@ NodePostProcessing.prototype = {
 
 };
 
-export { NodePostProcessing };
+export {NodePostProcessing};

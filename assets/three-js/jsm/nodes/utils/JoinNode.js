@@ -2,14 +2,14 @@
  * @author sunag / http://www.sunag.com.br/
  */
 
-import { TempNode } from '../core/TempNode.js';
-import { NodeUtils } from '../core/NodeUtils.js';
+import {TempNode} from '../core/TempNode.js';
+import {NodeUtils} from '../core/NodeUtils.js';
 
 var inputs = NodeUtils.elements;
 
-function JoinNode( x, y, z, w ) {
+function JoinNode(x, y, z, w) {
 
-	TempNode.call( this, 'f' );
+	TempNode.call(this, 'f');
 
 	this.x = x;
 	this.y = y;
@@ -18,7 +18,7 @@ function JoinNode( x, y, z, w ) {
 
 }
 
-JoinNode.prototype = Object.create( TempNode.prototype );
+JoinNode.prototype = Object.create(TempNode.prototype);
 JoinNode.prototype.constructor = JoinNode;
 JoinNode.prototype.nodeType = "Join";
 
@@ -26,11 +26,11 @@ JoinNode.prototype.getNumElements = function () {
 
 	var i = inputs.length;
 
-	while ( i -- ) {
+	while (i--) {
 
-		if ( this[ inputs[ i ] ] !== undefined ) {
+		if (this[inputs[i]] !== undefined) {
 
-			++ i;
+			++i;
 
 			break;
 
@@ -38,43 +38,43 @@ JoinNode.prototype.getNumElements = function () {
 
 	}
 
-	return Math.max( i, 2 );
+	return Math.max(i, 2);
 
 };
 
-JoinNode.prototype.getType = function ( builder ) {
+JoinNode.prototype.getType = function (builder) {
 
-	return builder.getTypeFromLength( this.getNumElements() );
+	return builder.getTypeFromLength(this.getNumElements());
 
 };
 
-JoinNode.prototype.generate = function ( builder, output ) {
+JoinNode.prototype.generate = function (builder, output) {
 
-	var type = this.getType( builder ),
+	var type = this.getType(builder),
 		length = this.getNumElements(),
 		outputs = [];
 
-	for ( var i = 0; i < length; i ++ ) {
+	for (var i = 0; i < length; i++) {
 
-		var elm = this[ inputs[ i ] ];
+		var elm = this[inputs[i]];
 
-		outputs.push( elm ? elm.build( builder, 'f' ) : '0.0' );
+		outputs.push(elm ? elm.build(builder, 'f') : '0.0');
 
 	}
 
-	var code = ( length > 1 ? builder.getConstructorFromLength( length ) : '' ) + '( ' + outputs.join( ', ' ) + ' )';
+	var code = (length > 1 ? builder.getConstructorFromLength(length) : '') + '( ' + outputs.join(', ') + ' )';
 
-	return builder.format( code, type, output );
+	return builder.format(code, type, output);
 
 };
 
-JoinNode.prototype.copy = function ( source ) {
+JoinNode.prototype.copy = function (source) {
 
-	TempNode.prototype.copy.call( this, source );
+	TempNode.prototype.copy.call(this, source);
 
-	for ( var prop in source.inputs ) {
+	for (var prop in source.inputs) {
 
-		this[ prop ] = source.inputs[ prop ];
+		this[prop] = source.inputs[prop];
 
 	}
 
@@ -82,25 +82,25 @@ JoinNode.prototype.copy = function ( source ) {
 
 };
 
-JoinNode.prototype.toJSON = function ( meta ) {
+JoinNode.prototype.toJSON = function (meta) {
 
-	var data = this.getJSONNode( meta );
+	var data = this.getJSONNode(meta);
 
-	if ( ! data ) {
+	if (!data) {
 
-		data = this.createJSONNode( meta );
+		data = this.createJSONNode(meta);
 
 		data.inputs = {};
 
 		var length = this.getNumElements();
 
-		for ( var i = 0; i < length; i ++ ) {
+		for (var i = 0; i < length; i++) {
 
-			var elm = this[ inputs[ i ] ];
+			var elm = this[inputs[i]];
 
-			if ( elm ) {
+			if (elm) {
 
-				data.inputs[ inputs[ i ] ] = elm.toJSON( meta ).uuid;
+				data.inputs[inputs[i]] = elm.toJSON(meta).uuid;
 
 			}
 
@@ -113,4 +113,4 @@ JoinNode.prototype.toJSON = function ( meta ) {
 
 };
 
-export { JoinNode };
+export {JoinNode};

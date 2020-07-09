@@ -3,38 +3,36 @@
  */
 /* global QUnit */
 
-import { CubeTextureLoader } from '../../../../src/loaders/CubeTextureLoader';
+export default QUnit.module('Loaders', () => {
 
-export default QUnit.module( 'Loaders', () => {
-
-	QUnit.module( 'CubeTextureLoader', () => {
+	QUnit.module('CubeTextureLoader', () => {
 
 		// INSTANCING
-		QUnit.todo( "Instancing", ( assert ) => {
+		QUnit.todo("Instancing", (assert) => {
 
-			assert.ok( false, "everything's gonna be alright" );
+			assert.ok(false, "everything's gonna be alright");
 
-		} );
+		});
 
 		// PUBLIC STUFF
-		QUnit.todo( "load", ( assert ) => {
+		QUnit.todo("load", (assert) => {
 
-			assert.ok( false, "everything's gonna be alright" );
+			assert.ok(false, "everything's gonna be alright");
 
-		} );
+		});
 
-		QUnit.todo( "setCrossOrigin", ( assert ) => {
+		QUnit.todo("setCrossOrigin", (assert) => {
 
-			assert.ok( false, "everything's gonna be alright" );
+			assert.ok(false, "everything's gonna be alright");
 
-		} );
+		});
 
-		QUnit.todo( "setPath", ( assert ) => {
+		QUnit.todo("setPath", (assert) => {
 
-			assert.ok( false, "everything's gonna be alright" );
+			assert.ok(false, "everything's gonna be alright");
 
-		} );
+		});
 
-	} );
+	});
 
-} );
+});

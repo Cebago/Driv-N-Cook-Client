@@ -3,7 +3,7 @@
  * Developed as part of a project at University of Applied Sciences and Arts Northwestern Switzerland (www.fhnw.ch)
  */
 
-import { Command } from '../Command.js';
+import {Command} from '../Command.js';
 
 import * as THREE from '../../../build/three.module.js';
 
@@ -14,9 +14,9 @@ import * as THREE from '../../../build/three.module.js';
  * @param optionalOldPosition THREE.Vector3
  * @constructor
  */
-var SetPositionCommand = function ( editor, object, newPosition, optionalOldPosition ) {
+var SetPositionCommand = function (editor, object, newPosition, optionalOldPosition) {
 
-	Command.call( this, editor );
+	Command.call(this, editor);
 
 	this.type = 'SetPositionCommand';
 	this.name = 'Set Position';
@@ -24,14 +24,14 @@ var SetPositionCommand = function ( editor, object, newPosition, optionalOldPosi
 
 	this.object = object;
 
-	if ( object !== undefined && newPosition !== undefined ) {
+	if (object !== undefined && newPosition !== undefined) {
 
 		this.oldPosition = object.position.clone();
 		this.newPosition = newPosition.clone();
 
 	}
 
-	if ( optionalOldPosition !== undefined ) {
+	if (optionalOldPosition !== undefined) {
 
 		this.oldPosition = optionalOldPosition.clone();
 
@@ -42,29 +42,29 @@ SetPositionCommand.prototype = {
 
 	execute: function () {
 
-		this.object.position.copy( this.newPosition );
-		this.object.updateMatrixWorld( true );
-		this.editor.signals.objectChanged.dispatch( this.object );
+		this.object.position.copy(this.newPosition);
+		this.object.updateMatrixWorld(true);
+		this.editor.signals.objectChanged.dispatch(this.object);
 
 	},
 
 	undo: function () {
 
-		this.object.position.copy( this.oldPosition );
-		this.object.updateMatrixWorld( true );
-		this.editor.signals.objectChanged.dispatch( this.object );
+		this.object.position.copy(this.oldPosition);
+		this.object.updateMatrixWorld(true);
+		this.editor.signals.objectChanged.dispatch(this.object);
 
 	},
 
-	update: function ( command ) {
+	update: function (command) {
 
-		this.newPosition.copy( command.newPosition );
+		this.newPosition.copy(command.newPosition);
 
 	},
 
 	toJSON: function () {
 
-		var output = Command.prototype.toJSON.call( this );
+		var output = Command.prototype.toJSON.call(this);
 
 		output.objectUuid = this.object.uuid;
 		output.oldPosition = this.oldPosition.toArray();
@@ -74,16 +74,16 @@ SetPositionCommand.prototype = {
 
 	},
 
-	fromJSON: function ( json ) {
+	fromJSON: function (json) {
 
-		Command.prototype.fromJSON.call( this, json );
+		Command.prototype.fromJSON.call(this, json);
 
-		this.object = this.editor.objectByUuid( json.objectUuid );
-		this.oldPosition = new THREE.Vector3().fromArray( json.oldPosition );
-		this.newPosition = new THREE.Vector3().fromArray( json.newPosition );
+		this.object = this.editor.objectByUuid(json.objectUuid);
+		this.oldPosition = new THREE.Vector3().fromArray(json.oldPosition);
+		this.newPosition = new THREE.Vector3().fromArray(json.newPosition);
 
 	}
 
 };
 
-export { SetPositionCommand };
+export {SetPositionCommand};

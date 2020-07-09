@@ -16,19 +16,19 @@ THREE.SSAOShader = {
 
 	uniforms: {
 
-		"tDiffuse": { value: null },
-		"tNormal": { value: null },
-		"tDepth": { value: null },
-		"tNoise": { value: null },
-		"kernel": { value: null },
-		"cameraNear": { value: null },
-		"cameraFar": { value: null },
-		"resolution": { value: new THREE.Vector2() },
-		"cameraProjectionMatrix": { value: new THREE.Matrix4() },
-		"cameraInverseProjectionMatrix": { value: new THREE.Matrix4() },
-		"kernelRadius": { value: 8 },
-		"minDistance": { value: 0.005 },
-		"maxDistance": { value: 0.05 },
+		"tDiffuse": {value: null},
+		"tNormal": {value: null},
+		"tDepth": {value: null},
+		"tNoise": {value: null},
+		"kernel": {value: null},
+		"cameraNear": {value: null},
+		"cameraFar": {value: null},
+		"resolution": {value: new THREE.Vector2()},
+		"cameraProjectionMatrix": {value: new THREE.Matrix4()},
+		"cameraInverseProjectionMatrix": {value: new THREE.Matrix4()},
+		"kernelRadius": {value: 8},
+		"minDistance": {value: 0.005},
+		"maxDistance": {value: 0.05},
 
 	},
 
@@ -44,7 +44,7 @@ THREE.SSAOShader = {
 
 		"}"
 
-	].join( "\n" ),
+	].join("\n"),
 
 	fragmentShader: [
 
@@ -171,7 +171,7 @@ THREE.SSAOShader = {
 
 		"}"
 
-	].join( "\n" )
+	].join("\n")
 
 };
 
@@ -183,9 +183,9 @@ THREE.SSAODepthShader = {
 
 	uniforms: {
 
-		"tDepth": { value: null },
-		"cameraNear": { value: null },
-		"cameraFar": { value: null },
+		"tDepth": {value: null},
+		"cameraNear": {value: null},
+		"cameraFar": {value: null},
 
 	},
 
@@ -200,7 +200,7 @@ THREE.SSAODepthShader = {
 
 		"}"
 
-	].join( "\n" ),
+	].join("\n"),
 
 	fragmentShader: [
 
@@ -236,7 +236,7 @@ THREE.SSAODepthShader = {
 
 		"}"
 
-	].join( "\n" )
+	].join("\n")
 
 };
 
@@ -244,8 +244,8 @@ THREE.SSAOBlurShader = {
 
 	uniforms: {
 
-		"tDiffuse": { value: null },
-		"resolution": { value: new THREE.Vector2() }
+		"tDiffuse": {value: null},
+		"resolution": {value: new THREE.Vector2()}
 
 	},
 
@@ -260,7 +260,7 @@ THREE.SSAOBlurShader = {
 
 		"}"
 
-	].join( "\n" ),
+	].join("\n"),
 
 	fragmentShader: [
 
@@ -290,6 +290,6 @@ THREE.SSAOBlurShader = {
 
 		"}"
 
-	].join( "\n" )
+	].join("\n")
 
 };

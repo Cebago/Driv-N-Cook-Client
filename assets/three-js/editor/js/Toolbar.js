@@ -2,82 +2,88 @@
  * @author mrdoob / http://mrdoob.com/
  */
 
-import { UIPanel, UIButton } from './libs/ui.js';
-import { UIBoolean } from './libs/ui.three.js';
+import {UIButton, UIPanel} from './libs/ui.js';
+import {UIBoolean} from './libs/ui.three.js';
 
-var Toolbar = function ( editor ) {
+var Toolbar = function (editor) {
 
 	var signals = editor.signals;
 	var strings = editor.strings;
 
 	var container = new UIPanel();
-	container.setId( 'toolbar' );
-	container.setDisplay( 'none' );
+	container.setId('toolbar');
+	container.setDisplay('none');
 
 	var buttons = new UIPanel();
-	container.add( buttons );
+	container.add(buttons);
 
 	// translate / rotate / scale
 
-	var translate = new UIButton( strings.getKey( 'toolbar/translate' ) );
+	var translate = new UIButton(strings.getKey('toolbar/translate'));
 	translate.dom.className = 'Button selected';
-	translate.onClick( function () {
+	translate.onClick(function () {
 
-		signals.transformModeChanged.dispatch( 'translate' );
+		signals.transformModeChanged.dispatch('translate');
 
-	} );
-	buttons.add( translate );
+	});
+	buttons.add(translate);
 
-	var rotate = new UIButton( strings.getKey( 'toolbar/rotate' ) );
-	rotate.onClick( function () {
+	var rotate = new UIButton(strings.getKey('toolbar/rotate'));
+	rotate.onClick(function () {
 
-		signals.transformModeChanged.dispatch( 'rotate' );
+		signals.transformModeChanged.dispatch('rotate');
 
-	} );
-	buttons.add( rotate );
+	});
+	buttons.add(rotate);
 
-	var scale = new UIButton( strings.getKey( 'toolbar/scale' ) );
-	scale.onClick( function () {
+	var scale = new UIButton(strings.getKey('toolbar/scale'));
+	scale.onClick(function () {
 
-		signals.transformModeChanged.dispatch( 'scale' );
+		signals.transformModeChanged.dispatch('scale');
 
-	} );
-	buttons.add( scale );
+	});
+	buttons.add(scale);
 
-	var local = new UIBoolean( false, strings.getKey( 'toolbar/local' ) );
-	local.onChange( function () {
+	var local = new UIBoolean(false, strings.getKey('toolbar/local'));
+	local.onChange(function () {
 
-		signals.spaceChanged.dispatch( this.getValue() === true ? 'local' : 'world' );
+		signals.spaceChanged.dispatch(this.getValue() === true ? 'local' : 'world');
 
-	} );
-	buttons.add( local );
+	});
+	buttons.add(local);
 
 	//
 
-	signals.objectSelected.add( function ( object ) {
+	signals.objectSelected.add(function (object) {
 
-		container.setDisplay( object === null ? 'none' : '' );
+		container.setDisplay(object === null ? 'none' : '');
 
-	} );
+	});
 
-	signals.transformModeChanged.add( function ( mode ) {
+	signals.transformModeChanged.add(function (mode) {
 
-		translate.dom.classList.remove( 'selected' );
-		rotate.dom.classList.remove( 'selected' );
-		scale.dom.classList.remove( 'selected' );
+		translate.dom.classList.remove('selected');
+		rotate.dom.classList.remove('selected');
+		scale.dom.classList.remove('selected');
 
-		switch ( mode ) {
+		switch (mode) {
 
-			case 'translate': translate.dom.classList.add( 'selected' ); break;
-			case 'rotate': rotate.dom.classList.add( 'selected' ); break;
-			case 'scale': scale.dom.classList.add( 'selected' ); break;
+			case 'translate':
+				translate.dom.classList.add('selected');
+				break;
+			case 'rotate':
+				rotate.dom.classList.add('selected');
+				break;
+			case 'scale':
+				scale.dom.classList.add('selected');
+				break;
 
 		}
 
-	} );
+	});
 
 	return container;
 
 };
 
-export { Toolbar };
+export {Toolbar};

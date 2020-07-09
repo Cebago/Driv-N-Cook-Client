@@ -1,4 +1,5 @@
-import { EllipseCurve } from './EllipseCurve';
+import {EllipseCurve} from './EllipseCurve';
+
 export class ArcCurve extends EllipseCurve {
 
 	constructor(

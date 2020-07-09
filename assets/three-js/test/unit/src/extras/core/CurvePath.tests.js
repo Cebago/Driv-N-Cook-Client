@@ -3,97 +3,95 @@
  */
 /* global QUnit */
 
-import { CurvePath } from '../../../../../src/extras/core/CurvePath';
+export default QUnit.module('Extras', () => {
 
-export default QUnit.module( 'Extras', () => {
+	QUnit.module('Core', () => {
 
-	QUnit.module( 'Core', () => {
-
-		QUnit.module( 'CurvePath', () => {
+		QUnit.module('CurvePath', () => {
 
 			// INHERITANCE
-			QUnit.todo( "Extending", ( assert ) => {
+			QUnit.todo("Extending", (assert) => {
 
-				assert.ok( false, "everything's gonna be alright" );
+				assert.ok(false, "everything's gonna be alright");
 
-			} );
+			});
 
 			// INSTANCING
-			QUnit.todo( "Instancing", ( assert ) => {
+			QUnit.todo("Instancing", (assert) => {
 
-				assert.ok( false, "everything's gonna be alright" );
+				assert.ok(false, "everything's gonna be alright");
 
-			} );
+			});
 
 			// PUBLIC STUFF
-			QUnit.todo( "add", ( assert ) => {
+			QUnit.todo("add", (assert) => {
 
-				assert.ok( false, "everything's gonna be alright" );
+				assert.ok(false, "everything's gonna be alright");
 
-			} );
+			});
 
-			QUnit.todo( "closePath", ( assert ) => {
+			QUnit.todo("closePath", (assert) => {
 
-				assert.ok( false, "everything's gonna be alright" );
+				assert.ok(false, "everything's gonna be alright");
 
-			} );
+			});
 
-			QUnit.todo( "getPoint", ( assert ) => {
+			QUnit.todo("getPoint", (assert) => {
 
-				assert.ok( false, "everything's gonna be alright" );
+				assert.ok(false, "everything's gonna be alright");
 
-			} );
+			});
 
-			QUnit.todo( "getLength", ( assert ) => {
+			QUnit.todo("getLength", (assert) => {
 
-				assert.ok( false, "everything's gonna be alright" );
+				assert.ok(false, "everything's gonna be alright");
 
-			} );
+			});
 
-			QUnit.todo( "updateArcLengths", ( assert ) => {
+			QUnit.todo("updateArcLengths", (assert) => {
 
-				assert.ok( false, "everything's gonna be alright" );
+				assert.ok(false, "everything's gonna be alright");
 
-			} );
+			});
 
-			QUnit.todo( "getCurveLengths", ( assert ) => {
+			QUnit.todo("getCurveLengths", (assert) => {
 
-				assert.ok( false, "everything's gonna be alright" );
+				assert.ok(false, "everything's gonna be alright");
 
-			} );
+			});
 
-			QUnit.todo( "getSpacedPoints", ( assert ) => {
+			QUnit.todo("getSpacedPoints", (assert) => {
 
-				assert.ok( false, "everything's gonna be alright" );
+				assert.ok(false, "everything's gonna be alright");
 
-			} );
+			});
 
-			QUnit.todo( "getPoints", ( assert ) => {
+			QUnit.todo("getPoints", (assert) => {
 
-				assert.ok( false, "everything's gonna be alright" );
+				assert.ok(false, "everything's gonna be alright");
 
-			} );
+			});
 
-			QUnit.todo( "createPointsGeometry", ( assert ) => {
+			QUnit.todo("createPointsGeometry", (assert) => {
 
-				assert.ok( false, "everything's gonna be alright" );
+				assert.ok(false, "everything's gonna be alright");
 
-			} );
+			});
 
-			QUnit.todo( "createSpacedPointsGeometry", ( assert ) => {
+			QUnit.todo("createSpacedPointsGeometry", (assert) => {
 
-				assert.ok( false, "everything's gonna be alright" );
+				assert.ok(false, "everything's gonna be alright");
 
-			} );
+			});
 
-			QUnit.todo( "createGeometry", ( assert ) => {
+			QUnit.todo("createGeometry", (assert) => {
 
-				assert.ok( false, "everything's gonna be alright" );
+				assert.ok(false, "everything's gonna be alright");
 
-			} );
+			});
 
-		} );
+		});
 
-	} );
+	});
 
-} );
+});

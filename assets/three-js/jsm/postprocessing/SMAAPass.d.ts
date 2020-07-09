@@ -1,14 +1,9 @@
-import {
-	ShaderMaterial,
-	Texture,
-	WebGLRenderTarget
-} from '../../../src/Three';
+import {ShaderMaterial, Texture, WebGLRenderTarget} from '../../../src/Three';
 
-import { Pass } from './Pass';
+import {Pass} from './Pass';
 
 export class SMAAPass extends Pass {
 
-	constructor( width: number, height: number );
 	edgesRT: WebGLRenderTarget;
 	weightsRT: WebGLRenderTarget;
 	areaTexture: Texture;
@@ -21,7 +16,10 @@ export class SMAAPass extends Pass {
 	materialBlend: ShaderMaterial;
 	fsQuad: object;
 
+	constructor(width: number, height: number);
+
 	getAreaTexture(): string;
+
 	getSearchTexture(): string;
 
 }

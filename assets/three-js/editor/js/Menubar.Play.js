@@ -2,42 +2,42 @@
  * @author mrdoob / http://mrdoob.com/
  */
 
-import { UIPanel } from './libs/ui.js';
+import {UIPanel} from './libs/ui.js';
 
-var MenubarPlay = function ( editor ) {
+var MenubarPlay = function (editor) {
 
 	var signals = editor.signals;
 	var strings = editor.strings;
 
 	var container = new UIPanel();
-	container.setClass( 'menu' );
+	container.setClass('menu');
 
 	var isPlaying = false;
 
 	var title = new UIPanel();
-	title.setClass( 'title' );
-	title.setTextContent( strings.getKey( 'menubar/play' ) );
-	title.onClick( function () {
+	title.setClass('title');
+	title.setTextContent(strings.getKey('menubar/play'));
+	title.onClick(function () {
 
-		if ( isPlaying === false ) {
+		if (isPlaying === false) {
 
 			isPlaying = true;
-			title.setTextContent( strings.getKey( 'menubar/play/stop' ) );
+			title.setTextContent(strings.getKey('menubar/play/stop'));
 			signals.startPlayer.dispatch();
 
 		} else {
 
 			isPlaying = false;
-			title.setTextContent( strings.getKey( 'menubar/play/play' ) );
+			title.setTextContent(strings.getKey('menubar/play/play'));
 			signals.stopPlayer.dispatch();
 
 		}
 
-	} );
-	container.add( title );
+	});
+	container.add(title);
 
 	return container;
 
 };
 
-export { MenubarPlay };
+export {MenubarPlay};

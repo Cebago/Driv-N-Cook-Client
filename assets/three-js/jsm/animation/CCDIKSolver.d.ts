@@ -1,6 +1,4 @@
-import {
-	SkinnedMesh,
-} from '../../../src/Three';
+import {SkinnedMesh,} from '../../../src/Three';
 
 export interface IKS {
 	effector: number;
@@ -15,15 +13,16 @@ export interface IKS {
 
 export class CCDIKSolver {
 
-	constructor( mesh: SkinnedMesh, iks: IKS[] );
+	constructor(mesh: SkinnedMesh, iks: IKS[]);
 
 	update(): this;
+
 	createHelper(): CCDIKHelper;
 
 }
 
 export class CCDIKHelper {
 
-	constructor( mesh: SkinnedMesh, iks: IKS[] );
+	constructor(mesh: SkinnedMesh, iks: IKS[]);
 
 }

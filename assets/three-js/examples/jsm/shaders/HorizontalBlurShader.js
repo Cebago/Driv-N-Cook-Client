@@ -16,8 +16,8 @@ var HorizontalBlurShader = {
 
 	uniforms: {
 
-		"tDiffuse": { value: null },
-		"h": { value: 1.0 / 512.0 }
+		"tDiffuse": {value: null},
+		"h": {value: 1.0 / 512.0}
 
 	},
 
@@ -32,7 +32,7 @@ var HorizontalBlurShader = {
 
 		"}"
 
-	].join( "\n" ),
+	].join("\n"),
 
 	fragmentShader: [
 
@@ -59,8 +59,8 @@ var HorizontalBlurShader = {
 
 		"}"
 
-	].join( "\n" )
+	].join("\n")
 
 };
 
-export { HorizontalBlurShader };
+export {HorizontalBlurShader};

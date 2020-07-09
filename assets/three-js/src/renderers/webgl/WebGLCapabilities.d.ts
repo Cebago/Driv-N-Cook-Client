@@ -5,12 +5,6 @@ export interface WebGLCapabilitiesParameters {
 
 export class WebGLCapabilities {
 
-	constructor(
-		gl: WebGLRenderingContext,
-		extensions: any,
-		parameters: WebGLCapabilitiesParameters
-	);
-
 	readonly isWebGL2: true;
 	precision: string;
 	logarithmicDepthBuffer: boolean;
@@ -26,7 +20,14 @@ export class WebGLCapabilities {
 	floatFragmentTextures: boolean;
 	floatVertexTextures: boolean;
 
+	constructor(
+		gl: WebGLRenderingContext,
+		extensions: any,
+		parameters: WebGLCapabilitiesParameters
+	);
+
 	getMaxAnisotropy(): number;
-	getMaxPrecision( precision: string ): string;
+
+	getMaxPrecision(precision: string): string;
 
 }

@@ -2,7 +2,7 @@
  * @author Mugen87 / https://github.com/Mugen87
  */
 
-function WebGLInfo( gl ) {
+function WebGLInfo(gl) {
 
 	var memory = {
 		geometries: 0,
@@ -17,24 +17,24 @@ function WebGLInfo( gl ) {
 		lines: 0
 	};
 
-	function update( count, mode, instanceCount ) {
+	function update(count, mode, instanceCount) {
 
 		instanceCount = instanceCount || 1;
 
-		render.calls ++;
+		render.calls++;
 
-		switch ( mode ) {
+		switch (mode) {
 
 			case gl.TRIANGLES:
-				render.triangles += instanceCount * ( count / 3 );
+				render.triangles += instanceCount * (count / 3);
 				break;
 
 			case gl.LINES:
-				render.lines += instanceCount * ( count / 2 );
+				render.lines += instanceCount * (count / 2);
 				break;
 
 			case gl.LINE_STRIP:
-				render.lines += instanceCount * ( count - 1 );
+				render.lines += instanceCount * (count - 1);
 				break;
 
 			case gl.LINE_LOOP:
@@ -46,7 +46,7 @@ function WebGLInfo( gl ) {
 				break;
 
 			default:
-				console.error( 'THREE.WebGLInfo: Unknown draw mode:', mode );
+				console.error('THREE.WebGLInfo: Unknown draw mode:', mode);
 				break;
 
 		}
@@ -55,7 +55,7 @@ function WebGLInfo( gl ) {
 
 	function reset() {
 
-		render.frame ++;
+		render.frame++;
 		render.calls = 0;
 		render.triangles = 0;
 		render.points = 0;
@@ -75,4 +75,4 @@ function WebGLInfo( gl ) {
 }
 
 
-export { WebGLInfo };
+export {WebGLInfo};

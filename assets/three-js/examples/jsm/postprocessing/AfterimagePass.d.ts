@@ -1,13 +1,9 @@
-import {
-	WebGLRenderTarget,
-	ShaderMaterial
-} from '../../../src/Three';
+import {ShaderMaterial, WebGLRenderTarget} from '../../../src/Three';
 
-import { Pass } from './Pass';
+import {Pass} from './Pass';
 
 export class AfterimagePass extends Pass {
 
-	constructor( damp?: number );
 	shader: object;
 	uniforms: object;
 	textureComp: WebGLRenderTarget;
@@ -15,5 +11,7 @@ export class AfterimagePass extends Pass {
 	shaderMaterial: ShaderMaterial;
 	compFsQuad: object;
 	copyFsQuad: object;
+
+	constructor(damp?: number);
 
 }

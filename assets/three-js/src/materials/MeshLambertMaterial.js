@@ -1,6 +1,6 @@
-import { Material } from './Material.js';
-import { MultiplyOperation } from '../constants.js';
-import { Color } from '../math/Color.js';
+import {Material} from './Material.js';
+import {MultiplyOperation} from '../constants.js';
+import {Color} from '../math/Color.js';
 
 /**
  * @author mrdoob / http://mrdoob.com/
@@ -40,13 +40,13 @@ import { Color } from '../math/Color.js';
  * }
  */
 
-function MeshLambertMaterial( parameters ) {
+function MeshLambertMaterial(parameters) {
 
-	Material.call( this );
+	Material.call(this);
 
 	this.type = 'MeshLambertMaterial';
 
-	this.color = new Color( 0xffffff ); // diffuse
+	this.color = new Color(0xffffff); // diffuse
 
 	this.map = null;
 
@@ -56,7 +56,7 @@ function MeshLambertMaterial( parameters ) {
 	this.aoMap = null;
 	this.aoMapIntensity = 1.0;
 
-	this.emissive = new Color( 0x000000 );
+	this.emissive = new Color(0x000000);
 	this.emissiveIntensity = 1.0;
 	this.emissiveMap = null;
 
@@ -78,20 +78,20 @@ function MeshLambertMaterial( parameters ) {
 	this.morphTargets = false;
 	this.morphNormals = false;
 
-	this.setValues( parameters );
+	this.setValues(parameters);
 
 }
 
-MeshLambertMaterial.prototype = Object.create( Material.prototype );
+MeshLambertMaterial.prototype = Object.create(Material.prototype);
 MeshLambertMaterial.prototype.constructor = MeshLambertMaterial;
 
 MeshLambertMaterial.prototype.isMeshLambertMaterial = true;
 
-MeshLambertMaterial.prototype.copy = function ( source ) {
+MeshLambertMaterial.prototype.copy = function (source) {
 
-	Material.prototype.copy.call( this, source );
+	Material.prototype.copy.call(this, source);
 
-	this.color.copy( source.color );
+	this.color.copy(source.color);
 
 	this.map = source.map;
 
@@ -101,7 +101,7 @@ MeshLambertMaterial.prototype.copy = function ( source ) {
 	this.aoMap = source.aoMap;
 	this.aoMapIntensity = source.aoMapIntensity;
 
-	this.emissive.copy( source.emissive );
+	this.emissive.copy(source.emissive);
 	this.emissiveMap = source.emissiveMap;
 	this.emissiveIntensity = source.emissiveIntensity;
 
@@ -128,4 +128,4 @@ MeshLambertMaterial.prototype.copy = function ( source ) {
 };
 
 
-export { MeshLambertMaterial };
+export {MeshLambertMaterial};

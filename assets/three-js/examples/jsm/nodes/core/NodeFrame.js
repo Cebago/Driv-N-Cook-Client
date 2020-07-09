@@ -2,7 +2,7 @@
  * @author sunag / http://www.sunag.com.br/
  */
 
-function NodeFrame( time ) {
+function NodeFrame(time) {
 
 	this.time = time !== undefined ? time : 0;
 
@@ -14,9 +14,9 @@ NodeFrame.prototype = {
 
 	constructor: NodeFrame,
 
-	update: function ( delta ) {
+	update: function (delta) {
 
-		++ this.id;
+		++this.id;
 
 		this.time += delta;
 		this.delta = delta;
@@ -25,7 +25,7 @@ NodeFrame.prototype = {
 
 	},
 
-	setRenderer: function ( renderer ) {
+	setRenderer: function (renderer) {
 
 		this.renderer = renderer;
 
@@ -33,7 +33,7 @@ NodeFrame.prototype = {
 
 	},
 
-	setRenderTexture: function ( renderTexture ) {
+	setRenderTexture: function (renderTexture) {
 
 		this.renderTexture = renderTexture;
 
@@ -41,11 +41,11 @@ NodeFrame.prototype = {
 
 	},
 
-	updateNode: function ( node ) {
+	updateNode: function (node) {
 
-		if ( node.frameId === this.id ) return this;
+		if (node.frameId === this.id) return this;
 
-		node.updateFrame( this );
+		node.updateFrame(this);
 
 		node.frameId = this.id;
 
@@ -55,4 +55,4 @@ NodeFrame.prototype = {
 
 };
 
-export { NodeFrame };
+export {NodeFrame};

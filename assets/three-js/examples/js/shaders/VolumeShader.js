@@ -8,12 +8,12 @@
 
 THREE.VolumeRenderShader1 = {
 	uniforms: {
-		"u_size": { value: new THREE.Vector3( 1, 1, 1 ) },
-		"u_renderstyle": { value: 0 },
-		"u_renderthreshold": { value: 0.5 },
-		"u_clim": { value: new THREE.Vector2( 1, 1 ) },
-		"u_data": { value: null },
-		"u_cmdata": { value: null }
+		"u_size": {value: new THREE.Vector3(1, 1, 1)},
+		"u_renderstyle": {value: 0},
+		"u_renderthreshold": {value: 0.5},
+		"u_clim": {value: new THREE.Vector2(1, 1)},
+		"u_data": {value: null},
+		"u_cmdata": {value: null}
 	},
 	vertexShader: [
 		"		varying vec4 v_nearpos;",
@@ -89,7 +89,7 @@ THREE.VolumeRenderShader1 = {
 		"				v_position = position;",
 		"				gl_Position = projectionMatrix * viewMatrix * modelMatrix * position4;",
 		"		}",
-	].join( "\n" ),
+	].join("\n"),
 	fragmentShader: [
 		"		precision highp float;",
 		"		precision mediump sampler3D;",
@@ -294,7 +294,7 @@ THREE.VolumeRenderShader1 = {
 		// note: could allow multiple lights
 		"				for (int i=0; i<1; i++)",
 		"				{",
-								 // Get light direction (make sure to prevent zero devision)
+		// Get light direction (make sure to prevent zero devision)
 		"						vec3 L = normalize(view_ray);	//lightDirs[i];",
 		"						float lightEnabled = float( length(L) > 0.0 );",
 		"						L = normalize(L + (1.0 - lightEnabled));",
@@ -320,5 +320,5 @@ THREE.VolumeRenderShader1 = {
 		"				final_color.a = color.a;",
 		"				return final_color;",
 		"		}",
-	].join( "\n" )
+	].join("\n")
 };

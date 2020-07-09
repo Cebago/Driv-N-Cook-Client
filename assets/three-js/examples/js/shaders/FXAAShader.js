@@ -12,8 +12,8 @@ THREE.FXAAShader = {
 
 	uniforms: {
 
-		"tDiffuse": { value: null },
-		"resolution": { value: new THREE.Vector2( 1 / 1024, 1 / 512 ) }
+		"tDiffuse": {value: null},
+		"resolution": {value: new THREE.Vector2(1 / 1024, 1 / 512)}
 
 	},
 
@@ -28,7 +28,7 @@ THREE.FXAAShader = {
 
 		"}"
 
-	].join( "\n" ),
+	].join("\n"),
 
 	fragmentShader: [
 		"precision highp float;",
@@ -1110,6 +1110,6 @@ THREE.FXAAShader = {
 		"  // TODO avoid querying texture twice for same texel",
 		"  gl_FragColor.a = texture2D(tDiffuse, vUv).a;",
 		"}"
-	].join( "\n" )
+	].join("\n")
 
 };

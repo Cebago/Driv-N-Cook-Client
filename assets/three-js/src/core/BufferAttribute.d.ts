@@ -1,13 +1,11 @@
-import { Usage } from '../constants';
-import { Matrix3 } from './../math/Matrix3';
-import { Matrix4 } from './../math/Matrix4';
+import {Usage} from '../constants';
+import {Matrix3} from './../math/Matrix3';
+import {Matrix4} from './../math/Matrix4';
 
 /**
  * @see <a href="https://github.com/mrdoob/three.js/blob/master/src/core/BufferAttribute.js">src/core/BufferAttribute.js</a>
  */
 export class BufferAttribute {
-
-	constructor( array: ArrayLike<number>, itemSize: number, normalized?: boolean ); // array parameter should be TypedArray.
 
 	name: string;
 	array: ArrayLike<number>;
@@ -17,50 +15,76 @@ export class BufferAttribute {
 	version: number;
 	normalized: boolean;
 	count: number;
-
-	set needsUpdate( value: boolean );
-
 	readonly isBufferAttribute: true;
-
 	onUploadCallback: () => void;
-	onUpload( callback: () => void ): this;
-	setUsage( usage: Usage ): this;
+
+	constructor(array: ArrayLike<number>, itemSize: number, normalized?: boolean); // array parameter should be TypedArray.
+
+	set needsUpdate(value: boolean);
+
+	onUpload(callback: () => void): this;
+
+	setUsage(usage: Usage): this;
+
 	clone(): BufferAttribute;
-	copy( source: BufferAttribute ): this;
+
+	copy(source: BufferAttribute): this;
+
 	copyAt(
 		index1: number,
 		attribute: BufferAttribute,
 		index2: number
 	): this;
-	copyArray( array: ArrayLike<number> ): this;
+
+	copyArray(array: ArrayLike<number>): this;
+
 	copyColorsArray(
 		colors: { r: number; g: number; b: number }[]
 	): this;
-	copyVector2sArray( vectors: { x: number; y: number }[] ): this;
+
+	copyVector2sArray(vectors: { x: number; y: number }[]): this;
+
 	copyVector3sArray(
 		vectors: { x: number; y: number; z: number }[]
 	): this;
+
 	copyVector4sArray(
 		vectors: { x: number; y: number; z: number; w: number }[]
 	): this;
-	applyMatrix3( m: Matrix3 ): this;
-	applyMatrix4( m: Matrix4 ): this;
-	applyNormalMatrix( m: Matrix3 ): this;
-	transformDirection( m: Matrix4 ): this;
+
+	applyMatrix3(m: Matrix3): this;
+
+	applyMatrix4(m: Matrix4): this;
+
+	applyNormalMatrix(m: Matrix3): this;
+
+	transformDirection(m: Matrix4): this;
+
 	set(
 		value: ArrayLike<number> | ArrayBufferView,
 		offset?: number
 	): this;
-	getX( index: number ): number;
-	setX( index: number, x: number ): this;
-	getY( index: number ): number;
-	setY( index: number, y: number ): this;
-	getZ( index: number ): number;
-	setZ( index: number, z: number ): this;
-	getW( index: number ): number;
-	setW( index: number, z: number ): this;
-	setXY( index: number, x: number, y: number ): this;
-	setXYZ( index: number, x: number, y: number, z: number ): this;
+
+	getX(index: number): number;
+
+	setX(index: number, x: number): this;
+
+	getY(index: number): number;
+
+	setY(index: number, y: number): this;
+
+	getZ(index: number): number;
+
+	setZ(index: number, z: number): this;
+
+	getW(index: number): number;
+
+	setW(index: number, z: number): this;
+
+	setXY(index: number, x: number, y: number): this;
+
+	setXYZ(index: number, x: number, y: number, z: number): this;
+
 	setXYZW(
 		index: number,
 		x: number,
@@ -68,6 +92,7 @@ export class BufferAttribute {
 		z: number,
 		w: number
 	): this;
+
 	toJSON(): {
 		itemSize: number,
 		type: string,
@@ -82,7 +107,7 @@ export class BufferAttribute {
  */
 export class Int8Attribute extends BufferAttribute {
 
-	constructor( array: any, itemSize: number );
+	constructor(array: any, itemSize: number);
 
 }
 
@@ -91,7 +116,7 @@ export class Int8Attribute extends BufferAttribute {
  */
 export class Uint8Attribute extends BufferAttribute {
 
-	constructor( array: any, itemSize: number );
+	constructor(array: any, itemSize: number);
 
 }
 
@@ -100,7 +125,7 @@ export class Uint8Attribute extends BufferAttribute {
  */
 export class Uint8ClampedAttribute extends BufferAttribute {
 
-	constructor( array: any, itemSize: number );
+	constructor(array: any, itemSize: number);
 
 }
 
@@ -109,7 +134,7 @@ export class Uint8ClampedAttribute extends BufferAttribute {
  */
 export class Int16Attribute extends BufferAttribute {
 
-	constructor( array: any, itemSize: number );
+	constructor(array: any, itemSize: number);
 
 }
 
@@ -118,7 +143,7 @@ export class Int16Attribute extends BufferAttribute {
  */
 export class Uint16Attribute extends BufferAttribute {
 
-	constructor( array: any, itemSize: number );
+	constructor(array: any, itemSize: number);
 
 }
 
@@ -127,7 +152,7 @@ export class Uint16Attribute extends BufferAttribute {
  */
 export class Int32Attribute extends BufferAttribute {
 
-	constructor( array: any, itemSize: number );
+	constructor(array: any, itemSize: number);
 
 }
 
@@ -136,7 +161,7 @@ export class Int32Attribute extends BufferAttribute {
  */
 export class Uint32Attribute extends BufferAttribute {
 
-	constructor( array: any, itemSize: number );
+	constructor(array: any, itemSize: number);
 
 }
 
@@ -145,7 +170,7 @@ export class Uint32Attribute extends BufferAttribute {
  */
 export class Float32Attribute extends BufferAttribute {
 
-	constructor( array: any, itemSize: number );
+	constructor(array: any, itemSize: number);
 
 }
 
@@ -154,7 +179,7 @@ export class Float32Attribute extends BufferAttribute {
  */
 export class Float64Attribute extends BufferAttribute {
 
-	constructor( array: any, itemSize: number );
+	constructor(array: any, itemSize: number);
 
 }
 

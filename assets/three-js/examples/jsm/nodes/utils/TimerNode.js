@@ -2,12 +2,12 @@
  * @author sunag / http://www.sunag.com.br/
  */
 
-import { FloatNode } from '../inputs/FloatNode.js';
-import { NodeLib } from '../core/NodeLib.js';
+import {FloatNode} from '../inputs/FloatNode.js';
+import {NodeLib} from '../core/NodeLib.js';
 
-function TimerNode( scale, scope, timeScale ) {
+function TimerNode(scale, scope, timeScale) {
 
-	FloatNode.call( this );
+	FloatNode.call(this);
 
 	this.scale = scale !== undefined ? scale : 1;
 	this.scope = scope || TimerNode.GLOBAL;
@@ -20,7 +20,7 @@ TimerNode.GLOBAL = 'global';
 TimerNode.LOCAL = 'local';
 TimerNode.DELTA = 'delta';
 
-TimerNode.prototype = Object.create( FloatNode.prototype );
+TimerNode.prototype = Object.create(FloatNode.prototype);
 TimerNode.prototype.constructor = TimerNode;
 TimerNode.prototype.nodeType = "Timer";
 
@@ -36,15 +36,15 @@ TimerNode.prototype.getUnique = function () {
 
 	// share TimerNode "uniform" input if is used on more time with others TimerNode
 
-	return this.timeScale && ( this.scope === TimerNode.GLOBAL || this.scope === TimerNode.DELTA );
+	return this.timeScale && (this.scope === TimerNode.GLOBAL || this.scope === TimerNode.DELTA);
 
 };
 
-TimerNode.prototype.updateFrame = function ( frame ) {
+TimerNode.prototype.updateFrame = function (frame) {
 
 	var scale = this.timeScale ? this.scale : 1;
 
-	switch ( this.scope ) {
+	switch (this.scope) {
 
 		case TimerNode.LOCAL:
 
@@ -66,9 +66,9 @@ TimerNode.prototype.updateFrame = function ( frame ) {
 
 };
 
-TimerNode.prototype.copy = function ( source ) {
+TimerNode.prototype.copy = function (source) {
 
-	FloatNode.prototype.copy.call( this, source );
+	FloatNode.prototype.copy.call(this, source);
 
 	this.scope = source.scope;
 	this.scale = source.scale;
@@ -79,13 +79,13 @@ TimerNode.prototype.copy = function ( source ) {
 
 };
 
-TimerNode.prototype.toJSON = function ( meta ) {
+TimerNode.prototype.toJSON = function (meta) {
 
-	var data = this.getJSONNode( meta );
+	var data = this.getJSONNode(meta);
 
-	if ( ! data ) {
+	if (!data) {
 
-		data = this.createJSONNode( meta );
+		data = this.createJSONNode(meta);
 
 		data.scope = this.scope;
 		data.scale = this.scale;
@@ -98,10 +98,10 @@ TimerNode.prototype.toJSON = function ( meta ) {
 
 };
 
-NodeLib.addKeyword( 'time', function () {
+NodeLib.addKeyword('time', function () {
 
 	return new TimerNode();
 
-} );
+});
 
-export { TimerNode };
+export {TimerNode};

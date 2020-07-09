@@ -6,9 +6,7 @@
  * https://github.com/iryoku/smaa/releases/tag/v2.8
  */
 
-import {
-	Vector2
-} from "../../../build/three.module.js";
+import {Vector2} from "../../../build/three.module.js";
 
 var SMAAEdgesShader = {
 
@@ -20,8 +18,8 @@ var SMAAEdgesShader = {
 
 	uniforms: {
 
-		"tDiffuse": { value: null },
-		"resolution": { value: new Vector2( 1 / 1024, 1 / 512 ) }
+		"tDiffuse": {value: null},
+		"resolution": {value: new Vector2(1 / 1024, 1 / 512)}
 
 	},
 
@@ -48,7 +46,7 @@ var SMAAEdgesShader = {
 
 		"}"
 
-	].join( "\n" ),
+	].join("\n"),
 
 	fragmentShader: [
 
@@ -115,7 +113,7 @@ var SMAAEdgesShader = {
 
 		"}"
 
-	].join( "\n" )
+	].join("\n")
 
 };
 
@@ -132,10 +130,10 @@ var SMAAWeightsShader = {
 
 	uniforms: {
 
-		"tDiffuse": { value: null },
-		"tArea": { value: null },
-		"tSearch": { value: null },
-		"resolution": { value: new Vector2( 1 / 1024, 1 / 512 ) }
+		"tDiffuse": {value: null},
+		"tArea": {value: null},
+		"tSearch": {value: null},
+		"resolution": {value: new Vector2(1 / 1024, 1 / 512)}
 
 	},
 
@@ -169,7 +167,7 @@ var SMAAWeightsShader = {
 
 		"}"
 
-	].join( "\n" ),
+	].join("\n"),
 
 	fragmentShader: [
 
@@ -201,12 +199,12 @@ var SMAAWeightsShader = {
 
 		"float SMAASearchXLeft( sampler2D edgesTex, sampler2D searchTex, vec2 texcoord, float end ) {",
 		/**
-			* @PSEUDO_GATHER4
-			* This texcoord has been offset by (-0.25, -0.125) in the vertex shader to
-			* sample between edge, thus fetching four edges in a row.
-			* Sampling with different offsets in each direction allows to disambiguate
-			* which edges are active from the four fetched ones.
-			*/
+		 * @PSEUDO_GATHER4
+		 * This texcoord has been offset by (-0.25, -0.125) in the vertex shader to
+		 * sample between edge, thus fetching four edges in a row.
+		 * Sampling with different offsets in each direction allows to disambiguate
+		 * which edges are active from the four fetched ones.
+		 */
 		"	vec2 e = vec2( 0.0, 1.0 );",
 
 		"	for ( int i = 0; i < SMAA_MAX_SEARCH_STEPS; i ++ ) {", // WebGL port note: Changed while to for
@@ -373,7 +371,7 @@ var SMAAWeightsShader = {
 
 		"}"
 
-	].join( "\n" )
+	].join("\n")
 
 };
 
@@ -381,9 +379,9 @@ var SMAABlendShader = {
 
 	uniforms: {
 
-		"tDiffuse": { value: null },
-		"tColor": { value: null },
-		"resolution": { value: new Vector2( 1 / 1024, 1 / 512 ) }
+		"tDiffuse": {value: null},
+		"tColor": {value: null},
+		"resolution": {value: new Vector2(1 / 1024, 1 / 512)}
 
 	},
 
@@ -409,7 +407,7 @@ var SMAABlendShader = {
 
 		"}"
 
-	].join( "\n" ),
+	].join("\n"),
 
 	fragmentShader: [
 
@@ -467,8 +465,8 @@ var SMAABlendShader = {
 
 		"}"
 
-	].join( "\n" )
+	].join("\n")
 
 };
 
-export { SMAAEdgesShader, SMAAWeightsShader, SMAABlendShader };
+export {SMAAEdgesShader, SMAAWeightsShader, SMAABlendShader};

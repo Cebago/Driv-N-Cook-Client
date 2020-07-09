@@ -1,8 +1,8 @@
-import { Color } from './../math/Color';
-import { Texture } from './../textures/Texture';
-import { Vector2 } from './../math/Vector2';
-import { MaterialParameters, Material } from './Material';
-import { NormalMapTypes } from '../constants';
+import {Color} from './../math/Color';
+import {Texture} from './../textures/Texture';
+import {Vector2} from './../math/Vector2';
+import {Material, MaterialParameters} from './Material';
+import {NormalMapTypes} from '../constants';
 
 export interface MeshStandardMaterialParameters extends MaterialParameters {
 	color?: Color | string | number;
@@ -40,8 +40,6 @@ export interface MeshStandardMaterialParameters extends MaterialParameters {
 
 export class MeshStandardMaterial extends Material {
 
-	constructor( parameters?: MeshStandardMaterialParameters );
-
 	color: Color;
 	roughness: number;
 	metalness: number;
@@ -74,6 +72,8 @@ export class MeshStandardMaterial extends Material {
 	morphTargets: boolean;
 	morphNormals: boolean;
 
-	setValues( parameters: MeshStandardMaterialParameters ): void;
+	constructor(parameters?: MeshStandardMaterialParameters);
+
+	setValues(parameters: MeshStandardMaterialParameters): void;
 
 }

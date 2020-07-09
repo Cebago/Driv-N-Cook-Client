@@ -1,12 +1,9 @@
-import { Texture } from './Texture';
-import {
-	Mapping,
-	Wrapping,
-	TextureFilter,
-	TextureDataType,
-} from '../constants';
+import {Texture} from './Texture';
+import {Mapping, TextureDataType, TextureFilter, Wrapping,} from '../constants';
 
 export class DepthTexture extends Texture {
+
+	image: { width: number; height: number };
 
 	constructor(
 		width: number,
@@ -19,7 +16,5 @@ export class DepthTexture extends Texture {
 		minFilter?: TextureFilter,
 		anisotropy?: number
 	);
-
-	image: { width: number; height: number };
 
 }

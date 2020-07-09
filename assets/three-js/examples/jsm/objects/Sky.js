@@ -12,7 +12,7 @@
  * http://blenderartists.org/forum/showthread.php?245954-preethams-sky-impementation-HDR
  *
  * Three.js integration by zz85 http://twitter.com/blurspline
-*/
+ */
 
 import {
 	BackSide,
@@ -27,30 +27,30 @@ var Sky = function () {
 
 	var shader = Sky.SkyShader;
 
-	var material = new ShaderMaterial( {
+	var material = new ShaderMaterial({
 		fragmentShader: shader.fragmentShader,
 		vertexShader: shader.vertexShader,
-		uniforms: UniformsUtils.clone( shader.uniforms ),
+		uniforms: UniformsUtils.clone(shader.uniforms),
 		side: BackSide,
 		depthWrite: false
-	} );
+	});
 
-	Mesh.call( this, new BoxBufferGeometry( 1, 1, 1 ), material );
+	Mesh.call(this, new BoxBufferGeometry(1, 1, 1), material);
 
 };
 
-Sky.prototype = Object.create( Mesh.prototype );
+Sky.prototype = Object.create(Mesh.prototype);
 
 Sky.SkyShader = {
 
 	uniforms: {
-		"luminance": { value: 1 },
-		"turbidity": { value: 2 },
-		"rayleigh": { value: 1 },
-		"mieCoefficient": { value: 0.005 },
-		"mieDirectionalG": { value: 0.8 },
-		"sunPosition": { value: new Vector3() },
-		"up": { value: new Vector3( 0, 1, 0 ) }
+		"luminance": {value: 1},
+		"turbidity": {value: 2},
+		"rayleigh": {value: 1},
+		"mieCoefficient": {value: 0.005},
+		"mieDirectionalG": {value: 0.8},
+		"sunPosition": {value: new Vector3()},
+		"up": {value: new Vector3(0, 1, 0)}
 	},
 
 	vertexShader: [
@@ -124,7 +124,7 @@ Sky.SkyShader = {
 		'	vBetaM = totalMie( turbidity ) * mieCoefficient;',
 
 		'}'
-	].join( '\n' ),
+	].join('\n'),
 
 	fragmentShader: [
 		'varying vec3 vWorldPosition;',
@@ -228,8 +228,8 @@ Sky.SkyShader = {
 		'	gl_FragColor = vec4( retColor, 1.0 );',
 
 		'}'
-	].join( '\n' )
+	].join('\n')
 
 };
 
-export { Sky };
+export {Sky};

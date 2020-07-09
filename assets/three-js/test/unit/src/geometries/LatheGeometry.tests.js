@@ -3,17 +3,15 @@
  */
 /* global QUnit */
 
-import { runStdGeometryTests } from '../../qunit-utils';
-import {
-	LatheBufferGeometry
-} from '../../../../src/geometries/LatheGeometry';
+import {runStdGeometryTests} from '../../qunit-utils';
+import {LatheBufferGeometry} from '../../../../src/geometries/LatheGeometry';
 
-export default QUnit.module( 'Geometries', () => {
+export default QUnit.module('Geometries', () => {
 
-	QUnit.module( 'LatheBufferGeometry', ( hooks ) => {
+	QUnit.module('LatheBufferGeometry', (hooks) => {
 
 		var geometries = undefined;
-		hooks.beforeEach( function () {
+		hooks.beforeEach(function () {
 
 			const parameters = {
 				points: [],
@@ -24,32 +22,32 @@ export default QUnit.module( 'Geometries', () => {
 
 			geometries = [
 				//				new LatheBufferGeometry(), // Todo: error for undefined point
-				new LatheBufferGeometry( parameters.points )
+				new LatheBufferGeometry(parameters.points)
 			];
 
-		} );
+		});
 
 		// INHERITANCE
-		QUnit.todo( "Extending", ( assert ) => {
+		QUnit.todo("Extending", (assert) => {
 
-			assert.ok( false, "everything's gonna be alright" );
+			assert.ok(false, "everything's gonna be alright");
 
-		} );
+		});
 
 		// INSTANCING
-		QUnit.todo( "Instancing", ( assert ) => {
+		QUnit.todo("Instancing", (assert) => {
 
-			assert.ok( false, "everything's gonna be alright" );
+			assert.ok(false, "everything's gonna be alright");
 
-		} );
+		});
 
 		// OTHERS
-		QUnit.test( 'Standard geometry tests', ( assert ) => {
+		QUnit.test('Standard geometry tests', (assert) => {
 
-			runStdGeometryTests( assert, geometries );
+			runStdGeometryTests(assert, geometries);
 
-		} );
+		});
 
-	} );
+	});
 
-} );
+});

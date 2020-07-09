@@ -2,21 +2,21 @@
  * @author sunag / http://www.sunag.com.br/
  */
 
-import { TempNode } from './TempNode.js';
+import {TempNode} from './TempNode.js';
 
-function FunctionCallNode( func, inputs ) {
+function FunctionCallNode(func, inputs) {
 
-	TempNode.call( this );
+	TempNode.call(this);
 
-	this.setFunction( func, inputs );
+	this.setFunction(func, inputs);
 
 }
 
-FunctionCallNode.prototype = Object.create( TempNode.prototype );
+FunctionCallNode.prototype = Object.create(TempNode.prototype);
 FunctionCallNode.prototype.constructor = FunctionCallNode;
 FunctionCallNode.prototype.nodeType = "FunctionCall";
 
-FunctionCallNode.prototype.setFunction = function ( func, inputs ) {
+FunctionCallNode.prototype.setFunction = function (func, inputs) {
 
 	this.value = func;
 	this.inputs = inputs || [];
@@ -29,42 +29,42 @@ FunctionCallNode.prototype.getFunction = function () {
 
 };
 
-FunctionCallNode.prototype.getType = function ( builder ) {
+FunctionCallNode.prototype.getType = function (builder) {
 
-	return this.value.getType( builder );
+	return this.value.getType(builder);
 
 };
 
-FunctionCallNode.prototype.generate = function ( builder, output ) {
+FunctionCallNode.prototype.generate = function (builder, output) {
 
-	var type = this.getType( builder ),
+	var type = this.getType(builder),
 		func = this.value;
 
-	var code = func.build( builder, output ) + '( ',
+	var code = func.build(builder, output) + '( ',
 		params = [];
 
-	for ( var i = 0; i < func.inputs.length; i ++ ) {
+	for (var i = 0; i < func.inputs.length; i++) {
 
-		var inpt = func.inputs[ i ],
-			param = this.inputs[ i ] || this.inputs[ inpt.name ];
+		var inpt = func.inputs[i],
+			param = this.inputs[i] || this.inputs[inpt.name];
 
-		params.push( param.build( builder, builder.getTypeByFormat( inpt.type ) ) );
+		params.push(param.build(builder, builder.getTypeByFormat(inpt.type)));
 
 	}
 
-	code += params.join( ', ' ) + ' )';
+	code += params.join(', ') + ' )';
 
-	return builder.format( code, type, output );
+	return builder.format(code, type, output);
 
 };
 
-FunctionCallNode.prototype.copy = function ( source ) {
+FunctionCallNode.prototype.copy = function (source) {
 
-	TempNode.prototype.copy.call( this, source );
+	TempNode.prototype.copy.call(this, source);
 
-	for ( var prop in source.inputs ) {
+	for (var prop in source.inputs) {
 
-		this.inputs[ prop ] = source.inputs[ prop ];
+		this.inputs[prop] = source.inputs[prop];
 
 	}
 
@@ -74,28 +74,28 @@ FunctionCallNode.prototype.copy = function ( source ) {
 
 };
 
-FunctionCallNode.prototype.toJSON = function ( meta ) {
+FunctionCallNode.prototype.toJSON = function (meta) {
 
-	var data = this.getJSONNode( meta );
+	var data = this.getJSONNode(meta);
 
-	if ( ! data ) {
+	if (!data) {
 
 		var func = this.value;
 
-		data = this.createJSONNode( meta );
+		data = this.createJSONNode(meta);
 
-		data.value = this.value.toJSON( meta ).uuid;
+		data.value = this.value.toJSON(meta).uuid;
 
-		if ( func.inputs.length ) {
+		if (func.inputs.length) {
 
 			data.inputs = {};
 
-			for ( var i = 0; i < func.inputs.length; i ++ ) {
+			for (var i = 0; i < func.inputs.length; i++) {
 
-				var inpt = func.inputs[ i ],
-					node = this.inputs[ i ] || this.inputs[ inpt.name ];
+				var inpt = func.inputs[i],
+					node = this.inputs[i] || this.inputs[inpt.name];
 
-				data.inputs[ inpt.name ] = node.toJSON( meta ).uuid;
+				data.inputs[inpt.name] = node.toJSON(meta).uuid;
 
 			}
 
@@ -107,4 +107,4 @@ FunctionCallNode.prototype.toJSON = function ( meta ) {
 
 };
 
-export { FunctionCallNode };
+export {FunctionCallNode};

@@ -1,7 +1,7 @@
-import { TangentSpaceNormalMap } from '../constants.js';
-import { Material } from './Material.js';
-import { Vector2 } from '../math/Vector2.js';
-import { Color } from '../math/Color.js';
+import {TangentSpaceNormalMap} from '../constants.js';
+import {Material} from './Material.js';
+import {Vector2} from '../math/Vector2.js';
+import {Color} from '../math/Color.js';
 
 /**
  * @author WestLangley / http://github.com/WestLangley
@@ -55,15 +55,15 @@ import { Color } from '../math/Color.js';
  * }
  */
 
-function MeshStandardMaterial( parameters ) {
+function MeshStandardMaterial(parameters) {
 
-	Material.call( this );
+	Material.call(this);
 
-	this.defines = { 'STANDARD': '' };
+	this.defines = {'STANDARD': ''};
 
 	this.type = 'MeshStandardMaterial';
 
-	this.color = new Color( 0xffffff ); // diffuse
+	this.color = new Color(0xffffff); // diffuse
 	this.roughness = 1.0;
 	this.metalness = 0.0;
 
@@ -75,7 +75,7 @@ function MeshStandardMaterial( parameters ) {
 	this.aoMap = null;
 	this.aoMapIntensity = 1.0;
 
-	this.emissive = new Color( 0x000000 );
+	this.emissive = new Color(0x000000);
 	this.emissiveIntensity = 1.0;
 	this.emissiveMap = null;
 
@@ -84,7 +84,7 @@ function MeshStandardMaterial( parameters ) {
 
 	this.normalMap = null;
 	this.normalMapType = TangentSpaceNormalMap;
-	this.normalScale = new Vector2( 1, 1 );
+	this.normalScale = new Vector2(1, 1);
 
 	this.displacementMap = null;
 	this.displacementScale = 1;
@@ -112,22 +112,22 @@ function MeshStandardMaterial( parameters ) {
 
 	this.vertexTangents = false;
 
-	this.setValues( parameters );
+	this.setValues(parameters);
 
 }
 
-MeshStandardMaterial.prototype = Object.create( Material.prototype );
+MeshStandardMaterial.prototype = Object.create(Material.prototype);
 MeshStandardMaterial.prototype.constructor = MeshStandardMaterial;
 
 MeshStandardMaterial.prototype.isMeshStandardMaterial = true;
 
-MeshStandardMaterial.prototype.copy = function ( source ) {
+MeshStandardMaterial.prototype.copy = function (source) {
 
-	Material.prototype.copy.call( this, source );
+	Material.prototype.copy.call(this, source);
 
-	this.defines = { 'STANDARD': '' };
+	this.defines = {'STANDARD': ''};
 
-	this.color.copy( source.color );
+	this.color.copy(source.color);
 	this.roughness = source.roughness;
 	this.metalness = source.metalness;
 
@@ -139,7 +139,7 @@ MeshStandardMaterial.prototype.copy = function ( source ) {
 	this.aoMap = source.aoMap;
 	this.aoMapIntensity = source.aoMapIntensity;
 
-	this.emissive.copy( source.emissive );
+	this.emissive.copy(source.emissive);
 	this.emissiveMap = source.emissiveMap;
 	this.emissiveIntensity = source.emissiveIntensity;
 
@@ -148,7 +148,7 @@ MeshStandardMaterial.prototype.copy = function ( source ) {
 
 	this.normalMap = source.normalMap;
 	this.normalMapType = source.normalMapType;
-	this.normalScale.copy( source.normalScale );
+	this.normalScale.copy(source.normalScale);
 
 	this.displacementMap = source.displacementMap;
 	this.displacementScale = source.displacementScale;
@@ -181,4 +181,4 @@ MeshStandardMaterial.prototype.copy = function ( source ) {
 };
 
 
-export { MeshStandardMaterial };
+export {MeshStandardMaterial};

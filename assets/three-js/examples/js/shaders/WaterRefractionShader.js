@@ -46,7 +46,7 @@ THREE.WaterRefractionShader = {
 
 		"}"
 
-	].join( "\n" ),
+	].join("\n"),
 
 	fragmentShader: [
 
@@ -92,5 +92,5 @@ THREE.WaterRefractionShader = {
 
 		"}"
 
-	].join( "\n" )
+	].join("\n")
 };

@@ -15,7 +15,7 @@ if (isset($json['token'])) {
     $dbManager = new DatabaseManager();
     $authService = new AuthService($dbManager);
     $user = $authService->fidelityFromToken($token);
-    if ($user === null OR $user->getFidelity() === null) {
+    if ($user === null or $user->getFidelity() === null) {
         http_response_code(401);
     } else {
         $fidelity = $authService->fidelityFromPoints($user->getFidelity()->getPoints());

@@ -1,17 +1,17 @@
 import {
-	Scene,
 	Camera,
+	Color,
 	Material,
 	MeshDepthMaterial,
 	MeshNormalMaterial,
+	Scene,
 	ShaderMaterial,
-	Color,
 	Vector2,
 	WebGLRenderer,
 	WebGLRenderTarget
 } from '../../../src/Three';
 
-import { Pass } from './Pass';
+import {Pass} from './Pass';
 
 interface SAOPassParams {
 	output: SAOPass.OUTPUT;
@@ -38,7 +38,6 @@ export namespace SAOPass {
 
 export class SAOPass extends Pass {
 
-	constructor( scene: Scene, camera: Camera, depthTexture?: boolean, useNormals?: boolean, resolution?: Vector2 );
 	scene: Scene;
 	camera: Camera;
 	supportsDepthTextureExtension: boolean;
@@ -62,9 +61,12 @@ export class SAOPass extends Pass {
 	fsQuad: object;
 	params: SAOPassParams;
 
-	renderPass( renderer: WebGLRenderer, passMaterial: Material, renderTarget: WebGLRenderTarget, clearColor?: Color, clearAlpha?: number ): void;
-	renderPass( renderer: WebGLRenderer, passMaterial: Material, renderTarget: WebGLRenderTarget, clearColor?: number, clearAlpha?: number ): void;
-	renderOverride( renderer: WebGLRenderer, overrideMaterial: Material, renderTarget: WebGLRenderTarget, clearColor?: Color, clearAlpha?: number ): void;
-	renderOverride( renderer: WebGLRenderer, overrideMaterial: Material, renderTarget: WebGLRenderTarget, clearColor?: number, clearAlpha?: number ): void;
+	constructor(scene: Scene, camera: Camera, depthTexture?: boolean, useNormals?: boolean, resolution?: Vector2);
+
+	renderPass(renderer: WebGLRenderer, passMaterial: Material, renderTarget: WebGLRenderTarget, clearColor?: Color, clearAlpha?: number): void;
+	renderPass(renderer: WebGLRenderer, passMaterial: Material, renderTarget: WebGLRenderTarget, clearColor?: number, clearAlpha?: number): void;
+
+	renderOverride(renderer: WebGLRenderer, overrideMaterial: Material, renderTarget: WebGLRenderTarget, clearColor?: Color, clearAlpha?: number): void;
+	renderOverride(renderer: WebGLRenderer, overrideMaterial: Material, renderTarget: WebGLRenderTarget, clearColor?: number, clearAlpha?: number): void;
 
 }

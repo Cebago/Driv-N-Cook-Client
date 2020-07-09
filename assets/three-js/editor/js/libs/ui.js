@@ -2,7 +2,7 @@
  * @author mrdoob / http://mrdoob.com/
  */
 
-var UIElement = function ( dom ) {
+var UIElement = function (dom) {
 
 	this.dom = dom;
 
@@ -12,17 +12,17 @@ UIElement.prototype = {
 
 	add: function () {
 
-		for ( var i = 0; i < arguments.length; i ++ ) {
+		for (var i = 0; i < arguments.length; i++) {
 
-			var argument = arguments[ i ];
+			var argument = arguments[i];
 
-			if ( argument instanceof UIElement ) {
+			if (argument instanceof UIElement) {
 
-				this.dom.appendChild( argument.dom );
+				this.dom.appendChild(argument.dom);
 
 			} else {
 
-				console.error( 'UIElement:', argument, 'is not an instance of UIElement.' );
+				console.error('UIElement:', argument, 'is not an instance of UIElement.');
 
 			}
 
@@ -34,17 +34,17 @@ UIElement.prototype = {
 
 	remove: function () {
 
-		for ( var i = 0; i < arguments.length; i ++ ) {
+		for (var i = 0; i < arguments.length; i++) {
 
-			var argument = arguments[ i ];
+			var argument = arguments[i];
 
-			if ( argument instanceof UIElement ) {
+			if (argument instanceof UIElement) {
 
-				this.dom.removeChild( argument.dom );
+				this.dom.removeChild(argument.dom);
 
 			} else {
 
-				console.error( 'UIElement:', argument, 'is not an instance of UIElement.' );
+				console.error('UIElement:', argument, 'is not an instance of UIElement.');
 
 			}
 
@@ -56,15 +56,15 @@ UIElement.prototype = {
 
 	clear: function () {
 
-		while ( this.dom.children.length ) {
+		while (this.dom.children.length) {
 
-			this.dom.removeChild( this.dom.lastChild );
+			this.dom.removeChild(this.dom.lastChild);
 
 		}
 
 	},
 
-	setId: function ( id ) {
+	setId: function (id) {
 
 		this.dom.id = id;
 
@@ -78,7 +78,7 @@ UIElement.prototype = {
 
 	},
 
-	setClass: function ( name ) {
+	setClass: function (name) {
 
 		this.dom.className = name;
 
@@ -86,27 +86,27 @@ UIElement.prototype = {
 
 	},
 
-	addClass: function ( name ) {
+	addClass: function (name) {
 
-		this.dom.classList.add( name );
-
-		return this;
-
-	},
-
-	removeClass: function ( name ) {
-
-		this.dom.classList.remove( name );
+		this.dom.classList.add(name);
 
 		return this;
 
 	},
 
-	setStyle: function ( style, array ) {
+	removeClass: function (name) {
 
-		for ( var i = 0; i < array.length; i ++ ) {
+		this.dom.classList.remove(name);
 
-			this.dom.style[ style ] = array[ i ];
+		return this;
+
+	},
+
+	setStyle: function (style, array) {
+
+		for (var i = 0; i < array.length; i++) {
+
+			this.dom.style[style] = array[i];
 
 		}
 
@@ -114,7 +114,7 @@ UIElement.prototype = {
 
 	},
 
-	setDisabled: function ( value ) {
+	setDisabled: function (value) {
 
 		this.dom.disabled = value;
 
@@ -122,7 +122,7 @@ UIElement.prototype = {
 
 	},
 
-	setTextContent: function ( value ) {
+	setTextContent: function (value) {
 
 		this.dom.textContent = value;
 
@@ -134,79 +134,79 @@ UIElement.prototype = {
 
 // properties
 
-var properties = [ 'position', 'left', 'top', 'right', 'bottom', 'width', 'height', 'border', 'borderLeft',
+var properties = ['position', 'left', 'top', 'right', 'bottom', 'width', 'height', 'border', 'borderLeft',
 	'borderTop', 'borderRight', 'borderBottom', 'borderColor', 'display', 'overflow', 'margin', 'marginLeft', 'marginTop', 'marginRight', 'marginBottom', 'padding', 'paddingLeft', 'paddingTop', 'paddingRight', 'paddingBottom', 'color',
-	'background', 'backgroundColor', 'opacity', 'fontSize', 'fontWeight', 'textAlign', 'textDecoration', 'textTransform', 'cursor', 'zIndex' ];
+	'background', 'backgroundColor', 'opacity', 'fontSize', 'fontWeight', 'textAlign', 'textDecoration', 'textTransform', 'cursor', 'zIndex'];
 
-properties.forEach( function ( property ) {
+properties.forEach(function (property) {
 
-	var method = 'set' + property.substr( 0, 1 ).toUpperCase() + property.substr( 1, property.length );
+	var method = 'set' + property.substr(0, 1).toUpperCase() + property.substr(1, property.length);
 
-	UIElement.prototype[ method ] = function () {
+	UIElement.prototype[method] = function () {
 
-		this.setStyle( property, arguments );
+		this.setStyle(property, arguments);
 
 		return this;
 
 	};
 
-} );
+});
 
 // events
 
-var events = [ 'KeyUp', 'KeyDown', 'MouseOver', 'MouseOut', 'Click', 'DblClick', 'Change' ];
+var events = ['KeyUp', 'KeyDown', 'MouseOver', 'MouseOut', 'Click', 'DblClick', 'Change'];
 
-events.forEach( function ( event ) {
+events.forEach(function (event) {
 
 	var method = 'on' + event;
 
-	UIElement.prototype[ method ] = function ( callback ) {
+	UIElement.prototype[method] = function (callback) {
 
-		this.dom.addEventListener( event.toLowerCase(), callback.bind( this ), false );
+		this.dom.addEventListener(event.toLowerCase(), callback.bind(this), false);
 
 		return this;
 
 	};
 
-} );
+});
 
 // UISpan
 
 var UISpan = function () {
 
-	UIElement.call( this );
+	UIElement.call(this);
 
-	this.dom = document.createElement( 'span' );
+	this.dom = document.createElement('span');
 
 	return this;
 
 };
 
-UISpan.prototype = Object.create( UIElement.prototype );
+UISpan.prototype = Object.create(UIElement.prototype);
 UISpan.prototype.constructor = UISpan;
 
 // UIDiv
 
 var UIDiv = function () {
 
-	UIElement.call( this );
+	UIElement.call(this);
 
-	this.dom = document.createElement( 'div' );
+	this.dom = document.createElement('div');
 
 	return this;
 
 };
 
-UIDiv.prototype = Object.create( UIElement.prototype );
+UIDiv.prototype = Object.create(UIElement.prototype);
 UIDiv.prototype.constructor = UIDiv;
 
 // UIRow
 
 var UIRow = function () {
 
-	UIElement.call( this );
+	UIElement.call(this);
 
-	var dom = document.createElement( 'div' );
+	var dom = document.createElement('div');
 	dom.className = 'Row';
 
 	this.dom = dom;
@@ -215,16 +215,16 @@ var UIRow = function () {
 
 };
 
-UIRow.prototype = Object.create( UIElement.prototype );
+UIRow.prototype = Object.create(UIElement.prototype);
 UIRow.prototype.constructor = UIRow;
 
 // UIPanel
 
 var UIPanel = function () {
 
-	UIElement.call( this );
+	UIElement.call(this);
 
-	var dom = document.createElement( 'div' );
+	var dom = document.createElement('div');
 	dom.className = 'Panel';
 
 	this.dom = dom;
@@ -233,29 +233,29 @@ var UIPanel = function () {
 
 };
 
-UIPanel.prototype = Object.create( UIElement.prototype );
+UIPanel.prototype = Object.create(UIElement.prototype);
 UIPanel.prototype.constructor = UIPanel;
 
 // UIText
 
-var UIText = function ( text ) {
+var UIText = function (text) {
 
-	UIElement.call( this );
+	UIElement.call(this);
 
-	var dom = document.createElement( 'span' );
+	var dom = document.createElement('span');
 	dom.className = 'Text';
 	dom.style.cursor = 'default';
 	dom.style.display = 'inline-block';
 	dom.style.verticalAlign = 'middle';
 
 	this.dom = dom;
-	this.setValue( text );
+	this.setValue(text);
 
 	return this;
 
 };
 
-UIText.prototype = Object.create( UIElement.prototype );
+UIText.prototype = Object.create(UIElement.prototype);
 UIText.prototype.constructor = UIText;
 
 UIText.prototype.getValue = function () {
@@ -264,9 +264,9 @@ UIText.prototype.getValue = function () {
 
 };
 
-UIText.prototype.setValue = function ( value ) {
+UIText.prototype.setValue = function (value) {
 
-	if ( value !== undefined ) {
+	if (value !== undefined) {
 
 		this.dom.textContent = value;
 
@@ -279,29 +279,29 @@ UIText.prototype.setValue = function ( value ) {
 
 // UIInput
 
-var UIInput = function ( text ) {
+var UIInput = function (text) {
 
-	UIElement.call( this );
+	UIElement.call(this);
 
-	var dom = document.createElement( 'input' );
+	var dom = document.createElement('input');
 	dom.className = 'Input';
 	dom.style.padding = '2px';
 	dom.style.border = '1px solid transparent';
 
-	dom.addEventListener( 'keydown', function ( event ) {
+	dom.addEventListener('keydown', function (event) {
 
 		event.stopPropagation();
 
-	}, false );
+	}, false);
 
 	this.dom = dom;
-	this.setValue( text );
+	this.setValue(text);
 
 	return this;
 
 };
 
-UIInput.prototype = Object.create( UIElement.prototype );
+UIInput.prototype = Object.create(UIElement.prototype);
 UIInput.prototype.constructor = UIInput;
 
 UIInput.prototype.getValue = function () {
@@ -310,7 +310,7 @@ UIInput.prototype.getValue = function () {
 
 };
 
-UIInput.prototype.setValue = function ( value ) {
+UIInput.prototype.setValue = function (value) {
 
 	this.dom.value = value;
 
@@ -323,30 +323,30 @@ UIInput.prototype.setValue = function ( value ) {
 
 var UITextArea = function () {
 
-	UIElement.call( this );
+	UIElement.call(this);
 
-	var dom = document.createElement( 'textarea' );
+	var dom = document.createElement('textarea');
 	dom.className = 'TextArea';
 	dom.style.padding = '2px';
 	dom.spellcheck = false;
 
-	dom.addEventListener( 'keydown', function ( event ) {
+	dom.addEventListener('keydown', function (event) {
 
 		event.stopPropagation();
 
-		if ( event.keyCode === 9 ) {
+		if (event.keyCode === 9) {
 
 			event.preventDefault();
 
 			var cursor = dom.selectionStart;
 
-			dom.value = dom.value.substring( 0, cursor ) + '\t' + dom.value.substring( cursor );
+			dom.value = dom.value.substring(0, cursor) + '\t' + dom.value.substring(cursor);
 			dom.selectionStart = cursor + 1;
 			dom.selectionEnd = dom.selectionStart;
 
 		}
 
-	}, false );
+	}, false);
 
 	this.dom = dom;
 
@@ -354,7 +354,7 @@ var UITextArea = function () {
 
 };
 
-UITextArea.prototype = Object.create( UIElement.prototype );
+UITextArea.prototype = Object.create(UIElement.prototype);
 UITextArea.prototype.constructor = UITextArea;
 
 UITextArea.prototype.getValue = function () {
@@ -363,7 +363,7 @@ UITextArea.prototype.getValue = function () {
 
 };
 
-UITextArea.prototype.setValue = function ( value ) {
+UITextArea.prototype.setValue = function (value) {
 
 	this.dom.value = value;
 
@@ -376,9 +376,9 @@ UITextArea.prototype.setValue = function ( value ) {
 
 var UISelect = function () {
 
-	UIElement.call( this );
+	UIElement.call(this);
 
-	var dom = document.createElement( 'select' );
+	var dom = document.createElement('select');
 	dom.className = 'Select';
 	dom.style.padding = '2px';
 
@@ -388,10 +388,10 @@ var UISelect = function () {
 
 };
 
-UISelect.prototype = Object.create( UIElement.prototype );
+UISelect.prototype = Object.create(UIElement.prototype);
 UISelect.prototype.constructor = UISelect;
 
-UISelect.prototype.setMultiple = function ( boolean ) {
+UISelect.prototype.setMultiple = function (boolean) {
 
 	this.dom.multiple = boolean;
 
@@ -399,22 +399,22 @@ UISelect.prototype.setMultiple = function ( boolean ) {
 
 };
 
-UISelect.prototype.setOptions = function ( options ) {
+UISelect.prototype.setOptions = function (options) {
 
 	var selected = this.dom.value;
 
-	while ( this.dom.children.length > 0 ) {
+	while (this.dom.children.length > 0) {
 
-		this.dom.removeChild( this.dom.firstChild );
+		this.dom.removeChild(this.dom.firstChild);
 
 	}
 
-	for ( var key in options ) {
+	for (var key in options) {
 
-		var option = document.createElement( 'option' );
+		var option = document.createElement('option');
 		option.value = key;
-		option.innerHTML = options[ key ];
-		this.dom.appendChild( option );
+		option.innerHTML = options[key];
+		this.dom.appendChild(option);
 
 	}
 
@@ -430,11 +430,11 @@ UISelect.prototype.getValue = function () {
 
 };
 
-UISelect.prototype.setValue = function ( value ) {
+UISelect.prototype.setValue = function (value) {
 
-	value = String( value );
+	value = String(value);
 
-	if ( this.dom.value !== value ) {
+	if (this.dom.value !== value) {
 
 		this.dom.value = value;
 
@@ -446,22 +446,22 @@ UISelect.prototype.setValue = function ( value ) {
 
 // UICheckbox
 
-var UICheckbox = function ( boolean ) {
+var UICheckbox = function (boolean) {
 
-	UIElement.call( this );
+	UIElement.call(this);
 
-	var dom = document.createElement( 'input' );
+	var dom = document.createElement('input');
 	dom.className = 'Checkbox';
 	dom.type = 'checkbox';
 
 	this.dom = dom;
-	this.setValue( boolean );
+	this.setValue(boolean);
 
 	return this;
 
 };
 
-UICheckbox.prototype = Object.create( UIElement.prototype );
+UICheckbox.prototype = Object.create(UIElement.prototype);
 UICheckbox.prototype.constructor = UICheckbox;
 
 UICheckbox.prototype.getValue = function () {
@@ -470,9 +470,9 @@ UICheckbox.prototype.getValue = function () {
 
 };
 
-UICheckbox.prototype.setValue = function ( value ) {
+UICheckbox.prototype.setValue = function (value) {
 
-	if ( value !== undefined ) {
+	if (value !== undefined) {
 
 		this.dom.checked = value;
 
@@ -487,9 +487,9 @@ UICheckbox.prototype.setValue = function ( value ) {
 
 var UIColor = function () {
 
-	UIElement.call( this );
+	UIElement.call(this);
 
-	var dom = document.createElement( 'input' );
+	var dom = document.createElement('input');
 	dom.className = 'Color';
 	dom.style.width = '64px';
 	dom.style.height = '17px';
@@ -502,7 +502,8 @@ var UIColor = function () {
 		dom.type = 'color';
 		dom.value = '#ffffff';
 
-	} catch ( exception ) {}
+	} catch (exception) {
+	}
 
 	this.dom = dom;
 
@@ -510,7 +511,7 @@ var UIColor = function () {
 
 };
 
-UIColor.prototype = Object.create( UIElement.prototype );
+UIColor.prototype = Object.create(UIElement.prototype);
 UIColor.prototype.constructor = UIColor;
 
 UIColor.prototype.getValue = function () {
@@ -521,11 +522,11 @@ UIColor.prototype.getValue = function () {
 
 UIColor.prototype.getHexValue = function () {
 
-	return parseInt( this.dom.value.substr( 1 ), 16 );
+	return parseInt(this.dom.value.substr(1), 16);
 
 };
 
-UIColor.prototype.setValue = function ( value ) {
+UIColor.prototype.setValue = function (value) {
 
 	this.dom.value = value;
 
@@ -533,9 +534,9 @@ UIColor.prototype.setValue = function ( value ) {
 
 };
 
-UIColor.prototype.setHexValue = function ( hex ) {
+UIColor.prototype.setHexValue = function (hex) {
 
-	this.dom.value = '#' + ( '000000' + hex.toString( 16 ) ).slice( - 6 );
+	this.dom.value = '#' + ('000000' + hex.toString(16)).slice(-6);
 
 	return this;
 
@@ -544,19 +545,19 @@ UIColor.prototype.setHexValue = function ( hex ) {
 
 // UINumber
 
-var UINumber = function ( number ) {
+var UINumber = function (number) {
 
-	UIElement.call( this );
+	UIElement.call(this);
 
 	var scope = this;
 
-	var dom = document.createElement( 'input' );
+	var dom = document.createElement('input');
 	dom.className = 'Number';
 	dom.value = '0.00';
 
 	this.value = 0;
 
-	this.min = - Infinity;
+	this.min = -Infinity;
 	this.max = Infinity;
 
 	this.precision = 2;
@@ -566,18 +567,18 @@ var UINumber = function ( number ) {
 
 	this.dom = dom;
 
-	this.setValue( number );
+	this.setValue(number);
 
-	var changeEvent = document.createEvent( 'HTMLEvents' );
-	changeEvent.initEvent( 'change', true, true );
+	var changeEvent = document.createEvent('HTMLEvents');
+	changeEvent.initEvent('change', true, true);
 
 	var distance = 0;
 	var onMouseDownValue = 0;
 
-	var pointer = [ 0, 0 ];
-	var prevPointer = [ 0, 0 ];
+	var pointer = [0, 0];
+	var prevPointer = [0, 0];
 
-	function onMouseDown( event ) {
+	function onMouseDown(event) {
 
 		event.preventDefault();
 
@@ -585,41 +586,41 @@ var UINumber = function ( number ) {
 
 		onMouseDownValue = scope.value;
 
-		prevPointer = [ event.clientX, event.clientY ];
+		prevPointer = [event.clientX, event.clientY];
 
-		document.addEventListener( 'mousemove', onMouseMove, false );
-		document.addEventListener( 'mouseup', onMouseUp, false );
+		document.addEventListener('mousemove', onMouseMove, false);
+		document.addEventListener('mouseup', onMouseUp, false);
 
 	}
 
-	function onMouseMove( event ) {
+	function onMouseMove(event) {
 
 		var currentValue = scope.value;
 
-		pointer = [ event.clientX, event.clientY ];
+		pointer = [event.clientX, event.clientY];
 
-		distance += ( pointer[ 0 ] - prevPointer[ 0 ] ) - ( pointer[ 1 ] - prevPointer[ 1 ] );
+		distance += (pointer[0] - prevPointer[0]) - (pointer[1] - prevPointer[1]);
 
-		var value = onMouseDownValue + ( distance / ( event.shiftKey ? 5 : 50 ) ) * scope.step;
-		value = Math.min( scope.max, Math.max( scope.min, value ) );
+		var value = onMouseDownValue + (distance / (event.shiftKey ? 5 : 50)) * scope.step;
+		value = Math.min(scope.max, Math.max(scope.min, value));
 
-		if ( currentValue !== value ) {
+		if (currentValue !== value) {
 
-			scope.setValue( value );
-			dom.dispatchEvent( changeEvent );
+			scope.setValue(value);
+			dom.dispatchEvent(changeEvent);
 
 		}
 
-		prevPointer = [ event.clientX, event.clientY ];
+		prevPointer = [event.clientX, event.clientY];
 
 	}
 
 	function onMouseUp() {
 
-		document.removeEventListener( 'mousemove', onMouseMove, false );
-		document.removeEventListener( 'mouseup', onMouseUp, false );
+		document.removeEventListener('mousemove', onMouseMove, false);
+		document.removeEventListener('mouseup', onMouseUp, false);
 
-		if ( Math.abs( distance ) < 2 ) {
+		if (Math.abs(distance) < 2) {
 
 			dom.focus();
 			dom.select();
@@ -628,51 +629,51 @@ var UINumber = function ( number ) {
 
 	}
 
-	function onTouchStart( event ) {
+	function onTouchStart(event) {
 
-		if ( event.touches.length === 1 ) {
+		if (event.touches.length === 1) {
 
 			distance = 0;
 
 			onMouseDownValue = scope.value;
 
-			prevPointer = [ event.touches[ 0 ].pageX, event.touches[ 0 ].pageY ];
+			prevPointer = [event.touches[0].pageX, event.touches[0].pageY];
 
-			document.addEventListener( 'touchmove', onTouchMove, false );
-			document.addEventListener( 'touchend', onTouchEnd, false );
+			document.addEventListener('touchmove', onTouchMove, false);
+			document.addEventListener('touchend', onTouchEnd, false);
 
 		}
 
 	}
 
-	function onTouchMove( event ) {
+	function onTouchMove(event) {
 
 		var currentValue = scope.value;
 
-		pointer = [ event.touches[ 0 ].pageX, event.touches[ 0 ].pageY ];
+		pointer = [event.touches[0].pageX, event.touches[0].pageY];
 
-		distance += ( pointer[ 0 ] - prevPointer[ 0 ] ) - ( pointer[ 1 ] - prevPointer[ 1 ] );
+		distance += (pointer[0] - prevPointer[0]) - (pointer[1] - prevPointer[1]);
 
-		var value = onMouseDownValue + ( distance / ( event.shiftKey ? 5 : 50 ) ) * scope.step;
-		value = Math.min( scope.max, Math.max( scope.min, value ) );
+		var value = onMouseDownValue + (distance / (event.shiftKey ? 5 : 50)) * scope.step;
+		value = Math.min(scope.max, Math.max(scope.min, value));
 
-		if ( currentValue !== value ) {
+		if (currentValue !== value) {
 
-			scope.setValue( value );
-			dom.dispatchEvent( changeEvent );
+			scope.setValue(value);
+			dom.dispatchEvent(changeEvent);
 
 		}
 
-		prevPointer = [ event.touches[ 0 ].pageX, event.touches[ 0 ].pageY ];
+		prevPointer = [event.touches[0].pageX, event.touches[0].pageY];
 
 	}
 
-	function onTouchEnd( event ) {
+	function onTouchEnd(event) {
 
-		if ( event.touches.length === 0 ) {
+		if (event.touches.length === 0) {
 
-			document.removeEventListener( 'touchmove', onTouchMove, false );
-			document.removeEventListener( 'touchend', onTouchEnd, false );
+			document.removeEventListener('touchmove', onTouchMove, false);
+			document.removeEventListener('touchend', onTouchEnd, false);
 
 		}
 
@@ -680,7 +681,7 @@ var UINumber = function ( number ) {
 
 	function onChange() {
 
-		scope.setValue( dom.value );
+		scope.setValue(dom.value);
 
 	}
 
@@ -698,11 +699,11 @@ var UINumber = function ( number ) {
 
 	}
 
-	function onKeyDown( event ) {
+	function onKeyDown(event) {
 
 		event.stopPropagation();
 
-		switch ( event.keyCode ) {
+		switch (event.keyCode) {
 
 			case 13: // enter
 				dom.blur();
@@ -710,14 +711,14 @@ var UINumber = function ( number ) {
 
 			case 38: // up
 				event.preventDefault();
-				scope.setValue( scope.getValue() + scope.nudge );
-				dom.dispatchEvent( changeEvent );
+				scope.setValue(scope.getValue() + scope.nudge);
+				dom.dispatchEvent(changeEvent);
 				break;
 
 			case 40: // down
 				event.preventDefault();
-				scope.setValue( scope.getValue() - scope.nudge );
-				dom.dispatchEvent( changeEvent );
+				scope.setValue(scope.getValue() - scope.nudge);
+				dom.dispatchEvent(changeEvent);
 				break;
 
 		}
@@ -726,18 +727,18 @@ var UINumber = function ( number ) {
 
 	onBlur();
 
-	dom.addEventListener( 'keydown', onKeyDown, false );
-	dom.addEventListener( 'mousedown', onMouseDown, false );
-	dom.addEventListener( 'touchstart', onTouchStart, false );
-	dom.addEventListener( 'change', onChange, false );
-	dom.addEventListener( 'focus', onFocus, false );
-	dom.addEventListener( 'blur', onBlur, false );
+	dom.addEventListener('keydown', onKeyDown, false);
+	dom.addEventListener('mousedown', onMouseDown, false);
+	dom.addEventListener('touchstart', onTouchStart, false);
+	dom.addEventListener('change', onChange, false);
+	dom.addEventListener('focus', onFocus, false);
+	dom.addEventListener('blur', onBlur, false);
 
 	return this;
 
 };
 
-UINumber.prototype = Object.create( UIElement.prototype );
+UINumber.prototype = Object.create(UIElement.prototype);
 UINumber.prototype.constructor = UINumber;
 
 UINumber.prototype.getValue = function () {
@@ -746,19 +747,19 @@ UINumber.prototype.getValue = function () {
 
 };
 
-UINumber.prototype.setValue = function ( value ) {
+UINumber.prototype.setValue = function (value) {
 
-	if ( value !== undefined ) {
+	if (value !== undefined) {
 
-		value = parseFloat( value );
+		value = parseFloat(value);
 
-		if ( value < this.min ) value = this.min;
-		if ( value > this.max ) value = this.max;
+		if (value < this.min) value = this.min;
+		if (value > this.max) value = this.max;
 
 		this.value = value;
-		this.dom.value = value.toFixed( this.precision );
+		this.dom.value = value.toFixed(this.precision);
 
-		if ( this.unit !== '' ) this.dom.value += ' ' + this.unit;
+		if (this.unit !== '') this.dom.value += ' ' + this.unit;
 
 	}
 
@@ -766,7 +767,7 @@ UINumber.prototype.setValue = function ( value ) {
 
 };
 
-UINumber.prototype.setPrecision = function ( precision ) {
+UINumber.prototype.setPrecision = function (precision) {
 
 	this.precision = precision;
 
@@ -774,7 +775,7 @@ UINumber.prototype.setPrecision = function ( precision ) {
 
 };
 
-UINumber.prototype.setStep = function ( step ) {
+UINumber.prototype.setStep = function (step) {
 
 	this.step = step;
 
@@ -782,7 +783,7 @@ UINumber.prototype.setStep = function ( step ) {
 
 };
 
-UINumber.prototype.setNudge = function ( nudge ) {
+UINumber.prototype.setNudge = function (nudge) {
 
 	this.nudge = nudge;
 
@@ -790,7 +791,7 @@ UINumber.prototype.setNudge = function ( nudge ) {
 
 };
 
-UINumber.prototype.setRange = function ( min, max ) {
+UINumber.prototype.setRange = function (min, max) {
 
 	this.min = min;
 	this.max = max;
@@ -799,7 +800,7 @@ UINumber.prototype.setRange = function ( min, max ) {
 
 };
 
-UINumber.prototype.setUnit = function ( unit ) {
+UINumber.prototype.setUnit = function (unit) {
 
 	this.unit = unit;
 
@@ -809,19 +810,19 @@ UINumber.prototype.setUnit = function ( unit ) {
 
 // UIInteger
 
-var UIInteger = function ( number ) {
+var UIInteger = function (number) {
 
-	UIElement.call( this );
+	UIElement.call(this);
 
 	var scope = this;
 
-	var dom = document.createElement( 'input' );
+	var dom = document.createElement('input');
 	dom.className = 'Number';
 	dom.value = '0';
 
 	this.value = 0;
 
-	this.min = - Infinity;
+	this.min = -Infinity;
 	this.max = Infinity;
 
 	this.step = 1;
@@ -829,18 +830,18 @@ var UIInteger = function ( number ) {
 
 	this.dom = dom;
 
-	this.setValue( number );
+	this.setValue(number);
 
-	var changeEvent = document.createEvent( 'HTMLEvents' );
-	changeEvent.initEvent( 'change', true, true );
+	var changeEvent = document.createEvent('HTMLEvents');
+	changeEvent.initEvent('change', true, true);
 
 	var distance = 0;
 	var onMouseDownValue = 0;
 
-	var pointer = [ 0, 0 ];
-	var prevPointer = [ 0, 0 ];
+	var pointer = [0, 0];
+	var prevPointer = [0, 0];
 
-	function onMouseDown( event ) {
+	function onMouseDown(event) {
 
 		event.preventDefault();
 
@@ -848,41 +849,41 @@ var UIInteger = function ( number ) {
 
 		onMouseDownValue = scope.value;
 
-		prevPointer = [ event.clientX, event.clientY ];
+		prevPointer = [event.clientX, event.clientY];
 
-		document.addEventListener( 'mousemove', onMouseMove, false );
-		document.addEventListener( 'mouseup', onMouseUp, false );
+		document.addEventListener('mousemove', onMouseMove, false);
+		document.addEventListener('mouseup', onMouseUp, false);
 
 	}
 
-	function onMouseMove( event ) {
+	function onMouseMove(event) {
 
 		var currentValue = scope.value;
 
-		pointer = [ event.clientX, event.clientY ];
+		pointer = [event.clientX, event.clientY];
 
-		distance += ( pointer[ 0 ] - prevPointer[ 0 ] ) - ( pointer[ 1 ] - prevPointer[ 1 ] );
+		distance += (pointer[0] - prevPointer[0]) - (pointer[1] - prevPointer[1]);
 
-		var value = onMouseDownValue + ( distance / ( event.shiftKey ? 5 : 50 ) ) * scope.step;
-		value = Math.min( scope.max, Math.max( scope.min, value ) ) | 0;
+		var value = onMouseDownValue + (distance / (event.shiftKey ? 5 : 50)) * scope.step;
+		value = Math.min(scope.max, Math.max(scope.min, value)) | 0;
 
-		if ( currentValue !== value ) {
+		if (currentValue !== value) {
 
-			scope.setValue( value );
-			dom.dispatchEvent( changeEvent );
+			scope.setValue(value);
+			dom.dispatchEvent(changeEvent);
 
 		}
 
-		prevPointer = [ event.clientX, event.clientY ];
+		prevPointer = [event.clientX, event.clientY];
 
 	}
 
 	function onMouseUp() {
 
-		document.removeEventListener( 'mousemove', onMouseMove, false );
-		document.removeEventListener( 'mouseup', onMouseUp, false );
+		document.removeEventListener('mousemove', onMouseMove, false);
+		document.removeEventListener('mouseup', onMouseUp, false);
 
-		if ( Math.abs( distance ) < 2 ) {
+		if (Math.abs(distance) < 2) {
 
 			dom.focus();
 			dom.select();
@@ -893,7 +894,7 @@ var UIInteger = function ( number ) {
 
 	function onChange() {
 
-		scope.setValue( dom.value );
+		scope.setValue(dom.value);
 
 	}
 
@@ -911,11 +912,11 @@ var UIInteger = function ( number ) {
 
 	}
 
-	function onKeyDown( event ) {
+	function onKeyDown(event) {
 
 		event.stopPropagation();
 
-		switch ( event.keyCode ) {
+		switch (event.keyCode) {
 
 			case 13: // enter
 				dom.blur();
@@ -923,14 +924,14 @@ var UIInteger = function ( number ) {
 
 			case 38: // up
 				event.preventDefault();
-				scope.setValue( scope.getValue() + scope.nudge );
-				dom.dispatchEvent( changeEvent );
+				scope.setValue(scope.getValue() + scope.nudge);
+				dom.dispatchEvent(changeEvent);
 				break;
 
 			case 40: // down
 				event.preventDefault();
-				scope.setValue( scope.getValue() - scope.nudge );
-				dom.dispatchEvent( changeEvent );
+				scope.setValue(scope.getValue() - scope.nudge);
+				dom.dispatchEvent(changeEvent);
 				break;
 
 		}
@@ -939,17 +940,17 @@ var UIInteger = function ( number ) {
 
 	onBlur();
 
-	dom.addEventListener( 'keydown', onKeyDown, false );
-	dom.addEventListener( 'mousedown', onMouseDown, false );
-	dom.addEventListener( 'change', onChange, false );
-	dom.addEventListener( 'focus', onFocus, false );
-	dom.addEventListener( 'blur', onBlur, false );
+	dom.addEventListener('keydown', onKeyDown, false);
+	dom.addEventListener('mousedown', onMouseDown, false);
+	dom.addEventListener('change', onChange, false);
+	dom.addEventListener('focus', onFocus, false);
+	dom.addEventListener('blur', onBlur, false);
 
 	return this;
 
 };
 
-UIInteger.prototype = Object.create( UIElement.prototype );
+UIInteger.prototype = Object.create(UIElement.prototype);
 UIInteger.prototype.constructor = UIInteger;
 
 UIInteger.prototype.getValue = function () {
@@ -958,11 +959,11 @@ UIInteger.prototype.getValue = function () {
 
 };
 
-UIInteger.prototype.setValue = function ( value ) {
+UIInteger.prototype.setValue = function (value) {
 
-	if ( value !== undefined ) {
+	if (value !== undefined) {
 
-		value = parseInt( value );
+		value = parseInt(value);
 
 		this.value = value;
 		this.dom.value = value;
@@ -973,15 +974,15 @@ UIInteger.prototype.setValue = function ( value ) {
 
 };
 
-UIInteger.prototype.setStep = function ( step ) {
+UIInteger.prototype.setStep = function (step) {
 
-	this.step = parseInt( step );
+	this.step = parseInt(step);
 
 	return this;
 
 };
 
-UIInteger.prototype.setNudge = function ( nudge ) {
+UIInteger.prototype.setNudge = function (nudge) {
 
 	this.nudge = nudge;
 
@@ -989,7 +990,7 @@ UIInteger.prototype.setNudge = function ( nudge ) {
 
 };
 
-UIInteger.prototype.setRange = function ( min, max ) {
+UIInteger.prototype.setRange = function (min, max) {
 
 	this.min = min;
 	this.max = max;
@@ -1003,9 +1004,9 @@ UIInteger.prototype.setRange = function ( min, max ) {
 
 var UIBreak = function () {
 
-	UIElement.call( this );
+	UIElement.call(this);
 
-	var dom = document.createElement( 'br' );
+	var dom = document.createElement('br');
 	dom.className = 'Break';
 
 	this.dom = dom;
@@ -1014,7 +1015,7 @@ var UIBreak = function () {
 
 };
 
-UIBreak.prototype = Object.create( UIElement.prototype );
+UIBreak.prototype = Object.create(UIElement.prototype);
 UIBreak.prototype.constructor = UIBreak;
 
 
@@ -1022,9 +1023,9 @@ UIBreak.prototype.constructor = UIBreak;
 
 var UIHorizontalRule = function () {
 
-	UIElement.call( this );
+	UIElement.call(this);
 
-	var dom = document.createElement( 'hr' );
+	var dom = document.createElement('hr');
 	dom.className = 'HorizontalRule';
 
 	this.dom = dom;
@@ -1033,17 +1034,17 @@ var UIHorizontalRule = function () {
 
 };
 
-UIHorizontalRule.prototype = Object.create( UIElement.prototype );
+UIHorizontalRule.prototype = Object.create(UIElement.prototype);
 UIHorizontalRule.prototype.constructor = UIHorizontalRule;
 
 
 // UIButton
 
-var UIButton = function ( value ) {
+var UIButton = function (value) {
 
-	UIElement.call( this );
+	UIElement.call(this);
 
-	var dom = document.createElement( 'button' );
+	var dom = document.createElement('button');
 	dom.className = 'Button';
 
 	this.dom = dom;
@@ -1053,10 +1054,10 @@ var UIButton = function ( value ) {
 
 };
 
-UIButton.prototype = Object.create( UIElement.prototype );
+UIButton.prototype = Object.create(UIElement.prototype);
 UIButton.prototype.constructor = UIButton;
 
-UIButton.prototype.setLabel = function ( value ) {
+UIButton.prototype.setLabel = function (value) {
 
 	this.dom.textContent = value;
 
@@ -1067,27 +1068,27 @@ UIButton.prototype.setLabel = function ( value ) {
 
 // UITabbedPanel
 
-var UITabbedPanel = function ( ) {
+var UITabbedPanel = function () {
 
-	UIElement.call( this );
+	UIElement.call(this);
 
-	var dom = document.createElement( 'div' );
+	var dom = document.createElement('div');
 
 	this.dom = dom;
 
-	this.setClass( 'TabbedPanel' );
+	this.setClass('TabbedPanel');
 
 	this.tabs = [];
 	this.panels = [];
 
 	this.tabsDiv = new UIDiv();
-	this.tabsDiv.setClass( 'Tabs' );
+	this.tabsDiv.setClass('Tabs');
 
 	this.panelsDiv = new UIDiv();
-	this.panelsDiv.setClass( 'Panels' );
+	this.panelsDiv.setClass('Panels');
 
-	this.add( this.tabsDiv );
-	this.add( this.panelsDiv );
+	this.add(this.tabsDiv);
+	this.add(this.panelsDiv);
 
 	this.selected = '';
 
@@ -1095,63 +1096,63 @@ var UITabbedPanel = function ( ) {
 
 };
 
-UITabbedPanel.prototype = Object.create( UIElement.prototype );
+UITabbedPanel.prototype = Object.create(UIElement.prototype);
 UITabbedPanel.prototype.constructor = UITabbedPanel;
 
-UITabbedPanel.prototype.select = function ( id ) {
+UITabbedPanel.prototype.select = function (id) {
 
 	var tab;
 	var panel;
 	var scope = this;
 
 	// Deselect current selection
-	if ( this.selected && this.selected.length ) {
+	if (this.selected && this.selected.length) {
 
-		tab = this.tabs.find( function ( item ) {
-
-			return item.dom.id === scope.selected;
-
-		} );
-		panel = this.panels.find( function ( item ) {
+		tab = this.tabs.find(function (item) {
 
 			return item.dom.id === scope.selected;
 
-		} );
+		});
+		panel = this.panels.find(function (item) {
 
-		if ( tab ) {
+			return item.dom.id === scope.selected;
 
-			tab.removeClass( 'selected' );
+		});
+
+		if (tab) {
+
+			tab.removeClass('selected');
 
 		}
 
-		if ( panel ) {
+		if (panel) {
 
-			panel.setDisplay( 'none' );
+			panel.setDisplay('none');
 
 		}
 
 	}
 
-	tab = this.tabs.find( function ( item ) {
+	tab = this.tabs.find(function (item) {
 
 		return item.dom.id === id;
 
-	} );
-	panel = this.panels.find( function ( item ) {
+	});
+	panel = this.panels.find(function (item) {
 
 		return item.dom.id === id;
 
-	} );
+	});
 
-	if ( tab ) {
+	if (tab) {
 
-		tab.addClass( 'selected' );
+		tab.addClass('selected');
 
 	}
 
-	if ( panel ) {
+	if (panel) {
 
-		panel.setDisplay( '' );
+		panel.setDisplay('');
 
 	}
 
@@ -1161,52 +1162,52 @@ UITabbedPanel.prototype.select = function ( id ) {
 
 };
 
-UITabbedPanel.prototype.addTab = function ( id, label, items ) {
+UITabbedPanel.prototype.addTab = function (id, label, items) {
 
-	var tab = new UITabbedPanel.Tab( label, this );
-	tab.setId( id );
-	this.tabs.push( tab );
-	this.tabsDiv.add( tab );
+	var tab = new UITabbedPanel.Tab(label, this);
+	tab.setId(id);
+	this.tabs.push(tab);
+	this.tabsDiv.add(tab);
 
 	var panel = new UIDiv();
-	panel.setId( id );
-	panel.add( items );
-	panel.setDisplay( 'none' );
-	this.panels.push( panel );
-	this.panelsDiv.add( panel );
+	panel.setId(id);
+	panel.add(items);
+	panel.setDisplay('none');
+	this.panels.push(panel);
+	this.panelsDiv.add(panel);
 
-	this.select( id );
+	this.select(id);
 
 };
 
-UITabbedPanel.Tab = function ( text, parent ) {
+UITabbedPanel.Tab = function (text, parent) {
 
-	UIText.call( this, text );
+	UIText.call(this, text);
 	this.parent = parent;
 
-	this.setClass( 'Tab' );
+	this.setClass('Tab');
 
 	var scope = this;
 
-	this.dom.addEventListener( 'click', function () {
+	this.dom.addEventListener('click', function () {
 
-		scope.parent.select( scope.dom.id );
+		scope.parent.select(scope.dom.id);
 
-	} );
+	});
 
 	return this;
 
 };
 
-UITabbedPanel.Tab.prototype = Object.create( UIText.prototype );
+UITabbedPanel.Tab.prototype = Object.create(UIText.prototype);
 UITabbedPanel.Tab.prototype.constructor = UITabbedPanel.Tab;
 
 // UIListbox
-var UIListbox = function ( ) {
+var UIListbox = function () {
 
-	UIElement.call( this );
+	UIElement.call(this);
 
-	var dom = document.createElement( 'div' );
+	var dom = document.createElement('div');
 	dom.className = 'Listbox';
 	dom.tabIndex = 0;
 
@@ -1220,12 +1221,12 @@ var UIListbox = function ( ) {
 
 };
 
-UIListbox.prototype = Object.create( UIElement.prototype );
+UIListbox.prototype = Object.create(UIElement.prototype);
 UIListbox.prototype.constructor = UIListbox;
 
-UIListbox.prototype.setItems = function ( items ) {
+UIListbox.prototype.setItems = function (items) {
 
-	if ( Array.isArray( items ) ) {
+	if (Array.isArray(items)) {
 
 		this.items = items;
 
@@ -1235,26 +1236,26 @@ UIListbox.prototype.setItems = function ( items ) {
 
 };
 
-UIListbox.prototype.render = function ( ) {
+UIListbox.prototype.render = function () {
 
-	while ( this.listitems.length ) {
+	while (this.listitems.length) {
 
-		var item = this.listitems[ 0 ];
+		var item = this.listitems[0];
 
 		item.dom.remove();
 
-		this.listitems.splice( 0, 1 );
+		this.listitems.splice(0, 1);
 
 	}
 
-	for ( var i = 0; i < this.items.length; i ++ ) {
+	for (var i = 0; i < this.items.length; i++) {
 
-		var item = this.items[ i ];
+		var item = this.items[i];
 
-		var listitem = new UIListbox.ListboxItem( this );
-		listitem.setId( item.id || `Listbox-${i}` );
-		listitem.setTextContent( item.name || item.type );
-		this.add( listitem );
+		var listitem = new UIListbox.ListboxItem(this);
+		listitem.setId(item.id || `Listbox-${i}`);
+		listitem.setTextContent(item.name || item.type);
+		this.add(listitem);
 
 	}
 
@@ -1263,19 +1264,19 @@ UIListbox.prototype.render = function ( ) {
 // Assuming user passes valid list items
 UIListbox.prototype.add = function () {
 
-	var items = Array.from( arguments );
+	var items = Array.from(arguments);
 
-	this.listitems = this.listitems.concat( items );
+	this.listitems = this.listitems.concat(items);
 
-	UIElement.prototype.add.apply( this, items );
+	UIElement.prototype.add.apply(this, items);
 
 };
 
-UIListbox.prototype.selectIndex = function ( index ) {
+UIListbox.prototype.selectIndex = function (index) {
 
-	if ( index >= 0 && index < this.items.length ) {
+	if (index >= 0 && index < this.items.length) {
 
-		this.setValue( this.listitems[ index ].getId() );
+		this.setValue(this.listitems[index].getId());
 
 	}
 
@@ -1289,19 +1290,19 @@ UIListbox.prototype.getValue = function () {
 
 };
 
-UIListbox.prototype.setValue = function ( value ) {
+UIListbox.prototype.setValue = function (value) {
 
-	for ( var i = 0; i < this.listitems.length; i ++ ) {
+	for (var i = 0; i < this.listitems.length; i++) {
 
-		var element = this.listitems[ i ];
+		var element = this.listitems[i];
 
-		if ( element.getId() === value ) {
+		if (element.getId() === value) {
 
-			element.addClass( 'active' );
+			element.addClass('active');
 
 		} else {
 
-			element.removeClass( 'active' );
+			element.removeClass('active');
 
 		}
 
@@ -1309,18 +1310,18 @@ UIListbox.prototype.setValue = function ( value ) {
 
 	this.selectedValue = value;
 
-	var changeEvent = document.createEvent( 'HTMLEvents' );
-	changeEvent.initEvent( 'change', true, true );
-	this.dom.dispatchEvent( changeEvent );
+	var changeEvent = document.createEvent('HTMLEvents');
+	changeEvent.initEvent('change', true, true);
+	this.dom.dispatchEvent(changeEvent);
 
 };
 
 // Listbox Item
-UIListbox.ListboxItem = function ( parent ) {
+UIListbox.ListboxItem = function (parent) {
 
-	UIElement.call( this );
+	UIElement.call(this);
 
-	var dom = document.createElement( 'div' );
+	var dom = document.createElement('div');
 	dom.className = 'ListboxItem';
 
 	this.parent = parent;
@@ -1330,21 +1331,40 @@ UIListbox.ListboxItem = function ( parent ) {
 
 	function onClick() {
 
-		if ( scope.parent ) {
+		if (scope.parent) {
 
-			scope.parent.setValue( scope.getId( ) );
+			scope.parent.setValue(scope.getId());
 
 		}
 
 	}
 
-	dom.addEventListener( 'click', onClick, false );
+	dom.addEventListener('click', onClick, false);
 
 	return this;
 
 };
 
-UIListbox.ListboxItem.prototype = Object.create( UIElement.prototype );
+UIListbox.ListboxItem.prototype = Object.create(UIElement.prototype);
 UIListbox.ListboxItem.prototype.constructor = UIListbox.ListboxItem;
 
-export { UIElement, UISpan, UIDiv, UIRow, UIPanel, UIText, UIInput, UITextArea, UISelect, UICheckbox, UIColor, UINumber, UIInteger, UIBreak, UIHorizontalRule, UIButton, UITabbedPanel, UIListbox };
+export {
+	UIElement,
+	UISpan,
+	UIDiv,
+	UIRow,
+	UIPanel,
+	UIText,
+	UIInput,
+	UITextArea,
+	UISelect,
+	UICheckbox,
+	UIColor,
+	UINumber,
+	UIInteger,
+	UIBreak,
+	UIHorizontalRule,
+	UIButton,
+	UITabbedPanel,
+	UIListbox
+};

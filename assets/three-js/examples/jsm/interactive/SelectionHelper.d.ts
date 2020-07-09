@@ -1,13 +1,9 @@
-import {
-	WebGLRenderer,
-	Vector2
-} from '../../../src/Three';
+import {Vector2, WebGLRenderer} from '../../../src/Three';
 
-import { SelectionBox } from './SelectionBox';
+import {SelectionBox} from './SelectionBox';
 
 export class SelectionHelper {
 
-	constructor( selectionBox: SelectionBox, renderer: WebGLRenderer, cssClassName: string );
 	element: HTMLElement;
 	isDown: boolean;
 	pointBottomRight: Vector2;
@@ -15,8 +11,12 @@ export class SelectionHelper {
 	renderer: WebGLRenderer;
 	startPoint: Vector2;
 
-	onSelectStart( event: Event ): void;
-	onSelectMove( event: Event ): void;
-	onSelectOver( event: Event ): void;
+	constructor(selectionBox: SelectionBox, renderer: WebGLRenderer, cssClassName: string);
+
+	onSelectStart(event: Event): void;
+
+	onSelectMove(event: Event): void;
+
+	onSelectOver(event: Event): void;
 
 }

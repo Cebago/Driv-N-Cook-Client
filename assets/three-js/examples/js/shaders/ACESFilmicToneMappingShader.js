@@ -9,8 +9,8 @@ THREE.ACESFilmicToneMappingShader = {
 
 	uniforms: {
 
-		'tDiffuse': { value: null },
-		'exposure': { value: 1.0 }
+		'tDiffuse': {value: null},
+		'exposure': {value: 1.0}
 
 	},
 
@@ -25,7 +25,7 @@ THREE.ACESFilmicToneMappingShader = {
 
 		'}'
 
-	].join( '\n' ),
+	].join('\n'),
 
 	fragmentShader: [
 
@@ -83,6 +83,6 @@ THREE.ACESFilmicToneMappingShader = {
 
 		'}'
 
-	].join( '\n' )
+	].join('\n')
 
 };

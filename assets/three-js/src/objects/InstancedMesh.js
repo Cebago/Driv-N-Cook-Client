@@ -1,9 +1,9 @@
 /**
  * @author mrdoob / http://mrdoob.com/
  */
-import { BufferAttribute } from '../core/BufferAttribute.js';
-import { Mesh } from './Mesh.js';
-import { Matrix4 } from '../math/Matrix4.js';
+import {BufferAttribute} from '../core/BufferAttribute.js';
+import {Mesh} from './Mesh.js';
+import {Matrix4} from '../math/Matrix4.js';
 
 var _instanceLocalMatrix = new Matrix4();
 var _instanceWorldMatrix = new Matrix4();
@@ -12,11 +12,11 @@ var _instanceIntersects = [];
 
 var _mesh = new Mesh();
 
-function InstancedMesh( geometry, material, count ) {
+function InstancedMesh(geometry, material, count) {
 
-	Mesh.call( this, geometry, material );
+	Mesh.call(this, geometry, material);
 
-	this.instanceMatrix = new BufferAttribute( new Float32Array( count * 16 ), 16 );
+	this.instanceMatrix = new BufferAttribute(new Float32Array(count * 16), 16);
 
 	this.count = count;
 
@@ -24,19 +24,19 @@ function InstancedMesh( geometry, material, count ) {
 
 }
 
-InstancedMesh.prototype = Object.assign( Object.create( Mesh.prototype ), {
+InstancedMesh.prototype = Object.assign(Object.create(Mesh.prototype), {
 
 	constructor: InstancedMesh,
 
 	isInstancedMesh: true,
 
-	getMatrixAt: function ( index, matrix ) {
+	getMatrixAt: function (index, matrix) {
 
-		matrix.fromArray( this.instanceMatrix.array, index * 16 );
+		matrix.fromArray(this.instanceMatrix.array, index * 16);
 
 	},
 
-	raycast: function ( raycaster, intersects ) {
+	raycast: function (raycaster, intersects) {
 
 		var matrixWorld = this.matrixWorld;
 		var raycastTimes = this.count;
@@ -44,30 +44,30 @@ InstancedMesh.prototype = Object.assign( Object.create( Mesh.prototype ), {
 		_mesh.geometry = this.geometry;
 		_mesh.material = this.material;
 
-		if ( _mesh.material === undefined ) return;
+		if (_mesh.material === undefined) return;
 
-		for ( var instanceId = 0; instanceId < raycastTimes; instanceId ++ ) {
+		for (var instanceId = 0; instanceId < raycastTimes; instanceId++) {
 
 			// calculate the world matrix for each instance
 
-			this.getMatrixAt( instanceId, _instanceLocalMatrix );
+			this.getMatrixAt(instanceId, _instanceLocalMatrix);
 
-			_instanceWorldMatrix.multiplyMatrices( matrixWorld, _instanceLocalMatrix );
+			_instanceWorldMatrix.multiplyMatrices(matrixWorld, _instanceLocalMatrix);
 
 			// the mesh represents this single instance
 
 			_mesh.matrixWorld = _instanceWorldMatrix;
 
-			_mesh.raycast( raycaster, _instanceIntersects );
+			_mesh.raycast(raycaster, _instanceIntersects);
 
 			// process the result of raycast
 
-			for ( var i = 0, l = _instanceIntersects.length; i < l; i ++ ) {
+			for (var i = 0, l = _instanceIntersects.length; i < l; i++) {
 
-				var intersect = _instanceIntersects[ i ];
+				var intersect = _instanceIntersects[i];
 				intersect.instanceId = instanceId;
 				intersect.object = this;
-				intersects.push( intersect );
+				intersects.push(intersect);
 
 			}
 
@@ -77,9 +77,9 @@ InstancedMesh.prototype = Object.assign( Object.create( Mesh.prototype ), {
 
 	},
 
-	setMatrixAt: function ( index, matrix ) {
+	setMatrixAt: function (index, matrix) {
 
-		matrix.toArray( this.instanceMatrix.array, index * 16 );
+		matrix.toArray(this.instanceMatrix.array, index * 16);
 
 	},
 
@@ -87,6 +87,6 @@ InstancedMesh.prototype = Object.assign( Object.create( Mesh.prototype ), {
 
 	}
 
-} );
+});
 
-export { InstancedMesh };
+export {InstancedMesh};

@@ -4,13 +4,14 @@
 
 
 
-var TypedGeometryExporter = function () {};
+var TypedGeometryExporter = function () {
+};
 
 TypedGeometryExporter.prototype = {
 
 	constructor: TypedGeometryExporter,
 
-	parse: function ( geometry ) {
+	parse: function (geometry) {
 
 		var output = {
 			metadata: {
@@ -20,28 +21,28 @@ TypedGeometryExporter.prototype = {
 			}
 		};
 
-		var attributes = [ 'vertices', 'normals', 'uvs' ];
+		var attributes = ['vertices', 'normals', 'uvs'];
 
-		for ( var key in attributes ) {
+		for (var key in attributes) {
 
-			var attribute = attributes[ key ];
+			var attribute = attributes[key];
 
-			var typedArray = geometry[ attribute ];
+			var typedArray = geometry[attribute];
 			var array = [];
 
-			for ( var i = 0, l = typedArray.length; i < l; i ++ ) {
+			for (var i = 0, l = typedArray.length; i < l; i++) {
 
-				array[ i ] = typedArray[ i ];
+				array[i] = typedArray[i];
 
 			}
 
-			output[ attribute ] = array;
+			output[attribute] = array;
 
 		}
 
 		var boundingSphere = geometry.boundingSphere;
 
-		if ( boundingSphere !== null ) {
+		if (boundingSphere !== null) {
 
 			output.boundingSphere = {
 				center: boundingSphere.center.toArray(),
@@ -56,4 +57,4 @@ TypedGeometryExporter.prototype = {
 
 };
 
-export { TypedGeometryExporter };
+export {TypedGeometryExporter};

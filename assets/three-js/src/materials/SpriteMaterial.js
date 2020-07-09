@@ -1,5 +1,5 @@
-import { Material } from './Material.js';
-import { Color } from '../math/Color.js';
+import {Material} from './Material.js';
+import {Color} from '../math/Color.js';
 
 /**
  * @author alteredq / http://alteredqualia.com/
@@ -13,13 +13,13 @@ import { Color } from '../math/Color.js';
  * }
  */
 
-function SpriteMaterial( parameters ) {
+function SpriteMaterial(parameters) {
 
-	Material.call( this );
+	Material.call(this);
 
 	this.type = 'SpriteMaterial';
 
-	this.color = new Color( 0xffffff );
+	this.color = new Color(0xffffff);
 
 	this.map = null;
 
@@ -31,19 +31,19 @@ function SpriteMaterial( parameters ) {
 
 	this.transparent = true;
 
-	this.setValues( parameters );
+	this.setValues(parameters);
 
 }
 
-SpriteMaterial.prototype = Object.create( Material.prototype );
+SpriteMaterial.prototype = Object.create(Material.prototype);
 SpriteMaterial.prototype.constructor = SpriteMaterial;
 SpriteMaterial.prototype.isSpriteMaterial = true;
 
-SpriteMaterial.prototype.copy = function ( source ) {
+SpriteMaterial.prototype.copy = function (source) {
 
-	Material.prototype.copy.call( this, source );
+	Material.prototype.copy.call(this, source);
 
-	this.color.copy( source.color );
+	this.color.copy(source.color);
 
 	this.map = source.map;
 
@@ -58,4 +58,4 @@ SpriteMaterial.prototype.copy = function ( source ) {
 };
 
 
-export { SpriteMaterial };
+export {SpriteMaterial};

@@ -18,10 +18,7 @@
  * Sousa2008 - Crysis Next Gen Effects, GDC2008, http://www.crytek.com/sites/default/files/GDC08_SousaT_CrysisEffects.ppt
  */
 
-import {
-	Color,
-	Vector2
-} from "../../../build/three.module.js";
+import {Color, Vector2} from "../../../build/three.module.js";
 
 var GodRaysDepthMaskShader = {
 
@@ -44,7 +41,7 @@ var GodRaysDepthMaskShader = {
 
 		"}"
 
-	].join( "\n" ),
+	].join("\n"),
 
 	fragmentShader: [
 
@@ -59,7 +56,7 @@ var GodRaysDepthMaskShader = {
 
 		"}"
 
-	].join( "\n" )
+	].join("\n")
 
 };
 
@@ -90,7 +87,7 @@ var GodRaysGenerateShader = {
 			value: 1.0
 		},
 		vSunPositionScreenSpace: {
-			value: new Vector2( 0.5, 0.5 )
+			value: new Vector2(0.5, 0.5)
 		}
 
 	},
@@ -106,7 +103,7 @@ var GodRaysGenerateShader = {
 
 		"}"
 
-	].join( "\n" ),
+	].join("\n"),
 
 	fragmentShader: [
 
@@ -192,7 +189,7 @@ var GodRaysGenerateShader = {
 
 		"}"
 
-	].join( "\n" )
+	].join("\n")
 
 };
 
@@ -218,7 +215,7 @@ var GodRaysCombineShader = {
 		},
 
 		vSunPositionScreenSpace: {
-			value: new Vector2( 0.5, 0.5 )
+			value: new Vector2(0.5, 0.5)
 		}
 
 	},
@@ -234,7 +231,7 @@ var GodRaysCombineShader = {
 
 		"}"
 
-	].join( "\n" ),
+	].join("\n"),
 
 	fragmentShader: [
 
@@ -257,7 +254,7 @@ var GodRaysCombineShader = {
 
 		"}"
 
-	].join( "\n" )
+	].join("\n")
 
 };
 
@@ -272,7 +269,7 @@ var GodRaysFakeSunShader = {
 	uniforms: {
 
 		vSunPositionScreenSpace: {
-			value: new Vector2( 0.5, 0.5 )
+			value: new Vector2(0.5, 0.5)
 		},
 
 		fAspect: {
@@ -280,11 +277,11 @@ var GodRaysFakeSunShader = {
 		},
 
 		sunColor: {
-			value: new Color( 0xffee00 )
+			value: new Color(0xffee00)
 		},
 
 		bgColor: {
-			value: new Color( 0x000000 )
+			value: new Color(0x000000)
 		}
 
 	},
@@ -300,7 +297,7 @@ var GodRaysFakeSunShader = {
 
 		"}"
 
-	].join( "\n" ),
+	].join("\n"),
 
 	fragmentShader: [
 
@@ -328,8 +325,8 @@ var GodRaysFakeSunShader = {
 
 		"}"
 
-	].join( "\n" )
+	].join("\n")
 
 };
 
-export { GodRaysDepthMaskShader, GodRaysGenerateShader, GodRaysCombineShader, GodRaysFakeSunShader };
+export {GodRaysDepthMaskShader, GodRaysGenerateShader, GodRaysCombineShader, GodRaysFakeSunShader};

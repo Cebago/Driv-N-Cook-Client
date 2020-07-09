@@ -4,14 +4,14 @@
 
 var LoaderUtils = {
 
-	createFilesMap: function ( files ) {
+	createFilesMap: function (files) {
 
 		var map = {};
 
-		for ( var i = 0; i < files.length; i ++ ) {
+		for (var i = 0; i < files.length; i++) {
 
-			var file = files[ i ];
-			map[ file.name ] = file;
+			var file = files[i];
+			map[file.name] = file;
 
 		}
 
@@ -19,7 +19,7 @@ var LoaderUtils = {
 
 	},
 
-	getFilesFromItemList: function ( items, onDone ) {
+	getFilesFromItemList: function (items, onDone) {
 
 		// TOFIX: setURLModifier() breaks when the file being loaded is not in root
 
@@ -31,53 +31,53 @@ var LoaderUtils = {
 
 		function onEntryHandled() {
 
-			itemsCount ++;
+			itemsCount++;
 
-			if ( itemsCount === itemsTotal ) {
+			if (itemsCount === itemsTotal) {
 
-				onDone( files, filesMap );
+				onDone(files, filesMap);
 
 			}
 
 		}
 
-		function handleEntry( entry ) {
+		function handleEntry(entry) {
 
-			if ( entry.isDirectory ) {
+			if (entry.isDirectory) {
 
 				var reader = entry.createReader();
-				reader.readEntries( function ( entries ) {
+				reader.readEntries(function (entries) {
 
-					for ( var i = 0; i < entries.length; i ++ ) {
+					for (var i = 0; i < entries.length; i++) {
 
-						handleEntry( entries[ i ] );
+						handleEntry(entries[i]);
 
 					}
 
 					onEntryHandled();
 
-				} );
+				});
 
-			} else if ( entry.isFile ) {
+			} else if (entry.isFile) {
 
-				entry.file( function ( file ) {
+				entry.file(function (file) {
 
-					files.push( file );
+					files.push(file);
 
-					filesMap[ entry.fullPath.substr( 1 ) ] = file;
+					filesMap[entry.fullPath.substr(1)] = file;
 					onEntryHandled();
 
-				} );
+				});
 
 			}
 
-			itemsTotal ++;
+			itemsTotal++;
 
 		}
 
-		for ( var i = 0; i < items.length; i ++ ) {
+		for (var i = 0; i < items.length; i++) {
 
-			handleEntry( items[ i ].webkitGetAsEntry() );
+			handleEntry(items[i].webkitGetAsEntry());
 
 		}
 
@@ -85,4 +85,4 @@ var LoaderUtils = {
 
 };
 
-export { LoaderUtils };
+export {LoaderUtils};

@@ -1,6 +1,6 @@
-import { Vector2 } from '../math/Vector2.js';
-import { MeshStandardMaterial } from './MeshStandardMaterial.js';
-import { Color } from '../math/Color.js';
+import {Vector2} from '../math/Vector2.js';
+import {MeshStandardMaterial} from './MeshStandardMaterial.js';
+import {Color} from '../math/Color.js';
 
 /**
  * @author WestLangley / http://github.com/WestLangley
@@ -21,9 +21,9 @@ import { Color } from '../math/Color.js';
  * }
  */
 
-function MeshPhysicalMaterial( parameters ) {
+function MeshPhysicalMaterial(parameters) {
 
-	MeshStandardMaterial.call( this );
+	MeshStandardMaterial.call(this);
 
 	this.defines = {
 
@@ -38,7 +38,7 @@ function MeshPhysicalMaterial( parameters ) {
 	this.clearcoatMap = null;
 	this.clearcoatRoughness = 0.0;
 	this.clearcoatRoughnessMap = null;
-	this.clearcoatNormalScale = new Vector2( 1, 1 );
+	this.clearcoatNormalScale = new Vector2(1, 1);
 	this.clearcoatNormalMap = null;
 
 	this.reflectivity = 0.5; // maps to F0 = 0.04
@@ -47,18 +47,18 @@ function MeshPhysicalMaterial( parameters ) {
 
 	this.transparency = 0.0;
 
-	this.setValues( parameters );
+	this.setValues(parameters);
 
 }
 
-MeshPhysicalMaterial.prototype = Object.create( MeshStandardMaterial.prototype );
+MeshPhysicalMaterial.prototype = Object.create(MeshStandardMaterial.prototype);
 MeshPhysicalMaterial.prototype.constructor = MeshPhysicalMaterial;
 
 MeshPhysicalMaterial.prototype.isMeshPhysicalMaterial = true;
 
-MeshPhysicalMaterial.prototype.copy = function ( source ) {
+MeshPhysicalMaterial.prototype.copy = function (source) {
 
-	MeshStandardMaterial.prototype.copy.call( this, source );
+	MeshStandardMaterial.prototype.copy.call(this, source);
 
 	this.defines = {
 
@@ -72,13 +72,13 @@ MeshPhysicalMaterial.prototype.copy = function ( source ) {
 	this.clearcoatRoughness = source.clearcoatRoughness;
 	this.clearcoatRoughnessMap = source.clearcoatRoughnessMap;
 	this.clearcoatNormalMap = source.clearcoatNormalMap;
-	this.clearcoatNormalScale.copy( source.clearcoatNormalScale );
+	this.clearcoatNormalScale.copy(source.clearcoatNormalScale);
 
 	this.reflectivity = source.reflectivity;
 
-	if ( source.sheen ) {
+	if (source.sheen) {
 
-		this.sheen = ( this.sheen || new Color() ).copy( source.sheen );
+		this.sheen = (this.sheen || new Color()).copy(source.sheen);
 
 	} else {
 
@@ -92,4 +92,4 @@ MeshPhysicalMaterial.prototype.copy = function ( source ) {
 
 };
 
-export { MeshPhysicalMaterial };
+export {MeshPhysicalMaterial};
