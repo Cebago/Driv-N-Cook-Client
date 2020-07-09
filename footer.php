@@ -5,7 +5,7 @@
             <div class="row">
                 <div class="col-md-6">
                     <div class="single-widget single-widget1">
-                        <a href="home.php"><img src="assets/images/logo/logo2.png" alt=""></a>
+                        <a href="home.php"><img src="img/logo.png" alt="" class="img-fluid" width="150" height="150"></a>
                         <p class="mt-3">
                             <?php echo getTranslate("titre2", $tabLang, $setLanguage); ?>
                         </p>
