@@ -152,7 +152,9 @@ if (isset($_GET["idTruck"])) {
                                         ?>
                                         <a href="javascript:void(0)" class="template-btn3 mt-3"
                                            onclick='addMenuQuantity(<?php echo $cart . ", " . $menu["idMenu"]; ?>)'>
-                                            <?php echo getTranslate("Ajouter à mon panier", $tabLang, $setLanguage) ?>
+                                            <?php
+                                            if (isOpen($_GET["idTruck"]))
+                                                echo getTranslate("Ajouter à mon panier", $tabLang, $setLanguage) ?>
                                             <span>
                                             <i class="fa fa-long-arrow-right"></i>
                                         </span>
@@ -196,7 +198,8 @@ if (isset($_GET["idTruck"])) {
                                         ?>
                                         <a href="javascript:void(0)" class="template-btn3 mt-3"
                                            onclick='addMenuQuantity(<?php echo $cart . ", " . $menu["idMenu"]; ?>)'>
-                                            <?php echo getTranslate("Ajouter à mon panier", $tabLang, $setLanguage) ?>
+                                            <?php if (isOpen($_GET["idTruck"]))
+                                                echo getTranslate("Ajouter à mon panier", $tabLang, $setLanguage) ?>
                                             <span>
                                             <i class="fa fa-long-arrow-right"></i>
                                         </span>
@@ -270,7 +273,8 @@ if (isset($_GET["idTruck"])) {
                                         ?>
                                         <a href="javascript:void(0)" class="template-btn3 mt-3"
                                            onclick='addProductQuantity(<?php echo $cart . ", " . $product["idProduct"] ?>)'>
-                                            <?php echo getTranslate("Ajouter à mon panier", $tabLang, $setLanguage) ?>
+                                            <?php if (isOpen($_GET["idTruck"]))
+                                                echo getTranslate("Ajouter à mon panier", $tabLang, $setLanguage) ?>
                                             <span>
                                         <i class="fa fa-long-arrow-right"></i>
                                     </span>
@@ -312,7 +316,8 @@ if (isset($_GET["idTruck"])) {
                                         ?>
                                         <a href="javascript:void(0)" class="template-btn3 mt-3"
                                            onclick='addProductQuantity(<?php echo $cart . ", " . $product["idProduct"] ?>)'>
-                                            <?php echo getTranslate("Ajouter à mon panier", $tabLang, $setLanguage) ?>
+                                            <?php if (isOpen($_GET["idTruck"]))
+                                                echo getTranslate("Ajouter à mon panier", $tabLang, $setLanguage) ?>
                                             <span><i class="fa fa-long-arrow-right"></i>
                                     </span>
                                         </a>
