@@ -23,13 +23,13 @@ if (isset($_POST["inputEmail"]) && isset($_POST["inputPassword"]) && !empty($_PO
 require "navbar.php";
 ?>
 <?php
-/*if ($_GET["errors"] == true) {*/?><!--
+/*if ($_GET["errors"] == true) {*/ ?><!--
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
             integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
             crossorigin="anonymous">
     $('#signin').tab('show')
 </script>
---><?php /*} */?>
+--><?php /*} */ ?>
     <!-- Banner Area Starts -->
     <section class="banner-area banner-area2 blog-page text-center">
         <div class="container">
@@ -82,7 +82,7 @@ require "navbar.php";
                         <div class="card-body">
                             <?php
                             if (!empty($error)) {
-                                echo    "<div class='alert alert-danger'><li>" . getTranslate("Identifiants incorrects", $tabLang, $setLanguage) . "</li></div>";
+                                echo "<div class='alert alert-danger'><li>" . getTranslate("Identifiants incorrects", $tabLang, $setLanguage) . "</li></div>";
                             }
                             ?>
                             <form method="POST" action="login.php">
@@ -93,7 +93,8 @@ require "navbar.php";
                                             :
                                         </label>
                                         <input type="email" class="form-control focus"
-                                               placeholder="<?php echo getTranslate("Adresse mail", $tabLang, $setLanguage); ?>" required="required" autofocus="autofocus"
+                                               placeholder="<?php echo getTranslate("Adresse mail", $tabLang, $setLanguage); ?>"
+                                               required="required" autofocus="autofocus"
                                                name="inputEmail" autocomplete="username"
                                                value="<?php echo (isset($_POST['inputEmail'])) ? $_POST['inputEmail'] : '' ?>">
                                     </div>
@@ -103,11 +104,14 @@ require "navbar.php";
                                         <label for="inputPassword">
                                             <?php echo getTranslate("Mot de passe", $tabLang, $setLanguage); ?> :
                                         </label>
-                                        <input type="password" class="form-control focus" autocomplete="current-password"
-                                               placeholder="<?php echo getTranslate("Mot de passe", $tabLang, $setLanguage); ?>" required="required" name="inputPassword">
+                                        <input type="password" class="form-control focus"
+                                               autocomplete="current-password"
+                                               placeholder="<?php echo getTranslate("Mot de passe", $tabLang, $setLanguage); ?>"
+                                               required="required" name="inputPassword">
                                     </div>
                                 </div>
-                                <input class="genric-btn primary circle " type="submit" value="<?php echo getTranslate("Se connecter", $tabLang, $setLanguage); ?>">
+                                <input class="genric-btn primary circle " type="submit"
+                                       value="<?php echo getTranslate("Se connecter", $tabLang, $setLanguage); ?>">
                             </form>
                             <div class="text-center">
                                 <a class="d-block small pt-3 text-center text-secondary" href="forgotPassword.php">
@@ -138,7 +142,8 @@ require "navbar.php";
                                                         <?php echo getTranslate("Prénom", $tabLang, $setLanguage) ?> :
                                                     </label>
                                                     <input type="text" id="firstName" class="form-control focus"
-                                                           placeholder="<?php echo getTranslate("Prénom", $tabLang, $setLanguage) ?>" required="required" name="firstName"
+                                                           placeholder="<?php echo getTranslate("Prénom", $tabLang, $setLanguage) ?>"
+                                                           required="required" name="firstName"
                                                            value="<?php echo (isset($_SESSION["inputErrors"]))
                                                                ? $_SESSION["inputErrors"]["firstName"]
                                                                : ""; ?>">
@@ -150,7 +155,8 @@ require "navbar.php";
                                                         <?php echo getTranslate("Nom", $tabLang, $setLanguage) ?> :
                                                     </label>
                                                     <input type="text" id="lastName" class="form-control focus"
-                                                           placeholder="<?php echo getTranslate("Nom", $tabLang, $setLanguage) ?>" required="required" name="lastName"
+                                                           placeholder="<?php echo getTranslate("Nom", $tabLang, $setLanguage) ?>"
+                                                           required="required" name="lastName"
                                                            value="<?php echo (isset($_SESSION["inputErrors"]))
                                                                ? $_SESSION["inputErrors"]["lastName"]
                                                                : ""; ?>">
@@ -174,16 +180,19 @@ require "navbar.php";
                                             <?php echo getTranslate("Mot de passe", $tabLang, $setLanguage); ?> :
                                         </label>
                                         <input type="password" id="inputPassword" class="form-control focus"
-                                               placeholder="<?php echo getTranslate("Mot de passe", $tabLang, $setLanguage); ?>" required="required" name="inputPassword"
+                                               placeholder="<?php echo getTranslate("Mot de passe", $tabLang, $setLanguage); ?>"
+                                               required="required" name="inputPassword"
                                                autocomplete="off">
                                     </div>
                                     <div class="form-group">
                                         <!-- Confirmation mot de passe -->
                                         <label for="confirmPassword">
-                                            <?php echo getTranslate("Confirmation de mot de passe", $tabLang, $setLanguage); ?> :
+                                            <?php echo getTranslate("Confirmation de mot de passe", $tabLang, $setLanguage); ?>
+                                            :
                                         </label>
                                         <input type="password" id="confirmPassword" class="form-control focus"
-                                               placeholder="<?php echo getTranslate("Confirmation de mot de passe", $tabLang, $setLanguage); ?>" required="required"
+                                               placeholder="<?php echo getTranslate("Confirmation de mot de passe", $tabLang, $setLanguage); ?>"
+                                               required="required"
                                                name="confirmPassword" autocomplete="off">
                                     </div>
                                     <div class="form-group">
@@ -205,7 +214,8 @@ require "navbar.php";
                                             <?php echo getTranslate("J'accepte de recevoir les newsletter par email", $tabLang, $setLanguage); ?>
                                         </label>
                                     </div>
-                                    <input class="genric-btn primary circle" type="submit" value="<?php echo getTranslate("S'inscrire", $tabLang, $setLanguage); ?>">
+                                    <input class="genric-btn primary circle" type="submit"
+                                           value="<?php echo getTranslate("S'inscrire", $tabLang, $setLanguage); ?>">
                                 </form>
                             </div>
                         </div>

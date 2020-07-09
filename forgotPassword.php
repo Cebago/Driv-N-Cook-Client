@@ -53,7 +53,8 @@ require "header.php";
                             </div>
                         </div>
                         <div class="form-group">
-                            <input class="template-btn template-btn2 mt-4 pt-2 pb-2" type="submit" value="<?php echo getTranslate("Envoyer", $tabLang, $setLanguage); ?>">
+                            <input class="template-btn template-btn2 mt-4 pt-2 pb-2" type="submit"
+                                   value="<?php echo getTranslate("Envoyer", $tabLang, $setLanguage); ?>">
                         </div>
                     </form>
                 </div>
