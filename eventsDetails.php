@@ -33,10 +33,9 @@ require "navbar.php";
 <section class="update-area section-padding">
     <div class="container">
         <div class="row">
-            <div class="col-6">
+            <div class="col-8">
                 <img src="<?php echo $infos["eventImg"] ?>" alt="" class="img-fluid">
             </div>
-            <div class="col-2"></div>
             <div class="col-4">
                 <div class="card">
                     <div class="card-header">
