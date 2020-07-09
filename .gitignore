@@ -1,4 +1,5 @@
 
 .idea/
 img/*
-./assets/traduction.json
+
+assets/traduction.json
