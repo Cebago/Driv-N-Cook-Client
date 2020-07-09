@@ -3,7 +3,7 @@ session_start();
 require "conf.inc.php";
 require "functions.php";
 
-if (!isConnected() || !isActivated() || !isActivated()) {
+if (!isConnected() || !isActivated() || !isClient()) {
     header("Location: login.php");
 }
 include "navbar.php";
