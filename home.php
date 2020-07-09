@@ -70,7 +70,7 @@ $count = 0;
                         <div class="col-md-4 col-sm-6">
                             <div class="single-food">
                                 <div class="food-img">
-                                    <img src="assets/images/food1.jpg" class="img-fluid" alt="">
+                                    <img src="<?php echo $getMenu["menuImage"] ?>" class="img-fluid" alt="">
                                 </div>
                                 <div class="food-content">
                                     <div class="d-flex justify-content-between">
