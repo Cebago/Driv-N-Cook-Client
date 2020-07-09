@@ -7,7 +7,7 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
 
     <!-- Page Title -->
-    <title>Foodfun</title>
+    <title>Driv'N Cook</title>
 
     <!-- Favicon -->
     <link rel="shortcut icon" href="img/drivncook.ico" type="image/x-icon">

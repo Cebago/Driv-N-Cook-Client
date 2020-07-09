@@ -404,10 +404,8 @@ function getEventsPreview()
 
 function getMenuForHomePage()
 {
-
     $pdo = connectDB();
-
-    $queryPrepared = $pdo->prepare("SELECT menuName, menuPrice, truck FROM MENUS ;");
+    $queryPrepared = $pdo->prepare("SELECT menuName, menuPrice, truck, menuImage FROM MENUS ;");
     $queryPrepared->execute();
     return $getMenuName = $queryPrepared->fetchAll(PDO::FETCH_ASSOC);
 
