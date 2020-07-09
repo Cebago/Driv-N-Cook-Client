@@ -565,6 +565,14 @@
       "es_ES" : "Nuestros <span>eventos</span>",
       "fr_FR" : "Nos <span>événements</span>"
     },
+    "Ouvert du" : {
+      "en_EN" : "Open from",
+      "es_ES" : "Abierto de"
+    },
+    "au" : {
+      "en_EN" : "to",
+      "es_ES" : "al"
+    },
     "Découvrez les évènements près de chez vous" : {
       "es_ES" : "Descubre los eventos cercanos a tu casa",
       "en_EN" : "Discover the events near to your position"
