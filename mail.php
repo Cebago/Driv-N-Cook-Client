@@ -1,7 +1,7 @@
 <?php
 session_start();
 require "navbar.php" ?>
-<body>
+    <body>
 
 <!-- Banner Area Starts -->
 <section class="banner-area banner-area2 blog-page text-center">

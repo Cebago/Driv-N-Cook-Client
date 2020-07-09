@@ -1,5 +1,5 @@
 <?php
-if(!isset($_GET) || empty($_GET)){
+if (!isset($_GET) || empty($_GET)) {
     header("Location: events.php");
 }
 require 'functions.php';
@@ -15,54 +15,54 @@ if (empty($infos)) {
 }
 require "navbar.php";
 ?>
-<!-- Banner Area Starts -->
-<section class="banner-area banner-area2 contact-bg text-center">
-    <div class="container">
-        <div class="row">
-            <div class="col-lg-12">
-                <h1>
-                    <i>
-                        <?php echo $infos["eventName"]; ?>
-                    </i>
-                </h1>
+    <!-- Banner Area Starts -->
+    <section class="banner-area banner-area2 contact-bg text-center">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <h1>
+                        <i>
+                            <?php echo $infos["eventName"]; ?>
+                        </i>
+                    </h1>
+                </div>
             </div>
         </div>
-    </div>
-</section>
+    </section>
 
-<section class="update-area section-padding">
-    <div class="container">
-        <div class="row">
-            <div class="col-8">
-                <img src="<?php echo $infos["eventImg"] ?>" alt="" class="img-fluid">
-            </div>
-            <div class="col-4">
-                <div class="card">
-                    <div class="card-header">
-                        <?php echo $infos["eventDesc"]; ?>
-                    </div>
-                    <div class="card-body">
-                        <p>
+    <section class="update-area section-padding">
+        <div class="container">
+            <div class="row">
+                <div class="col-8">
+                    <img src="<?php echo $infos["eventImg"] ?>" alt="" class="img-fluid">
+                </div>
+                <div class="col-4">
+                    <div class="card">
+                        <div class="card-header">
+                            <?php echo $infos["eventDesc"]; ?>
+                        </div>
+                        <div class="card-body">
+                            <p>
+                                <?php
+                                echo getTranslate("Ouvert du", $tabLang, $setLanguage) . " " . $infos["eventBeginDate"] . " - " . $infos["eventStartHour"];
+                                ?>
+                            </p>
+                            <p>
+                                <?php
+                                echo getTranslate("au", $tabLang, $setLanguage) . " " . $infos["eventBeginDate"] . " - " . $infos["eventStartHour"];
+                                ?>
+                            </p>
+                        </div>
+                        <div class="card-footer">
                             <?php
-                            echo getTranslate("Ouvert du", $tabLang, $setLanguage) . " " . $infos["eventBeginDate"] . " - " . $infos["eventStartHour"];
+                            echo $infos["eventAddress"] . ", " . $infos["eventPostalCode"] . "&nbsp;" . $infos["eventCity"];
                             ?>
-                        </p>
-                        <p>
-                            <?php
-                            echo getTranslate("au", $tabLang, $setLanguage) . " " . $infos["eventBeginDate"] . " - " . $infos["eventStartHour"];
-                            ?>
-                        </p>
-                    </div>
-                    <div class="card-footer">
-                        <?php
-                        echo $infos["eventAddress"] . ", " . $infos["eventPostalCode"] . "&nbsp;" . $infos["eventCity"];
-                        ?>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
-</section>
+    </section>
 
 
-<?php require 'footer.php';?>
+<?php require 'footer.php'; ?>

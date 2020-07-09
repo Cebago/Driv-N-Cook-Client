@@ -56,8 +56,9 @@ if (isConnected() && isActivated() && !isActivated()) {
             <div class="row">
                 <div class="col-lg-3">
                     <div class="logo-area">
-                        <a href="home.php"><img src="./img/logo.png" alt="logo" class="img-fluid" width="100" height="100"></a>
-                            <h5>Driv'N Cook</h5>
+                        <a href="home.php"><img src="./img/logo.png" alt="logo" class="img-fluid" width="100"
+                                                height="100"></a>
+                        <h5>Driv'N Cook</h5>
                     </div>
                 </div>
                 <div class="col-lg-9">

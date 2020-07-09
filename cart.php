@@ -189,7 +189,7 @@ if (isActivated() && isConnected() && isClient()) {
     </div>
 </section>
 <!-- Food Area End -->
-    <?php include "footer.php"; ?>
+<?php include "footer.php"; ?>
 <script src="scripts/scripts.js"></script>
 <?php } else {
     header("Location: login.php");
