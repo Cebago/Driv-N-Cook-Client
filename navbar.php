@@ -54,14 +54,13 @@ if (isConnected() && isActivated() && !isActivated()) {
     <header class="header-area shadow-lg p-3 mb-5 bg-info rounded-pill">
         <div class="container">
             <div class="row">
-                <div class="col-lg-2">
+                <div class="col-lg-3">
                     <div class="logo-area">
-                        <a href="home.php"><img src="./img/logo.png" alt="logo"></a>
-                        <span>Driv'n Cook</span>
+                        <a href="home.php"><img src="./img/logo.png" alt="logo" class="img-fluid" width="100" height="100"></a>
+                            <h5>Driv'N Cook</h5>
                     </div>
-
                 </div>
-                <div class="col-lg-10">
+                <div class="col-lg-9">
                     <div class="custom-navbar">
                         <span></span>
                         <span></span>
