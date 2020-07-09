@@ -22,14 +22,6 @@ if (isset($_POST["inputEmail"]) && isset($_POST["inputPassword"]) && !empty($_PO
 }
 require "navbar.php";
 ?>
-<?php
-/*if ($_GET["errors"] == true) {*/ ?><!--
-    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
-            integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
-            crossorigin="anonymous">
-    $('#signin').tab('show')
-</script>
---><?php /*} */ ?>
     <!-- Banner Area Starts -->
     <section class="banner-area banner-area2 blog-page text-center">
         <div class="container">
@@ -65,20 +57,20 @@ require "navbar.php";
             <div class="col-xs-10 col-sm-10  col-lg-6 mx-auto">
                 <ul class="nav nav-tabs" id="myTab" role="tablist">
                     <li class="nav-item" role="presentation">
-                        <a class="nav-link active" id="home-tab" data-toggle="tab" href="#login" role="tab"
+                        <a class="nav-link <?= (isset($_GET['errors'])) ? '' : 'active'; ?>" id="loginLink" data-toggle="tab" href="#login" role="tab"
                            aria-controls="home" aria-selected="true">
                             <?php echo getTranslate("Se connecter", $tabLang, $setLanguage); ?>
                         </a>
                     </li>
                     <li class="nav-item" role="presentation">
-                        <a class="nav-link" id="profile-tab" data-toggle="tab" href="#signin" role="tab"
+                        <a class="nav-link <?= (isset($_GET['errors'])) ? 'active' : ''; ?>" id="signinLink" data-toggle="tab" href="#signin" role="tab"
                            aria-controls="profile" aria-selected="false">
                             <?php echo getTranslate("S'inscrire", $tabLang, $setLanguage); ?>
                         </a>
                     </li>
                 </ul>
                 <div class="tab-content" id="myTabContent">
-                    <div class="card mx-auto p-5 tab-pane fade show active" id="login">
+                    <div class="card mx-auto p-5 tab-pane fade <?php echo (isset($_GET['errors'])) ? '' : 'active show'; ?>" id="login">
                         <div class="card-body">
                             <?php
                             if (!empty($error)) {
@@ -120,7 +112,7 @@ require "navbar.php";
                             </div>
                         </div>
                     </div>
-                    <div class="tab-pane fade" id="signin">
+                    <div class="tab-pane fade <?php echo (isset($_GET['errors'])) ? 'active show' : ''; ?>" id="signin">
                         <div class="card card-login mx-auto p-5">
                             <div class="card-body">
                                 <?php
