@@ -1,4 +1,5 @@
 <?php
+session_start();
 if (!isset($_GET) || empty($_GET)) {
     header("Location: events.php");
 }
