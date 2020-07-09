@@ -3,8 +3,7 @@ session_start();
 require "conf.inc.php";
 require "functions.php";
 
-if (count($_POST) == 7
-    && !empty($_POST["firstName"])
+if (!empty($_POST["firstName"])
     && !empty($_POST["lastName"])
     && !empty($_POST["inputEmail"])
     && !empty($_POST["inputPassword"])
