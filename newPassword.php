@@ -1,4 +1,5 @@
 <?php
+session_start();
 require "conf.inc.php";
 require "functions.php";
 if (!isset($_GET["cle"], $_GET["id"])) {
