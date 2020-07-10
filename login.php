@@ -11,6 +11,12 @@ if (isset($_POST["inputEmail"]) && isset($_POST["inputPassword"]) && !empty($_PO
     if (password_verify($_POST["inputPassword"], $result["pwd"])) {
         $email = $_POST["inputEmail"];
         login($email);
+        if (isFranchisee()) {
+            header("Location: https://franchises." . $_SERVER["SERVER_NAME"] . "/login.php");
+        }
+        if (isAdmin()) {
+            header("Location: https://back." . $_SERVER["SERVER_NAME"] . "/login.php");
+        }
         header("Location: home.php");
         exit;
     } else {
