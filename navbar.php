@@ -54,12 +54,12 @@ if (isConnected() && isActivated() && isClient()) {
     <header class="header-area shadow-lg p-3 mb-5 bg-info rounded-pill">
         <div class="container">
             <div class="row">
-                <div class="col-lg-3">
+                <div class="col-lg-2">
                     <div class="logo-area">
                         <a href="home.php"><img src="./img/logo.png" alt="logo" class="img-fluid" ></a>
                     </div>
                 </div>
-                <div class="col-lg-9">
+                <div class="col-lg-10">
                     <div class="custom-navbar">
                         <span></span>
                         <span></span>
@@ -67,11 +67,6 @@ if (isConnected() && isActivated() && isClient()) {
                     </div>
                     <div class="main-menu">
                         <ul>
-                            <li class="active">
-                                <a
-                                        href="home.php"><?php echo getTranslate("accueil", $tabLang, $setLanguage); ?>
-                                </a>
-                            </li>
                             <li>
                                 <a href="viewTrucks.php">
                                     <?php echo getTranslate("nos camions", $tabLang, $setLanguage); ?>
@@ -88,7 +83,7 @@ if (isConnected() && isActivated() && isClient()) {
                                 </a>
                             </li>
                             <li>
-                                <a href="./assets/three-js/examples/test.html">
+                                <a href="contact-us.php">
                                     <?php echo getTranslate("contactezNous", $tabLang, $setLanguage); ?>
                                 </a>
                             </li>
