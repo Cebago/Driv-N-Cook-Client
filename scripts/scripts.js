@@ -140,7 +140,7 @@ function deleteMenuQuantity(cart, menu) {
                         if (total !== null) {
                             let tmp = total.innerText.split("€")[0];
                             tmp = Number(tmp) - Number(inputPrice);
-                            total.innerText = tmp + "€";
+                            total.innerText = Number(tmp) + "€";
                         }
                     }
                 }
@@ -180,7 +180,7 @@ function addMenuQuantity(cart, menu) {
                     if (total !== null) {
                         let tmp = total.innerText.split("€")[0];
                         tmp = Number(tmp) + Number(inputPrice);
-                        total.innerText = tmp + "€";
+                        total.innerText = Number(tmp) + "€";
                     }
                 }
             }
@@ -218,7 +218,7 @@ function completelyMenuDelete(cart, menu) {
                     if (total !== null || total !== 0) {
                         let tmp = total.innerText.split("€")[0];
                         tmp = Number(tmp) - qty * Number(inputPrice);
-                        total.innerText = tmp + "€";
+                        total.innerText = Number(tmp) + "€";
                     }
                     deleteMenu.remove();
                 }
@@ -254,7 +254,7 @@ function deleteProductQuantity(cart, product) {
                         if (total !== null) {
                             let tmp = total.innerText.split("€")[0];
                             tmp = Number(tmp) - Number(inputPrice);
-                            total.innerText = tmp + "€";
+                            total.innerText = Number(tmp) + "€";
                         }
                     }
                 }
@@ -295,7 +295,7 @@ function addProductQuantity(cart, product) {
                     if (total !== null) {
                         let tmp = total.innerText.split("€")[0];
                         tmp = Number(tmp) + Number(inputPrice);
-                        total.innerText = tmp + "€";
+                        total.innerText = Number(tmp) + "€";
                     }
                 }
             }
@@ -333,7 +333,7 @@ function completelyProductDelete(cart, product) {
                     if (total !== null) {
                         let tmp = total.innerText.split("€")[0];
                         tmp = Number(tmp) - qty * Number(inputPrice);
-                        total.innerText = tmp + "€";
+                        total.innerText = Number(tmp) + "€";
                     }
                     deleteMenu.remove();
                 }
