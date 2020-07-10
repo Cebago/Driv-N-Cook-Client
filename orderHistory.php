@@ -1,5 +1,12 @@
 <?php
 session_start();
+require "conf.inc.php";
+require "functions.php";
+
+
+if (!isConnected() || !isActivated() || !isClient())
+    header("Location: login.php");
+
 require "navbar.php";
 $orders = ordersOfUser($_SESSION["email"]);
 
