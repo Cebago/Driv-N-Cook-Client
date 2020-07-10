@@ -87,6 +87,11 @@ if (isConnected() && isActivated() && isClient()) {
                                     <?php echo getTranslate("rejoignez-nous", $tabLang, $setLanguage); ?>
                                 </a>
                             </li>
+                            <li>
+                                <a href="./assets/three-js/examples/test.html">
+                                    <?php echo getTranslate("contactezNous", $tabLang, $setLanguage); ?>
+                                </a>
+                            </li>
                             <?php
                             if (isConnected() && isActivated() && isClient()) { ?>
                                 <li>
