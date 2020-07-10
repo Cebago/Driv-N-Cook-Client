@@ -3,14 +3,12 @@ session_start();
 require "conf.inc.php";
 require "functions.php";
 
-if (count($_POST) == 7
-    && !empty($_POST["firstName"])
+if (!empty($_POST["firstName"])
     && !empty($_POST["lastName"])
     && !empty($_POST["inputEmail"])
     && !empty($_POST["inputPassword"])
     && !empty($_POST["confirmPassword"])
     && !empty($_POST["captcha"])
-    && !empty($_POST["newsletterAgreement"])
 ) {
 
 
@@ -156,7 +154,7 @@ if (count($_POST) == 7
         $header .= "X-Mailer: PHP\n";
         $header .= "Return-Path: <no-reply@" . $domaineAddresse . "\n";
         $header .= "Content-Type: text/html; charset=iso-8859-1\n";
-        $link = "https://" . $domaineAddresse . "/isActivated?cle=" . urlencode($cle) . "&id=" . urlencode($idUser);
+        $link = "https://" . $domaineAddresse . "/isActivated.php?cle=" . urlencode($cle) . "&id=" . urlencode($idUser);
 
         $html = file_get_contents('mail.html');
         $html = str_replace("{{firstname}}", $firstName . " !", $html);

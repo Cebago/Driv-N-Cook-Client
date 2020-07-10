@@ -1,20 +1,11 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <!-- Required Meta Tags -->
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+<?php
+session_start();
+require "conf.inc.php";
+require "functions.php";
 
-    <!-- Page Title -->
-    <?php
-    session_start();
-    require "conf.inc.php";
-    require "functions.php";
-
-    if (!isConnected() || !isActivated() || !isActivated()) {
-        header("Location: login.php");
-    }
+if (!isConnected() || !isActivated() || !isClient()) {
+    header("Location: login.php");
+}
 
     require "header.php" ?>
 <body>
