@@ -21,10 +21,12 @@ function getOpenDays(idtruck) {
                         thd.className = "text-center";
                         thd.id = myJson[i]["openDay"];
                         thd.innerText = myJson[i]["openDay"];
+                        thd.setAttribute("rowspan", "1");
                         tr.appendChild(thd);
                     } else {
-
-                        search.setAttribute("rowspan", "2");
+                        let rowspan = Number(search.getAttribute("rowspan"));
+                        rowspan += 1;
+                        search.setAttribute("rowspan", "" + rowspan);
                         search.className = "align-middle text-center";
                     }
                     const td1 = document.createElement("td");
@@ -207,7 +209,7 @@ function completelyMenuDelete(cart, menu) {
                 if (request.responseText !== "") {
                     alert(request.responseText);
                 } else {
-                    if (Number(count.innerText > qty)) {
+                    if (Number(count.innerText) > qty) {
                         count.innerText = Number(count.innerText) - qty;
                     } else {
                         count.innerText = 0;
@@ -322,7 +324,7 @@ function completelyProductDelete(cart, product) {
                 if (request.responseText !== "") {
                     alert(request.responseText);
                 } else {
-                    if (Number(count.innerText > qty)) {
+                    if (Number(count.innerText) > qty) {
                         count.innerText = Number(count.innerText) - qty;
                     } else {
                         count.innerText = 0;
