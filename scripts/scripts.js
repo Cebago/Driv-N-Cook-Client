@@ -207,7 +207,7 @@ function completelyMenuDelete(cart, menu) {
                 if (request.responseText !== "") {
                     alert(request.responseText);
                 } else {
-                    if (Number(count.innerText > qty)) {
+                    if (Number(count.innerText) > qty) {
                         count.innerText = Number(count.innerText) - qty;
                     } else {
                         count.innerText = 0;
@@ -322,7 +322,7 @@ function completelyProductDelete(cart, product) {
                 if (request.responseText !== "") {
                     alert(request.responseText);
                 } else {
-                    if (Number(count.innerText > qty)) {
+                    if (Number(count.innerText) > qty) {
                         count.innerText = Number(count.innerText) - qty;
                     } else {
                         count.innerText = 0;
