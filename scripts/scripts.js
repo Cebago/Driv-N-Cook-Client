@@ -207,13 +207,13 @@ function completelyMenuDelete(cart, menu) {
                 if (request.responseText !== "") {
                     alert(request.responseText);
                 } else {
-                    if (Number(count.innerText > Number(qty.innerText))) {
-                        count.innerText = Number(count.innerText) - Number(qty.innerText);
+                    if (Number(count.innerText > qty)) {
+                        count.innerText = Number(count.innerText) - qty;
                     } else {
                         count.innerText = 0;
                     }
                     let total = document.getElementById("total" + cart);
-                    if (total !== null) {
+                    if (total !== null || total !== 0) {
                         let tmp = total.innerText.split("€")[0];
                         tmp = Number(tmp) - qty * Number(inputPrice);
                         total.innerText = tmp + "€";
@@ -322,8 +322,8 @@ function completelyProductDelete(cart, product) {
                 if (request.responseText !== "") {
                     alert(request.responseText);
                 } else {
-                    if (Number(count.innerText > Number(qty.innerText))) {
-                        count.innerText = Number(count.innerText) - Number(qty.innerText);
+                    if (Number(count.innerText > qty)) {
+                        count.innerText = Number(count.innerText) - qty;
                     } else {
                         count.innerText = 0;
                     }
