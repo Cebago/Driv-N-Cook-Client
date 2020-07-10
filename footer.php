@@ -30,7 +30,9 @@
                                 <i class="fa fa-envelope-o"></i>
                             </div>
                             <div class="info-text">
-                                <p>no-reply@<?php echo $_SERVER["SERVER_NAME"]; ?></p>
+                                <a href="mailto:no-reply@<?php echo $_SERVER["SERVER_NAME"]; ?>">
+                                    no-reply@<?php echo $_SERVER["SERVER_NAME"]; ?>
+                                </a>
                             </div>
                         </div>
                     </div>
