@@ -291,6 +291,11 @@ function ingredientsFromProduct($idProduct)
     return $menus;
 }
 
+/**
+ * @param $idIngredient
+ * @param $idTruck
+ * @return mixed
+ */
 function availableInTruck($idIngredient, $idTruck)
 {
     $pdo = connectDB();
@@ -357,6 +362,10 @@ function ordersOfUser($email)
     return $orders;
 }
 
+/**
+ * @param $idOrder
+ * @return array|null
+ */
 function statusOfOrder($idOrder)
 {
     $pdo = connectDB();
@@ -391,7 +400,9 @@ function getUserInfos()
     return false;
 }
 
-
+/**
+ * @return array
+ */
 function getEventsPreview()
 {
 
@@ -402,6 +413,9 @@ function getEventsPreview()
 
 }
 
+/**
+ * @return array
+ */
 function getMenuForHomePage()
 {
     $pdo = connectDB();
@@ -410,3 +424,58 @@ function getMenuForHomePage()
     return $getMenuName = $queryPrepared->fetchAll(PDO::FETCH_ASSOC);
 
 }
+
+/**
+ * @return bool
+ */
+function isFranchisee()
+{
+    if (!empty($_SESSION["email"]) && !empty($_SESSION["token"])) {
+        $email = $_SESSION["email"];
+        $token = $_SESSION["token"];
+        $pdo = connectDB();
+        $queryPrepared = $pdo->prepare("SELECT roleName FROM USER, SITEROLE, USERTOKEN WHERE emailAddress = :email 
+                                                 AND USERTOKEN.token = :token 
+                                                 AND user = idUser 
+                                                 AND userRole = idRole
+                                                 AND tokenType = 'Site'");
+        $queryPrepared->execute([
+            ":email" => $email,
+            ":token" => $token
+        ]);
+        $isAdmin = $queryPrepared->fetch();
+        $isAdmin = $isAdmin["roleName"];
+        if ($isAdmin == "Franchisé") {
+            return true;
+        }
+    }
+    return false;
+}
+
+/**
+ * @return bool
+ */
+function isAdmin()
+{
+    if (!empty($_SESSION["email"]) && !empty($_SESSION["token"])) {
+        $email = $_SESSION["email"];
+        $token = $_SESSION["token"];
+        $pdo = connectDB();
+        $queryPrepared = $pdo->prepare("SELECT roleName FROM USER, SITEROLE, USERTOKEN WHERE emailAddress = :email 
+                                                 AND USERTOKEN.token = :token 
+                                                 AND user = idUser 
+                                                 AND userRole = idRole
+                                                 AND tokenType = 'Site'");
+        $queryPrepared->execute([
+            ":email" => $email,
+            ":token" => $token
+        ]);
+        $isAdmin = $queryPrepared->fetch();
+        $isAdmin = $isAdmin["roleName"];
+        if ($isAdmin == "Administrateur") {
+            return true;
+        }
+    }
+    return false;
+}
+
