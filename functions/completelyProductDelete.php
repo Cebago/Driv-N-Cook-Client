@@ -26,7 +26,7 @@ if (isset($_GET["cart"], $_GET["product"])) {
     ]);
     $cartPrice = $queryPrepared->fetch(PDO::FETCH_ASSOC);
     $cartPrice = $cartPrice["cartPrice"];
-    $cartPrice = $cartPrice - $price;
+    $cartPrice = $cartPrice - $quantity * $price;
 
     $queryPrepared = $pdo->prepare("UPDATE CART SET cartPrice = :price WHERE idCart = :cart");
     $queryPrepared->execute([
