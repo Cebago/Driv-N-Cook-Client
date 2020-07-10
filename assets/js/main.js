@@ -16,7 +16,7 @@
             loop: true,
             margin: 30,
             autoplay: true,
-            autoplayTimeout: 2000,
+            autoplayTimeout: 5000,
             autoplayHoverPause: true,
             nav: false,
             dots: true,
@@ -37,9 +37,6 @@
                 }
             }
         });
-
-        // Nice Select
-        $('select').niceSelect();
 
         // Date Picker
         jQuery('#datepicker').datetimepicker({
