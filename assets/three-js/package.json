@@ -91,7 +91,7 @@
     "pngjs": "5.0.0",
     "puppeteer": "2.1.1",
     "qunit": "^2.9.3",
-    "rollup": "^2.3.2",
+    "rollup": "^3.29.5",
     "rollup-plugin-buble": "^0.19.8",
     "serve-handler": "^6.1.2",
     "typescript": "^3.8.3"
